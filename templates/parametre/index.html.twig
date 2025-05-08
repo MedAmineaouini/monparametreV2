@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Parametre index{% endblock %}
+
+{% block body %}
+    <h1>Parametre index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Seqparam</th>
+                <th>Entete1</th>
+                <th>Entete2</th>
+                <th>Adresse</th>
+                <th>Cp</th>
+                <th>Ville</th>
+                <th>Pays</th>
+                <th>Tel</th>
+                <th>Fax</th>
+                <th>Email</th>
+                <th>Seqresa</th>
+                <th>Contactfr</th>
+                <th>Contact</th>
+                <th>Euro</th>
+                <th>Expediteur</th>
+                <th>Alerte</th>
+                <th>Btobvol</th>
+                <th>Tel2</th>
+                <th>Tel3</th>
+                <th>Tel4</th>
+                <th>Marge</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for parametre in parametres %}
+            <tr>
+                <td>{{ parametre.seqparam }}</td>
+                <td>{{ parametre.entete1 }}</td>
+                <td>{{ parametre.entete2 }}</td>
+                <td>{{ parametre.adresse }}</td>
+                <td>{{ parametre.cp }}</td>
+                <td>{{ parametre.ville }}</td>
+                <td>{{ parametre.pays }}</td>
+                <td>{{ parametre.tel }}</td>
+                <td>{{ parametre.fax }}</td>
+                <td>{{ parametre.email }}</td>
+                <td>{{ parametre.seqresa }}</td>
+                <td>{{ parametre.contactfr }}</td>
+                <td>{{ parametre.contact }}</td>
+                <td>{{ parametre.euro }}</td>
+                <td>{{ parametre.expediteur }}</td>
+                <td>{{ parametre.alerte ? 'Yes' : 'No' }}</td>
+                <td>{{ parametre.btobvol }}</td>
+                <td>{{ parametre.tel2 }}</td>
+                <td>{{ parametre.tel3 }}</td>
+                <td>{{ parametre.tel4 }}</td>
+                <td>{{ parametre.marge }}</td>
+                <td>
+                    <a href="{{ path('app_parametre_show', {'seqparam': parametre.seqparam}) }}">show</a>
+                    <a href="{{ path('app_parametre_edit', {'seqparam': parametre.seqparam}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="22">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_parametre_new') }}">Create new</a>
+{% endblock %}

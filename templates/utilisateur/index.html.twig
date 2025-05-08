@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Utilisateur index{% endblock %}
+
+{% block body %}
+    <h1>Utilisateur index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>SEQUTIL</th>
+                <th>MAJ</th>
+                <th>CODEUTIL</th>
+                <th>NOMUTIL</th>
+                <th>PROFILUTIL</th>
+                <th>MDP</th>
+                <th>BADGE</th>
+                <th>FLAG1</th>
+                <th>FLAG2</th>
+                <th>DATEDEB</th>
+                <th>HEURED</th>
+                <th>DATEFIN</th>
+                <th>HEUREF</th>
+                <th>ENCOURS</th>
+                <th>SEQNIVEAU</th>
+                <th>Emailutil</th>
+                <th>WEBLOGIN</th>
+                <th>WEBMDP</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for utilisateur in utilisateurs %}
+            <tr>
+                <td>{{ utilisateur.SEQUTIL }}</td>
+                <td>{{ utilisateur.MAJ ? utilisateur.MAJ|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ utilisateur.CODEUTIL }}</td>
+                <td>{{ utilisateur.NOMUTIL }}</td>
+                <td>{{ utilisateur.PROFILUTIL }}</td>
+                <td>{{ utilisateur.MDP }}</td>
+                <td>{{ utilisateur.BADGE }}</td>
+                <td>{{ utilisateur.FLAG1 ? 'Yes' : 'No' }}</td>
+                <td>{{ utilisateur.FLAG2 ? 'Yes' : 'No' }}</td>
+                <td>{{ utilisateur.DATEDEB ? utilisateur.DATEDEB|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ utilisateur.HEURED ? utilisateur.HEURED|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ utilisateur.DATEFIN ? utilisateur.DATEFIN|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ utilisateur.HEUREF ? utilisateur.HEUREF|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ utilisateur.ENCOURS ? 'Yes' : 'No' }}</td>
+                <td>{{ utilisateur.SEQNIVEAU }}</td>
+                <td>{{ utilisateur.emailutil }}</td>
+                <td>{{ utilisateur.WEBLOGIN }}</td>
+                <td>{{ utilisateur.WEBMDP }}</td>
+                <td>
+                    <a href="{{ path('app_utilisateur_show', {'SEQUTIL': utilisateur.SEQUTIL}) }}">show</a>
+                    <a href="{{ path('app_utilisateur_edit', {'SEQUTIL': utilisateur.SEQUTIL}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="19">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_utilisateur_new') }}">Create new</a>
+{% endblock %}

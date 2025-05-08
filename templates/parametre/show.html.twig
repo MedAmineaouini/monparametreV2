@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Parametre{% endblock %}
+
+{% block body %}
+    <h1>Parametre</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Seqparam</th>
+                <td>{{ parametre.seqparam }}</td>
+            </tr>
+            <tr>
+                <th>Entete1</th>
+                <td>{{ parametre.entete1 }}</td>
+            </tr>
+            <tr>
+                <th>Entete2</th>
+                <td>{{ parametre.entete2 }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ parametre.adresse }}</td>
+            </tr>
+            <tr>
+                <th>Cp</th>
+                <td>{{ parametre.cp }}</td>
+            </tr>
+            <tr>
+                <th>Ville</th>
+                <td>{{ parametre.ville }}</td>
+            </tr>
+            <tr>
+                <th>Pays</th>
+                <td>{{ parametre.pays }}</td>
+            </tr>
+            <tr>
+                <th>Tel</th>
+                <td>{{ parametre.tel }}</td>
+            </tr>
+            <tr>
+                <th>Fax</th>
+                <td>{{ parametre.fax }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ parametre.email }}</td>
+            </tr>
+            <tr>
+                <th>Seqresa</th>
+                <td>{{ parametre.seqresa }}</td>
+            </tr>
+            <tr>
+                <th>Contactfr</th>
+                <td>{{ parametre.contactfr }}</td>
+            </tr>
+            <tr>
+                <th>Contact</th>
+                <td>{{ parametre.contact }}</td>
+            </tr>
+            <tr>
+                <th>Euro</th>
+                <td>{{ parametre.euro }}</td>
+            </tr>
+            <tr>
+                <th>Expediteur</th>
+                <td>{{ parametre.expediteur }}</td>
+            </tr>
+            <tr>
+                <th>Alerte</th>
+                <td>{{ parametre.alerte ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Btobvol</th>
+                <td>{{ parametre.btobvol }}</td>
+            </tr>
+            <tr>
+                <th>Tel2</th>
+                <td>{{ parametre.tel2 }}</td>
+            </tr>
+            <tr>
+                <th>Tel3</th>
+                <td>{{ parametre.tel3 }}</td>
+            </tr>
+            <tr>
+                <th>Tel4</th>
+                <td>{{ parametre.tel4 }}</td>
+            </tr>
+            <tr>
+                <th>Marge</th>
+                <td>{{ parametre.marge }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_parametre_index') }}">back to list</a>
+
+    <a href="{{ path('app_parametre_edit', {'seqparam': parametre.seqparam}) }}">edit</a>
+
+    {{ include('parametre/_delete_form.html.twig') }}
+{% endblock %}
