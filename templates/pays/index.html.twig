@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pays index{% endblock %}
+
+{% block body %}
+    <h1>Pays index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IDPAYS</th>
+                <th>CODEPAYS</th>
+                <th>LIBPAYS</th>
+                <th>PLACE</th>
+                <th>ORDRE</th>
+                <th>NATURE</th>
+                <th>CONTINENT</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for pay in pays %}
+            <tr>
+                <td>{{ pay.IDPAYS }}</td>
+                <td>{{ pay.CODEPAYS }}</td>
+                <td>{{ pay.LIBPAYS }}</td>
+                <td>{{ pay.PLACE }}</td>
+                <td>{{ pay.ORDRE }}</td>
+                <td>{{ pay.NATURE }}</td>
+                <td>{{ pay.CONTINENT }}</td>
+                <td>
+                    <a href="{{ path('app_pays_show', {'IDPAYS': pay.IDPAYS}) }}">show</a>
+                    <a href="{{ path('app_pays_edit', {'IDPAYS': pay.IDPAYS}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_pays_new') }}">Create new</a>
+{% endblock %}
