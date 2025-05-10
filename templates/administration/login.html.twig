@@ -1,0 +1,77 @@
+{% extends 'administration/base.html.twig' %}
+
+{% block title %}Créer un compte {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/assets/vendor/css/pages/page-auth.css') }}" />
+{% endblock %}
+
+{% block content %}
+    <div class="container-xxl">
+      <div class="authentication-wrapper authentication-basic container-p-y">
+        <div class="authentication-inner">
+          <div class="card px-sm-6 px-0">
+            <div class="card-body">
+              <div class="app-brand justify-content-center mb-4">
+                <span class="app-brand-logo demo">
+                  <!-- Logo ici -->
+                </span>
+                <span class="app-brand-text demo text-heading fw-bold">solplus</span>
+              </div>
+
+              <h4 class="mb-1">Se connecter 👋</h4>
+              <p class="mb-6">Remplissez les champs pour vous se connecter</p>
+
+             <form id="formAuthentication" class="mb-6" method="post">
+              {% if error %}
+                  <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+              {% endif %}
+
+              {% if app.user %}
+                  <div class="mb-3">
+                      Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Déconnexion</a>
+                  </div>
+              {% endif %}
+                <div class="mb-6 ">
+                  <label for="username" class="form-label">Nom</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="username"
+                    name="nom"
+                    value="{{ last_username }}"
+                    placeholder="Enter votre nom"
+                    required
+                    autofocus>
+                </div>
+
+                <div class="mb-6 form-password-toggle">
+                  <label class="form-label" for="password">Password</label>
+                  <div class="input-group input-group-merge">
+                    <input
+                      type="password"
+                      id="password"
+                      class="form-control"
+                      name="password"
+                      placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                      required>
+                    <span class="input-group-text cursor-pointer"><i class="icon-base bx bx-hide"></i></span>
+                  </div>
+                </div>
+
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                <div class="mb-6">
+                  <button class="btn btn-primary d-grid w-100" type="submit">Se connecter</button>
+                </div>
+              </form>
+
+              <div class="text-center">
+                <p class="mb-0">Non inscrit ? <a href="{{ path('app_register') }}">S'inscrire</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
