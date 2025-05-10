@@ -2,45 +2,102 @@
 
 {% block title %}Pays{% endblock %}
 
-{% block body %}
-    <h1>Pays</h1>
+{% block content %}
+  <!-- Contenu spécifique au dashboard -->
+  <div class="container-xxl flex-grow-1 container-p-y">
+    {% block dashboard_content %}
+    
+                <div class="card mb-6">
+                    <div class="card-header">
+                      <h5 class="card-title m-0">Shipping activity</h5>
+                    </div>
+                    <div class="card-body pt-1">
+                      <ul class="timeline pb-0 mb-0">
+                        <li class="timeline-item timeline-item-transparent border-primary">
+                        <span class="timeline-point timeline-point-primary"></span>
+                        <div class="timeline-event">
+                            <div class="timeline-header">
+                            <h6 class="mb-0">IDPAYS</h6>
+                            </div>
+                            <p class="mt-3">{{ pay.IDPAYS }}</p>
+                        </div>
+                        </li>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>IDPAYS</th>
-                <td>{{ pay.IDPAYS }}</td>
-            </tr>
-            <tr>
-                <th>CODEPAYS</th>
-                <td>{{ pay.CODEPAYS }}</td>
-            </tr>
-            <tr>
-                <th>LIBPAYS</th>
-                <td>{{ pay.LIBPAYS }}</td>
-            </tr>
-            <tr>
-                <th>PLACE</th>
-                <td>{{ pay.PLACE }}</td>
-            </tr>
-            <tr>
-                <th>ORDRE</th>
-                <td>{{ pay.ORDRE }}</td>
-            </tr>
-            <tr>
-                <th>NATURE</th>
-                <td>{{ pay.NATURE }}</td>
-            </tr>
-            <tr>
-                <th>CONTINENT</th>
-                <td>{{ pay.CONTINENT }}</td>
-            </tr>
-        </tbody>
-    </table>
+                        <li class="timeline-item timeline-item-transparent border-primary">
+                        <span class="timeline-point timeline-point-primary"></span>
+                        <div class="timeline-event">
+                            <div class="timeline-header">
+                            <h6 class="mb-0">CODEPAYS</h6>
+                            </div>
+                            <p class="mt-3">{{ pay.CODEPAYS }}</p>
+                        </div>
+                        </li>
+
+                        <li class="timeline-item timeline-item-transparent border-primary">
+                        <span class="timeline-point timeline-point-primary"></span>
+                        <div class="timeline-event">
+                            <div class="timeline-header">
+                            <h6 class="mb-0">LIBPAYS</h6>
+                            </div>
+                            <p class="mt-3">{{ pay.LIBPAYS }}</p>
+                        </div>
+                        </li>
+
+                        <li class="timeline-item timeline-item-transparent border-primary">
+                        <span class="timeline-point timeline-point-primary"></span>
+                        <div class="timeline-event">
+                            <div class="timeline-header">
+                            <h6 class="mb-0">PLACE</h6>
+                            </div>
+                            <p class="mt-3">{{ pay.PLACE }}</p>
+                        </div>
+                        </li>
+
+                        <li class="timeline-item timeline-item-transparent border-primary">
+                        <span class="timeline-point timeline-point-primary"></span>
+                        <div class="timeline-event">
+                            <div class="timeline-header">
+                            <h6 class="mb-0">ORDRE</h6>
+                            </div>
+                            <p class="mt-3">{{ pay.ORDRE }}</p>
+                        </div>
+                        </li>
+
+                        <li class="timeline-item timeline-item-transparent border-primary">
+                        <span class="timeline-point timeline-point-primary"></span>
+                        <div class="timeline-event">
+                            <div class="timeline-header">
+                            <h6 class="mb-0">NATURE</h6>
+                            </div>
+                            <p class="mt-3">{{ pay.NATURE }}</p>
+                        </div>
+                        </li>
+
+                        <li class="timeline-item timeline-item-transparent border-primary">
+                        <span class="timeline-point timeline-point-primary"></span>
+                        <div class="timeline-event">
+                            <div class="timeline-header">
+                            <h6 class="mb-0">CONTINENT</h6>
+                            </div>
+                            <p class="mt-3">{{ pay.CONTINENT }}</p>
+                        </div>
+                        </li>
+
+                      </ul>
+                    </div>
+                  </div>
+
 
     <a href="{{ path('app_pays_index') }}">back to list</a>
 
     <a href="{{ path('app_pays_edit', {'IDPAYS': pay.IDPAYS}) }}">edit</a>
 
     {{ include('pays/_delete_form.html.twig') }}
+    {% endblock %}
+  </div>
 {% endblock %}
+
+
+
+
+
