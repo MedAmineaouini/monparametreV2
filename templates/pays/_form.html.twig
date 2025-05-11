@@ -1,4 +1,78 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="card mb-4">
+    <h5 class="card-header">Formulaire Pays</h5>
+    {{ form_start(form) }}
+    <div class="card-body">
+        <div class="row g-4 col-md-12">
+            <div class="col-md-6">
+                <div class="form-floating form-floating-outline">
+                    {{ form_widget(form.CODEPAYS, {
+                        'attr': {
+                            'class': 'form-control',
+                            'placeholder': 'Code pays'
+                        }
+                    }) }}
+                    {{ form_label(form.CODEPAYS) }}
+                </div>
+
+                <div class="form-floating form-floating-outline mt-4">
+                    {{ form_widget(form.LIBPAYS, {
+                        'attr': {
+                            'class': 'form-control',
+                            'placeholder': 'Libellé pays'
+                        }
+                    }) }}
+                    {{ form_label(form.LIBPAYS) }}
+                </div>
+
+                <div class="form-floating form-floating-outline mt-4">
+                    {{ form_widget(form.CONTINENT, {
+                        'attr': {
+                            'class': 'form-control',
+                            'placeholder': 'Continent'
+                        }
+                    }) }}
+                    {{ form_label(form.CONTINENT) }}
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-floating form-floating-outline">
+                    {{ form_widget(form.PLACE, {
+                        'attr': {
+                            'class': 'form-control',
+                            'placeholder': 'Place'
+                        }
+                    }) }}
+                    {{ form_label(form.PLACE) }}
+                </div>
+
+                <div class="form-floating form-floating-outline mt-4">
+                    {{ form_widget(form.ORDRE, {
+                        'attr': {
+                            'class': 'form-control',
+                            'placeholder': 'Ordre'
+                        }
+                    }) }}
+                    {{ form_label(form.ORDRE) }}
+                </div>
+
+                              <div class="form-floating form-floating-outline mt-4">
+                    {{ form_widget(form.NATURE, {
+                        'attr': {
+                            'class': 'form-control',
+                            'placeholder': 'NATURE'
+                        }
+                    }) }}
+                    {{ form_label(form.NATURE) }}
+                </div>
+
+            </div>
+        </div>
+
+        <div class="pt-4 d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary me-3">{{ button_label|default('Enregistrer') }}</button>
+            <a href="{{ path('app_pays_index') }}" class="btn btn-label-secondary">Annuler</a>
+        </div>
+    </div>
+    {{ form_end(form) }}
+</div>

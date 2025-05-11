@@ -12,12 +12,15 @@ class PaysType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('CODEPAYS')
-            ->add('LIBPAYS')
-            ->add('PLACE')
-            ->add('ORDRE')
-            ->add('NATURE')
-            ->add('CONTINENT')
+
+            ->add('CODEPAYS', null, [
+                'label' => 'Code pays'
+            ])
+            ->add('LIBPAYS', null, ['label' => 'Libellé'])
+            ->add('PLACE', null, ['label' => 'Position'])
+            ->add('ORDRE', null, ['label' => 'Ordre'])
+            ->add('NATURE', null,['label' => 'Nature'])
+            ->add('CONTINENT', null, ['label' => 'Continent']);
         ;
     }
 
