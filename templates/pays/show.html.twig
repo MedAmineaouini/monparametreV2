@@ -6,10 +6,10 @@
   <!-- Contenu spécifique au dashboard -->
   <div class="container-xxl flex-grow-1 container-p-y">
     {% block dashboard_content %}
-    
+
                 <div class="card mb-6">
                     <div class="card-header">
-                      <h5 class="card-title m-0">Shipping activity</h5>
+                      <h5 class="card-title m-0">Détails Pays</h5>
                     </div>
                     <div class="card-body pt-1">
                       <ul class="timeline pb-0 mb-0">
@@ -88,9 +88,9 @@
                   </div>
 
 
-    <a href="{{ path('app_pays_index') }}">back to list</a>
+    <a href="{{ path('app_pays_index') }}">retourner vers liste</a>
 
-    <a href="{{ path('app_pays_edit', {'IDPAYS': pay.IDPAYS}) }}">edit</a>
+    <a href="{{ path('app_pays_edit', {'IDPAYS': pay.IDPAYS}) }}">Mettre à jour</a>
 
     {{ include('pays/_delete_form.html.twig') }}
     {% endblock %}

@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Utilisateurs index{% endblock %}
+{% block title %}Utilisateurs{% endblock %}
 
 {% block content %}
 <div class="container-xxl flex-grow-1 container-p-y">
-    <h1>Utilisateur index</h1>
+    <h1>Utilisateur</h1>
 
                 <div class="card">
                 <h5 class="card-header pb-0 text-md-start text-center"> Utilisateur index </h5>
@@ -35,8 +35,8 @@
                         <td>{{ utilisateur.HEUREF ? utilisateur.HEUREF|date('Y-m-d H:i:s') : '' }}</td>
                         <td>{{ utilisateur.ENCOURS ? 'Yes' : 'No' }}</td>
                         <td>
-                            <a href="{{ path('app_utilisateur_show', {'SEQUTIL': utilisateur.SEQUTIL}) }}">show</a>
-                            <a href="{{ path('app_utilisateur_edit', {'SEQUTIL': utilisateur.SEQUTIL}) }}">edit</a>
+                        <a class="btn btn-sm btn-outline-primary" href="{{ path('app_utilisateur_show', {'SEQUTIL': utilisateur.SEQUTIL}) }}">Détail</a>
+                        <a class="btn btn-sm btn-outline-secondary" href="{{ path('app_utilisateur_edit', {'SEQUTIL': utilisateur.SEQUTIL}) }}">Modifier</a>
                         </td>
                         </tr>
                         {% else %}
@@ -49,7 +49,7 @@
                 </div>
               </div>
 
-    <a href="{{ path('app_utilisateur_new') }}" class="btn btn-success mt-3">Create new</a>
+    <a href="{{ path('app_utilisateur_new') }}" class="btn btn-success mt-3">Créer un nouveau utilisateur</a>
 </div>
 {% endblock %}
 

@@ -4,6 +4,10 @@ namespace App\Form;
 
 use App\Entity\Utilisateur;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,24 +16,43 @@ class UtilisateurType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('MAJ')
+            ->add('MAJ', DateType::class, [
+                'widget' => 'single_text',
+                'html5' => false,
+                'attr' => ['class' => 'form-control flatpickr-date']
+            ])
             ->add('CODEUTIL')
             ->add('NOMUTIL')
             ->add('PROFILUTIL')
-            ->add('MDP')
+            ->add('MDP', PasswordType::class)
             ->add('BADGE')
             ->add('FLAG1')
             ->add('FLAG2')
-            ->add('DATEDEB')
-            ->add('HEURED')
-            ->add('DATEFIN')
-            ->add('HEUREF')
+            ->add('DATEDEB', DateType::class, [
+                'widget' => 'single_text',
+                'html5' => false,
+                'attr' => ['class' => 'form-control flatpickr-date']
+            ])
+            ->add('HEURED', TimeType::class, [
+                'widget' => 'single_text',
+                'html5' => false,
+                'attr' => ['class' => 'form-control flatpickr-time']
+            ])
+            ->add('DATEFIN', DateType::class, [
+                'widget' => 'single_text',
+                'html5' => false,
+                'attr' => ['class' => 'form-control flatpickr-date']
+            ])
+            ->add('HEUREF', TimeType::class, [
+                'widget' => 'single_text',
+                'html5' => false,
+                'attr' => ['class' => 'form-control flatpickr-time']
+            ])
             ->add('ENCOURS')
             ->add('SEQNIVEAU')
-            ->add('emailutil')
+            ->add('emailutil', EmailType::class)
             ->add('WEBLOGIN')
-            ->add('WEBMDP')
-        ;
+            ->add('WEBMDP', PasswordType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

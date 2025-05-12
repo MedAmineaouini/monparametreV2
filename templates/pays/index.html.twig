@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Pays index{% endblock %}
+{% block title %}Pays{% endblock %}
 
 {% block content %}
 <div class="container-xxl flex-grow-1 container-p-y">
-    <h1>Pays index</h1>
+    <h1>Pays</h1>
 
                     <div class="card">
                 <h5 class="card-header pb-0 text-md-start text-center">Column Search</h5>
@@ -33,8 +33,8 @@
                     <td>{{ pay.NATURE }}</td>
                     <td>{{ pay.CONTINENT }}</td>
                     <td>
-                        <a class="btn btn-sm btn-outline-primary" href="{{ path('app_pays_show', {'IDPAYS': pay.IDPAYS}) }}">Show</a>
-                        <a class="btn btn-sm btn-outline-secondary" href="{{ path('app_pays_edit', {'IDPAYS': pay.IDPAYS}) }}">Edit</a>
+                        <a class="btn btn-sm btn-outline-primary" href="{{ path('app_pays_show', {'IDPAYS': pay.IDPAYS}) }}">Détail</a>
+                        <a class="btn btn-sm btn-outline-secondary" href="{{ path('app_pays_edit', {'IDPAYS': pay.IDPAYS}) }}">Mettre à jour</a>
                     </td>
                         </tr>
                     {% else %}
@@ -47,7 +47,7 @@
                 </div>
               </div>
 
-    <a href="{{ path('app_pays_new') }}" class="btn btn-success mt-3">Create new</a>
+    <a href="{{ path('app_pays_new') }}" class="btn btn-success mt-3">Créer un nouveau pays</a>
 </div>
 {% endblock %}
 
