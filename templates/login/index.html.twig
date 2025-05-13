@@ -38,10 +38,10 @@
                   <input
                     type="text"
                     class="form-control"
-                    id="username"
-                    name="nom"
+                    id="codeutil"
+                    name="codeutil"
                     value="{{ last_username }}"
-                    placeholder="Enter votre nom"
+                    placeholder="Enter votre codeutil"
                     required
                     autofocus>
                 </div>
@@ -67,7 +67,7 @@
               </form>
 
               <div class="text-center">
-                <p class="mb-0">Non inscrit ? <a href="{{ path('app_register') }}">S'inscrire</a></p>
+                <p class="mb-0">Non inscrit ? <a href="{{ path('app_parametre_index') }}">S'inscrire</a></p>
               </div>
             </div>
           </div>
@@ -75,3 +75,7 @@
       </div>
     </div>
 {% endblock %}
+
+
+
+

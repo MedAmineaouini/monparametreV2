@@ -1,13 +1,27 @@
+{# templates/utilisateur/edit.html.twig #}
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Modifier Utilisateur{% endblock %}
 
-{% block body %}
-    <h1>Modifier Utilisateur</h1>
+{% block content %}
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4">
+        <span class="text-muted fw-light">Utilisateur /</span> Modification
+    </h4>
 
-    {{ include('utilisateur/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
-
-    <a href="{{ path('app_utilisateur_index') }}">retourner vers liste</a>
-
-    {{ include('utilisateur/_delete_form.html.twig') }}
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5>Modifier le Utilisateur</h5>
+            <div class="d-flex gap-2">
+                <a href="{{ path('app_utilisateur_index') }}" class="btn btn-label-secondary">
+                    <i class="icon-base bx bx-arrow-back"></i> Retour
+                </a>
+                {{ include('utilisateur/_delete_form.html.twig') }}
+            </div>
+        </div>
+        
+        {{ include('utilisateur/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+    </div>
+</div>
 {% endblock %}

@@ -1,8 +1,11 @@
+{# templates/pays/_form.html.twig #}
+
 <div class="card mb-4">
     <h5 class="card-header">Formulaire Pays</h5>
     {{ form_start(form) }}
     <div class="card-body">
-        <div class="row g-4 col-md-12">
+        <div class="row g-4">
+
             <div class="col-md-6">
                 <div class="form-floating form-floating-outline">
                     {{ form_widget(form.CODEPAYS, {
@@ -35,6 +38,7 @@
                 </div>
             </div>
 
+
             <div class="col-md-6">
                 <div class="form-floating form-floating-outline">
                     {{ form_widget(form.PLACE, {
@@ -56,7 +60,8 @@
                     {{ form_label(form.ORDRE) }}
                 </div>
 
-                              <div class="form-floating form-floating-outline mt-4">
+
+                <div class="form-floating form-floating-outline mt-4">
                     {{ form_widget(form.NATURE, {
                         'attr': {
                             'class': 'form-control',
@@ -65,7 +70,6 @@
                     }) }}
                     {{ form_label(form.NATURE) }}
                 </div>
-
             </div>
         </div>
 

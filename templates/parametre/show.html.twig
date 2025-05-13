@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Parametre{% endblock %}
+{% block title %}Paramétre{% endblock %}
 
-{% block body %}
-    <h1>Parametre</h1>
+{% block content %}
 
-    <table class="table">
+  <div class="container-xxl flex-grow-1 container-p-y">
+    {% block dashboard_content %}
+  <div class="card mb-12">
+    <table class="table m-10">
         <tbody>
             <tr>
                 <th>Seqparam</th>
@@ -94,9 +96,12 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_parametre_index') }}">back to list</a>
-
-    <a href="{{ path('app_parametre_edit', {'seqparam': parametre.seqparam}) }}">edit</a>
-
-    {{ include('parametre/_delete_form.html.twig') }}
+    <div class="d-flex justify-content-between m-10">
+        <a href="{{ path('app_parametre_index') }}" class="btn btn-secondary">Annuler</a>
+        <a href="{{ path('app_parametre_edit', {'seqparam': parametre.seqparam}) }}" class="btn btn-primary">Modifier</a>
+        {{ include('parametre/_delete_form.html.twig') }}
+    </div>
+    {% endblock %}
+  </div>
+  </div>
 {% endblock %}

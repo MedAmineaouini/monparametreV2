@@ -1,4 +1,130 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+{# templates/parametre/_form.html.twig #}
+
+<div class="card mb-4">
+    <h5 class="card-header">Formulaire Paramètre</h5>
+    {{ form_start(form) }}
+    <div class="card-body">
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="form-floating form-floating-outline">
+                    {{ form_widget(form.entete1, { attr: { class: 'form-control', placeholder: 'Entête 1' } }) }}
+                    {{ form_label(form.entete1) }}
+                </div>
+
+                <div class="form-floating form-floating-outline mt-4">
+                    {{ form_widget(form.entete2, { attr: { class: 'form-control', placeholder: 'Entête 2' } }) }}
+                    {{ form_label(form.entete2) }}
+                </div>
+
+                <div class="form-floating form-floating-outline mt-4">
+                    {{ form_widget(form.adresse, { attr: { class: 'form-control', placeholder: 'Adresse' } }) }}
+                    {{ form_label(form.adresse) }}
+                </div>
+
+                <div class="form-floating form-floating-outline mt-4">
+                    {{ form_widget(form.cp, { attr: { class: 'form-control', placeholder: 'Code postal' } }) }}
+                    {{ form_label(form.cp) }}
+                </div>
+
+                <div class="form-floating form-floating-outline mt-4">
+                    {{ form_widget(form.ville, { attr: { class: 'form-control', placeholder: 'Ville' } }) }}
+                    {{ form_label(form.ville) }}
+                </div>
+
+                <div class="form-floating form-floating-outline mt-4">
+                    {{ form_widget(form.pays, { attr: { class: 'form-control', placeholder: 'Pays' } }) }}
+                    {{ form_label(form.pays) }}
+                </div>
+
+                <div class="form-floating form-floating-outline mt-4">
+                    {{ form_widget(form.tel, { attr: { class: 'form-control', placeholder: 'Téléphone' } }) }}
+                    {{ form_label(form.tel) }}
+                </div>
+
+                <div class="form-floating form-floating-outline mt-4">
+                    {{ form_widget(form.fax, { attr: { class: 'form-control', placeholder: 'Fax' } }) }}
+                    {{ form_label(form.fax) }}
+                </div>
+            </div>
+
+
+            <div class="col-md-6">
+                <div class="form-floating form-floating-outline">
+                    {{ form_widget(form.email, { attr: { class: 'form-control', placeholder: 'Email' } }) }}
+                    {{ form_label(form.email) }}
+                </div>
+
+                <div class="form-floating form-floating-outline mt-4">
+                    {{ form_widget(form.seqresa, { attr: { class: 'form-control', placeholder: 'SEQRESA' } }) }}
+                    {{ form_label(form.seqresa) }}
+                </div>
+
+                <div class="form-floating form-floating-outline mt-4">
+                    {{ form_widget(form.contactfr, { attr: { class: 'form-control', placeholder: 'Contact Français' } }) }}
+                    {{ form_label(form.contactfr) }}
+                </div>
+
+                <div class="form-floating form-floating-outline mt-4">
+                    {{ form_widget(form.contact, { attr: { class: 'form-control', placeholder: 'Contact' } }) }}
+                    {{ form_label(form.contact) }}
+                </div>
+
+                <div class="form-floating form-floating-outline mt-4">
+                    {{ form_widget(form.euro, { attr: { class: 'form-control', placeholder: 'Euro' } }) }}
+                    {{ form_label(form.euro) }}
+                </div>
+
+                <div class="form-floating form-floating-outline mt-4">
+                    {{ form_widget(form.expediteur, { attr: { class: 'form-control', placeholder: 'Expéditeur' } }) }}
+                    {{ form_label(form.expediteur) }}
+                </div>
+
+                <div class="form-floating form-floating-outline mt-4">
+                    {{ form_widget(form.alerte, { attr: { class: 'form-control', placeholder: 'Alerte' } }) }}
+                    {{ form_label(form.alerte) }}
+                </div>
+
+                <div class="form-floating form-floating-outline mt-4">
+                    {{ form_widget(form.btobvol, { attr: { class: 'form-control', placeholder: 'BtoB Vol' } }) }}
+                    {{ form_label(form.btobvol) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mt-4">
+            <div class="col-md-3">
+                <div class="form-floating form-floating-outline">
+                    {{ form_widget(form.tel2, { attr: { class: 'form-control', placeholder: 'Téléphone 2' } }) }}
+                    {{ form_label(form.tel2) }}
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-floating form-floating-outline">
+                    {{ form_widget(form.tel3, { attr: { class: 'form-control', placeholder: 'Téléphone 3' } }) }}
+                    {{ form_label(form.tel3) }}
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-floating form-floating-outline">
+                    {{ form_widget(form.tel4, { attr: { class: 'form-control', placeholder: 'Téléphone 4' } }) }}
+                    {{ form_label(form.tel4) }}
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-floating form-floating-outline">
+                    {{ form_widget(form.marge, { attr: { class: 'form-control', placeholder: 'Marge' } }) }}
+                    {{ form_label(form.marge) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="pt-4 d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary me-3">{{ button_label|default('Enregistrer') }}</button>
+            <a href="{{ path('app_parametre_index') }}" class="btn btn-label-secondary">Annuler</a>
+        </div>
+    </div>
+    {{ form_end(form) }}
+</div>

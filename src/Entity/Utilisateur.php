@@ -3,10 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: 'App\Repository\UtilisateurRepository')]
 #[ORM\Table(name: 'UTILISATEUR')]
-class Utilisateur
+class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -255,5 +258,33 @@ class Utilisateur
         $this->WEBMDP = $WEBMDP;
         return $this;
     }
-}
+    // Required methods from UserInterface
+    public function getUserIdentifier(): string
+    {
+        return $this->CODEUTIL;
+    }
 
+    public function getRoles(): array
+    {
+        // Return the roles assigned to the user
+        // Make sure you have roles assigned in your database, or return an empty array if none
+        return $this->roles ?? ['ROLE_USER'];
+    }
+
+    // Required methods from PasswordAuthenticatedUserInterface
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+        return $this;
+    }
+
+    public function eraseCredentials(): void
+    {
+        // Clear any sensitive data
+    }
+}

@@ -1,88 +1,33 @@
 <div class="card mb-4">
-  <h5 class="card-header">Formulaire Utilisateurs</h5>
-  {{ form_start(form) }}
-  <div class="card-body">
-    <div class="row g-4">
+    <h5 class="card-header">Formulaire Utilisateur</h5>
+    {{ form_start(form) }}
+    <div class="card-body">
+        <div class="row g-4">
 
-      <!-- Date de fin -->
-      <div class="col-md-6">
-        <label for="form_DATEFIN" class="form-label">Date fin</label>
-        <input type="text"
-               class="form-control flatpickr"
-               id="form_DATEFIN"
-               name="{{ form.DATEFIN.vars.full_name }}"
-               value="{{ form.DATEFIN.vars.value ? form.DATEFIN.vars.value|date('Y-m-d') : '' }}"
-               placeholder="YYYY-MM-DD" />
-        {{ form_errors(form.DATEFIN) }}
-      </div>
+            <div class="col-md-6">
+                {% for field in [form.MAJ, form.CODEUTIL, form.NOMUTIL, form.PROFILUTIL, form.MDP, form.BADGE, form.FLAG1, form.FLAG2] %}
+                    <div class="form-floating form-floating-outline{% if not loop.first %} mt-4{% endif %}">
+                        {{ form_widget(field, { 'attr': { 'class': 'form-control', 'placeholder': field.vars.label } }) }}
+                        {{ form_label(field) }}
+                    </div>
+                {% endfor %}
+            </div>
 
-      <!-- Champs CODEUTIL, NOMUTIL, ... -->
-      {% for field in ['CODEUTIL', 'NOMUTIL', 'PROFILUTIL', 'MDP', 'BADGE', 'FLAG1'] %}
-        <div class="col-md-6">
-          <div class="form-floating form-floating-outline">
-            {{ form_widget(attribute(form, field), {
-              'attr': { 'class': 'form-control', 'placeholder': field }
-            }) }}
-            {{ form_label(attribute(form, field)) }}
-          </div>
+            <div class="col-md-6">
+                {% for field in [form.DATEDEB, form.HEURED, form.DATEFIN, form.HEUREF, form.ENCOURS, form.SEQNIVEAU, form.emailutil, form.WEBLOGIN, form.WEBMDP] %}
+                    <div class="form-floating form-floating-outline{% if not loop.first %} mt-4{% endif %}">
+                        {{ form_widget(field, { 'attr': { 'class': 'form-control', 'placeholder': field.vars.label } }) }}
+                        {{ form_label(field) }}
+                    </div>
+                {% endfor %}
+            </div>
+
         </div>
-      {% endfor %}
 
-      <!-- Heure début -->
-      <div class="col-md-6">
-        <label for="form_HEURED" class="form-label">Heure début</label>
-        <input type="time"
-               class="form-control"
-               id="form_HEURED"
-               name="{{ form.HEURED.vars.full_name }}"
-               value="{{ form.HEURED.vars.value }}"
-               placeholder="HH:MM" />
-        {{ form_errors(form.HEURED) }}
-      </div>
-
-      <!-- Heure fin -->
-      <div class="col-md-6">
-        <label for="form_HEUREF" class="form-label">Heure fin</label>
-        <input type="time"
-               class="form-control"
-               id="form_HEUREF"
-               name="{{ form.HEUREF.vars.full_name }}"
-               value="{{ form.HEUREF.vars.value }}"
-               placeholder="HH:MM" />
-        {{ form_errors(form.HEUREF) }}
-      </div>
-
-      <!-- FLAG2 -->
-      <div class="col-md-6">
-        <div class="form-floating form-floating-outline">
-          {{ form_widget(form.FLAG2, {
-            'attr': { 'class': 'form-control', 'placeholder': 'FLAG2' }
-          }) }}
-          {{ form_label(form.FLAG2) }}
+        <div class="pt-4 d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary me-3">{{ button_label|default('Enregistrer') }}</button>
+            <a href="{{ path('app_utilisateur_index') }}" class="btn btn-label-secondary">Annuler</a>
         </div>
-      </div>
-
-      <!-- Autres champs -->
-      {% for field in ['ENCOURS', 'SEQNIVEAU', 'emailutil', 'WEBLOGIN', 'WEBMDP'] %}
-        <div class="col-md-6">
-          <div class="form-floating form-floating-outline">
-            {{ form_widget(attribute(form, field), {
-              'attr': { 'class': 'form-control', 'placeholder': field }
-            }) }}
-            {{ form_label(attribute(form, field)) }}
-          </div>
-        </div>
-      {% endfor %}
-
     </div>
-
-    <!-- Boutons -->
-    <div class="pt-4 d-flex justify-content-end">
-      <button type="submit" class="btn btn-primary me-3">
-        {{ button_label|default('Enregistrer') }}
-      </button>
-      <a href="{{ path('app_utilisateur_index') }}" class="btn btn-label-secondary">Annuler</a>
-    </div>
-  </div>
-  {{ form_end(form) }}
+    {{ form_end(form) }}
 </div>

@@ -1,11 +1,14 @@
+
 {% extends 'base.html.twig' %}
 
-{% block title %}New Parametre{% endblock %}
+{% block title %}Nouveau Parametre{% endblock %}
 
-{% block body %}
-    <h1>Create new Parametre</h1>
-
-    {{ include('parametre/_form.html.twig') }}
-
-    <a href="{{ path('app_parametre_index') }}">back to list</a>
+{% block content %}
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4">
+        <span class="text-muted fw-light">Parametre /</span> Création
+    </h4>
+    
+    {% include 'parametre/_form.html.twig' %}
+</div>
 {% endblock %}
