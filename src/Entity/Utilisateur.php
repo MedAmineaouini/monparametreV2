@@ -95,7 +95,11 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->SEQUTIL;
     }
-
+    public function setSEQUTIL(?int $SEQUTIL): self
+    {
+        $this->SEQUTIL = $SEQUTIL;
+        return $this;
+    }
     public function getMAJ(): \DateTimeInterface
     {
         return $this->MAJ;
