@@ -23,6 +23,7 @@ class UtilisateurController extends AbstractController
     }
 
     #[Route('/new', name: 'app_utilisateur_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_utilisateur_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $utilisateur = new Utilisateur();
@@ -30,6 +31,10 @@ class UtilisateurController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Aucune initialisation supplémentaire n'est nécessaire ici
+            // Vous pouvez personnaliser les valeurs si nécessaire, comme :
+//            $utilisateur->setCODEUTIL('CustomCode');  // Exemple d'override
+            // Persister l'entité
             $entityManager->persist($utilisateur);
             $entityManager->flush();
 
@@ -41,6 +46,8 @@ class UtilisateurController extends AbstractController
             'form' => $form,
         ]);
     }
+
+
 
     #[Route('/{SEQUTIL}', name: 'app_utilisateur_show', methods: ['GET'])]
     public function show(Utilisateur $utilisateur): Response

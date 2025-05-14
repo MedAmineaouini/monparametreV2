@@ -1,13 +1,16 @@
-{% extends 'base.html.twig' %}
+{% extends 'base2.html.twig' %}
 
 {% block title %}Nouveau Utilisateur{% endblock %}
 
-{% block content %}
-<div class="container-xxl flex-grow-1 container-p-y">
-    <h4 class="fw-bold py-3 mb-4">
-        <span class="text-muted fw-light">Créer un nouvel utilisateur /</span> Création
-    </h4>
-    
-    {% include 'utilisateur/_form.html.twig' %}
-</div>
+{% block body %}
+    <div class="card mb-4 shadow-sm small">
+        <div class="card-header text-white py-3">
+            <h5 class="card-title mb-0">
+                <i class="bx bx-user me-2"></i>Ajout d'un utilisateur
+            </h5>
+        </div>
+<hr>
+
+        {% include 'utilisateur/_form.html.twig' %}
+    </div>
 {% endblock %}

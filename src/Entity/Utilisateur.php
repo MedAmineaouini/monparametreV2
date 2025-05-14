@@ -66,6 +66,30 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 10, name: 'WEBMDP')]
     private string $WEBMDP;
+    public function __construct()
+    {
+        // Initialisation de la propriété MAJ avec la date actuelle par défaut
+        $this->MAJ = new \DateTime();  // Valeur par défaut à la date et l'heure actuelles
+
+        // Initialisation des propriétés qui doivent avoir des valeurs par défaut
+        $this->CODEUTIL = ' ';
+        $this->NOMUTIL = ' ';
+        $this->PROFILUTIL = ' ';
+        $this->MDP = ' ';
+        $this->BADGE = ' ';
+        $this->FLAG1 = false;
+        $this->FLAG2 = false;
+        $this->MAJ =    \DateTime::createFromFormat('d/m/Y', '01/01/1900');;
+        $this->DATEDEB =\DateTime::createFromFormat('d/m/Y', '01/01/1900');;
+        $this->HEURED = \DateTime::createFromFormat('d/m/Y', '01/01/1900');;
+        $this->DATEFIN =\DateTime::createFromFormat('d/m/Y', '01/01/1900');;
+        $this->HEUREF = \DateTime::createFromFormat('d/m/Y', '01/01/1900');;
+        $this->ENCOURS = false;
+        $this->SEQNIVEAU = 1;
+        $this->emailutil = '';
+        $this->WEBLOGIN = ' ';
+        $this->WEBMDP = ' ';
+    }
 
     public function getSEQUTIL(): ?int
     {

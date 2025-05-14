@@ -1,33 +1,90 @@
-<div class="card mb-4">
-    <h5 class="card-header">Formulaire Utilisateur</h5>
-    {{ form_start(form) }}
-    <div class="card-body">
-        <div class="row g-4">
+<div class="card-body" style="font-size: 12px">
+    {{ form_start(form, {'attr': {'class': 'browser-default-validation'}}) }}
 
-            <div class="col-md-6">
-                {% for field in [form.MAJ, form.CODEUTIL, form.NOMUTIL, form.PROFILUTIL, form.MDP, form.BADGE, form.FLAG1, form.FLAG2] %}
-                    <div class="form-floating form-floating-outline{% if not loop.first %} mt-4{% endif %}">
-                        {{ form_widget(field, { 'attr': { 'class': 'form-control', 'placeholder': field.vars.label } }) }}
-                        {{ form_label(field) }}
-                    </div>
-                {% endfor %}
-            </div>
-
-            <div class="col-md-6">
-                {% for field in [form.DATEDEB, form.HEURED, form.DATEFIN, form.HEUREF, form.ENCOURS, form.SEQNIVEAU, form.emailutil, form.WEBLOGIN, form.WEBMDP] %}
-                    <div class="form-floating form-floating-outline{% if not loop.first %} mt-4{% endif %}">
-                        {{ form_widget(field, { 'attr': { 'class': 'form-control', 'placeholder': field.vars.label } }) }}
-                        {{ form_label(field) }}
-                    </div>
-                {% endfor %}
-            </div>
-
+    <!-- Première ligne -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-1">
+            {{ form_label(form.SEQUTIL, 'N°', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.SEQUTIL, {'attr': {'class': 'form-control bg-light', 'readonly': 'readonly'}}) }}
         </div>
 
-        <div class="pt-4 d-flex justify-content-end">
-            <button type="submit" class="btn btn-primary me-3">{{ button_label|default('Enregistrer') }}</button>
-            <a href="{{ path('app_utilisateur_index') }}" class="btn btn-label-secondary">Annuler</a>
+        <div class="col-md-2">
+            {{ form_label(form.CODEUTIL, 'Code utilisateur', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.CODEUTIL, {'attr': {'class': 'form-control', 'placeholder': 'UTIL001'}}) }}
+        </div>
+
+        <div class="col-md-3">
+            {{ form_label(form.NOMUTIL, 'Nom Utilisateur', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.NOMUTIL, {'attr': {'class': 'form-control', 'placeholder': 'Prénom Nom'}}) }}
+        </div>
+
+        <div class="col-md-3">
+            {{ form_label(form.MDP, 'Mot de passe', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            <div class="input-group">
+                {{ form_widget(form.MDP, {'attr': {'class': 'form-control', 'id': 'mdp'}}) }}
+                <button type="button" class="btn btn-outline-secondary toggle-password" data-target="mdp">
+                    <i class="bx bx-show" id="icon-mdp"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="col-md-2 d-flex align-items-center mt-7">
+            <div class="form-check form-switch">
+                {{ form_widget(form.ENCOURS, {'attr': {'class': 'form-check-input', 'role': 'switch'}}) }}
+                {{ form_label(form.ENCOURS, 'Utilisateur en cours', {'label_attr': {'class': 'form-check-label fw-semibold'}}) }}
+            </div>
         </div>
     </div>
+
+    <!-- Deuxième ligne -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-2">
+            {{ form_label(form.SEQNIVEAU, 'Niveau', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.SEQNIVEAU, {'attr': {'class': 'form-select'}}) }}
+        </div>
+
+        <div class="col-md-3">
+            {{ form_label(form.emailutil, 'Email', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.emailutil, {'attr': {'class': 'form-control', 'placeholder': 'email@domaine.com'}}) }}
+        </div>
+
+        <div class="col-md-3">
+            {{ form_label(form.WEBLOGIN, 'Login web', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.WEBLOGIN, {'attr': {'class': 'form-control', 'placeholder': 'login_web'}}) }}
+        </div>
+
+        <div class="col-md-3">
+            {{ form_label(form.WEBMDP, 'Mot de passe web', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            <div class="input-group">
+                {{ form_widget(form.WEBMDP, {'attr': {'class': 'form-control', 'id': 'webmdp'}}) }}
+                <button type="button" class="btn btn-outline-secondary toggle-password" data-target="webmdp">
+                    <i class="bx bx-show" id="icon-webmdp"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Boutons d'action -->
+    <div class="pt-3 border-top text-end">
+        <button type="submit" class="btn btn-primary px-4">
+            <i class="bx bx-save me-2"></i>{{ button_label|default('Enregistrer') }}
+        </button>
+        <a href="{{ path('app_utilisateur_index') }}" class="btn btn-outline-secondary px-4">
+            <i class="bx bx-x me-2"></i>Annuler
+        </a>
+    </div>
+
     {{ form_end(form) }}
 </div>
+<script>
+    document.querySelectorAll('.toggle-password').forEach(button => {
+        button.addEventListener('click', function() {
+            const input = this.closest('.input-group').querySelector('input');
+            const icon = this.querySelector('i');
+            const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+            input.setAttribute('type', type);
+            icon.classList.toggle('bx-hide');
+            icon.classList.toggle('bx-show');
+        });
+    });
+</script>
