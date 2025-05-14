@@ -1,25 +1,11 @@
 doctrine:
     dbal:
-        # Configuration de la connexion à la base de données
-        default_connection: default
-        connections:
-            default:
-                # Configuration spécifique à SQL Server
-                driver: 'pdo_sqlsrv'
-                # Hôte du serveur SQL Server
-                host: '5.196.92.101'
-                # Port (par défaut : 1433)
-                port: '1433'
-                # Nom de la base de données
-                dbname: 'RFT_V1'
-                # Nom d'utilisateur
-                user: 'sa'
-                # Mot de passe
-                password: '@Serv+sol24+#05'
-                # Options supplémentaires
-                charset: 'UTF-8'
-                options:
-                    TrustServerCertificate: true
+        driver: pdo_sqlsrv
+        url: '%env(DATABASE_URL)%'
+        server_version: SQLServer2022
+        charset: UTF-8
+        profiling_collect_backtrace: '%kernel.debug%'
+        use_savepoints: true
     orm:
         auto_generate_proxy_classes: true
         enable_lazy_ghost_objects: true
