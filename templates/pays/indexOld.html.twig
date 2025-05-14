@@ -1,0 +1,55 @@
+{% extends 'base2.html.twig' %}
+
+{% block title %}Pays{% endblock %}
+
+{% block content %}
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h1>Pays</h1>
+
+                    <div class="card">
+                <h5 class="card-header pb-0 text-md-start text-center">Column Search</h5>
+                <div class="card-datatable text-nowrap p-5">
+                  <table class="dt-column-search table table-bordered table-responsive">
+                    <thead>
+                      <tr>
+                        <th>IDPAYS</th>
+                        <th>CODEPAYS</th>
+                        <th>LIBPAYS</th>
+                        <th>PLACE</th>
+                        <th>ORDRE</th>
+                        <th>NATURE</th>
+                        <th>CONTINENT</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tfoot>
+                      {% for pay in pays %}
+                     <tr>
+                    <td>{{ pay.IDPAYS }}</td>
+                    <td>{{ pay.CODEPAYS }}</td>
+                    <td>{{ pay.LIBPAYS }}</td>
+                    <td>{{ pay.PLACE }}</td>
+                    <td>{{ pay.ORDRE }}</td>
+                    <td>{{ pay.NATURE }}</td>
+                    <td>{{ pay.CONTINENT }}</td>
+                    <td>
+                        <a class="btn btn-sm btn-outline-primary" href="{{ path('app_pays_show', {'IDPAYS': pay.IDPAYS}) }}">Détail</a>
+                        <a class="btn btn-sm btn-outline-secondary" href="{{ path('app_pays_edit', {'IDPAYS': pay.IDPAYS}) }}">Mettre à jour</a>
+                    </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="8" class="text-center">No records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+
+    <a href="{{ path('app_pays_new') }}" class="btn btn-success mt-3">Créer un nouveau pays</a>
+</div>
+{% endblock %}
+
+
+
