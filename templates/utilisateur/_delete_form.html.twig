@@ -1,4 +1,9 @@
-<form method="post" action="{{ path('app_utilisateur_delete', {'SEQUTIL': utilisateur.SEQUTIL}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisatur ?');">
+<form method="post"
+      action="{{ path('app_utilisateur_delete', {'SEQUTIL': utilisateur.SEQUTIL}) }}"
+      onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');"
+      style="display: inline;">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ utilisateur.SEQUTIL) }}">
-    <button class="btn">Supprimer</button>
+    <button type="submit" class="dropdown-item text-danger border-0 bg-transparent w-100 text-start">
+        <i class="icon-base bx bx-trash me-1"></i> Supprimer
+    </button>
 </form>

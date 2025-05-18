@@ -2,26 +2,18 @@
 
 {% extends 'base2.html.twig' %}
 
-{% block title %}Modifier Pays{% endblock %}
+{% block title %}RFT | Modification pays{% endblock %}
 
-{% block content %}
-<div class="container-xxl flex-grow-1 container-p-y">
-    <h4 class="fw-bold py-3 mb-4">
-        <span class="text-muted fw-light">Pays /</span> Modification
-    </h4>
-
-    <div class="card mb-4">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h5>Modifier le pays</h5>
-            <div class="d-flex gap-2">
-                <a href="{{ path('app_pays_index') }}" class="btn btn-label-secondary">
-                    <i class="icon-base bx bx-arrow-back"></i> Retour
-                </a>
-                {{ include('pays/_delete_form.html.twig') }}
-            </div>
-        </div>
+{% block body %}
+<div class="card mb-4 shadow-sm small">
+    <div class="card-header text-white py-3">
+        <h5 class="card-title mb-0">
+            <i class="bx bx-map me-2"></i>Détails du pays
+        </h5>
+    </div>
+    <hr>
         
-        {{ include('pays/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+        {{ include('pays/_form.html.twig', {'button_label': 'Enregistrer'}) }}
     </div>
 </div>
 {% endblock %}

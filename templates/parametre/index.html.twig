@@ -1,55 +1,17 @@
 {% extends 'base2.html.twig' %}
 
-{% block title %}Parametre{% endblock %}
+{% block title %}RFT | Configurations {% endblock %}
+{% block body %}
+    <div class="card shadow rounded-3 border-0 p-10">
+        <div class="card-header text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Configurations</h5>
+           
+        </div>
 
-{% block content %}
-<div class="container-xxl flex-grow-1 container-p-y">
-    <h1>Parametre</h1>
+{{ include('parametre/_form.html.twig', { form: form }) }}
+    </div>
 
-                <div class="card">
-                <h5 class="card-header pb-0 text-md-start text-center"> Parametre index </h5>
-                <div class="card-datatable text-nowrap p-5">
-                  <table class="dt-column-search table table-bordered table-responsive">
-                    <thead>
-                      <tr>
-                        <th>Entete1</th>
-                        <th>Entete2</th>
-                        <th>Adresse</th>
-                        <th>Cp</th>
-                        <th>Ville</th>
-                        <th>Pays</th>
-                        <th>Tel</th>
-                        <th>Fax</th>
-                        <th>actions</th>
-                      </tr>
-                    </thead>
-                    <tfoot>
-                      {% for parametre in parametres %}
-                     <tr>
-                        <td>{{ parametre.entete1 }}</td>
-                        <td>{{ parametre.entete2 }}</td>
-                        <td>{{ parametre.adresse }}</td>
-                        <td>{{ parametre.cp }}</td>
-                        <td>{{ parametre.ville }}</td>
-                        <td>{{ parametre.pays }}</td>
-                        <td>{{ parametre.tel }}</td>
-                        <td>{{ parametre.fax }}</td>
-
-                        <td>
-                        <a class="btn btn-sm btn-outline-primary" href="{{ path('app_parametre_show', {'seqparam': parametre.seqparam}) }}">Détail</a>
-                        <a class="btn btn-sm btn-outline-secondary" href="{{ path('app_parametre_edit', {'seqparam': parametre.seqparam}) }}">Modifier</a>
-                        </td>
-                        </tr>
-                        {% else %}
-                            <tr>
-                                <td colspan="8" class="text-center">No records found</td>
-                            </tr>
-                        {% endfor %}
-                    </tfoot>
-                  </table>
-                </div>
-              </div>
-
-    <a href="{{ path('app_parametre_new') }}" class="btn btn-success mt-3">Créer un nouveau parametre </a>
-</div>
 {% endblock %}
+
+
+

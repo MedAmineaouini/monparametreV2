@@ -74,6 +74,11 @@ private $tel4;
 #[ORM\Column(type: 'float', name: 'MARGE')]
 private $marge;
 
+public function __construct()
+{
+    $this->alerte = 1;
+}
+
     /**
      * @return mixed
      */
@@ -317,19 +322,15 @@ private $marge;
     /**
      * @return mixed
      */
-    public function getAlerte()
+    public function getAlerte(): bool
     {
         return $this->alerte;
     }
-
-    /**
-     * @param mixed $alerte
-     */
-    public function setAlerte($alerte): void
+    
+    public function setAlerte(bool $alerte): void
     {
         $this->alerte = $alerte;
     }
-
     /**
      * @return mixed
      */

@@ -14,6 +14,14 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/pays')]
 class PaysController extends AbstractController
 {
+
+    #[Route(path: '/pays/test/', name: 'app_pays_test')]
+    public function test(): Response
+    {
+        return $this->render('pays/test.html.twig');
+    }
+
+
     #[Route('/', name: 'app_pays_index', methods: ['GET'])]
     public function index(PaysRepository $paysRepository): Response
     {
