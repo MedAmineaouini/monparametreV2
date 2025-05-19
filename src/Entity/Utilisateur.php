@@ -286,6 +286,8 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         $this->WEBMDP = $WEBMDP;
         return $this;
     }
+    #[ORM\Column(type: 'string', name: 'roles')]
+    private string $roles = 'ROLE_USER';
     // Required methods from UserInterface
 //    public function getUserIdentifier(): string
 //    {

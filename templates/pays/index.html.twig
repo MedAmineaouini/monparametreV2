@@ -1,55 +1,61 @@
-{% extends 'base.html.twig' %}
+{% extends 'base2.html.twig' %}
 
-{% block title %}Pays{% endblock %}
-
-{% block content %}
-<div class="container-xxl flex-grow-1 container-p-y">
-    <h1>Pays</h1>
-
-                    <div class="card">
-                <h5 class="card-header pb-0 text-md-start text-center">Column Search</h5>
-                <div class="card-datatable text-nowrap p-5">
-                  <table class="dt-column-search table table-bordered table-responsive">
-                    <thead>
-                      <tr>
-                        <th>IDPAYS</th>
-                        <th>CODEPAYS</th>
-                        <th>LIBPAYS</th>
-                        <th>PLACE</th>
-                        <th>ORDRE</th>
-                        <th>NATURE</th>
-                        <th>CONTINENT</th>
+{% block title %}RFT | Listes Pays{% endblock %}
+{% block body %}
+    <div class="card shadow rounded-3 border-0">
+        <div class="card-header text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">📋  Listes des pays</h5>
+            <a href="{{ path('app_pays_new') }}" class="btn btn-success btn-sm">
+                <i class="bx bx-plus"></i> Nouveau pay
+            </a>
+        </div>
+<hr>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped align-middle small">
+                    <thead >
+                        <th>#</th>
+                        <th>Code pays</th>
+                        <th>Libellé</th>
+                        <th>Place</th>
+                         <th>NATURE</th>
                         <th>Actions</th>
-                      </tr>
                     </thead>
-                    <tfoot>
-                      {% for pay in pays %}
-                     <tr>
-                    <td>{{ pay.IDPAYS }}</td>
-                    <td>{{ pay.CODEPAYS }}</td>
-                    <td>{{ pay.LIBPAYS }}</td>
-                    <td>{{ pay.PLACE }}</td>
-                    <td>{{ pay.ORDRE }}</td>
-                    <td>{{ pay.NATURE }}</td>
-                    <td>{{ pay.CONTINENT }}</td>
-                    <td>
-                        <a class="btn btn-sm btn-outline-primary" href="{{ path('app_pays_show', {'IDPAYS': pay.IDPAYS}) }}">Détail</a>
-                        <a class="btn btn-sm btn-outline-secondary" href="{{ path('app_pays_edit', {'IDPAYS': pay.IDPAYS}) }}">Mettre à jour</a>
-                    </td>
+                    <tbody>
+                    {% for pay in pays %}
+                        <tr>
+                           <td>{{ pay.IDPAYS }}</td>
+                            <td>{{ pay.CODEPAYS }}</td>
+                            <td>{{ pay.LIBPAYS }}</td>
+                            <td>{{ pay.PLACE }}</td>
+                            <td>{{ pay.NATURE }}</td>
+                            </td>
+                            <td>
+                                <div class="dropdown">
+                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                            data-bs-toggle="dropdown">
+                                        <i class="icon-base bx bx-dots-vertical-rounded"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item"
+                                           href="{{ path('app_pays_edit', {'IDPAYS': pay.IDPAYS}) }}">
+                                            <i class="icon-base bx bx-edit-alt me-1"></i> Consulter / Modifier
+                                        </a>
+                                      
+                                         {{ include('pays/_delete_form.html.twig') }}
+                                    </div>
+                                </div>
+                            </td>
                         </tr>
                     {% else %}
                         <tr>
-                            <td colspan="8" class="text-center">No records found</td>
+                            <td colspan="7" class="text-center text-muted">Aucun pay trouvé.</td>
                         </tr>
                     {% endfor %}
-                    </tfoot>
-                  </table>
-                </div>
-              </div>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
-    <a href="{{ path('app_pays_new') }}" class="btn btn-success mt-3">Créer un nouveau pays</a>
-</div>
 {% endblock %}
-
-
-

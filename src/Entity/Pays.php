@@ -32,6 +32,34 @@ class Pays
     #[ORM\Column(name: 'CONTINENT', type: 'string', length: 10)]
     private ?string $CONTINENT = null;
 
+    #[ORM\Column(name: 'FORMALITE', type: 'text', nullable: true)]
+    private ?string $FORMALITE = null;
+
+    #[ORM\Column(name: 'OBSERVATION', type: 'text', nullable: true)]
+    private ?string $OBSERVATION = null;
+
+    public function getOBSERVATION(): ?string
+    {
+        return $this->OBSERVATION;
+    }
+
+    public function setOBSERVATION(?string $OBSERVATION): self
+    {
+        $this->OBSERVATION = $OBSERVATION;
+        return $this;
+    }
+
+    public function getFORMALITE(): ?string
+    {
+        return $this->FORMALITE;
+    }
+
+    public function setFORMALITE(?string $FORMALITE): self
+    {
+        $this->FORMALITE = $FORMALITE;
+        return $this;
+    }
+
     // Getters et setters
     public function getIDPAYS(): ?int { return $this->IDPAYS; }
 

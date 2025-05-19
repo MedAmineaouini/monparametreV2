@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class ParametreType extends AbstractType
 {
@@ -27,12 +28,15 @@ class ParametreType extends AbstractType
             ->add('contact')
             ->add('euro')
             ->add('expediteur')
-            ->add('alerte')
+            ->add('alerte', CheckboxType::class, [
+                'required' => false,
+                'label' => 'Activer les alertes',
+            ])
             ->add('btobvol')
-            ->add('tel2')
-            ->add('tel3')
-            ->add('tel4')
-            ->add('marge')
+            // ->add('tel2')
+            // ->add('tel3')
+            // ->add('tel4')
+            // ->add('marge')
         ;
     }
 

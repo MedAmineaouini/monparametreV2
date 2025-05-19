@@ -74,7 +74,7 @@
 
                 <li class="menu-item {% if app.request.get('_route') starts with 'app_parametre' %}active open{% endif %}">
                     <a href="{{ path('app_parametre_index') }}" class="menu-link">
-                        <div data-i18n="Configurations">Configurations</div>
+                        <i class="fa fa-cog me-2"></i>Configurations
                     </a>
                 </li>
                 <li class="menu-item {% if app.request.get('_route') starts with 'app_utilisateur' %}active open{% endif %}">
@@ -85,7 +85,7 @@
 
                 <li class="menu-item {% if app.request.get('_route') starts with 'app_pays' %}active open{% endif %}">
                     <a href="{{ path('app_pays_index') }}" class="menu-link">
-                        <div data-i18n="Pays">Pays</div>
+                        <i class="fa fa-map me-2"></i>Pays
                     </a>
                 </li>
             </ul>

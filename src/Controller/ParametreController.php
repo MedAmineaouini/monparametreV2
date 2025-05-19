@@ -14,13 +14,43 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/parametre')]
 class ParametreController extends AbstractController
 {
-    #[Route('/', name: 'app_parametre_index', methods: ['GET'])]
-    public function index(ParametreRepository $parametreRepository): Response
+    #[Route('/', name: 'app_parametre_index', methods: ['GET', 'POST'])]
+    public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
+        // Try to get existing parameters (assuming you only have one set)
+        $parametre = $entityManager->getRepository(Parametre::class)->findOneBy([]);
+
+        
+        if (!$parametre) {
+            $parametre = new Parametre();
+        }
+    
+        $form = $this->createForm(ParametreType::class, $parametre);
+        $form->handleRequest($request);
+
+        // if ($form->isSubmitted()) {
+        //     dd('Form is submitted');
+        // }
+        // if ($form->isSubmitted() && $form->isValid()) {
+        //     dd('Form is valid'); 
+        // }
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($parametre);
+            $entityManager->flush();
+    
+            return $this->redirectToRoute('app_parametre_index');
+        }
+    
         return $this->render('parametre/index.html.twig', [
-            'parametres' => $parametreRepository->findAll(),
+            'form' => $form->createView(),
+            'parametre' => $parametre, 
+            
         ]);
     }
+
+
+
 
     #[Route('/new', name: 'app_parametre_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response

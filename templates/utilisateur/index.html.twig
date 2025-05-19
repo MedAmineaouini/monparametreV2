@@ -48,9 +48,8 @@
                                            href="{{ path('app_utilisateur_edit', {'SEQUTIL': utilisateur.SEQUTIL}) }}">
                                             <i class="icon-base bx bx-edit-alt me-1"></i> Consulter / Modifier
                                         </a>
-                                        <a class="dropdown-item" href="{{ path('app_utilisateur_edit', {'SEQUTIL': utilisateur.SEQUTIL}) }}">
-                                            <i class="icon-base bx bx-trash me-1"></i> Supprimer
-                                        </a>
+                                      
+                                         {{ include('utilisateur/_delete_form.html.twig') }}
                                     </div>
                                 </div>
                             </td>
@@ -67,56 +66,6 @@
     </div>
 
 {% endblock %}
-{# {% block content %} #}
-{# <div class="container-xxl flex-grow-1 container-p-y"> #}
-{#    <h1>Utilisateur</h1> #}
-
-{#                <div class="card"> #}
-{#                <h5 class="card-header pb-0 text-md-start text-center"> Utilisateur index </h5> #}
-{#                <div class="card-datatable text-nowrap p-5"> #}
-{#                  <table class="dt-column-search table table-bordered table-responsive"> #}
-{#                    <thead> #}
-{#                      <tr> #}
-{#                        <th>SEQUTIL</th> #}
-{#                        <th>CODEUTIL</th> #}
-{#                        <th>NOMUTIL</th> #}
-{#                        <th>MDP</th> #}
-{#                        <th>DATEDEB</th> #}
-{#                        <th>DATEFIN</th> #}
-{#                        <th>HEUREF</th> #}
-{#                        <th>ENCOURS</th> #}
-{#                        <th>Actions</th> #}
-{#                      </tr> #}
-{#                    </thead> #}
-{#                    <tfoot> #}
-{#                      {% for utilisateur in utilisateurs %} #}
-{#                     <tr> #}
-{#                        <td>{{ utilisateur.SEQUTIL }}</td> #}
-{#                        <td>{{ utilisateur.CODEUTIL }}</td> #}
-{#                        <td>{{ utilisateur.NOMUTIL }}</td> #}
-{#                        <td>{{ utilisateur.MDP }}</td> #}
-{#                        <td>{{ utilisateur.DATEDEB ? utilisateur.DATEDEB|date('Y-m-d H:i:s') : '' }}</td> #}
-{#                        <td>{{ utilisateur.DATEFIN ? utilisateur.DATEFIN|date('Y-m-d H:i:s') : '' }}</td> #}
-{#                        <td>{{ utilisateur.HEUREF ? utilisateur.HEUREF|date('Y-m-d H:i:s') : '' }}</td> #}
-{#                        <td>{{ utilisateur.ENCOURS ? 'Yes' : 'No' }}</td> #}
-{#                        <td> #}
-{#                        <a class="btn btn-sm btn-outline-primary" href="{{ path('app_utilisateur_show', {'SEQUTIL': utilisateur.SEQUTIL}) }}">Détail</a> #}
-{#                        <a class="btn btn-sm btn-outline-secondary" href="{{ path('app_utilisateur_edit', {'SEQUTIL': utilisateur.SEQUTIL}) }}">Modifier</a> #}
-{#                        </td> #}
-{#                        </tr> #}
-{#                        {% else %} #}
-{#                            <tr> #}
-{#                                <td colspan="8" class="text-center">No records found</td> #}
-{#                            </tr> #}
-{#                        {% endfor %} #}
-{#                    </tfoot> #}
-{#                  </table> #}
-{#                </div> #}
-{#              </div> #}
-
-{#    <a href="{{ path('app_utilisateur_new') }}" class="btn btn-success mt-3">Créer un nouveau utilisateur</a> #}
-{# </div> #}
-{# {% endblock %} #}
 
 
 
