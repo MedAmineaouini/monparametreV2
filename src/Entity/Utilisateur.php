@@ -28,7 +28,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 25, name: 'PROFILUTIL')]
     private string $PROFILUTIL;
 
-    #[ORM\Column(type: 'string', length: 5, name: 'MDP')]
+    #[ORM\Column(type: 'string', length: 255, name: 'MDP')]
     private string $MDP;
 
     #[ORM\Column(type: 'string', length: 4, name: 'BADGE')]
@@ -287,32 +287,42 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
     // Required methods from UserInterface
-    public function getUserIdentifier(): string
-    {
-        return $this->CODEUTIL;
-    }
+//    public function getUserIdentifier(): string
+//    {
+//        return $this->CODEUTIL;
+//    }
 
     public function getRoles(): array
     {
-        // Return the roles assigned to the user
-        // Make sure you have roles assigned in your database, or return an empty array if none
-        return $this->roles ?? ['ROLE_USER'];
+        $roles = [];
+
+        if ($this->PROFILUTIL === 'ADMIN') {
+            $roles[] = 'ROLE_ADMIN';
+        } elseif ($this->PROFILUTIL === 'USER') {
+            $roles[] = 'ROLE_USER';
+        } else {
+            $roles[] = 'ROLE_USER'; // rôle par défaut
+        }
+
+        return array_unique($roles);
     }
+
 
     // Required methods from PasswordAuthenticatedUserInterface
-    public function getPassword(): string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
-        return $this;
-    }
+//
 
     public function eraseCredentials(): void
     {
         // Clear any sensitive data
     }
+    public function getUserIdentifier(): string
+    {
+        return $this->CODEUTIL; // Utiliser NOMUTIL comme identifiant
+    }
+
+    public function getPassword(): string
+    {
+        return $this->MDP;
+    }
+
 }

@@ -11,6 +11,10 @@ class UtilisateurRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Utilisateur::class);
     }
+    public function loadUserByIdentifier(string $identifier): ?\Symfony\Component\Security\Core\User\UserInterface
+    {
+        return $this->findOneBy(['NOMUTIL' => $identifier]);
+    }
 
     // Ajoute des méthodes spécifiques pour ton repository ici
 }

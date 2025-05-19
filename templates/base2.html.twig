@@ -162,9 +162,14 @@
                                     <div class="dropdown-divider my-1"></div>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="auth-login-cover.html" target="_blank">
+                                    <form id="logout-form" action="{{ path('app_logout') }}" method="post" style="display: none;">
+                                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('logout') }}">
+                                    </form>
+
+                                    <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         <i class="icon-base bx bx-power-off icon-md me-3"></i><span>Log Out</span>
                                     </a>
+
                                 </li>
                             </ul>
                         </li>
@@ -226,6 +231,7 @@
 <!-- endbuild -->
 
 <!-- Vendors JS -->
+<script src="{{ asset('assets/assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
 <script src="{{ asset('assets/assets//vendor/libs/moment/moment.js') }}"></script>
 <script src="{{ asset('assets/assets//vendor/libs/flatpickr/flatpickr.js') }}"></script>
 <script src="{{ asset('assets/assets//vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js') }}"></script>
@@ -236,6 +242,7 @@
 <script src="{{ asset('assets/assets/js/main.js') }}"></script>
 
 <!-- Page JS -->
+<script src="{{ asset('assets/assets/js/dashboards-analytics.js') }}"></script>
 <script>
     $('.table').DataTable({
         'paging': true,
