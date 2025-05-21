@@ -20,3 +20,14 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+# Ignorer le dossier node_modules
+/node_modules
+
+# Ignorer le dossier storage (utilisé par Laravel, à adapter selon ton projet)
+/storage
+
+# Ignorer les migrations (si tu ne veux pas versionner les migrations locales)
+/migrations
+
+# Ignorer le fichier doctrine.yaml (à éviter sauf cas très spécifique)
+config/packages/doctrine.yaml
