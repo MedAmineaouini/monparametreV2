@@ -83,10 +83,8 @@
         <!-- Layout container -->
         <div class="layout-page">
             <!-- Navbar -->
-
-            <nav
-                    class="layout-navbar container-xxl navbar-detached navbar navbar-expand-xl align-items-center bg-navbar-theme"
-                    id="layout-navbar">
+                    <nav id="layout-navbar"
+     class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme ">
                 <div class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0 d-xl-none">
                     <a class="nav-item nav-link px-0 me-xl-6" href="javascript:void(0)">
                         <i class="icon-base bx bx-menu icon-md"></i>
@@ -231,17 +229,7 @@
 <!-- endbuild -->
 
 <!-- Vendors JS -->
-<<<<<<< HEAD
-<script src="{{ asset('assets/assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
-<script src="{{ asset('assets/assets//vendor/libs/moment/moment.js') }}"></script>
-<script src="{{ asset('assets/assets//vendor/libs/flatpickr/flatpickr.js') }}"></script>
-<script src="{{ asset('assets/assets//vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js') }}"></script>
-<script src="{{ asset('assets/assets//vendor/libs/jquery-timepicker/jquery-timepicker.js') }}"></script>
-<script src="{{ asset('assets/assets//vendor/libs/pickr/pickr.js') }}"></script>
-<!-- Main JS -->
-=======
 <script src="{{ asset('assets/assets/vendor/libs/pickr/pickr.js') }}"></script>
->>>>>>> origin/main
 
   <!-- Vendors JS -->
     <script src="{{ asset('assets/assets/vendor/libs/moment/moment.js') }}"></script>
@@ -273,10 +261,26 @@
         'autoWidth': false,
         /*"scrollY": "500px",*/
         "scrollCollapse": true,
-        "language": {
-            "url": '{{ asset('assets/French.json') }}' // chemin relatif depuis public/
-        },
+
     });
+</script>
+<script>
+    function updateNavbarResponsiveClasses() {
+        const navbar = document.getElementById('layout-navbar');
+        const isNotDesktop = window.innerWidth <= 1024;
+
+        navbar.classList.toggle('navbar-detached', isNotDesktop);
+        navbar.classList.toggle('rounded-0', !isNotDesktop);
+
+        navbar.classList.toggle('m-0', !isNotDesktop);
+        navbar.classList.toggle('p-0', !isNotDesktop);
+        navbar.classList.toggle('container-xxl', isNotDesktop);
+
+        
+    }
+
+    window.addEventListener('resize', updateNavbarResponsiveClasses);
+    window.addEventListener('load', updateNavbarResponsiveClasses);
 </script>
 </body>
 </html>
