@@ -22,7 +22,9 @@
 
               <h4 class="mb-1">Se connecter 👋</h4>
               <p class="mb-6">Remplissez les champs pour vous se connecter</p>
-
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
              <form id="formAuthentication" class="mb-6" method="post">
               {% if error %}
                   <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -34,7 +36,7 @@
                   </div>
               {% endif %}
                 <div class="mb-6 ">
-                  <label for="username" class="form-label">Nom</label>
+                  <label for="username" class="form-label">Utilisateur</label>
                   <input
                     type="text"
                     class="form-control"
@@ -57,6 +59,10 @@
                       placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                       required>
                     <span class="input-group-text cursor-pointer"><i class="icon-base bx bx-hide"></i></span>
+                  </div>
+                  <div class="form-check mt-2 mb-2">
+                      <input class="form-check-input" type="checkbox" name="_remember_me" id="remember_me">
+                      <label class="form-check-label" for="remember_me">Remember me</label>
                   </div>
                 </div>
 

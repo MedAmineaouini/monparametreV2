@@ -88,6 +88,11 @@
                         <i class="fa fa-map me-2"></i>Pays
                     </a>
                 </li>
+                <li class="menu-item {% if app.request.get('_route') starts with 'app_pays' %}active open{% endif %}">
+                    <a href="{{ path('app_souspays_index') }}" class="menu-link">
+                        <i class="fa fa-map me-2"></i>Sous-Pays
+                    </a>
+                </li>
             </ul>
         </li>
 

@@ -6,6 +6,7 @@ use App\Entity\Utilisateur;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -30,12 +31,10 @@ class UtilisateurType extends AbstractType
                 'required' => true,
                 'attr' => ['class' => 'form-control']
             ])
-            ->add('MDP', TextType::class, [ // affiché en clair
-                'required' => true,
-                'attr' => [
-                    'class' => 'form-control',
-                    'placeholder' => 'Mot de passe',
-                ]
+            ->add('MDP', TextType::class, [
+                'mapped' => true,
+                'required' => false,
+                'attr' => ['autocomplete' => 'new-password']
             ])
             ->add('ENCOURS', CheckboxType::class, [
                 'required' => false,
@@ -51,12 +50,10 @@ class UtilisateurType extends AbstractType
                 'required' => false,
                 'attr' => ['class' => 'form-control']
             ])
-            ->add('WEBMDP', TextType::class, [ // affiché en clair
-                'required' => true,
-                'attr' => [
-                    'class' => 'form-control',
-                    'placeholder' => 'Mot de passe web'
-                ]
+            ->add('WEBMDP', TextType::class, [
+                'mapped' => true,
+                'required' => false,
+                'attr' => ['autocomplete' => 'new-password']
             ]);
     }
 

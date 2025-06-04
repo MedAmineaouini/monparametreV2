@@ -6,7 +6,7 @@
         <div class="card-header text-white d-flex justify-content-between align-items-center">
             <h5 class="mb-0">📋  Listes des pays</h5>
             <a href="{{ path('app_pays_new') }}" class="btn btn-success btn-sm">
-                <i class="bx bx-plus"></i> Nouveau pay
+                <i class="bx bx-plus"></i> Nouveau pays
             </a>
         </div>
 <hr>
@@ -18,7 +18,7 @@
                         <th>Code pays</th>
                         <th>Libellé</th>
                         <th>Place</th>
-                         <th>NATURE</th>
+                         <th>Nature</th>
                         <th>Actions</th>
                     </thead>
                     <tbody>
@@ -28,7 +28,7 @@
                             <td>{{ pay.CODEPAYS }}</td>
                             <td>{{ pay.LIBPAYS }}</td>
                             <td>{{ pay.PLACE }}</td>
-                            <td>{{ pay.NATURE }}</td>
+                            <td>{{ pay.NATURE == 1 ? 'Moyen courrier' : 'Long courrier' }}</td>
                             </td>
                             <td>
                                 <div class="dropdown">
@@ -41,7 +41,7 @@
                                            href="{{ path('app_pays_edit', {'IDPAYS': pay.IDPAYS}) }}">
                                             <i class="icon-base bx bx-edit-alt me-1"></i> Consulter / Modifier
                                         </a>
-                                      
+
                                          {{ include('pays/_delete_form.html.twig') }}
                                     </div>
                                 </div>
@@ -49,7 +49,7 @@
                         </tr>
                     {% else %}
                         <tr>
-                            <td colspan="7" class="text-center text-muted">Aucun pay trouvé.</td>
+                            <td colspan="6" style="text-align: center" class="text-center text-muted">aucun enregistrement trouvé.</td>
                         </tr>
                     {% endfor %}
                     </tbody>

@@ -28,7 +28,8 @@
                             <td>{{ utilisateur.SEQUTIL }}</td>
                             <td>{{ utilisateur.CODEUTIL }}</td>
                             <td>{{ utilisateur.NOMUTIL }}</td>
-                            <td>{{ utilisateur.MDP }}</td>
+                            <td>{{ utilisateur.MDP[:7] ~ '.....' }}
+                            </td>
                             <td>{{ utilisateur.EMAILUTIL }}</td>
                             <td>
                                 {% if utilisateur.SEQNIVEAU %}

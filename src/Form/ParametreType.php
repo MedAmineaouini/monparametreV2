@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Parametre;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -32,7 +33,14 @@ class ParametreType extends AbstractType
                 'required' => false,
                 'label' => 'Activer les alertes',
             ])
-            ->add('btobvol')
+            ->add('btobvol', TextareaType::class, [
+                'label' => '',
+                'attr' => [
+                    'rows' => 5,
+                    'class' => 'form-control w-100',
+                    'placeholder' => 'Entrez votre texte...',
+                ],
+            ]);
             // ->add('tel2')
             // ->add('tel3')
             // ->add('tel4')

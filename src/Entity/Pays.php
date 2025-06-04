@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PaysRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PaysRepository::class)]
@@ -37,6 +39,17 @@ class Pays
 
     #[ORM\Column(name: 'OBSERVATION', type: 'text', nullable: true)]
     private ?string $OBSERVATION = null;
+
+    #[ORM\Column(length: 4, nullable: true)]
+    private ?string $code_iata = null;
+
+
+
+    public function __construct()
+    {
+        $this->ORDRE = 0;
+        $this->CONTINENT = '';
+    }
 
     public function getOBSERVATION(): ?string
     {
@@ -80,4 +93,19 @@ class Pays
 
     public function getCONTINENT(): ?string { return $this->CONTINENT; }
     public function setCONTINENT(string $CONTINENT): self { $this->CONTINENT = $CONTINENT; return $this; }
+
+    public function getCodeIata(): ?string
+    {
+        return $this->code_iata;
+    }
+
+    public function setCodeIata(?string $code_iata): static
+    {
+        $this->code_iata = $code_iata;
+
+        return $this;
+    }
+
+
+
 }

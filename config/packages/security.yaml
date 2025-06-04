@@ -38,6 +38,8 @@ security:
         - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/register, roles: PUBLIC_ACCESS }
         - { path: ^/utilisateur, roles: ROLE_ADMIN }
+        - { path: ^/parametre, roles: ROLE_ADMIN }
+        - { path: ^/dashboard, roles: IS_AUTHENTICATED_FULLY   }
 
 when@test:
     security:

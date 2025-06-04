@@ -16,9 +16,9 @@
         </div>
 
         <div class="col-md-4">
-            {{ form_label(form.ORDRE, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_label(form.CODE_IATA, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
             <strong class="text-danger">*</strong>
-            {{ form_widget(form.ORDRE, {'attr': {'class': 'form-control', 'maxlength': 30, 'placeholder': 'Ordre', 'required': 'required'}}) }}
+            {{ form_widget(form.CODE_IATA, {'attr': {'class': 'form-control', 'maxlength': 30,  'required': 'required'}}) }}
         </div>
     </div>
 
@@ -33,11 +33,11 @@
             {{ form_widget(form.NATURE, {'attr': {'class': 'form-control'}}) }}
         </div>
 
-        <div class="col-md-4">
-            {{ form_label(form.CONTINENT, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
-            <strong class="text-danger">*</strong>
-            {{ form_widget(form.CONTINENT, {'attr': {'class': 'form-control', 'maxlength': 30, 'placeholder': 'Continent', 'required': 'required'}}) }}
-        </div>
+{#        <div class="col-md-4">#}
+{#            {{ form_label(form.CONTINENT, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}#}
+{#            <strong class="text-danger">*</strong>#}
+{#            {{ form_widget(form.CONTINENT, {'attr': {'class': 'form-control', 'maxlength': 30, 'placeholder': 'Continent', 'required': 'required'}}) }}#}
+{#        </div>#}
     </div>
 
     <div class="row g-3 mb-4">
