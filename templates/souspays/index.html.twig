@@ -1,0 +1,82 @@
+{% extends 'base2.html.twig' %}
+
+{% block title %}RFT | Listes des Souspays{% endblock %}
+
+{% block body %}
+<div class="card shadow rounded-3 border-0">
+    <div class="card-header text-white d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">📋  Listes des Souspays</h5>
+        <a href="{{ path('app_souspays_new') }}" class="btn btn-success btn-sm">
+            <i class="bx bx-plus"></i> Nouveau sous-pays
+        </a>
+    </div>
+    <hr>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped align-middle small">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Libellé</th>
+                <th>Tun</th>
+                <th>Mir</th>
+                <th>Nbe</th>
+                <th>Dje</th>
+                <th>Toe</th>
+                <th>Tunvente</th>
+                <th>Mirvente</th>
+                <th>Nbevente</th>
+                <th>Djevente</th>
+                <th>Toevente</th>
+{#                <th>Ordre</th>#}
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for souspay in souspays %}
+            <tr>
+                <td>{{ souspay.seqsouspays }}</td>
+                <td>{{ souspay.libsouspays }}</td>
+                <td>{{ souspay.tun }}</td>
+                <td>{{ souspay.mir }}</td>
+                <td>{{ souspay.nbe }}</td>
+                <td>{{ souspay.dje }}</td>
+                <td>{{ souspay.toe }}</td>
+                <td>{{ souspay.tunvente }}</td>
+                <td>{{ souspay.mirvente }}</td>
+                <td>{{ souspay.nbevente }}</td>
+                <td>{{ souspay.djevente }}</td>
+                <td>{{ souspay.toevente }}</td>
+{#                <td>{{ souspay.ordre }}</td>#}
+                <td>
+                    <div class="dropdown">
+                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="icon-base bx bx-dots-vertical-rounded"></i>
+                        </button>
+                        <div class="dropdown-menu">
+
+                            <a class="dropdown-item"
+                               href="{{ path('app_souspays_edit', {'seqsouspays': souspay.seqsouspays}) }}">
+                                <i class="icon-base bx bx-edit-alt me-1"></i> Consulter / Modifier
+                            </a>
+
+                            {# Bouton de suppression (si tu en as un) #}
+                            {{ include('souspays/_delete_form.html.twig', { 'seqsouspays': souspay.seqsouspays }) }}
+                        </div>
+                    </div>
+                </td>
+
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="14" style="text-align: center">aucun enregistrement trouvé...</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+        </div>
+    </div>
+</div>
+{#    <a href="{{ path('app_souspays_new') }}">Create new</a>#}
+{% endblock %}

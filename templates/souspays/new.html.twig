@@ -1,0 +1,16 @@
+{% extends 'base2.html.twig' %}
+
+{% block title %}New Souspays{% endblock %}
+
+{% block body %}
+<div class="card mb-4 shadow-sm small">
+    <div class="card-header text-white py-3">
+        <h5 class="card-title mb-0">
+            <i class="bx bx-map me-2"></i>Ajout d'un Souspays
+        </h5>
+    </div>
+    <hr>
+    {{ include('souspays/_form.html.twig') }}
+</div>
+    <a href="{{ path('app_souspays_index') }}">back to list</a>
+{% endblock %}
