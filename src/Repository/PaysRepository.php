@@ -12,4 +12,13 @@ class PaysRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Pays::class);
     }
+    public function dashboard(PaysRepository $paysRepository): Response
+    {
+        // Récupérer le nombre de pays
+        $nombrePays = $paysRepository->count([]);
+
+        return $this->render('dashboard.html.twig', [
+            'nombrePays' => $nombrePays,
+        ]);
+    }
 }

@@ -1,0 +1,70 @@
+{% extends 'base2.html.twig' %}
+
+{% block title %}Souspays{% endblock %}
+
+{% block body %}
+    <h1>Souspays</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Seqsouspays</th>
+                <td>{{ souspay.seqsouspays }}</td>
+            </tr>
+            <tr>
+                <th>Libsouspays</th>
+                <td>{{ souspay.libsouspays }}</td>
+            </tr>
+            <tr>
+                <th>Tun</th>
+                <td>{{ souspay.tun }}</td>
+            </tr>
+            <tr>
+                <th>Mir</th>
+                <td>{{ souspay.mir }}</td>
+            </tr>
+            <tr>
+                <th>Nbe</th>
+                <td>{{ souspay.nbe }}</td>
+            </tr>
+            <tr>
+                <th>Dje</th>
+                <td>{{ souspay.dje }}</td>
+            </tr>
+            <tr>
+                <th>Toe</th>
+                <td>{{ souspay.toe }}</td>
+            </tr>
+            <tr>
+                <th>Tunvente</th>
+                <td>{{ souspay.tunvente }}</td>
+            </tr>
+            <tr>
+                <th>Mirvente</th>
+                <td>{{ souspay.mirvente }}</td>
+            </tr>
+            <tr>
+                <th>Nbevente</th>
+                <td>{{ souspay.nbevente }}</td>
+            </tr>
+            <tr>
+                <th>Djevente</th>
+                <td>{{ souspay.djevente }}</td>
+            </tr>
+            <tr>
+                <th>Toevente</th>
+                <td>{{ souspay.toevente }}</td>
+            </tr>
+            <tr>
+                <th>Ordre</th>
+                <td>{{ souspay.ordre }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_souspays_index') }}">back to list</a>
+
+    <a href="{{ path('app_souspays_edit', {'seqsouspays': souspay.seqsouspays}) }}">edit</a>
+
+    {{ include('souspays/_delete_form.html.twig') }}
+{% endblock %}

@@ -115,7 +115,7 @@
                                                 </div>
                                             </div>
                                             <div class="flex-grow-1">
-                                                <h6 class="mb-0">John Doe</h6>
+                                                <h6 class="mb-0">{{ app.user.NOMUTIL }}</h6>
                                                 <small class="text-body-secondary">Admin</small>
                                             </div>
                                         </div>
@@ -125,39 +125,9 @@
                                     <div class="dropdown-divider my-1"></div>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="pages-profile-user.html">
+                                    <a class="dropdown-item" href="{{ path('app_utilisateur_edit', { SEQUTIL: app.user.SEQUTIL }) }}">
                                         <i class="icon-base bx bx-user icon-md me-3"></i><span>My Profile</span>
                                     </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="pages-account-settings-account.html">
-                                        <i class="icon-base bx bx-cog icon-md me-3"></i><span>Settings</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="pages-account-settings-billing.html">
-                        <span class="d-flex align-items-center align-middle">
-                          <i class="flex-shrink-0 icon-base bx bx-credit-card icon-md me-3"></i
-                          ><span class="flex-grow-1 align-middle">Billing Plan</span>
-                          <span class="flex-shrink-0 badge rounded-pill bg-danger">4</span>
-                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <div class="dropdown-divider my-1"></div>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="pages-pricing.html">
-                                        <i class="icon-base bx bx-dollar icon-md me-3"></i><span>Pricing</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="pages-faq.html">
-                                        <i class="icon-base bx bx-help-circle icon-md me-3"></i><span>FAQ</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <div class="dropdown-divider my-1"></div>
                                 </li>
                                 <li>
                                     <form id="logout-form" action="{{ path('app_logout') }}" method="post" style="display: none;">
@@ -229,7 +199,16 @@
 <!-- endbuild -->
 
 <!-- Vendors JS -->
+<<<<<<< HEAD
+<script src="{{ asset('assets/assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
+<script src="{{ asset('assets/assets//vendor/libs/moment/moment.js') }}"></script>
+<script src="{{ asset('assets/assets//vendor/libs/flatpickr/flatpickr.js') }}"></script>
+<script src="{{ asset('assets/assets//vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js') }}"></script>
+<script src="{{ asset('assets/assets//vendor/libs/jquery-timepicker/jquery-timepicker.js') }}"></script>
+<script src="{{ asset('assets/assets//vendor/libs/pickr/pickr.js') }}"></script>
+<!-- Main JS -->
 <script src="{{ asset('assets/assets/vendor/libs/pickr/pickr.js') }}"></script>
+
 
   <!-- Vendors JS -->
     <script src="{{ asset('assets/assets/vendor/libs/moment/moment.js') }}"></script>
