@@ -1,11 +1,18 @@
 {% extends 'base2.html.twig' %}
 
-{% block title %}Edit Souspays{% endblock %}
+{% block title %}RFT | Modification sous-pays{% endblock %}
 
 {% block body %}
-    <h1>Edit Souspays</h1>
-
-    {{ include('souspays/_form.html.twig', {'button_label': 'Update'}) }}
+<div class="card mb-4 shadow-sm small">
+    <div class="card-header text-white py-3">
+        <h5 class="card-title mb-0">
+            <i class="bx bx-map me-2"></i>Détails du sous-pays
+        </h5>
+    </div>
+    <hr>
+    {{ include('souspays/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+    {{ include('souspays/_delete_form.html.twig') }}
+</div>
 
     <a href="{{ path('app_souspays_index') }}">back to list</a>
 
