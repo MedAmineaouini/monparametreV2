@@ -9,7 +9,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 #[Route('/ville')]
 class VilleController extends AbstractController
 {
@@ -80,5 +82,34 @@ class VilleController extends AbstractController
         }
 
         return $this->redirectToRoute('app_ville_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/export/pdf', name: 'app_ville_export_pdf')]
+    public function exportPdf(EntityManagerInterface $entityManager): Response
+    {
+        $villes = $entityManager->getRepository(Ville::class)->findAll();
+
+        // Configure Dompdf
+        $options = new Options();
+        $options->set('defaultFont', 'Arial');
+        $dompdf = new Dompdf($options);
+
+        // Rendu HTML (depuis un template Twig)
+        $html = $this->renderView('ville/pdf.html.twig', [
+            'villes' => $villes,
+        ]);
+
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+
+        return new Response(
+            $dompdf->output(),
+            200,
+            [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="liste_villes.pdf"',
+            ]
+        );
     }
 }
