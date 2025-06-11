@@ -36,6 +36,7 @@
 
     <link rel="stylesheet" href="{{ asset('assets/assets/vendor/css/core.css') }}"/>
     <link rel="stylesheet" href="{{ asset('assets/assets/css/demo.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/assets/vendor/libs/animate-css/animate.css') }}"/>
 
     <!-- Vendors CSS -->
 
@@ -261,5 +262,52 @@
     window.addEventListener('resize', updateNavbarResponsiveClasses);
     window.addEventListener('load', updateNavbarResponsiveClasses);
 </script>
+
+<script>
+$(document).ready(function() {
+    $('#editModal').on('show.bs.modal', function (event) {
+        const button = $(event.relatedTarget);
+        const url = button.data('url');
+
+        const modal = $(this);
+        const modalBody = modal.find('.modal-body');
+
+        modalBody.load(url, function() {
+            const form = $('form', this);
+
+            form.off('submit').on('submit', function(e) {
+                e.preventDefault();
+
+                $.ajax({
+                    type: form.attr('method'),
+                    url: form.attr('action'),
+                    data: form.serialize(),
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            $('#editModal').modal('hide');
+                            location.reload();
+                        } else {
+                            if (typeof response === 'string') {
+                                modalBody.html(response);
+                            } else if (response.form) {
+                                modalBody.html(response.form);
+                            }
+                        }
+                    },
+                    error: function(xhr) {
+                        console.error("Erreur AJAX", xhr);
+                        alert("Une erreur est survenue.");
+                    }
+                });
+            });
+        });
+    });
+});
+</script>
+
+
 </body>
 </html>

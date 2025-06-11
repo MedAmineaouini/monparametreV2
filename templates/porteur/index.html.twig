@@ -1,0 +1,126 @@
+{% extends 'base2.html.twig' %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block title %}RFT | Listes des Porteurs{% endblock %}
+
+{% block body %}
+    <div class="card shadow rounded-3 border-0">
+        <div class="card-header text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">📋 Liste des Porteurs</h5>
+            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#modalCenter">
+                <i class="bx bx-plus"></i> Nouveau Porteur
+            </button>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped align-middle small">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Libellé</th>
+                            {#<th>Code Commercial</th> #}
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for porteur in porteurs %}
+                        <tr>
+                            <td>{{ porteur.seqPorteur }}</td>
+                            <td>{{ porteur.libPorteur }}</td>
+                            {# <td>{{ porteur.codeComm }}</td> #}
+                            <td>
+                                <div class="dropdown">
+                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                            data-bs-toggle="dropdown">
+                                        <i class="icon-base bx bx-dots-vertical-rounded"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#" 
+                                           data-bs-toggle="modal" 
+                                           data-bs-target="#editModal"
+                                           data-url="{{ path('app_porteur_edit', {'seqPorteur': porteur.seqPorteur}) }}">
+                                            <i class="icon-base bx bx-edit-alt me-1"></i> Modifier
+                                        </a>
+                                        {{ include('porteur/_delete_form.html.twig') }}
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4" class="text-center text-muted">
+                                Aucun enregistrement trouvé.
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Nouveau Porteur -->
+    <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Nouveau Porteur</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+
+                {{ form_start(form, {'attr': {'class': 'browser-default-validation'}}) }}
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            {{ form_label(form.libPorteur, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+                            <strong class="text-danger">*</strong>
+                            {{ form_widget(form.libPorteur, {
+                                'attr': {
+                                    'class': 'form-control',
+                                    'maxlength': 50,
+                                    'placeholder': 'Libellé du porteur',
+                                    'required': 'required'
+                                }
+                            }) }}
+                        </div>
+                        {#<div class="mb-3">
+                            {{ form_label(form.codeComm, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+                            {{ form_widget(form.codeComm, {
+                                'attr': {
+                                    'class': 'form-control',
+                                    'maxlength': 20,
+                                    'placeholder': 'Code commercial'
+                                }
+                            }) }}
+                        </div>#}
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
+                            Annuler
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bx bx-save me-2"></i>{{ button_label|default('Enregistrer') }}
+                        </button>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Edit Porteur -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modifier Porteur</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+                <div class="modal-body" id="editModalContent">
+                    <!-- Content will be loaded here via AJAX -->
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

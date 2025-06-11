@@ -1,0 +1,28 @@
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{{ form_start(form, {
+    'action': path('app_porteur_edit', {'seqPorteur': porteur.seqPorteur}),
+    'attr': {'class': 'browser-default-validation'}
+}) }}
+    <div class="mb-3">
+        {{ form_label(form.libPorteur, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+        <strong class="text-danger">*</strong>
+        {{ form_widget(form.libPorteur, {
+            'attr': {
+                'class': 'form-control',
+                'maxlength': 50,
+                'placeholder': 'Libellé du porteur',
+                'required': 'required'
+            }
+        }) }}
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
+            Annuler
+        </button>
+        <button type="submit" class="btn btn-primary">
+            <i class="bx bx-save me-2"></i>Enregistrer
+        </button>
+    </div>
+{{ form_end(form) }}

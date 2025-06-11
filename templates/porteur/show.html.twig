@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Porteur{% endblock %}
+
+{% block body %}
+    <h1>Porteur</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>SeqPorteur</th>
+                <td>{{ porteur.seqPorteur }}</td>
+            </tr>
+            <tr>
+                <th>LibPorteur</th>
+                <td>{{ porteur.libPorteur }}</td>
+            </tr>
+            <tr>
+                <th>CodeComm</th>
+                <td>{{ porteur.codeComm }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_porteur_index') }}">back to list</a>
+
+    <a href="{{ path('app_porteur_edit', {'seqPorteur': porteur.seqPorteur}) }}">edit</a>
+
+    {{ include('porteur/_delete_form.html.twig') }}
+{% endblock %}
