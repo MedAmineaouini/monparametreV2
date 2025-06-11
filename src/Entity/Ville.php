@@ -47,6 +47,17 @@ class Ville
     #[ORM\Column(name: 'Taxe_B2B', type: 'decimal', precision: 7, scale: 2)]
     private string $taxe_b2b;
 
+    public function __construct()
+    {
+        $this->codeville = '';
+        $this->aero = '';
+        $this->libville = '';
+        $this->codeiata = '';
+        $this->seq_zone = 0;
+        $this->iataaero = '';
+        $this->seqvilleparent = 0;
+        $this->taxe_b2b = '0.00';
+    }
     // Getters and setters
 
     public function getSeqville(): ?int

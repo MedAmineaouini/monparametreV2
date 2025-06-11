@@ -235,16 +235,18 @@
     $('.table').DataTable({
         'paging': true,
         'lengthChange': false,
-        'searching': true,
+        'searching': false,
         'ordering': true,
-        'info': true,
-        'autoWidth': false,
-        /*"scrollY": "500px",*/
-        "scrollCollapse": true,
+        'info': false,
+        'autoWidth': true,
+        // "scrollY": "500px",
+        "scrollCollapse": false,
+        {#"language": {#}
+        {#    "url": '{{ asset('assets/French.json') }}' // chemin relatif depuis public/#}
+        {#},#}
 
     });
-</script>
-<script>
+
     function updateNavbarResponsiveClasses() {
         const navbar = document.getElementById('layout-navbar');
         const isNotDesktop = window.innerWidth <= 1024;
