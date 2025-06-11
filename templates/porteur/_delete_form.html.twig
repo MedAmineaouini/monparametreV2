@@ -1,6 +1,6 @@
 <form method="post" 
       action="{{ path('app_porteur_delete', {'seqPorteur': porteur.seqPorteur}) }}" 
-      onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce porteur ?');"
+      onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce apporteur ?');"
       class="d-inline">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ porteur.seqPorteur) }}">
     <button type="submit" class="dropdown-item text-danger border-0 bg-transparent w-100 text-start">
