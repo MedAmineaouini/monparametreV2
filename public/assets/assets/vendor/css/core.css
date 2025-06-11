@@ -2501,7 +2501,7 @@ progress {
 }
 
 .table-responsive {
-  overflow-x: auto;
+  /*overflow-x: auto;*/
   -webkit-overflow-scrolling: touch;
 }
 
@@ -8475,7 +8475,7 @@ img[data-app-light-img][data-app-dark-img] {
   padding-inline: 1.25rem;
 }
 .table thead tr th {
-  padding-block: 1.161rem;
+  padding-block: 0.5rem;
 }
 .table.table-borderless:not(.table-sm) > :not(thead) > * > * {
   padding-block: 0.8133rem;
