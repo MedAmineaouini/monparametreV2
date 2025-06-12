@@ -40,6 +40,7 @@ security:
         - { path: ^/utilisateur, roles: IS_AUTHENTICATED_FULLY  }
         - { path: ^/parametre, roles: IS_AUTHENTICATED_FULLY  }
         - { path: ^/dashboard, roles: IS_AUTHENTICATED_FULLY   }
+        - { path: ^/commercial, roles: PUBLIC_ACCESS   }
 
 when@test:
     security:
