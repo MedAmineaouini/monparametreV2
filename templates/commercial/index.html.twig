@@ -97,19 +97,3 @@
   </div>
 {% endblock %}
 
-{% block javascripts %}
-  {{ parent() }}
-  <script>
-    $(document).ready(function() {
-      $('.datatables-commercials').DataTable({
-        responsive: true,
-        language: {
-          url: '{{ asset("assets/French.json") }}'
-        },
-        columnDefs: [
-          { orderable: false, targets: -1 } // Désactiver le tri sur la colonne Actions
-        ]
-      });
-    });
-  </script>
-{% endblock %}
