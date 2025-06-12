@@ -5,58 +5,60 @@
 
 {% block body %}
     <div class="card shadow rounded-3 border-0">
-        <div class="card-header text-white d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">📋 Liste des Apporteurs</h5>
-            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#modalCenter">
-                <i class="bx bx-plus"></i> Nouveau Apporteur
-            </button>
+        <div class="card-header text-white d-block d-sm-flex justify-content-between align-items-center">
+            <h5 class="mb-0 ">📋 Liste des Apporteurs</h5>
+            <div class="d-flex ">
+{#            <button type="button" class="btn btn-success btn-sm-12" data-bs-toggle="modal" data-bs-target="#modalCenter">#}
+{#                <i class="bx bx-plus"></i> Nouveau Apporteur#}
+{#            </button>#}
+                <button class="btn btn-success w-100 w-sm-auto" data-bs-toggle="modal" data-bs-target="#modalCenter"><i class="bx bx-plus"></i> Nouveau Apporteur</button>
+            </div>
         </div>
 
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered table-striped align-middle small">
+                <table  class="table table-bordered table-striped align-middle small">
                     <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Libellé</th>
-                            {#<th>Code Commercial</th> #}
-                            <th>Actions</th>
-                        </tr>
+                        <th>#</th>
+                        <th style="width: 75%">Libellé</th>
+                        <th>Actions</th>
                     </thead>
                     <tbody>
-                    {% for porteur in porteurs %}
-                        <tr>
-                            <td>{{ porteur.seqPorteur }}</td>
-                            <td>{{ porteur.libPorteur }}</td>
-                            {# <td>{{ porteur.codeComm }}</td> #}
-                            <td>
-                                <div class="dropdown">
-                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                            data-bs-toggle="dropdown">
-                                        <i class="icon-base bx bx-dots-vertical-rounded"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#" 
-                                           data-bs-toggle="modal" 
-                                           data-bs-target="#editModal"
-                                           data-url="{{ path('app_porteur_edit', {'seqPorteur': porteur.seqPorteur}) }}">
-                                            <i class="icon-base bx bx-edit-alt me-1"></i> Modifier
-                                        </a>
-                                        {{ include('porteur/_delete_form.html.twig') }}
+                    {% if porteurs is not empty %}
+                        {% for porteur in porteurs %}
+                            <tr>
+                                <td>{{ porteur.seqPorteur }}</td>
+                                <td>{{ porteur.libPorteur }}</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                                data-bs-toggle="dropdown">
+                                            <i class="icon-base bx bx-dots-vertical-rounded"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="#"
+                                               data-bs-toggle="modal"
+                                               data-bs-target="#editModal"
+                                               data-url="{{ path('app_porteur_edit', {'seqPorteur': porteur.seqPorteur}) }}">
+                                                <i class="icon-base bx bx-edit-alt me-1"></i> Modifier
+                                            </a>
+                                            {{ include('porteur/_delete_form.html.twig', { 'porteur': porteur }) }}
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
+                        {% endfor %}
                     {% else %}
                         <tr>
-                            <td colspan="4" class="text-center text-muted">
+                            <td colspan="3" class="text-center text-muted">
                                 Aucun enregistrement trouvé.
                             </td>
                         </tr>
-                    {% endfor %}
+                    {% endif %}
                     </tbody>
                 </table>
             </div>
+
         </div>
     </div>
 

@@ -62,6 +62,12 @@
     <link rel="stylesheet" href="{{ asset('assets/assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/assets/vendor/libs/jquery-timepicker/jquery-timepicker.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/assets/vendor/libs/pickr/pickr-themes.css') }}" />
+
+    <link rel="stylesheet" href="{{ asset('assets/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css') }}">
+    <!-- Row Group CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/assets/vendor/libs/datatables-rowgroup-bs5/rowgroup.bootstrap5.css') }}">
 </head>
 
 <body>
@@ -200,7 +206,6 @@
 <!-- endbuild -->
 
 <!-- Vendors JS -->
-<<<<<<< HEAD
 <script src="{{ asset('assets/assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
 <script src="{{ asset('assets/assets//vendor/libs/moment/moment.js') }}"></script>
 <script src="{{ asset('assets/assets//vendor/libs/flatpickr/flatpickr.js') }}"></script>
@@ -227,25 +232,25 @@
 
     <script src="{{ asset('assets/assets/vendor/libs/@form-validation/popular.js') }}"></script>
     <script src="{{ asset('assets/assets/vendor/libs/@form-validation/bootstrap5.js') }}"></script>
-    <script src="{{ asset('assets/assets/vendor/libs/@form-validation/auto-focus.js') }}"></script
+    <script src="{{ asset('assets/assets/vendor/libs/@form-validation/auto-focus.js') }}"></script>
 
 <!-- Page JS -->
 <script src="{{ asset('assets/assets/js/dashboards-analytics.js') }}"></script>
 <script>
-    $('.table').DataTable({
-        'paging': true,
-        'lengthChange': false,
-        'searching': false,
-        'ordering': true,
-        'info': false,
-        'autoWidth': true,
-        // "scrollY": "500px",
-        "scrollCollapse": false,
-        {#"language": {#}
-        {#    "url": '{{ asset('assets/French.json') }}' // chemin relatif depuis public/#}
-        {#},#}
+    {#$('.table').DataTable({#}
+    {#    'paging': true,#}
+    {#    'lengthChange': false,#}
+    {#    'searching': false,#}
+    {#    'ordering': true,#}
+    {#    'info': false,#}
+    {#    'autoWidth': true,#}
+    {#    // "scrollY": "500px",#}
+    {#    "scrollCollapse": false,#}
+    {#    #}{#"language": }#}
+    {#    #}{#    "url": '{{ asset('assets/French.json') }}' // chemin relatif depuis public/#}
+    {#    #}{#},#}
 
-    });
+    {#});#}
 
     function updateNavbarResponsiveClasses() {
         const navbar = document.getElementById('layout-navbar');
