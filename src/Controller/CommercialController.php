@@ -21,25 +21,79 @@ class CommercialController extends AbstractController
         CommercialRepository $commercialRepository,
         EntityManagerInterface $entityManager
     ): Response {
-        $commercial = new Commercial();
-        $form = $this->createForm(CommercialType::class, $commercial);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($commercial);
+        // Liste des commerciaux
+        $commercials = $commercialRepository->findAll();
+    
+        // === Formulaire d'ajout ===
+        $newCommercial = new Commercial();
+        $addForm = $this->createForm(CommercialType::class, $newCommercial);
+        $addForm->handleRequest($request);
+    
+        if ($addForm->isSubmitted() && $addForm->isValid() && !$request->query->get('edit')) {
+            $entityManager->persist($newCommercial);
             $entityManager->flush();
-
             $this->addFlash('success', 'Le commercial a été ajouté avec succès.');
             return $this->redirectToRoute('app_commercial_index');
         }
-
-        $commercials = $commercialRepository->findAll();
-
+    
+        // === Formulaire de modification ===
+        $editId = $request->query->get('edit');
+        $commercialToEdit = null;
+        $editForm = null;
+    
+        if ($editId) {
+            $commercialToEdit = $commercialRepository->find($editId);
+    
+            if ($commercialToEdit) {
+                $editForm = $this->createForm(CommercialType::class, $commercialToEdit);
+                $editForm->handleRequest($request);
+    
+                if ($editForm->isSubmitted() && $editForm->isValid()) {
+                    $entityManager->flush();
+                    $this->addFlash('success', 'Le commercial a été modifié avec succès.');
+                    return $this->redirectToRoute('app_commercial_index');
+                }
+            }
+        }
+    
         return $this->render('commercial/index.html.twig', [
             'commercials' => $commercials,
-            'form' => $form->createView(),
+            'addForm' => $addForm->createView(),
+            'editForm' => $editForm ? $editForm->createView() : null,
+            'commercialToEdit' => $commercialToEdit,
         ]);
     }
+    
+    
+    #[Route('/edit/{id}', name: 'app_commercial_edit', methods: ['GET', 'POST'])]
+    public function edit(
+        int $id,
+        Request $request,
+        CommercialRepository $commercialRepository,
+        EntityManagerInterface $entityManager
+    ): Response {
+        $commercial = $commercialRepository->find($id);
+    
+        if (!$commercial) {
+            throw $this->createNotFoundException('Commercial introuvable');
+        }
+    
+        $form = $this->createForm(CommercialType::class, $commercial);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+    
+            $this->addFlash('success', 'Le commercial a été modifié avec succès.');
+            return $this->redirectToRoute('app_commercial_index');
+        }
+    
+        return $this->render('commercial/edit.html.twig', [
+            'editForm' => $form->createView(),
+            'commercial' => $commercial
+        ]);
+    }
+    
 
     #[Route('/{seqCommercial}', name: 'app_commercial_show', methods: ['GET'])]
     public function show(Commercial $commercial): Response
@@ -49,39 +103,7 @@ class CommercialController extends AbstractController
         ]);
     }
 
-    #[Route('/{seqCommercial}/edit', name: 'app_commercial_edit', methods: ['GET', 'POST'])]
-    public function edit(
-        Request $request,
-        Commercial $commercial,
-        EntityManagerInterface $entityManager
-    ): Response {
-        $form = $this->createForm(CommercialType::class, $commercial);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Le commercial a été modifié avec succès.');
-
-            if ($request->isXmlHttpRequest()) {
-                return new JsonResponse(['success' => true]);
-            }
-
-            return $this->redirectToRoute('app_commercial_index');
-        }
-
-        if ($request->isXmlHttpRequest()) {
-            return $this->render('commercial/_edit_modal.html.twig', [
-                'commercial' => $commercial,
-                'form' => $form->createView(),
-            ]);
-        }
-
-        return $this->render('commercial/edit.html.twig', [
-            'commercial' => $commercial,
-            'form' => $form->createView(),
-        ]);
-    }
     #[Route('/{seqCommercial}', name: 'app_commercial_delete', methods: ['POST'])]
     public function delete(Request $request, Commercial $commercial, EntityManagerInterface $entityManager): Response
     {

@@ -6,10 +6,10 @@
   <div class="container-xxl flex-grow-1 container-p-y">
     <div class="card">
       <div class="card-header border-bottom">
-        <h5 class="card-title mb-0">Liste des commerciaux</h5>
-        <div class="d-flex justify-content-between align-items-center row pt-4 gap-md-0 g-6">
-          <div class="col-md-4">
-            <button class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddCommercial">
+        <h5 class="card-title mb-0">📋 Liste des commerciaux</h5>
+        <div class="d-flex justify-content-end align-items-center row pt-4 gap-md-0 g-6">
+          <div class="col-md-4 d-flex justify-content-end">
+            <button class="btn btn-success" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddCommercial">
               <i class="icon-base bx bx-plus me-2"></i>Ajouter un commercial
             </button>
           </div>
@@ -35,24 +35,19 @@
                 <td>{{ commercial.nomCommercial }}</td>
                 <td>{{ commercial.prenomCommercial }}</td>
                 <td>{{ commercial.telCommercial }}</td>
-
-                  <td>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                data-bs-toggle="dropdown">
-                                            <i class="icon-base bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="#"
-                                               data-bs-toggle="modal"
-                                               data-bs-target="#editModal"
-                                               data-url="{{ path('app_commercial_edit', {'seqCommercial': commercial.seqCommercial}) }}">
-                                                <i class="icon-base bx bx-edit-alt me-1"></i> Modifier
-                                            </a>
-                                            {{ include('commercial/_delete_form.html.twig', { 'commercial': commercial }) }}
-                                        </div>
-                                    </div>
-                                </td>
+                <td>
+                  <div class="dropdown">
+                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                      <i class="icon-base bx bx-dots-vertical-rounded"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="{{ path('app_commercial_index', {'edit': commercial.seqCommercial}) }}">
+                        <i class="icon-base bx bx-edit-alt me-1"></i> Modifier
+                      </a>
+                      {{ include('commercial/_delete_form.html.twig', {'commercial': commercial}) }}
+                    </div>
+                  </div>
+                </td>
               </tr>
             {% else %}
               <tr>
@@ -65,33 +60,71 @@
     </div>
   </div>
 
-  <!-- Offcanvas pour ajouter un nouveau commercial -->
+  <!-- Offcanvas pour ajouter un commercial -->
   <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddCommercial" aria-labelledby="offcanvasAddCommercialLabel">
     <div class="offcanvas-header border-bottom">
       <h5 id="offcanvasAddCommercialLabel" class="offcanvas-title">Ajouter un commercial</h5>
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
-      {{ form_start(form, {'attr': {'class': 'add-new-commercial pt-0', 'id': 'addNewCommercialForm'}}) }}
+      {{ form_start(addForm, {'attr': {'class': 'add-new-commercial pt-0'}}) }}
         <div class="mb-3">
-          {{ form_label(form.codeCommercial, 'Code commercial', {'label_attr': {'class': 'form-label'}}) }}
-          {{ form_widget(form.codeCommercial, {'attr': {'class': 'form-control', 'placeholder': 'CODE'}}) }}
+          {{ form_label(addForm.codeCommercial, 'Code commercial', {'label_attr': {'class': 'form-label'}}) }}
+          {{ form_widget(addForm.codeCommercial, {'attr': {'class': 'form-control', 'placeholder': 'CODE'}}) }}
         </div>
         <div class="mb-3">
-          {{ form_label(form.nomCommercial, 'Nom', {'label_attr': {'class': 'form-label'}}) }}
-          {{ form_widget(form.nomCommercial, {'attr': {'class': 'form-control', 'placeholder': 'Nom du commercial'}}) }}
+          {{ form_label(addForm.nomCommercial, 'Nom', {'label_attr': {'class': 'form-label'}}) }}
+          {{ form_widget(addForm.nomCommercial, {'attr': {'class': 'form-control', 'placeholder': 'Nom du commercial'}}) }}
         </div>
         <div class="mb-3">
-          {{ form_label(form.prenomCommercial, 'Prénom', {'label_attr': {'class': 'form-label'}}) }}
-          {{ form_widget(form.prenomCommercial, {'attr': {'class': 'form-control', 'placeholder': 'Prénom du commercial'}}) }}
+          {{ form_label(addForm.prenomCommercial, 'Prénom', {'label_attr': {'class': 'form-label'}}) }}
+          {{ form_widget(addForm.prenomCommercial, {'attr': {'class': 'form-control', 'placeholder': 'Prénom du commercial'}}) }}
         </div>
         <div class="mb-3">
-          {{ form_label(form.telCommercial, 'Téléphone', {'label_attr': {'class': 'form-label'}}) }}
-          {{ form_widget(form.telCommercial, {'attr': {'class': 'form-control', 'placeholder': 'Numéro de téléphone'}}) }}
+          {{ form_label(addForm.telCommercial, 'Téléphone', {'label_attr': {'class': 'form-label'}}) }}
+          {{ form_widget(addForm.telCommercial, {'attr': {'class': 'form-control', 'placeholder': 'Numéro de téléphone'}}) }}
         </div>
-        <button type="submit" class="btn btn-primary me-3">Enregistrer</button>
-        <button type="reset" class="btn btn-label-danger" data-bs-dismiss="offcanvas">Annuler</button>
-      {{ form_end(form) }}
+        <div class="d-flex justify-content-between">
+          <button type="submit" class="btn btn-primary w-25">Enregistrer</button>
+          <button type="reset" class="btn btn-label-danger w-25" data-bs-dismiss="offcanvas">Annuler</button>
+        </div>
+
+      {{ form_end(addForm) }}
     </div>
   </div>
+
+  <!-- Offcanvas pour modifier un commercial -->
+  {% if editForm is defined and editForm %}
+    <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasEditCommercial" style="visibility: visible;" aria-labelledby="offcanvasEditCommercialLabel">
+      <div class="offcanvas-header border-bottom">
+        <h5 id="offcanvasEditCommercialLabel" class="offcanvas-title">Modifier le commercial</h5>
+        <a href="{{ path('app_commercial_index') }}" class="btn-close text-reset" aria-label="Close"></a>
+      </div>
+      <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
+        {{ form_start(editForm, {'attr': {'class': 'edit-commercial pt-0'}}) }}
+          <div class="mb-3">
+            {{ form_label(editForm.codeCommercial, 'Code commercial', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(editForm.codeCommercial, {'attr': {'class': 'form-control', 'placeholder': 'CODE'}}) }}
+          </div>
+          <div class="mb-3">
+            {{ form_label(editForm.nomCommercial, 'Nom', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(editForm.nomCommercial, {'attr': {'class': 'form-control', 'placeholder': 'Nom du commercial'}}) }}
+          </div>
+          <div class="mb-3">
+            {{ form_label(editForm.prenomCommercial, 'Prénom', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(editForm.prenomCommercial, {'attr': {'class': 'form-control', 'placeholder': 'Prénom du commercial'}}) }}
+          </div>
+          <div class="mb-3">
+            {{ form_label(editForm.telCommercial, 'Téléphone', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(editForm.telCommercial, {'attr': {'class': 'form-control', 'placeholder': 'Numéro de téléphone'}}) }}
+          </div>
+          <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary w-25">Enregistrer</button>
+            <button type="reset" class="btn btn-label-danger w-25" data-bs-dismiss="offcanvas">Annuler</button>
+          </div>
+
+        {{ form_end(editForm) }}
+      </div>
+    </div>
+  {% endif %}
 {% endblock %}

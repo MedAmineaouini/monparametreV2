@@ -1,4 +1,28 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="modal-header border-bottom">
+    <h5 class="modal-title" id="modalTitle">{{ isEdit ? 'Modifier' : 'Ajouter' }} un commercial</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body mx-0 flex-grow-0 p-6 h-100">
+    {{ form_start(form, {'attr': {'class': 'commercial-form pt-0', 'id': 'commercialForm'}}) }}
+        <div class="mb-3">
+            {{ form_label(form.codeCommercial, 'Code commercial', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.codeCommercial, {'attr': {'class': 'form-control', 'placeholder': 'CODE'}}) }}
+        </div>
+        <div class="mb-3">
+            {{ form_label(form.nomCommercial, 'Nom', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.nomCommercial, {'attr': {'class': 'form-control', 'placeholder': 'Nom du commercial'}}) }}
+        </div>
+        <div class="mb-3">
+            {{ form_label(form.prenomCommercial, 'Prénom', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.prenomCommercial, {'attr': {'class': 'form-control', 'placeholder': 'Prénom du commercial'}}) }}
+        </div>
+        <div class="mb-3">
+            {{ form_label(form.telCommercial, 'Téléphone', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.telCommercial, {'attr': {'class': 'form-control', 'placeholder': 'Numéro de téléphone'}}) }}
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary me-3">Enregistrer</button>
+            <button type="button" class="btn btn-label-danger" data-bs-dismiss="modal">Annuler</button>
+        </div>
+    {{ form_end(form) }}
+</div>

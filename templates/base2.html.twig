@@ -315,6 +315,18 @@ $(document).ready(function() {
 });
 </script>
 
+<script>
+    document.querySelectorAll('.toggle-password').forEach(button => {
+        button.addEventListener('click', function() {
+            const input = this.closest('.input-group').querySelector('input');
+            const icon = this.querySelector('i');
+            const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+            input.setAttribute('type', type);
+            icon.classList.toggle('bx-hide');
+            icon.classList.toggle('bx-show');
+        });
+    });
+</script>
 
 </body>
 </html>

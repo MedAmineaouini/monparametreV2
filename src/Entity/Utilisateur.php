@@ -64,7 +64,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 10, name: 'WEBLOGIN')]
     private string $WEBLOGIN;
 
-    #[ORM\Column(type: 'string', length: 10, name: 'WEBMDP')]
+    #[ORM\Column(type: 'string', length: 100, name: 'WEBMDP')]
     private string $WEBMDP;
     public function __construct()
     {

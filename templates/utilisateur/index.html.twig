@@ -1,72 +1,216 @@
 {% extends 'base2.html.twig' %}
 
-{% block title %}RFT | Listes Utilisateurs{% endblock %}
+{% block title %}Liste des utilisateurs{% endblock %}
+
 {% block body %}
-    <div class="card shadow rounded-3 border-0">
-        <div class="card-header text-white d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">📋  Listes des utilisateurs</h5>
-            <a href="{{ path('app_utilisateur_new') }}" class="btn btn-success btn-sm">
-                <i class="bx bx-plus"></i> Nouveau utilisateur
-            </a>
+<div class="container-xxl flex-grow-1 container-p-y">
+  <div class="card">
+    <div class="card-header border-bottom">
+      <h5 class="card-title mb-0">📋 Liste des utilisateurs</h5>
+      <div class="d-flex justify-content-end align-items-center row pt-4 gap-md-0 g-6">
+        <div class="col-md-4 d-flex justify-content-end">
+          <button class="btn btn-success" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddUtilisateur">
+            <i class="icon-base bx bx-plus me-2"></i>Ajouter un utilisateur
+          </button>
         </div>
-<hr>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered table-striped align-middle small">
-                    <thead >
-                        <th>#</th>
-                        <th>Code</th>
-                        <th>Nom</th>
-                        <th>Mot de passe</th>
-                        <th>Email</th>
-                        <th>Niveau</th>
-                        <th>Actions</th>
-                    </thead>
-                    <tbody>
-                    {% for utilisateur in utilisateurs %}
-                        <tr>
-                            <td>{{ utilisateur.SEQUTIL }}</td>
-                            <td>{{ utilisateur.CODEUTIL }}</td>
-                            <td>{{ utilisateur.NOMUTIL }}</td>
-                            <td>{{ utilisateur.MDP[:7] ~ '.....' }}
-                            </td>
-                            <td>{{ utilisateur.EMAILUTIL }}</td>
-                            <td>
-                                {% if utilisateur.SEQNIVEAU %}
-                                    <span class="badge bg-success">Administrateur</span>
-                                {% else %}
-                                    <span class="badge bg-secondary">Utilisateur</span>
-                                {% endif %}
-                            </td>
-                            <td>
-                                <div class="dropdown">
-                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                            data-bs-toggle="dropdown">
-                                        <i class="icon-base bx bx-dots-vertical-rounded"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item"
-                                           href="{{ path('app_utilisateur_edit', {'SEQUTIL': utilisateur.SEQUTIL}) }}">
-                                            <i class="icon-base bx bx-edit-alt me-1"></i> Consulter / Modifier
-                                        </a>
-                                      
-                                         {{ include('utilisateur/_delete_form.html.twig') }}
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    {% else %}
-                        <tr>
-                            <td colspan="7" class="text-center text-muted">Aucun utilisateur trouvé.</td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+      </div>
+    </div>
+
+    <div class="card-datatable">
+      <table class="table table-bordered table-striped align-middle small">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Code</th>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Niveau</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for utilisateur in utilisateurs %}
+            <tr>
+              <td>{{ utilisateur.SEQUTIL }}</td>
+              <td>{{ utilisateur.CODEUTIL }}</td>
+              <td>{{ utilisateur.NOMUTIL }}</td>
+              <td>{{ utilisateur.emailutil }}</td>
+              <td>
+                {% if utilisateur.SEQNIVEAU %}
+                  <span class="badge bg-success">Administrateur</span>
+                {% else %}
+                  <span class="badge bg-secondary">Utilisateur</span>
+                {% endif %}
+              </td>
+              <td>
+                <div class="dropdown">
+                  <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                    <i class="icon-base bx bx-dots-vertical-rounded"></i>
+                  </button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{{ path('app_utilisateur_index', {'edit': utilisateur.SEQUTIL}) }}">
+                      <i class="icon-base bx bx-edit-alt me-1"></i> Modifier
+                    </a>
+                    {{ include('utilisateur/_delete_form.html.twig', {'utilisateur': utilisateur}) }}
+                  </div>
+                </div>
+              </td>
+            </tr>
+          {% else %}
+            <tr>
+              <td colspan="6" class="text-center text-muted">Aucun utilisateur trouvé.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Offcanvas Ajout -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddUtilisateur">
+  <div class="offcanvas-header border-bottom">
+    <h5 class="offcanvas-title">Ajouter un utilisateur</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
+  {{ form_start(addForm, {'attr': {'class': 'pt-0'}}) }}
+  <div class="row g-3 mb-4">
+   <div class="col-md-12">
+            {{ form_label(addForm.SEQUTIL, 'N°', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(addForm.SEQUTIL, {'attr': {'class': 'form-control bg-light', 'readonly': 'readonly'}}) }}
+        </div>
+    <div class="col-md-12">
+      {{ form_label(addForm.CODEUTIL, 'Code utilisateur', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+      {{ form_widget(addForm.CODEUTIL, {'attr': {'class': 'form-control', 'placeholder': 'UTIL001'}}) }}
+    </div>
+
+    <div class="col-md-12">
+      {{ form_label(addForm.NOMUTIL, 'Nom utilisateur', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+      {{ form_widget(addForm.NOMUTIL, {'attr': {'class': 'form-control', 'placeholder': 'Prénom Nom'}}) }}
+    </div>
+
+    <div class="col-md-12">
+      {{ form_label(addForm.MDP, 'Mot de passe', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+      <div class="input-group">
+        {{ form_widget(addForm.MDP, {'attr': {'class': 'form-control', 'id': 'mdp-add'}}) }}
+        <button type="button" class="btn btn-outline-secondary toggle-password" data-target="mdp-add">
+          <i class="bx bx-show" id="icon-mdp-add"></i>
+        </button>
+      </div>
+    </div>
+    <div class="col-md-12 d-flex align-items-center mt-11">
+        <div class="form-check form-switch">
+            {{ form_widget(addForm.ENCOURS, {'attr': {'class': 'form-check-input', 'role': 'switch'}}) }}
+            {{ form_label(addForm.ENCOURS, 'Utilisateur en cours', {'label_attr': {'class': 'form-check-label fw-semibold'}}) }}
+        </div>
+    </div>
+    <div class="col-md-12">
+      {{ form_label(addForm.SEQNIVEAU, 'Niveau', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+      {{ form_widget(addForm.SEQNIVEAU, {'attr': {'class': 'form-select'}}) }}
+    </div>
+    <div class="col-md-12">
+        {{ form_label(addForm.emailutil, 'Email', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+        {{ form_widget(addForm.emailutil, {'attr': {'class': 'form-control', 'placeholder': 'email@domaine.com'}}) }}
+    </div>
+    <div class="col-md-12">
+        {{ form_label(addForm.WEBLOGIN, 'Login web', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+        {{ form_widget(addForm.WEBLOGIN, {'attr': {'class': 'form-control', 'placeholder': 'login_web'}}) }}
+    </div>
+    <div class="col-md-12">
+        {{ form_label(addForm.WEBMDP, 'Mot de passe web', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+        <div class="input-group">
+            {{ form_widget(addForm.WEBMDP, {'attr': {'class': 'form-control', 'id': 'webmdp'}}) }}
+            <button type="button" class="btn btn-outline-secondary toggle-password" data-target="webmdp">
+                <i class="bx bx-show" id="icon-webmdp"></i>
+            </button>
         </div>
     </div>
 
+  </div>
+
+  <div class="pt-3 border-top">
+    <button type="submit" class="btn btn-primary w-100 mb-2">Enregistrer</button>
+    <button type="reset" class="btn btn-outline-danger w-100" data-bs-dismiss="offcanvas">Annuler</button>
+  </div>
+{{ form_end(addForm) }}
+
+  </div>
+</div>
+
+<!-- Offcanvas Modification -->
+
+{% if editForm is defined and editForm %}
+  <div class="offcanvas offcanvas-end show" id="offcanvasEditUtilisateur" style="visibility: visible;">
+    <div class="offcanvas-header border-bottom">
+      <h5 class="offcanvas-title">Modifier l'utilisateur</h5>
+      <a href="{{ path('app_utilisateur_index') }}" class="btn-close text-reset"></a>
+    </div>
+    <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
+      {{ form_start(editForm, {'attr': {'class': 'edit-utilisateur pt-0'}}) }}
+          <div class="col-md-12">
+        {{ form_label(editForm.SEQUTIL, 'N°', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+        {{ form_widget(editForm.SEQUTIL, {'attr': {'class': 'form-control bg-light', 'readonly': 'readonly'}}) }}
+      </div>
+      <div class="col-md-12">
+        {{ form_label(editForm.CODEUTIL, 'Code utilisateur', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+        {{ form_widget(editForm.CODEUTIL, {'attr': {'class': 'form-control', 'placeholder': 'UTIL001'}}) }}
+      </div>
+
+      <div class="col-md-12">
+        {{ form_label(editForm.NOMUTIL, 'Nom utilisateur', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+        {{ form_widget(editForm.NOMUTIL, {'attr': {'class': 'form-control', 'placeholder': 'Prénom Nom'}}) }}
+      </div>
+
+      <div class="col-md-12">
+        {{ form_label(editForm.MDP, 'Mot de passe', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+        <div class="input-group">
+          {{ form_widget(editForm.MDP, {'attr': {'class': 'form-control', 'id': 'mdp-edit'}}) }}
+          <button type="button" class="btn btn-outline-secondary toggle-password" data-target="mdp-edit">
+            <i class="bx bx-show" id="icon-mdp-edit"></i>
+          </button>
+      </div>
+          <div class="col-md-12 d-flex align-items-center mt-11">
+        <div class="form-check form-switch">
+            {{ form_widget(editForm.ENCOURS, {'attr': {'class': 'form-check-input', 'role': 'switch'}}) }}
+            {{ form_label(editForm.ENCOURS, 'Utilisateur en cours', {'label_attr': {'class': 'form-check-label fw-semibold'}}) }}
+        </div>
+    </div>
+    <div class="col-md-12">
+      {{ form_label(editForm.SEQNIVEAU, 'Niveau', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+      {{ form_widget(editForm.SEQNIVEAU, {'attr': {'class': 'form-select'}}) }}
+    </div>
+    <div class="col-md-12">
+        {{ form_label(editForm.emailutil, 'Email', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+        {{ form_widget(editForm.emailutil, {'attr': {'class': 'form-control', 'placeholder': 'email@domaine.com'}}) }}
+    </div>
+    <div class="col-md-12">
+        {{ form_label(editForm.WEBLOGIN, 'Login web', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+        {{ form_widget(editForm.WEBLOGIN, {'attr': {'class': 'form-control', 'placeholder': 'login_web'}}) }}
+    </div>
+    <div class="col-md-12">
+        {{ form_label(editForm.WEBMDP, 'Mot de passe web', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+        <div class="input-group">
+            {{ form_widget(editForm.WEBMDP, {'attr': {'class': 'form-control', 'id': 'webmdp'}}) }}
+            <button type="button" class="btn btn-outline-secondary toggle-password" data-target="webmdp">
+                <i class="bx bx-show" id="icon-webmdp"></i>
+            </button>
+        </div>
+    </div>
+      </div>
+         <div class="pt-3 border-top">
+           <button type="submit" class="btn btn-primary w-100 mb-2">Enregistrer</button>
+           <button type="reset" class="btn btn-outline-danger w-100" data-bs-dismiss="offcanvas">Annuler</button>
+        </div>
+      {{ form_end(editForm) }}
+    </div>
+  </div>
+{% endif %}
+
+
+
+
+
+
+
 {% endblock %}
-
-
-
