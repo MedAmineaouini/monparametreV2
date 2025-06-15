@@ -9,21 +9,60 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\SouspaysRepository;
 
 #[Route('/souspays')]
 class SouspaysController extends AbstractController
 {
-    #[Route('/', name: 'app_souspays_index', methods: ['GET'])]
-    public function index(EntityManagerInterface $entityManager): Response
-    {
-        $souspays = $entityManager
-            ->getRepository(Souspays::class)
-            ->findAll();
-
+    #[Route('/', name: 'app_souspays_index', methods: ['GET', 'POST'])]
+    public function index(
+        Request $request,
+        SouspaysRepository $sousPaysRepository,
+        EntityManagerInterface $entityManager
+    ): Response {
+        // Liste des sous-pays
+        $souspays = $sousPaysRepository->findAll();
+    
+        // === Formulaire d'ajout ===
+        $newSousPays = new SousPays();
+        $addForm = $this->createForm(SousPaysType::class, $newSousPays);
+        $addForm->handleRequest($request);
+    
+        if ($addForm->isSubmitted() && $addForm->isValid() && !$request->query->get('edit')) {
+            $entityManager->persist($newSousPays);
+            $entityManager->flush();
+            $this->addFlash('success', 'Le sous-pays a été ajouté avec succès.');
+            return $this->redirectToRoute('app_souspays_index');
+        }
+    
+        // === Formulaire de modification ===
+        $editId = $request->query->get('edit');
+        $sousPaysToEdit = null;
+        $editForm = null;
+    
+        if ($editId) {
+            $sousPaysToEdit = $sousPaysRepository->find($editId);
+    
+            if ($sousPaysToEdit) {
+                $editForm = $this->createForm(SousPaysType::class, $sousPaysToEdit);
+                $editForm->handleRequest($request);
+    
+                if ($editForm->isSubmitted() && $editForm->isValid()) {
+                    $entityManager->flush();
+                    $this->addFlash('success', 'Le sous-pays a été modifié avec succès.');
+                    return $this->redirectToRoute('app_souspays_index');
+                }
+            }
+        }
+    
         return $this->render('souspays/index.html.twig', [
             'souspays' => $souspays,
+            'addForm' => $addForm->createView(),
+            'editForm' => $editForm ? $editForm->createView() : null,
+            'sousPaysToEdit' => $sousPaysToEdit,
         ]);
     }
+
 
     #[Route('/new', name: 'app_souspays_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response

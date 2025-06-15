@@ -15,18 +15,52 @@ use Symfony\Component\Routing\Annotation\Route;
 class PaysController extends AbstractController
 {
 
-    #[Route(path: '/pays/test/', name: 'app_pays_test')]
-    public function test(): Response
-    {
-        return $this->render('pays/test.html.twig');
-    }
-
-
-    #[Route('/', name: 'app_pays_index', methods: ['GET'])]
-    public function index(PaysRepository $paysRepository): Response
-    {
+    #[Route('/', name: 'app_pays_index', methods: ['GET', 'POST'])]
+    public function index(
+        Request $request,
+        PaysRepository $paysRepository,
+        EntityManagerInterface $entityManager
+    ): Response {
+        // Liste des pays
+        $pays = $paysRepository->findAll();
+    
+        // === Formulaire d'ajout ===
+        $newPays = new Pays();
+        $addForm = $this->createForm(PaysType::class, $newPays);
+        $addForm->handleRequest($request);
+    
+        if ($addForm->isSubmitted() && $addForm->isValid() && !$request->query->get('edit')) {
+            $entityManager->persist($newPays);
+            $entityManager->flush();
+            $this->addFlash('success', 'Le pays a été ajouté avec succès.');
+            return $this->redirectToRoute('app_pays_index');
+        }
+    
+        // === Formulaire de modification ===
+        $editId = $request->query->get('edit');
+        $paysToEdit = null;
+        $editForm = null;
+    
+        if ($editId) {
+            $paysToEdit = $paysRepository->find($editId);
+    
+            if ($paysToEdit) {
+                $editForm = $this->createForm(PaysType::class, $paysToEdit);
+                $editForm->handleRequest($request);
+    
+                if ($editForm->isSubmitted() && $editForm->isValid()) {
+                    $entityManager->flush();
+                    $this->addFlash('success', 'Le pays a été modifié avec succès.');
+                    return $this->redirectToRoute('app_pays_index');
+                }
+            }
+        }
+    
         return $this->render('pays/index.html.twig', [
-            'pays' => $paysRepository->findAll(),
+            'pays' => $pays,
+            'addForm' => $addForm->createView(),
+            'editForm' => $editForm ? $editForm->createView() : null,
+            'paysToEdit' => $paysToEdit,
         ]);
     }
 

@@ -1,43 +1,36 @@
 <div class="card-body" style="font-size: 12px">
-
     {{ form_start(form, {'attr': {'class': 'browser-default-validation'}}) }}
 
     <div class="row g-3 mb-4 align-items-center">
-        <div class="col-md-4">
+        <div class="col-md-12">
             {{ form_label(form.CODEPAYS, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
             <strong class="text-danger">*</strong>
             {{ form_widget(form.CODEPAYS, {'attr': {'class': 'form-control', 'maxlength': 2, 'placeholder': 'Code', 'required': 'required'}}) }}
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-12">
             {{ form_label(form.LIBPAYS, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
             <strong class="text-danger">*</strong>
             {{ form_widget(form.LIBPAYS, {'attr': {'class': 'form-control', 'maxlength': 30, 'placeholder': 'Libellé', 'required': 'required'}}) }}
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-12">
             {{ form_label(form.CODE_IATA, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
             <strong class="text-danger">*</strong>
-            {{ form_widget(form.CODE_IATA, {'attr': {'class': 'form-control', 'maxlength': 30,  'required': 'required'}}) }}
+            {{ form_widget(form.CODE_IATA, {'attr': {'class': 'form-control', 'maxlength': 30, 'required': 'required'}}) }}
         </div>
     </div>
 
     <div class="row g-3 mb-4 align-items-center">
-        <div class="col-md-4">
+        <div class="col-md-12">
             {{ form_label(form.PLACE, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
             {{ form_widget(form.PLACE, {'attr': {'class': 'form-control'}}) }}
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-12">
             {{ form_label(form.NATURE, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
             {{ form_widget(form.NATURE, {'attr': {'class': 'form-control'}}) }}
         </div>
-
-{#        <div class="col-md-4">#}
-{#            {{ form_label(form.CONTINENT, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}#}
-{#            <strong class="text-danger">*</strong>#}
-{#            {{ form_widget(form.CONTINENT, {'attr': {'class': 'form-control', 'maxlength': 30, 'placeholder': 'Continent', 'required': 'required'}}) }}#}
-{#        </div>#}
     </div>
 
     <div class="row g-3 mb-4">
@@ -55,12 +48,18 @@
     </div>
 
     <div class="pt-3 border-top text-end">
-        <button type="submit" class="btn btn-primary px-4">
+        <button type="submit" class="btn btn-primary w-100 mb-2">
             <i class="bx bx-save me-2"></i>{{ button_label|default('Enregistrer') }}
         </button>
-        <a href="{{ path('app_pays_index') }}" class="btn btn-outline-secondary px-4">
-            <i class="bx bx-x me-2"></i>Annuler
-        </a>
+        {% if form.vars.data.IDPAYS %}
+            <a href="{{ path('app_pays_index') }}" class="btn btn-outline-danger w-100 px-4">
+                <i class="bx bx-x me-2"></i>Annuler
+            </a>
+        {% else %}
+            <button type="button" class="btn btn-outline-danger w-100 px-4" data-bs-dismiss="offcanvas">
+                <i class="bx bx-x me-2"></i>Annuler
+            </button>
+        {% endif %}
     </div>
 
     {{ form_end(form) }}

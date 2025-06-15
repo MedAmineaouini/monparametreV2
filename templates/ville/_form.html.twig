@@ -2,53 +2,53 @@
     {{ form_start(form, {'attr': {'class': 'browser-default-validation'}}) }}
 
     <div class="row g-3 mb-4 align-items-center">
-        <div class="col-md-1">
+        <div class="col-md-12">
             {{ form_label(form.codeville, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
             {{ form_widget(form.codeville, {'attr': {'class': 'form-control', 'required': true}}) }}
         </div>
 
-{#        <div class="col-md-4">#}
-{#            {{ form_label(form.aero, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}#}
-{#            {{ form_widget(form.aero, {'attr': {'class': 'form-control'}}) }}#}
-{#        </div>#}
+        <div class="col-md-12">
+          {{ form_label(form.aero, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.aero, {'attr': {'class': 'form-control'}}) }}
+        </div>
 
-        <div class="col-md-3">
+        <div class="col-md-12">
             {{ form_label(form.libville, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
             {{ form_widget(form.libville, {'attr': {'class': 'form-control'}}) }}
         </div>
 
-        <div class="col-md-1">
+        <div class="col-md-12">
             {{ form_label(form.codeiata, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
             {{ form_widget(form.codeiata, {'attr': {'class': 'form-control'}}) }}
         </div>
 
-{#        <div class="col-md-4">#}
-{#            {{ form_label(form.iataaero, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}#}
-{#            {{ form_widget(form.iataaero, {'attr': {'class': 'form-control'}}) }}#}
-{#        </div>#}
+       <div class="col-md-12"> 
+           {{ form_label(form.iataaero, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }} 
+           {{ form_widget(form.iataaero, {'attr': {'class': 'form-control'}}) }} 
+       </div> 
 
-{#        <div class="col-md-4">#}
-{#            {{ form_label(form.seq_zone, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}#}
-{#            {{ form_widget(form.seq_zone, {'attr': {'class': 'form-control'}}) }}#}
-{#        </div>#}
+       <div class="col-md-12"> 
+           {{ form_label(form.seq_zone, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }} 
+            {{ form_widget(form.seq_zone, {'attr': {'class': 'form-control'}}) }} 
+       </div>
     </div>
 
     <div class="row g-3 mb-4 align-items-center">
-{#        <div class="col-md-4">#}
-{#            {{ form_label(form.seqvilleparent, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}#}
-{#            {{ form_widget(form.seqvilleparent, {'attr': {'class': 'form-control'}}) }}#}
-{#        </div>#}
+       <div class="col-md-12"> 
+           {{ form_label(form.seqvilleparent, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }} 
+           {{ form_widget(form.seqvilleparent, {'attr': {'class': 'form-control'}}) }} 
+       </div> 
 
-{#        <div class="col-md-4">#}
-{#            {{ form_label(form.taxe_b2b, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}#}
-{#            {{ form_widget(form.taxe_b2b, {'attr': {'class': 'form-control'}}) }}#}
-{#        </div>#}
+       <div class="col-md-12"> 
+           {{ form_label(form.taxe_b2b, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }} 
+           {{ form_widget(form.taxe_b2b, {'attr': {'class': 'form-control'}}) }} 
+       </div> 
 
-        <div class="col-md-4">
+        <div class="col-md-12">
             {{ form_label(form.pays, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
             {{ form_widget(form.pays, {'attr': {'class': 'form-select'}}) }}
         </div>
-        <div class="col-md-4">
+        <div class="col-md-12">
             {{ form_label(form.souspays, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
             {{ form_widget(form.souspays, {'attr': {'class': 'form-select'}}) }}
         </div>
@@ -56,13 +56,18 @@
 
 
     <div class="pt-3 border-top text-end">
-        <button type="submit" class="btn btn-primary px-4">
+        <button type="submit" class="btn btn-primary w-100 mb-2">
             <i class="bx bx-save me-2"></i>{{ button_label|default('Enregistrer') }}
         </button>
-        <a href="{{ path('app_ville_index') }}" class="btn btn-outline-secondary px-4">
-            <i class="bx bx-x me-2"></i>Annuler
-        </a>
+        {% if form.vars.data.seqville %}
+            <a href="{{ path('app_ville_index') }}" class="btn btn-outline-danger w-100 px-4">
+                <i class="bx bx-x me-2"></i>Annuler
+            </a>
+        {% else %}
+            <button type="button" class="btn btn-outline-danger w-100 px-4" data-bs-dismiss="offcanvas">
+                <i class="bx bx-x me-2"></i>Annuler
+            </button>
+        {% endif %}
     </div>
-
     {{ form_end(form) }}
 </div>

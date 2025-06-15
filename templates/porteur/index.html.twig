@@ -97,14 +97,20 @@
                         </div>#}
                     </div>
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
-                            Annuler
-                        </button>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="bx bx-save me-2"></i>{{ button_label|default('Enregistrer') }}
-                        </button>
-                    </div>
+            <div class="pt-3 border-top text-end">
+                <button type="submit" class="btn btn-primary w-100 mb-2">
+                    <i class="bx bx-save me-2"></i>{{ button_label|default('Enregistrer') }}
+                </button>
+                {% if form.vars.data.porteur %}
+                    <a href="{{ path('app_porteur_index') }}" class="btn btn-outline-danger w-100 px-4">
+                        <i class="bx bx-x me-2"></i>Annuler
+                    </a>
+                {% else %}
+                    <button type="button" class="btn btn-outline-danger w-100 px-4" data-bs-dismiss="offcanvas">
+                        <i class="bx bx-x me-2"></i>Annuler
+                    </button>
+                {% endif %}
+            </div>
                 {{ form_end(form) }}
             </div>
         </div>

@@ -1,72 +1,95 @@
 {% extends 'base2.html.twig' %}
 
-{% block title %}RFT | Liste des Villes {% endblock %}
+{% block title %}Liste des Villes{% endblock %}
 
 {% block body %}
-    <div class="card shadow rounded-3 border-0">
-        <div class="card-header text-white d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">📋 Listes des Villes</h5>
-
-            <div class="d-flex gap-2">
-                <a href="{{ path('app_ville_new') }}" class="btn btn-success btn-sm">
-                    <i class="bx bx-plus"></i> Nouvelle ville
-                </a>
-
-                <a href="{{ path('app_ville_export_pdf') }}" class="btn btn-danger btn-sm" target="_blank">
-                    <i class="bx bxs-file-pdf"></i> Exporter en PDF
-                </a>
-            </div>
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <div class="card">
+      <div class="card-header border-bottom">
+        <h5 class="card-title mb-0">📋 Liste des Villes</h5>
+        <div class="d-flex justify-content-end align-items-center row pt-4 gap-md-0 g-6">
+          <div class="col-md-4 d-flex justify-content-end gap-2">
+            <button class="btn btn-success" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddVille">
+              <i class="icon-base bx bx-plus me-2"></i>Ajouter une ville
+            </button>
+            <a href="{{ path('app_ville_export_pdf') }}" class="btn btn-danger" target="_blank">
+              <i class="bx bxs-file-pdf me-2"></i>Exporter PDF
+            </a>
+          </div>
         </div>
-
-        <hr>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered table-striped align-middle small">
-                    <thead>
-                    <tr>
-                        <th>N°</th>
-                        <th>Code ville</th>
-                        <th>Libville</th>
-{#                        <th>Code iata</th>#}
-                        <th>Pays</th>
-                        <th>Souspays</th>
-                        <th>actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for ville in villes %}
-                        <tr>
-                            <td>{{ ville.seqville }}</td>
-                            <td>{{ ville.codeville }}</td>
-                            <td>{{ ville.libville }}</td>
-{#                            <td>{{ ville.codeiata }}</td>#}
-                            <td>{{ ville.pays.libpays }}</td>
-                            <td>{{ ville.souspays.libsouspays }}</td>
-                            <td>
-                                <div class="dropdown">
-                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                            data-bs-toggle="dropdown">
-                                        <i class="icon-base bx bx-dots-vertical-rounded"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item"
-                                           href="{{ path('app_ville_edit', {'seqville': ville.seqville}) }}">
-                                            <i class="icon-base bx bx-edit-alt me-1"></i> Consulter / Modifier
-                                        </a>
-
-                                        {{ include('ville/_delete_form.html.twig') }}
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    {% else %}
-                        <tr>
-                            <td colspan="10" style="text-align: center" class="text-center text-muted">aucun enregistrement trouvé.</td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+      </div>
+      <div class="card-datatable">
+        <table class="datatables-villes table border-top">
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th>Code ville</th>
+              <th>Libellé</th>
+              <th>Pays</th>
+              <th>Sous-pays</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for ville in villes %}
+              <tr>
+                <td>{{ ville.seqville }}</td>
+                <td>{{ ville.codeville }}</td>
+                <td>{{ ville.libville }}</td>
+                <td>{{ ville.pays.libpays }}</td>
+                <td>{{ ville.souspays.libsouspays }}</td>
+                <td>
+                  <div class="dropdown">
+                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                      <i class="icon-base bx bx-dots-vertical-rounded"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="{{ path('app_ville_index', {'edit': ville.seqville}) }}">
+                        <i class="icon-base bx bx-edit-alt me-1"></i> Modifier
+                      </a>
+                      {{ include('ville/_delete_form.html.twig', {'ville': ville}) }}
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            {% else %}
+              <tr>
+                <td colspan="6" class="text-center">Aucune ville trouvée</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
+  </div>
+
+  <!-- Offcanvas pour ajouter une ville -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddVille" aria-labelledby="offcanvasAddVilleLabel">
+    <div class="offcanvas-header border-bottom">
+      <h5 id="offcanvasAddVilleLabel" class="offcanvas-title">Ajouter une ville</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
+      {{ include('ville/_form.html.twig', {
+        form: addForm,
+        button_label: 'Enregistrer'
+      }) }}
+    </div>
+  </div>
+
+  <!-- Offcanvas pour modifier une ville -->
+  {% if editForm is defined and editForm %}
+    <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasEditVille" style="visibility: visible;" aria-labelledby="offcanvasEditVilleLabel">
+      <div class="offcanvas-header border-bottom">
+        <h5 id="offcanvasEditVilleLabel" class="offcanvas-title">Modifier la ville</h5>
+        <a href="{{ path('app_ville_index') }}" class="btn-close text-reset" aria-label="Close"></a>
+      </div>
+      <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
+        {{ include('ville/_form.html.twig', {
+          form: editForm,
+          button_label: 'Mettre à jour'
+        }) }}
+      </div>
+    </div>
+  {% endif %}
 {% endblock %}

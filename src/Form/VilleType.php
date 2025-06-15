@@ -20,20 +20,20 @@ class VilleType extends AbstractType
             ->add('codeville', TextType::class, [
                 'label' => 'Code Ville'
             ])
-//            ->add('aero')
+           ->add('aero')
             ->add('libville', TextType::class, [
                 'label' => 'Ville'
             ])
             ->add('codeiata', TextType::class, [
                 'label' => 'Code ISO ville'
             ])
-//            ->add('seq_zone')
-//            ->add('iataaero')
-//            ->add('seqvilleparent')
-//            ->add('taxe_b2b')
+           ->add('seq_zone')
+           ->add('iataaero')
+           ->add('seqvilleparent')
+           ->add('taxe_b2b')
             ->add('pays', EntityType::class, [
                 'class' => Pays::class,
-                'choice_label' => 'LIBPAYS', // ou 'nom', selon ton entité
+                'choice_label' => 'LIBPAYS', 
             ])
             ->add('souspays', EntityType::class, [
                 'class' => SousPays::class,

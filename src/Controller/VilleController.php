@@ -12,19 +12,96 @@ use Symfony\Component\Routing\Annotation\Route;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use App\Repository\VilleRepository;
+
 #[Route('/ville')]
 class VilleController extends AbstractController
 {
-    #[Route('/', name: 'app_ville_index', methods: ['GET'])]
-    public function index(EntityManagerInterface $entityManager): Response
-    {
-        $villes = $entityManager
-            ->getRepository(Ville::class)
-            ->findAll();
-
+    #[Route('/', name: 'app_ville_index', methods: ['GET', 'POST'])]
+    public function index(
+        Request $request,
+        VilleRepository $villeRepository,
+        EntityManagerInterface $entityManager
+    ): Response {
+        // Liste des villes
+        $villes = $villeRepository->findAll();
+    
+        // Formulaire d'ajout
+        $newVille = new Ville();
+        $addForm = $this->createForm(VilleType::class, $newVille);
+        $addForm->handleRequest($request);
+    
+        if ($addForm->isSubmitted() && $addForm->isValid() && !$request->query->get('edit')) {
+            $entityManager->persist($newVille);
+            $entityManager->flush();
+            $this->addFlash('success', 'La ville a été ajoutée avec succès.');
+            return $this->redirectToRoute('app_ville_index');
+        }
+    
+        // Formulaire de modification
+        $editId = $request->query->get('edit');
+        $villeToEdit = null;
+        $editForm = null;
+    
+        if ($editId) {
+            $villeToEdit = $villeRepository->find($editId);
+            if ($villeToEdit) {
+                $editForm = $this->createForm(VilleType::class, $villeToEdit);
+                $editForm->handleRequest($request);
+    
+                if ($editForm->isSubmitted() && $editForm->isValid()) {
+                    $entityManager->flush();
+                    $this->addFlash('success', 'La ville a été modifiée avec succès.');
+                    return $this->redirectToRoute('app_ville_index');
+                }
+            }
+        }
+    
         return $this->render('ville/index.html.twig', [
             'villes' => $villes,
+            'addForm' => $addForm->createView(),
+            'editForm' => $editForm ? $editForm->createView() : null,
+            'villeToEdit' => $villeToEdit,
         ]);
+    }
+
+    #[Route('/{seqville}', name: 'app_ville_delete', methods: ['POST'])]
+    public function delete(Request $request, Ville $ville, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$ville->getSeqville(), $request->request->get('_token'))) {
+            $entityManager->remove($ville);
+            $entityManager->flush();
+            $this->addFlash('success', 'La ville a été supprimée avec succès.');
+        }
+
+        return $this->redirectToRoute('app_ville_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/export/pdf', name: 'app_ville_export_pdf')]
+    public function exportPdf(VilleRepository $villeRepository): Response
+    {
+        $villes = $villeRepository->findAll();
+
+        $options = new Options();
+        $options->set('defaultFont', 'Arial');
+        $dompdf = new Dompdf($options);
+
+        $html = $this->renderView('ville/pdf.html.twig', [
+            'villes' => $villes,
+        ]);
+
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+
+        return new Response(
+            $dompdf->output(),
+            200,
+            [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="liste_villes.pdf"',
+            ]
+        );
     }
 
     #[Route('/new', name: 'app_ville_new', methods: ['GET', 'POST'])]
@@ -73,43 +150,5 @@ class VilleController extends AbstractController
         ]);
     }
 
-    #[Route('/{seqville}', name: 'app_ville_delete', methods: ['POST'])]
-    public function delete(Request $request, Ville $ville, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$ville->getSeqville(), $request->request->get('_token'))) {
-            $entityManager->remove($ville);
-            $entityManager->flush();
-        }
 
-        return $this->redirectToRoute('app_ville_index', [], Response::HTTP_SEE_OTHER);
-    }
-
-    #[Route('/export/pdf', name: 'app_ville_export_pdf')]
-    public function exportPdf(EntityManagerInterface $entityManager): Response
-    {
-        $villes = $entityManager->getRepository(Ville::class)->findAll();
-
-        // Configure Dompdf
-        $options = new Options();
-        $options->set('defaultFont', 'Arial');
-        $dompdf = new Dompdf($options);
-
-        // Rendu HTML (depuis un template Twig)
-        $html = $this->renderView('ville/pdf.html.twig', [
-            'villes' => $villes,
-        ]);
-
-        $dompdf->loadHtml($html);
-        $dompdf->setPaper('A4', 'portrait');
-        $dompdf->render();
-
-        return new Response(
-            $dompdf->output(),
-            200,
-            [
-                'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'inline; filename="liste_villes.pdf"',
-            ]
-        );
-    }
 }
