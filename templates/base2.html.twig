@@ -115,17 +115,16 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
-                                    <a class="dropdown-item" href="pages-account-settings-account.html">
+                                    <a class="dropdown-item" href="{{ app.user ? path('app_utilisateur_edit', { SEQUTIL: app.user.SEQUTIL }) : '#' }}">
                                         <div class="d-flex">
                                             <div class="flex-shrink-0 me-3">
                                                 <div class="avatar avatar-online">
-                                                    <img src="{{ asset('assets/assets/img/avatars/1.png') }}" alt
-                                                         class="w-px-40 h-auto rounded-circle"/>
+                                                    <img src="{{ asset('assets/assets/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle"/>
                                                 </div>
                                             </div>
                                             <div class="flex-grow-1">
-                                                <h6 class="mb-0">{{ app.user.NOMUTIL }}</h6>
-                                                <small class="text-body-secondary">Admin</small>
+                                                <h6 class="mb-0">{{ app.user ? app.user.NOMUTIL : 'Invité' }}</h6>
+                                                <small class="text-body-secondary">{{ app.user ? app.user.PROFILUTIL : 'Non connecté' }}</small>
                                             </div>
                                         </div>
                                     </a>
@@ -133,21 +132,27 @@
                                 <li>
                                     <div class="dropdown-divider my-1"></div>
                                 </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ path('app_utilisateur_edit', { SEQUTIL: app.user.SEQUTIL }) }}">
-                                        <i class="icon-base bx bx-user icon-md me-3"></i><span>My Profile</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <form id="logout-form" action="{{ path('app_logout') }}" method="post" style="display: none;">
-                                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('logout') }}">
-                                    </form>
-
-                                    <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        <i class="icon-base bx bx-power-off icon-md me-3"></i><span>Log Out</span>
-                                    </a>
-
-                                </li>
+                                {% if app.user %}
+                                    <li>
+                                        <a class="dropdown-item" href="{{ path('app_utilisateur_edit', { SEQUTIL: app.user.SEQUTIL }) }}">
+                                            <i class="icon-base bx bx-user icon-md me-3"></i><span>Mon Profil</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <form id="logout-form" action="{{ path('app_logout') }}" method="post" style="display: none;">
+                                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('logout') }}">
+                                        </form>
+                                        <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            <i class="icon-base bx bx-power-off icon-md me-3"></i><span>Déconnexion</span>
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li>
+                                        <a class="dropdown-item" href="{{ path('app_login') }}">
+                                            <i class="icon-base bx bx-log-in icon-md me-3"></i><span>Connexion</span>
+                                        </a>
+                                    </li>
+                                {% endif %}
                             </ul>
                         </li>
                         <!--/ User -->
