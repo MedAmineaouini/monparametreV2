@@ -1,9 +1,11 @@
 <form method="post"
       action="{{ path('app_utilisateur_delete', {'SEQUTIL': utilisateur.SEQUTIL}) }}"
-      onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');"
-      style="display: inline;">
+      class="delete-form">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ utilisateur.SEQUTIL) }}">
-    <button type="submit" class="dropdown-item text-danger border-0 bg-transparent w-100 text-start">
+    <button type="button" 
+            class="dropdown-item text-danger border-0 bg-transparent w-100 text-start delete-btn"
+            data-confirm-message="Êtes-vous sûr de vouloir supprimer cet utilisateur ?"
+            data-success-message="L'utilisateur a été supprimé avec succès">
         <i class="icon-base bx bx-trash me-1"></i> Supprimer
     </button>
 </form>

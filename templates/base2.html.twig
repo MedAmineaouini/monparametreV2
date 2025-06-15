@@ -68,6 +68,8 @@
     <link rel="stylesheet" href="{{ asset('assets/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css') }}">
     <!-- Row Group CSS -->
     <link rel="stylesheet" href="{{ asset('assets/assets/vendor/libs/datatables-rowgroup-bs5/rowgroup.bootstrap5.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/assets/vendor/libs/sweetalert2/sweetalert2.css') }}">
+
 </head>
 
 <body>
@@ -216,6 +218,7 @@
 <script src="{{ asset('assets/assets/vendor/libs/pickr/pickr.js') }}"></script>
 
 
+
   <!-- Vendors JS -->
     <script src="{{ asset('assets/assets/vendor/libs/moment/moment.js') }}"></script>
     <script src="{{ asset('assets/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
@@ -327,6 +330,44 @@ $(document).ready(function() {
         });
     });
 </script>
-
+    <script src="{{ asset('assets/assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+<script>
+document.querySelectorAll('.delete-btn').forEach(button => {
+    button.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const confirmMessage = this.dataset.confirmMessage || 'Êtes-vous sûr de vouloir supprimer cet élément ?';
+        const successMessage = this.dataset.successMessage || 'L\'élément a été supprimé avec succès.';
+        
+        Swal.fire({
+            title: 'Confirmer la suppression',
+            text: confirmMessage,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#696cff',
+            cancelButtonColor: '#ff3e1d',
+            confirmButtonText: 'Oui, supprimer!',
+            cancelButtonText: 'Annuler',
+            customClass: {
+                confirmButton: 'btn btn-primary me-3',
+                cancelButton: 'btn btn-label-danger'
+            },
+            buttonsStyling: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.closest('form').submit();
+                
+                Swal.fire({
+                    title: 'Supprimé!',
+                    text: successMessage,
+                    icon: 'success',
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+            }
+        });
+    });
+});
+</script>
 </body>
 </html>

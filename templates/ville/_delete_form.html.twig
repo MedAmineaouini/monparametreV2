@@ -1,10 +1,11 @@
-
-<form method="post"
-      action="{{ path('app_ville_delete', {'seqville': ville.seqville}) }}"
-      onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet Ville ?');"
-      style="display: inline;">
+<form method="post" 
+      action="{{ path('app_ville_delete', {'seqville': ville.seqville}) }}" 
+      class="delete-form">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ville.seqville) }}">
-    <button type="submit" class="dropdown-item text-danger border-0 bg-transparent w-100 text-start">
+    <button type="button" 
+            class="dropdown-item text-danger border-0 bg-transparent w-100 text-start delete-btn"
+            data-confirm-message="Êtes-vous sûr de vouloir supprimer cette ville ?"
+            data-success-message="La ville a été supprimée avec succès">
         <i class="icon-base bx bx-trash me-1"></i> Supprimer
     </button>
 </form>
