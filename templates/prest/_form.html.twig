@@ -1,0 +1,40 @@
+<div class="card-body" style="font-size: 12px">
+    {{ form_start(form, {'attr': {'class': 'browser-default-validation'}}) }}
+
+    <div class="row g-3 mb-4 align-items-center">
+        <div class="col-md-12">
+            {{ form_label(form.LIBPREST, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.LIBPREST, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="col-md-12">
+            {{ form_label(form.CODEPREST, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.CODEPREST, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="col-md-12 d-flex align-items-center mt-7">
+            <div class="form-check form-switch">
+                {{ form_widget(form.ACTIVER, {'attr': {'class': 'form-check-input', 'role': 'switch'}}) }}
+                {{ form_label(form.ACTIVER, 'Activer ', {'label_attr': {'class': 'form-check-label fw-semibold'}}) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="pt-3 border-top text-end">
+        <button type="submit" class="btn btn-primary w-100 mb-2">
+            <i class="bx bx-save me-2"></i>{{ button_label|default('Enregistrer') }}
+        </button>
+
+        {% if form.vars.data.SEQPREST is defined and form.vars.data.SEQPREST %}
+            <a href="{{ path('app_prest_index') }}" class="btn btn-outline-danger w-100 px-4">
+                <i class="bx bx-x me-2"></i>Annuler
+            </a>
+        {% else %}
+            <button type="button" class="btn btn-outline-danger w-100 px-4" data-bs-dismiss="offcanvas">
+                <i class="bx bx-x me-2"></i>Annuler
+            </button>
+        {% endif %}
+    </div>
+
+    {{ form_end(form) }}
+</div>

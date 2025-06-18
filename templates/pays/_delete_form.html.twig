@@ -1,6 +1,10 @@
-<form method="post" action="{{ path('app_pays_delete', {'IDPAYS': pay.IDPAYS}) }}" class="d-inline delete-form" onsubmit="return false;">
+<form method="post"
+      action="{{ path('app_pays_delete', {'IDPAYS': pay.IDPAYS}) }}"
+      class="delete-form">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ pay.IDPAYS) }}">
-    <button type="submit" class="btn btn-sm btn-danger delete-btn" title="Supprimer">
-        <i class="bx bx-trash"></i> Supprimer
+    <button type="button" class="dropdown-item text-danger border-0 bg-transparent w-100 text-start delete-btn"
+            data-confirm-message="Êtes-vous sûr de vouloir supprimer ce pays ?"
+            data-success-message="Le pays a été supprimé avec succès">
+        <i class="icon-base bx bx-trash me-1"></i> Supprimer
     </button>
 </form>
