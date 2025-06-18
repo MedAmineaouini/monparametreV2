@@ -10,8 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
-
 
 #[Route('/pays')]
 class PaysController extends AbstractController
@@ -112,23 +110,36 @@ class PaysController extends AbstractController
         ]);
     }
 
-
     #[Route('/{IDPAYS}', name: 'app_pays_delete', methods: ['POST'])]
     public function delete(Request $request, Pays $pay, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$pay->getIDPAYS(), $request->request->get('_token'))) {
+        if ($request->isXmlHttpRequest()) {
             try {
                 $entityManager->remove($pay);
                 $entityManager->flush();
-                $this->addFlash('success', 'Pays supprimé avec succès.');
-            } catch (ForeignKeyConstraintViolationException $e) {
-                $this->addFlash('error', 'Suppression impossible : ce pays est référencé dans une autre table.');
+
+                return $this->json([
+                    'success' => true,
+                    'message' => 'Pays supprimé avec succès.'
+                ]);
+
             } catch (\Exception $e) {
-                $this->addFlash('error', 'Une erreur est survenue lors de la suppression.');
+                // Détection spécifique des erreurs de contrainte SQL Server
+                if (str_contains($e->getMessage(), 'REFERENCE constraint')) {
+                    preg_match('/table "([^"]+)"/', $e->getMessage(), $matches);
+                    $table = $matches[1] ?? 'une table';
+
+                    return $this->json([
+                        'success' => false,
+                        'message' => "Impossible de supprimer : ce pays est utilisé dans $table."
+                    ], 400);
+                }
+
+                return $this->json([
+                    'success' => false,
+                    'message' => 'Erreur lors de la suppression : ' . $e->getMessage()
+                ], 500);
             }
         }
-
-        return $this->redirectToRoute('app_pays_index');
     }
-
 }

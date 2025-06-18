@@ -58,16 +58,20 @@
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
 
     <script src="{{ asset('assets/assets/js/config.js') }}"></script>
-    <link rel="stylesheet" href="{{ asset('assets/assets/vendor/libs/flatpickr/flatpickr.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/assets/vendor/libs/jquery-timepicker/jquery-timepicker.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/assets/vendor/libs/pickr/pickr-themes.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/assets/vendor/libs/flatpickr/flatpickr.css') }}"/>
+    <link rel="stylesheet"
+          href="{{ asset('assets/assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/assets/vendor/libs/jquery-timepicker/jquery-timepicker.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/assets/vendor/libs/pickr/pickr-themes.css') }}"/>
 
     <link rel="stylesheet" href="{{ asset('assets/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css') }}">
+    <link rel="stylesheet"
+          href="{{ asset('assets/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}">
+    <link rel="stylesheet"
+          href="{{ asset('assets/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css') }}">
     <!-- Row Group CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/assets/vendor/libs/datatables-rowgroup-bs5/rowgroup.bootstrap5.css') }}">
+    <link rel="stylesheet"
+          href="{{ asset('assets/assets/vendor/libs/datatables-rowgroup-bs5/rowgroup.bootstrap5.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/assets/vendor/libs/sweetalert2/sweetalert2.css') }}">
 
 </head>
@@ -92,8 +96,8 @@
         <!-- Layout container -->
         <div class="layout-page">
             <!-- Navbar -->
-                    <nav id="layout-navbar"
-     class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme ">
+            <nav id="layout-navbar"
+                 class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme ">
                 <div class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0 d-xl-none">
                     <a class="nav-item nav-link px-0 me-xl-6" href="javascript:void(0)">
                         <i class="icon-base bx bx-menu icon-md"></i>
@@ -115,11 +119,13 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
-                                    <a class="dropdown-item" href="{{ app.user ? path('app_utilisateur_edit', { SEQUTIL: app.user.SEQUTIL }) : '#' }}">
+                                    <a class="dropdown-item"
+                                       href="{{ app.user ? path('app_utilisateur_edit', { SEQUTIL: app.user.SEQUTIL }) : '#' }}">
                                         <div class="d-flex">
                                             <div class="flex-shrink-0 me-3">
                                                 <div class="avatar avatar-online">
-                                                    <img src="{{ asset('assets/assets/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle"/>
+                                                    <img src="{{ asset('assets/assets/img/avatars/1.png') }}" alt
+                                                         class="w-px-40 h-auto rounded-circle"/>
                                                 </div>
                                             </div>
                                             <div class="flex-grow-1">
@@ -134,15 +140,18 @@
                                 </li>
                                 {% if app.user %}
                                     <li>
-                                        <a class="dropdown-item" href="{{ path('app_utilisateur_edit', { SEQUTIL: app.user.SEQUTIL }) }}">
+                                        <a class="dropdown-item"
+                                           href="{{ path('app_utilisateur_edit', { SEQUTIL: app.user.SEQUTIL }) }}">
                                             <i class="icon-base bx bx-user icon-md me-3"></i><span>Mon Profil</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <form id="logout-form" action="{{ path('app_logout') }}" method="post" style="display: none;">
+                                        <form id="logout-form" action="{{ path('app_logout') }}" method="post"
+                                              style="display: none;">
                                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('logout') }}">
                                         </form>
-                                        <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        <a class="dropdown-item" href="#"
+                                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                             <i class="icon-base bx bx-power-off icon-md me-3"></i><span>Déconnexion</span>
                                         </a>
                                     </li>
@@ -223,27 +232,28 @@
 <script src="{{ asset('assets/assets/vendor/libs/pickr/pickr.js') }}"></script>
 
 
+<!-- Vendors JS -->
+<script src="{{ asset('assets/assets/vendor/libs/moment/moment.js') }}"></script>
+<script src="{{ asset('assets/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
+<script src="{{ asset('assets/assets/vendor/libs/select2/select2.js') }}"></script>
 
-  <!-- Vendors JS -->
-    <script src="{{ asset('assets/assets/vendor/libs/moment/moment.js') }}"></script>
-    <script src="{{ asset('assets/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
-    <script src="{{ asset('assets/assets/vendor/libs/select2/select2.js') }}"></script>
+<script src="{{ asset('assets/assets/vendor/libs/cleave-zen/cleave-zen.js') }}"></script>
 
-    <script src="{{ asset('assets/assets/vendor/libs/cleave-zen/cleave-zen.js') }}"></script>
+<!-- Main JS -->
 
-    <!-- Main JS -->
+<script src="{{ asset('assets/assets/js/main.js') }}"></script>
+>
 
-    <script src="{{ asset('assets/assets/js/main.js') }}"></script>>
+<!-- Page JS -->
+<script src="{{ asset('assets/assets/js/app-user-list.js') }}"></script>
 
-    <!-- Page JS -->
-    <script src="{{ asset('assets/assets/js/app-user-list.js') }}"></script>
-
-    <script src="{{ asset('assets/assets/vendor/libs/@form-validation/popular.js') }}"></script>
-    <script src="{{ asset('assets/assets/vendor/libs/@form-validation/bootstrap5.js') }}"></script>
-    <script src="{{ asset('assets/assets/vendor/libs/@form-validation/auto-focus.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{ asset('assets/assets/js/tables-datatables-basic.js') }}"></script>
-
+<script src="{{ asset('assets/assets/vendor/libs/@form-validation/popular.js') }}"></script>
+<script src="{{ asset('assets/assets/vendor/libs/@form-validation/bootstrap5.js') }}"></script>
+<script src="{{ asset('assets/assets/vendor/libs/@form-validation/auto-focus.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('assets/assets/js/tables-datatables-basic.js') }}"></script>
+<!-- Dans la section <head> -->
+<script src="{{ asset('assets/js/delete-handler.js') }}"></script>
 <!-- Page JS -->
 <script src="{{ asset('assets/assets/js/dashboards-analytics.js') }}"></script>
 {% block javascripts %}{% endblock %}
@@ -265,75 +275,75 @@
     window.addEventListener('resize', updateNavbarResponsiveClasses);
     window.addEventListener('load', updateNavbarResponsiveClasses);
 
-$(document).ready(function() {
-    $('#editModal').on('show.bs.modal', function (event) {
-        const button = $(event.relatedTarget);
-        const url = button.data('url');
+    $(document).ready(function () {
+        $('#editModal').on('show.bs.modal', function (event) {
+            const button = $(event.relatedTarget);
+            const url = button.data('url');
 
-        const modal = $(this);
-        const modalBody = modal.find('.modal-body');
+            const modal = $(this);
+            const modalBody = modal.find('.modal-body');
 
-        modalBody.load(url, function() {
-            const form = $('form', this);
+            modalBody.load(url, function () {
+                const form = $('form', this);
 
-            form.off('submit').on('submit', function(e) {
-                e.preventDefault();
+                form.off('submit').on('submit', function (e) {
+                    e.preventDefault();
 
-                $.ajax({
-                    type: form.attr('method'),
-                    url: form.attr('action'),
-                    data: form.serialize(),
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            $('#editModal').modal('hide');
-                            location.reload();
-                        } else {
-                            if (typeof response === 'string') {
-                                modalBody.html(response);
-                            } else if (response.form) {
-                                modalBody.html(response.form);
+                    $.ajax({
+                        type: form.attr('method'),
+                        url: form.attr('action'),
+                        data: form.serialize(),
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        success: function (response) {
+                            if (response.success) {
+                                $('#editModal').modal('hide');
+                                location.reload();
+                            } else {
+                                if (typeof response === 'string') {
+                                    modalBody.html(response);
+                                } else if (response.form) {
+                                    modalBody.html(response.form);
+                                }
                             }
+                        },
+                        error: function (xhr) {
+                            console.error("Erreur AJAX", xhr);
+                            alert("Une erreur est survenue.");
                         }
-                    },
-                    error: function(xhr) {
-                        console.error("Erreur AJAX", xhr);
-                        alert("Une erreur est survenue.");
-                    }
+                    });
                 });
             });
         });
     });
-});
-// document.addEventListener('DOMContentLoaded', function () {
-//     const deleteForms = document.querySelectorAll('.assur-delete-form');
-//
-//     deleteForms.forEach(form => {
-//         form.addEventListener('submit', function (e) {
-//             e.preventDefault(); // Stop la soumission automatique
-//
-//             Swal.fire({
-//                 title: 'Confirmation',
-//                 text: form.dataset.confirm,
-//                 icon: 'error',
-//                 showCancelButton: true,
-//                 confirmButtonColor: '#d33',
-//                 cancelButtonColor: '#3085d6',
-//                 confirmButtonText: 'Oui, supprimer',
-//                 cancelButtonText: 'Annuler'
-//             }).then((result) => {
-//                 if (result.isConfirmed) {
-//                     form.submit(); // Soumettre manuellement si confirmé
-//                 }
-//             });
-//         });
-//     });
-// });
+    // document.addEventListener('DOMContentLoaded', function () {
+    //     const deleteForms = document.querySelectorAll('.assur-delete-form');
+    //
+    //     deleteForms.forEach(form => {
+    //         form.addEventListener('submit', function (e) {
+    //             e.preventDefault(); // Stop la soumission automatique
+    //
+    //             Swal.fire({
+    //                 title: 'Confirmation',
+    //                 text: form.dataset.confirm,
+    //                 icon: 'error',
+    //                 showCancelButton: true,
+    //                 confirmButtonColor: '#d33',
+    //                 cancelButtonColor: '#3085d6',
+    //                 confirmButtonText: 'Oui, supprimer',
+    //                 cancelButtonText: 'Annuler'
+    //             }).then((result) => {
+    //                 if (result.isConfirmed) {
+    //                     form.submit(); // Soumettre manuellement si confirmé
+    //                 }
+    //             });
+    //         });
+    //     });
+    // });
 
     document.querySelectorAll('.toggle-password').forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             const input = this.closest('.input-group').querySelector('input');
             const icon = this.querySelector('i');
             const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
@@ -343,41 +353,117 @@ $(document).ready(function() {
         });
     });
 
-document.querySelectorAll('.delete-btn').forEach(button => {
-    button.addEventListener('click', function(e) {
-        e.preventDefault();
+    // document.querySelectorAll('.delete-btn').forEach(button => {
+    //     button.addEventListener('click', function(e) {
+    //         e.preventDefault();
+    //
+    //         const confirmMessage = this.dataset.confirmMessage || 'Êtes-vous sûr de vouloir supprimer cet élément ?';
+    //         const successMessage = this.dataset.successMessage || 'L\'élément a été supprimé avec succès.';
+    //
+    //         Swal.fire({
+    //             title: 'Confirmer la suppression',
+    //             text: confirmMessage,
+    //             icon: 'error',
+    //             showCancelButton: true,
+    //             confirmButtonColor: '#696cff',
+    //             cancelButtonColor: '#ff3e1d',
+    //             confirmButtonText: 'Oui, supprimer!',
+    //             cancelButtonText: 'Annuler',
+    //             customClass: {
+    //                 confirmButton: 'btn btn-primary me-3',
+    //                 cancelButton: 'btn btn-label-danger'
+    //             },
+    //             buttonsStyling: false
+    //         }).then((result) => {
+    //             if (result.isConfirmed) {
+    //                 this.closest('form').submit();
+    //
+    //                 Swal.fire({
+    //                     title: 'Supprimé!',
+    //                     text: successMessage,
+    //                     icon: 'success',
+    //                     timer: 2000,
+    //                     showConfirmButton: false
+    //                 });
+    //             }
+    //         });
+    //     });
+    // });
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener('click', async function (e) {
+            e.preventDefault();
 
-        const confirmMessage = this.dataset.confirmMessage || 'Êtes-vous sûr de vouloir supprimer cet élément ?';
-        const successMessage = this.dataset.successMessage || 'L\'élément a été supprimé avec succès.';
+            const form = this.closest('form');
+            const formData = new FormData(form);
 
-        Swal.fire({
-            title: 'Confirmer la suppression',
-            text: confirmMessage,
-            icon: 'error',
-            showCancelButton: true,
-            confirmButtonColor: '#696cff',
-            cancelButtonColor: '#ff3e1d',
-            confirmButtonText: 'Oui, supprimer!',
-            cancelButtonText: 'Annuler',
-            customClass: {
-                confirmButton: 'btn btn-primary me-3',
-                cancelButton: 'btn btn-label-danger'
-            },
-            buttonsStyling: false
-        }).then((result) => {
-            if (result.isConfirmed) {
-                this.closest('form').submit();
-                Swal.fire({
-                    title: 'Supprimé!',
-                    text: successMessage,
-                    icon: 'success',
-                    timer: 2000,
-                    showConfirmButton: false
+            try {
+                const result = await Swal.fire({
+                    title: 'Confirmer la suppression',
+                    text: 'Êtes-vous sûr de vouloir supprimer ce pays ?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#696cff',
+                    cancelButtonColor: '#ff3e1d',
+                    confirmButtonText: 'Oui, supprimer',
+                    cancelButtonText: 'Annuler'
+                });
+
+                if (result.isConfirmed) {
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Accept': 'application/json'
+                        }
+                    });
+
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(data.message || 'Erreur lors de la suppression');
+                    }
+
+                    if (data.success) {
+                        await Swal.fire({
+                            title: 'Succès !',
+                            text: data.message,
+                            icon: 'success',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                        window.location.reload();
+                    } else {
+                        // Affiche une modale d'erreur stylisée
+                        await Swal.fire({
+                            title: 'Erreur de suppression',
+                            html: `
+                            <div class="text-danger">
+                                <i class="bx bx-error-alt fs-1"></i>
+                                <p class="mt-3">${data.message}</p>
+                                <small class="text-muted d-block mt-2">
+                                    Référence : ${data.reference || 'Non spécifiée'}
+                                </small>
+                            </div>
+                        `,
+                            icon: 'error',
+                            confirmButtonText: 'Compris',
+                            customClass: {
+                                confirmButton: 'btn btn-danger'
+                            }
+                        });
+                    }
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                await Swal.fire({
+                    title: 'Erreur',
+                    text: error.message,
+                    icon: 'error'
                 });
             }
         });
     });
-});
 </script>
 </body>
 </html>

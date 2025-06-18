@@ -61,25 +61,6 @@
       </div>
     </div>
   </div>
-  {# Afficher la modal d'erreur si un message flash "error" existe #}
-  {% for message in app.flashes('error') %}
-    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-danger">
-          <div class="modal-header text-white">
-            <h5 class="modal-title" id="errorModalLabel">Erreur de suppression</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
-          </div>
-          <div class="modal-body">
-            {{ message }}
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  {% endfor %}
 
   <!-- Offcanvas pour ajouter un pays -->
   <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddPays" aria-labelledby="offcanvasAddPaysLabel">
@@ -110,28 +91,4 @@
       </div>
     </div>
   {% endif %}
-{% endblock %}
-{% block javascripts %}
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      {% for message in app.flashes('error') %}
-      Swal.fire({
-        title: 'Erreur',
-        text: '{{ message|e('js') }}',
-        icon: 'error',
-        confirmButtonText: 'OK',
-      });
-      {% endfor %}
-
-      {% for message in app.flashes('success') %}
-      Swal.fire({
-        title: 'Succès',
-        text: '{{ message|e('js') }}',
-        icon: 'success',
-        timer: 2000,
-        showConfirmButton: false,
-      });
-      {% endfor %}
-    });
-  </script>
 {% endblock %}
