@@ -25962,6 +25962,10 @@ li:not(:first-child) .dropdown-item, .dropdown-menu .dropdown-item:not(:first-ch
   font-size: 0.9375rem;
   min-block-size: 2.625rem;
 }
+/*.menu-vertical .menu-item .menu-link {*/
+/*  font-size: 12px;*/
+/*  min-block-size: 10px;*/
+/*}*/
 .menu-vertical .menu-item .menu-link > div:not(.badge) {
   overflow: hidden;
   line-height: 1.375rem;
