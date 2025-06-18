@@ -1,0 +1,89 @@
+{% extends 'base2.html.twig' %}
+
+{% block title %}Liste des Prestations{% endblock %}
+
+{% block body %}
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <div class="card">
+      <div class="card-header border-bottom d-flex justify-content-between align-items-center">
+        <h5 class="card-title mb-0">📋 Liste des Prestations</h5>
+        <div>
+          <button class="btn btn-success" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddPrest">
+            <i class="bx bx-plus me-2"></i>Ajouter une prestation
+          </button>
+        </div>
+      </div>
+
+      <div class="card-datatable">
+        <table class="table border-top">
+          <thead>
+            <tr>
+              <th>SEQPREST</th>
+              <th>Libellé prestation</th>
+              <th>Code prestation</th>
+              <th>Active</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for prest in prests %}
+              <tr>
+                <td>{{ prest.SEQPREST }}</td>
+                <td>{{ prest.LIBPREST }}</td>
+                <td>{{ prest.CODEPREST }}</td>
+                <td>{{ prest.ACTIVER ? 'Oui' : 'Non' }}</td>
+                <td>
+                  <div class="dropdown">
+                    <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                      <i class="bx bx-dots-vertical-rounded"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="{{ path('app_prest_index', {'edit': prest.SEQPREST}) }}">
+                        <i class="bx bx-edit-alt me-1"></i> Modifier
+                    </a>
+                      {{ include('prest/_delete_form.html.twig', {'prest': prest}) }}
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            {% else %}
+              <tr>
+                <td colspan="5" class="text-center">Aucune prestation trouvée</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Offcanvas pour ajouter une prestation -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddPrest" aria-labelledby="offcanvasAddPrestLabel">
+    <div class="offcanvas-header border-bottom">
+      <h5 id="offcanvasAddPrestLabel" class="offcanvas-title">Ajouter une prestation</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
+      {{ include('prest/_form.html.twig', {
+        form: addForm,
+        button_label: 'Enregistrer'
+      }) }}
+    </div>
+  </div>
+
+  <!-- Offcanvas pour modifier une prestation -->
+  {% if editForm is defined and editForm %}
+    <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasEditPrest" style="visibility: visible;" aria-labelledby="offcanvasEditPrestLabel">
+      <div class="offcanvas-header border-bottom">
+        <h5 id="offcanvasEditPrestLabel" class="offcanvas-title">Modifier la prestation</h5>
+        <a href="{{ path('app_prest_index') }}" class="btn-close text-reset" aria-label="Close"></a>
+      </div>
+      <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
+        {{ include('prest/_form.html.twig', {
+          form: editForm,
+          button_label: 'Mettre à jour'
+        }) }}
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
