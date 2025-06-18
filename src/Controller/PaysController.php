@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
+
 
 #[Route('/pays')]
 class PaysController extends AbstractController
@@ -110,14 +112,23 @@ class PaysController extends AbstractController
         ]);
     }
 
+
     #[Route('/{IDPAYS}', name: 'app_pays_delete', methods: ['POST'])]
     public function delete(Request $request, Pays $pay, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$pay->getIDPAYS(), $request->request->get('_token'))) {
-            $entityManager->remove($pay);
-            $entityManager->flush();
+            try {
+                $entityManager->remove($pay);
+                $entityManager->flush();
+                $this->addFlash('success', 'Pays supprimé avec succès.');
+            } catch (ForeignKeyConstraintViolationException $e) {
+                $this->addFlash('error', 'Suppression impossible : ce pays est référencé dans une autre table.');
+            } catch (\Exception $e) {
+                $this->addFlash('error', 'Une erreur est survenue lors de la suppression.');
+            }
         }
 
-        return $this->redirectToRoute('app_pays_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_pays_index');
     }
+
 }

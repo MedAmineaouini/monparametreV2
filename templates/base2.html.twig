@@ -248,20 +248,6 @@
 <script src="{{ asset('assets/assets/js/dashboards-analytics.js') }}"></script>
 {% block javascripts %}{% endblock %}
 <script>
-    {#$('.table').DataTable({#}
-    {#    paging: true,#}
-    {#    lengthChange: false,#}
-    {#    searching: false,#}
-    {#    ordering: true,#}
-    {#    info: false,#}
-    {#    autoWidth: true,#}
-    {#    scrollCollapse: false,#}
-    {#    language: {#}
-    {#        url: '{{ asset('assets/French.json') }}' // ✅ syntaxe correcte#}
-    {#    }#}
-    {#});#}
-
-
     function updateNavbarResponsiveClasses() {
         const navbar = document.getElementById('layout-navbar');
         const isNotDesktop = window.innerWidth <= 1024;
@@ -321,33 +307,31 @@ $(document).ready(function() {
         });
     });
 });
-document.addEventListener('DOMContentLoaded', function () {
-    const deleteForms = document.querySelectorAll('.assur-delete-form');
+// document.addEventListener('DOMContentLoaded', function () {
+//     const deleteForms = document.querySelectorAll('.assur-delete-form');
+//
+//     deleteForms.forEach(form => {
+//         form.addEventListener('submit', function (e) {
+//             e.preventDefault(); // Stop la soumission automatique
+//
+//             Swal.fire({
+//                 title: 'Confirmation',
+//                 text: form.dataset.confirm,
+//                 icon: 'error',
+//                 showCancelButton: true,
+//                 confirmButtonColor: '#d33',
+//                 cancelButtonColor: '#3085d6',
+//                 confirmButtonText: 'Oui, supprimer',
+//                 cancelButtonText: 'Annuler'
+//             }).then((result) => {
+//                 if (result.isConfirmed) {
+//                     form.submit(); // Soumettre manuellement si confirmé
+//                 }
+//             });
+//         });
+//     });
+// });
 
-    deleteForms.forEach(form => {
-        form.addEventListener('submit', function (e) {
-            e.preventDefault(); // Stop la soumission automatique
-
-            Swal.fire({
-                title: 'Confirmation',
-                text: form.dataset.confirm,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Oui, supprimer',
-                cancelButtonText: 'Annuler'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.submit(); // Soumettre manuellement si confirmé
-                }
-            });
-        });
-    });
-});
-</script>
-
-<script>
     document.querySelectorAll('.toggle-password').forEach(button => {
         button.addEventListener('click', function() {
             const input = this.closest('.input-group').querySelector('input');
@@ -358,20 +342,18 @@ document.addEventListener('DOMContentLoaded', function () {
             icon.classList.toggle('bx-show');
         });
     });
-</script>
-{#    <script src="{{ asset('assets/assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>#}
-<script>
+
 document.querySelectorAll('.delete-btn').forEach(button => {
     button.addEventListener('click', function(e) {
         e.preventDefault();
-        
+
         const confirmMessage = this.dataset.confirmMessage || 'Êtes-vous sûr de vouloir supprimer cet élément ?';
         const successMessage = this.dataset.successMessage || 'L\'élément a été supprimé avec succès.';
-        
+
         Swal.fire({
             title: 'Confirmer la suppression',
             text: confirmMessage,
-            icon: 'warning',
+            icon: 'error',
             showCancelButton: true,
             confirmButtonColor: '#696cff',
             cancelButtonColor: '#ff3e1d',
@@ -385,7 +367,6 @@ document.querySelectorAll('.delete-btn').forEach(button => {
         }).then((result) => {
             if (result.isConfirmed) {
                 this.closest('form').submit();
-                
                 Swal.fire({
                     title: 'Supprimé!',
                     text: successMessage,

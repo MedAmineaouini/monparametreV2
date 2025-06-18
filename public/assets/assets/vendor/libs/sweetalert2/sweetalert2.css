@@ -1109,7 +1109,7 @@ body.swal2-toast-shown .swal2-container.swal2-bottom-end, body.swal2-toast-shown
 }
 .swal2-container .swal2-modal.swal2-popup .swal2-title {
   line-height: 1.375;
-  margin-block: 1.875rem 1rem;
+  /*margin-block: 1.875rem 1rem;*/
   max-inline-size: 16em;
 }
 .swal2-container .swal2-modal.swal2-popup .swal2-actions {

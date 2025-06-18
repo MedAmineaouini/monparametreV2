@@ -1,35 +1,136 @@
 {% extends 'base2.html.twig' %}
 
-{% block title %}TypeAssur index{% endblock %}
+{% block title %}Liste des Types d'assurance{% endblock %}
 
 {% block body %}
-    <h1>TypeAssur index</h1>
+    <div class="card shadow-sm border-0">
+        <div class="card-header text-white">
+            <div class="row align-items-center">
+                <div class="col-12 col-md-9 mb-2 mb-md-0">
+                    <h5 class="mb-0 text-center text-md-start">📋 Liste des types assurances</h5>
+                </div>
+                <div class="col-12 col-md-3 d-flex flex-column flex-md-row justify-content-md-end gap-2">
+                    <button class="btn btn-success w-100 w-md-auto" data-bs-toggle="modal" data-bs-target="#modalTypeAssur">
+                        <i class="bx bx-plus"></i> Nouveau type assurance
+                    </button>
+                </div>
+            </div>
+        </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Seqtypeassur</th>
-                <th>LibTypeAssur</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for type_assur in type_assurs %}
-            <tr>
-                <td>{{ type_assur.seqtypeassur }}</td>
-                <td>{{ type_assur.libTypeAssur }}</td>
-                <td>
-                    <a href="{{ path('app_type_assur_show', {'seqtypeassur': type_assur.seqtypeassur}) }}">show</a>
-                    <a href="{{ path('app_type_assur_edit', {'seqtypeassur': type_assur.seqtypeassur}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <div class="card-body">
+            <table class="table table-hover table-bordered table-striped">
+                <thead class="table-light">
+                <tr>
+                    <th>#</th>
+                    <th>Libellé</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for type_assur in type_assurs %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ type_assur.libTypeAssur }}</td>
+                        <td>
+                            <div class="dropdown">
+                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="icon-base bx bx-dots-vertical-rounded"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" href="#"
+                                           data-bs-toggle="modal"
+                                           data-bs-target="#editModal{{ type_assur.seqtypeassur }}">
+                                            <i class="icon-base bx bx-edit-alt me-1"></i> Modifier
+                                        </a>
 
-    <a href="{{ path('app_type_assur_new') }}">Create new</a>
+                                         {{ include('type_assur/_delete_form.html.twig', { 'seqtypeassur': type_assur.seqtypeassur }) }}
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+
+                    </tr>
+                    {# Modal édition #}
+                    <div class="modal fade" id="editModal{{ type_assur.seqtypeassur }}" tabindex="-1" aria-hidden="true"
+                         data-bs-backdrop="static" data-bs-keyboard="false">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                {{ form_start(forms_edit[type_assur.seqtypeassur]) }}
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Modifier Type d'assurance</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="mb-3 row align-items-center">
+                                        <label for="{{ forms_edit[type_assur.seqtypeassur].libTypeAssur.vars.id }}" class="col-sm-4 col-form-label fw-semibold">
+                                            Libellé <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-sm-8">
+                                            {{ form_widget(forms_edit[type_assur.seqtypeassur].libTypeAssur, {attr: {'class': 'form-control', 'placeholder': 'Type assurance'}}) }}
+                                            {{ form_errors(forms_edit[type_assur.seqtypeassur].libTypeAssur) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary text-white">
+                                        <i class="bx bx-save me-2"></i> Enregistrer
+                                    </button><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                        <i class="bx bx-x me-2"></i> Annuler
+                                    </button>
+
+                                </div>
+                                {{ form_end(forms_edit[type_assur.seqtypeassur]) }}
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <tr><td colspan="3" class="text-center">Aucun type d'assurance trouvé</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {# Modal ajout #}
+    <div class="modal fade" id="modalTypeAssur" tabindex="-1" aria-hidden="true"
+             data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                {{ form_start(form_new) }}
+                <div class="modal-header text-white">
+                    <h5 class="modal-title">Nouveau Type d'assurance</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3 row align-items-center">
+                        <label for="{{ form_new.libTypeAssur.vars.id }}" class="col-sm-4 col-form-label fw-semibold">
+                            Libellé <span class="text-danger">*</span>
+                        </label>
+                        <div class="col-sm-8">
+                            {{ form_widget(form_new.libTypeAssur, {
+                                'attr': {
+                                    'class': 'form-control',
+                                    'maxlength': 80,
+                                    'placeholder': 'Type assurance',
+                                    'required': 'required'
+                                }
+                            }) }}
+                            {{ form_errors(form_new.libTypeAssur) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bx bx-save me-2"></i> Enregistrer
+                    </button>
+                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
+                        <i class="bx bx-x me-2"></i> Annuler
+                    </button>
+
+                </div>
+                {{ form_end(form_new) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -1,11 +1,17 @@
-{% extends 'base.html.twig' %}
+{% extends 'base2.html.twig' %}
 
-{% block title %}New TypeAssur{% endblock %}
+{% block title %}RFT | Nouveau type assurance{% endblock %}
 
 {% block body %}
-    <h1>Create new TypeAssur</h1>
+<div class="card mb-4 shadow-sm small">
+    <div class="card-header text-white py-3">
+        <h5 class="card-title mb-0">
+            <i class="fa fa-shield-alt me-2"></i>Type Assurance
+        </h5>
+    </div>
+    <hr>
 
     {{ include('type_assur/_form.html.twig') }}
-
-    <a href="{{ path('app_type_assur_index') }}">back to list</a>
+</div>
+{#    <a href="{{ path('app_type_assur_index') }}">back to list</a>#}
 {% endblock %}
