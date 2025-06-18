@@ -1,0 +1,35 @@
+{% extends 'base2.html.twig' %}
+
+{% block title %}TypeAssur index{% endblock %}
+
+{% block body %}
+    <h1>TypeAssur index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Seqtypeassur</th>
+                <th>LibTypeAssur</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for type_assur in type_assurs %}
+            <tr>
+                <td>{{ type_assur.seqtypeassur }}</td>
+                <td>{{ type_assur.libTypeAssur }}</td>
+                <td>
+                    <a href="{{ path('app_type_assur_show', {'seqtypeassur': type_assur.seqtypeassur}) }}">show</a>
+                    <a href="{{ path('app_type_assur_edit', {'seqtypeassur': type_assur.seqtypeassur}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_type_assur_new') }}">Create new</a>
+{% endblock %}

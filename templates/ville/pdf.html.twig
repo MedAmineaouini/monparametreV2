@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des villes</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+        th, td {
+            border: 1px solid #999;
+            padding: 5px;
+            text-align: left;
+        }
+        th {
+            background-color: #eee;
+        }
+        .footer {
+            position: fixed;
+            bottom: 10px;
+            text-align: center;
+            font-size: 10px;
+            color: #999;
+            width: 100%;
+        }
+        body{
+            border: 1px solid black;
+            padding:2%
+        }
+    </style>
+</head>
+<body>
+<div class="logo">
+    {# Tu peux inclure un logo si souhaité #}
+     <img src="{{ absolute_url(asset('images/logo.png')) }}" alt="Logo">
+</div>
+
+<h2> Liste des villes</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Code</th>
+        <th>Libellé</th>
+        <th>Pays</th>
+        <th>Sous pays</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for ville in villes %}
+        <tr>
+            <td>{{ ville.codeville }}</td>
+            <td>{{ ville.libville }}</td>
+            <td>{{ ville.pays ? ville.pays.libpays : '---' }}</td>
+            <td>{{ ville.souspays ? ville.souspays.libsouspays : '---'  }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<div class="footer">
+    Généré automatiquement le {{ "now"|date("d/m/Y H:i") }}
+</div>
+</body>
+</html>

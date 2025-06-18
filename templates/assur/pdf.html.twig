@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+        th, td {
+            border: 1px solid #999;
+            padding: 5px;
+        }
+        th {
+            background-color: #eee;
+            text-align: center;
+        }
+        td {
+            text-align: right;
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 10px;
+            color: #999;
+            text-align: center;
+        }
+        .logo img {
+            height: 50px;
+        }
+        body {
+            padding: 2%;
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+<body>
+<div class="logo">
+    <img src="{{ asset('assets/assets/img/logo-promo.png') }}" alt="Logo">
+</div>
+
+<h2>Liste des Assurances</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>Assurance</th>
+        <th>Mini</th>
+        <th>Maxi</th>
+        <th>Montant</th>
+        <th>Achat</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for assur in assurs %}
+        <tr>
+            <td style="text-align: left;">{{ assur.libassur }}</td>
+            <td>{{ assur.mini1|number_format(2, '.', ' ') }} €</td>
+            <td>{{ assur.maxi1|number_format(2, '.', ' ') }} €</td>
+            <td>{{ assur.valeur|number_format(2, '.', ' ') }} €</td>
+            <td>{{ assur.valeurachat|number_format(2, '.', ' ') }} €</td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="5" style="text-align: center;">Aucune assurance trouvée.</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<div class="footer">
+    Généré automatiquement le {{ "now"|date("d/m/Y H:i") }}
+</div>
+</body>
+</html>

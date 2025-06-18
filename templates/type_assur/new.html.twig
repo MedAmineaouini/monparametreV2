@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New TypeAssur{% endblock %}
+
+{% block body %}
+    <h1>Create new TypeAssur</h1>
+
+    {{ include('type_assur/_form.html.twig') }}
+
+    <a href="{{ path('app_type_assur_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit TypeAssur{% endblock %}
+
+{% block body %}
+    <h1>Edit TypeAssur</h1>
+
+    {{ include('type_assur/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_type_assur_index') }}">back to list</a>
+
+    {{ include('type_assur/_delete_form.html.twig') }}
+{% endblock %}

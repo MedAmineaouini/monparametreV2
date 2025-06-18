@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Assur{% endblock %}
+
+{% block body %}
+    <h1>Assur</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Seqassur</th>
+                <td>{{ assur.seqassur }}</td>
+            </tr>
+            <tr>
+                <th>Libassur</th>
+                <td>{{ assur.libassur }}</td>
+            </tr>
+            <tr>
+                <th>Total1</th>
+                <td>{{ assur.total1 }}</td>
+            </tr>
+            <tr>
+                <th>Total2</th>
+                <td>{{ assur.total2 }}</td>
+            </tr>
+            <tr>
+                <th>Typevaleur</th>
+                <td>{{ assur.typevaleur }}</td>
+            </tr>
+            <tr>
+                <th>Valeur</th>
+                <td>{{ assur.valeur }}</td>
+            </tr>
+            <tr>
+                <th>Prixvente</th>
+                <td>{{ assur.prixvente }}</td>
+            </tr>
+            <tr>
+                <th>Prixvente2</th>
+                <td>{{ assur.prixvente2 }}</td>
+            </tr>
+            <tr>
+                <th>Prixachat</th>
+                <td>{{ assur.prixachat }}</td>
+            </tr>
+            <tr>
+                <th>Prixachat2</th>
+                <td>{{ assur.prixachat2 }}</td>
+            </tr>
+            <tr>
+                <th>Mini1</th>
+                <td>{{ assur.mini1 }}</td>
+            </tr>
+            <tr>
+                <th>Maxi1</th>
+                <td>{{ assur.maxi1 }}</td>
+            </tr>
+            <tr>
+                <th>ValeurAchat</th>
+                <td>{{ assur.valeurAchat }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_assur_index') }}">back to list</a>
+
+    <a href="{{ path('app_assur_edit', {'seqassur': assur.seqassur}) }}">edit</a>
+
+    {{ include('assur/_delete_form.html.twig') }}
+{% endblock %}

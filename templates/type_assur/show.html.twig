@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TypeAssur{% endblock %}
+
+{% block body %}
+    <h1>TypeAssur</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Seqtypeassur</th>
+                <td>{{ type_assur.seqtypeassur }}</td>
+            </tr>
+            <tr>
+                <th>LibTypeAssur</th>
+                <td>{{ type_assur.libTypeAssur }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_type_assur_index') }}">back to list</a>
+
+    <a href="{{ path('app_type_assur_edit', {'seqtypeassur': type_assur.seqtypeassur}) }}">edit</a>
+
+    {{ include('type_assur/_delete_form.html.twig') }}
+{% endblock %}

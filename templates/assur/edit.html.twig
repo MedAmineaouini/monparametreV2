@@ -1,0 +1,21 @@
+{% extends 'base2.html.twig' %}
+
+{% block title %}RFT | Modification d'assuranceAssur{% endblock %}
+
+{% block body %}
+<div class="card mb-4 shadow-sm small">
+    <div class="card-header text-white py-3">
+        <h5 class="card-title mb-0">
+            <i class="bx bx-map me-2"></i>Détails Assurance
+        </h5>
+    </div>
+    <hr>
+
+
+    {{ include('assur/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+
+{#    <a href="{{ path('app_assur_index') }}">back to list</a>#}
+</div>
+    </div>
+{#    {{ include('assur/_delete_form.html.twig') }}#}
+{% endblock %}
