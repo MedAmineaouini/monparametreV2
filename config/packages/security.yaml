@@ -35,9 +35,9 @@ security:
     access_control:
         - { path: ^/admin, roles: IS_AUTHENTICATED_FULLY  }
         - { path: ^/profile, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/login, roles: PUBLIC_ACCESS }
+        - { path: ^/login, roles: PUBLIC_ACCESS  }
         - { path: ^/register, roles: IS_AUTHENTICATED_FULLY  }
-        - { path: ^/utilisateur, roles: IS_AUTHENTICATED_FULLY  }
+        - { path: ^/utilisateur, roles: PUBLIC_ACCESS  }
         - { path: ^/parametre, roles: IS_AUTHENTICATED_FULLY  }
         - { path: ^/dashboard, roles: IS_AUTHENTICATED_FULLY   }
         - { path: ^/commercial, roles: PUBLIC_ACCESS   }

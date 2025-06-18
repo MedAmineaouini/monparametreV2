@@ -241,24 +241,26 @@
     <script src="{{ asset('assets/assets/vendor/libs/@form-validation/popular.js') }}"></script>
     <script src="{{ asset('assets/assets/vendor/libs/@form-validation/bootstrap5.js') }}"></script>
     <script src="{{ asset('assets/assets/vendor/libs/@form-validation/auto-focus.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('assets/assets/js/tables-datatables-basic.js') }}"></script>
 
 <!-- Page JS -->
 <script src="{{ asset('assets/assets/js/dashboards-analytics.js') }}"></script>
+{% block javascripts %}{% endblock %}
 <script>
     {#$('.table').DataTable({#}
-    {#    'paging': true,#}
-    {#    'lengthChange': false,#}
-    {#    'searching': false,#}
-    {#    'ordering': true,#}
-    {#    'info': false,#}
-    {#    'autoWidth': true,#}
-    {#    // "scrollY": "500px",#}
-    {#    "scrollCollapse": false,#}
-    {#    #}{#"language": }#}
-    {#    #}{#    "url": '{{ asset('assets/French.json') }}' // chemin relatif depuis public/#}
-    {#    #}{#},#}
-
+    {#    paging: true,#}
+    {#    lengthChange: false,#}
+    {#    searching: false,#}
+    {#    ordering: true,#}
+    {#    info: false,#}
+    {#    autoWidth: true,#}
+    {#    scrollCollapse: false,#}
+    {#    language: {#}
+    {#        url: '{{ asset('assets/French.json') }}' // ✅ syntaxe correcte#}
+    {#    }#}
     {#});#}
+
 
     function updateNavbarResponsiveClasses() {
         const navbar = document.getElementById('layout-navbar');
@@ -276,9 +278,7 @@
 
     window.addEventListener('resize', updateNavbarResponsiveClasses);
     window.addEventListener('load', updateNavbarResponsiveClasses);
-</script>
 
-<script>
 $(document).ready(function() {
     $('#editModal').on('show.bs.modal', function (event) {
         const button = $(event.relatedTarget);
@@ -321,6 +321,30 @@ $(document).ready(function() {
         });
     });
 });
+document.addEventListener('DOMContentLoaded', function () {
+    const deleteForms = document.querySelectorAll('.assur-delete-form');
+
+    deleteForms.forEach(form => {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault(); // Stop la soumission automatique
+
+            Swal.fire({
+                title: 'Confirmation',
+                text: form.dataset.confirm,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Oui, supprimer',
+                cancelButtonText: 'Annuler'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit(); // Soumettre manuellement si confirmé
+                }
+            });
+        });
+    });
+});
 </script>
 
 <script>
@@ -335,7 +359,7 @@ $(document).ready(function() {
         });
     });
 </script>
-    <script src="{{ asset('assets/assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+{#    <script src="{{ asset('assets/assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>#}
 <script>
 document.querySelectorAll('.delete-btn').forEach(button => {
     button.addEventListener('click', function(e) {

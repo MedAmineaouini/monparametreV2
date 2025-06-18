@@ -17,7 +17,7 @@
                 <span class="app-brand-logo demo">
                   <!-- Logo ici -->
                 </span>
-                <span class="app-brand-text demo text-heading fw-bold">solplus</span>
+                <span class="app-brand-text demo text-heading fw-bold">Royal first travel</span>
               </div>
 
               <h4 class="mb-1">Se connecter 👋</h4>
@@ -36,20 +36,20 @@
                   </div>
               {% endif %}
                 <div class="mb-6 ">
-                  <label for="username" class="form-label">Utilisateur</label>
+                  <label for="username" class="form-label">Login</label>
                   <input
                     type="text"
                     class="form-control"
                     id="codeutil"
                     name="codeutil"
                     value="{{ last_username }}"
-                    placeholder="Enter votre codeutil"
+                    placeholder="Enter votre login ..."
                     required
                     autofocus>
                 </div>
 
                 <div class="mb-6 form-password-toggle">
-                  <label class="form-label" for="password">Password</label>
+                  <label class="form-label" for="password">Mot de passe</label>
                   <div class="input-group input-group-merge">
                     <input
                       type="password"
@@ -80,6 +80,17 @@
         </div>
       </div>
     </div>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script>
+    // Redirection côté client si l'utilisateur est déjà connecté
+    document.addEventListener('DOMContentLoaded', function() {
+        {% if app.user %}
+        window.location.href = "{{ path('app_dashboard') }}";
+        {% endif %}
+    });
+</script>
 {% endblock %}
 
 
