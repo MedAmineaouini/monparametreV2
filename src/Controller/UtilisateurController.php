@@ -174,10 +174,27 @@ class UtilisateurController extends AbstractController
     public function delete(Request $request, Utilisateur $utilisateur, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$utilisateur->getSEQUTIL(), $request->request->get('_token'))) {
-            $entityManager->remove($utilisateur);
-            $entityManager->flush();
+            try {
+                $entityManager->remove($utilisateur);
+                $entityManager->flush();
+                
+                return $this->json([
+                    'success' => true,
+                    'message' => 'L\'utilisateur a été supprimé avec succès'
+                ]);
+                
+            } catch (\Exception $e) {
+                return $this->json([
+                    'success' => false,
+                    'message' => 'Échec de la suppression : ' . $e->getMessage(),
+                    'reference' => $utilisateur->getSEQUTIL()
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
         }
-
-        return $this->redirectToRoute('app_utilisateur_index', [], Response::HTTP_SEE_OTHER);
+    
+        return $this->json([
+            'success' => false,
+            'message' => 'Token CSRF invalide'
+        ], Response::HTTP_BAD_REQUEST);
     }
 }

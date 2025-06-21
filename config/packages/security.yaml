@@ -33,13 +33,13 @@ security:
             entry_point: form_login
 
     access_control:
-        - { path: ^/admin, roles: IS_AUTHENTICATED_FULLY  }
-        - { path: ^/profile, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/admin, roles: PUBLIC_ACCESS  }
+        - { path: ^/profile, roles: PUBLIC_ACCESS }
         - { path: ^/login, roles: PUBLIC_ACCESS  }
-        - { path: ^/register, roles: IS_AUTHENTICATED_FULLY  }
+        - { path: ^/register, roles: PUBLIC_ACCESS  }
         - { path: ^/utilisateur, roles: PUBLIC_ACCESS  }
-        - { path: ^/parametre, roles: IS_AUTHENTICATED_FULLY  }
-        - { path: ^/dashboard, roles: IS_AUTHENTICATED_FULLY   }
+        - { path: ^/parametre, roles: PUBLIC_ACCESS  }
+        - { path: ^/dashboard, roles: PUBLIC_ACCESS   }
         - { path: ^/commercial, roles: PUBLIC_ACCESS   }
 
 when@test:

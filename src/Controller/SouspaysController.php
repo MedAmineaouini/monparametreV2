@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Souspays;
+use App\Entity\Ville;
 use App\Form\SouspaysType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -113,11 +114,69 @@ class SouspaysController extends AbstractController
     #[Route('/{seqsouspays}', name: 'app_souspays_delete', methods: ['POST'])]
     public function delete(Request $request, Souspays $souspay, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$souspay->getSeqsouspays(), $request->request->get('_token'))) {
+        if (!$this->isCsrfTokenValid('delete'.$souspay->getSeqsouspays(), $request->request->get('_token'))) {
+            if ($request->isXmlHttpRequest()) {
+                return $this->json([
+                    'success' => false,
+                    'message' => 'Token CSRF invalide'
+                ], Response::HTTP_BAD_REQUEST);
+            }
+            
+            $this->addFlash('error', 'Token CSRF invalide');
+            return $this->redirectToRoute('app_souspays_index', [], Response::HTTP_SEE_OTHER);
+        }
+    
+        try {
+            // Vérification explicite des dépendances
+            $dependencies = [
+                'Villes' => $entityManager->getRepository(Ville::class)->count(['souspays' => $souspay]),
+                // Ajoutez d'autres relations si nécessaire
+            ];
+    
+            $usedIn = array_filter($dependencies, fn($count) => $count > 0);
+            
+            if (!empty($usedIn)) {
+                $message = 'Ce sous-pays ne peut pas être supprimé car il est utilisé dans : ';
+                $message .= implode(', ', array_keys($usedIn));
+                
+                throw new \Exception($message);
+            }
+    
             $entityManager->remove($souspay);
             $entityManager->flush();
+            
+            if ($request->isXmlHttpRequest()) {
+                return $this->json([
+                    'success' => true,
+                    'message' => 'Le sous-pays a été supprimé avec succès'
+                ]);
+            }
+            
+            $this->addFlash('success', 'Le sous-pays a été supprimé avec succès.');
+        } catch (\Exception $e) {
+            $errorData = [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'reference' => $souspay->getSeqsouspays(),
+                'details' => []
+            ];
+    
+            // Détails supplémentaires en mode développement
+            if ($this->getParameter('kernel.environment') === 'dev') {
+                $errorData['details'] = [
+                    'exception' => get_class($e),
+                    'constraint' => str_contains($e->getMessage(), 'foreign key constraint') ? 'FK_XXXX' : null,
+                    'trace' => $e->getTraceAsString()
+                ];
+            }
+    
+            if ($request->isXmlHttpRequest()) {
+                return $this->json($errorData, Response::HTTP_CONFLICT);
+            }
+            
+            $this->addFlash('error', $errorData['message']);
         }
-
+    
         return $this->redirectToRoute('app_souspays_index', [], Response::HTTP_SEE_OTHER);
     }
 }

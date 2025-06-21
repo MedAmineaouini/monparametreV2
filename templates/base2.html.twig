@@ -389,81 +389,90 @@
     //         });
     //     });
     // });
-    document.querySelectorAll('.delete-btn').forEach(button => {
-        button.addEventListener('click', async function (e) {
-            e.preventDefault();
+document.querySelectorAll('.delete-btn').forEach(button => {
+    button.addEventListener('click', async function(e) {
+        e.preventDefault();
 
-            const form = this.closest('form');
-            const formData = new FormData(form);
+        const form = this.closest('form');
+        const formData = new FormData(form);
+        const entityType = this.dataset.entityType || 'cet élément';
+        const confirmMessage = this.dataset.confirmMessage || `Êtes-vous sûr de vouloir supprimer ${entityType} ?`;
+        const successMessage = this.dataset.successMessage || `${entityType.charAt(0).toUpperCase() + entityType.slice(1)} a été supprimé avec succès`;
 
-            try {
-                const result = await Swal.fire({
-                    title: 'Confirmer la suppression',
-                    text: 'Êtes-vous sûr de vouloir supprimer ce pays ?',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#696cff',
-                    cancelButtonColor: '#ff3e1d',
-                    confirmButtonText: 'Oui, supprimer',
-                    cancelButtonText: 'Annuler'
+        try {
+            const result = await Swal.fire({
+                title: 'Confirmer la suppression',
+                text: confirmMessage,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#696cff',
+                cancelButtonColor: '#ff3e1d',
+                confirmButtonText: 'Oui, supprimer',
+                cancelButtonText: 'Annuler'
+            });
+
+            if (result.isConfirmed) {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
                 });
 
-                if (result.isConfirmed) {
-                    const response = await fetch(form.action, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest',
-                            'Accept': 'application/json'
-                        }
-                    });
+                const data = await response.json();
 
-                    const data = await response.json();
-
-                    if (!response.ok) {
-                        throw new Error(data.message || 'Erreur lors de la suppression');
-                    }
-
-                    if (data.success) {
-                        await Swal.fire({
-                            title: 'Succès !',
-                            text: data.message,
-                            icon: 'success',
-                            timer: 2000,
-                            showConfirmButton: false
-                        });
-                        window.location.reload();
-                    } else {
-                        // Affiche une modale d'erreur stylisée
-                        await Swal.fire({
-                            title: 'Erreur de suppression',
-                            html: `
-                            <div class="text-danger">
-                                <i class="bx bx-error-alt fs-1"></i>
-                                <p class="mt-3">${data.message}</p>
-                                <small class="text-muted d-block mt-2">
-                                    Référence : ${data.reference || 'Non spécifiée'}
-                                </small>
-                            </div>
-                        `,
-                            icon: 'error',
-                            confirmButtonText: 'Compris',
-                            customClass: {
-                                confirmButton: 'btn btn-danger'
-                            }
-                        });
-                    }
+                if (!response.ok) {
+                    throw new Error(data.message || `Erreur ${response.status}`);
                 }
-            } catch (error) {
-                console.error('Erreur:', error);
-                await Swal.fire({
-                    title: 'Erreur',
-                    text: error.message,
-                    icon: 'error'
-                });
+
+                if (data.success) {
+                    await Swal.fire({
+                        title: 'Succès !',
+                        text: successMessage,
+                        icon: 'success',
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                    window.location.reload();
+                } else {
+                    let html = `
+                        <div class="text-center">
+                            <i class="bx bx-error-circle text-danger fs-1 mb-3"></i>
+                            <h5 class="text-danger mb-3">Impossible de supprimer ${entityType}</h5>
+                            <div class="alert alert-warning text-start">
+                                <p class="mb-2">${data.message}</p>
+                    `;
+
+                    if (data.relations && data.relations.length) {
+                        html += '<ul class="mb-0 ps-3">';
+                        data.relations.forEach(relation => {
+                            html += `<li>${relation}</li>`;
+                        });
+                        html += '</ul>';
+                    }
+
+                    html += `</div></div>`;
+
+                    await Swal.fire({
+                        title: 'Erreur',
+                        html: html,
+                        icon: 'error',
+                        confirmButtonText: 'Compris'
+                    });
+                }
             }
-        });
+        } catch (error) {
+            console.error('Erreur:', error);
+            await Swal.fire({
+                title: 'Erreur',
+                text: error.message || 'Une erreur est survenue',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
     });
+});
 </script>
 </body>
 </html>

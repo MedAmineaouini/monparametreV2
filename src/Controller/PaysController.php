@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Pays;
+use App\Entity\Souspays;
+use App\Entity\Ville;
 use App\Form\PaysType;
 use App\Repository\PaysRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -109,37 +111,97 @@ class PaysController extends AbstractController
             'form' => $form,
         ]);
     }
-
     #[Route('/{IDPAYS}', name: 'app_pays_delete', methods: ['POST'])]
-    public function delete(Request $request, Pays $pay, EntityManagerInterface $entityManager): Response
-    {
-        if ($request->isXmlHttpRequest()) {
-            try {
-                $entityManager->remove($pay);
-                $entityManager->flush();
-
-                return $this->json([
-                    'success' => true,
-                    'message' => 'Pays supprimé avec succès.'
-                ]);
-
-            } catch (\Exception $e) {
-                // Détection spécifique des erreurs de contrainte SQL Server
-                if (str_contains($e->getMessage(), 'REFERENCE constraint')) {
-                    preg_match('/table "([^"]+)"/', $e->getMessage(), $matches);
-                    $table = $matches[1] ?? 'une table';
-
-                    return $this->json([
-                        'success' => false,
-                        'message' => "Impossible de supprimer : ce pays est utilisé dans $table."
-                    ], 400);
-                }
-
+    public function delete(
+        Request $request, 
+        Pays $pay,
+        EntityManagerInterface $entityManager
+    ): Response {
+        if (!$this->isCsrfTokenValid('delete'.$pay->getIDPAYS(), $request->request->get('_token'))) {
+            if ($request->isXmlHttpRequest()) {
                 return $this->json([
                     'success' => false,
-                    'message' => 'Erreur lors de la suppression : ' . $e->getMessage()
-                ], 500);
+                    'message' => 'Token CSRF invalide'
+                ], Response::HTTP_BAD_REQUEST);
             }
+            return $this->redirectToRoute('app_pays_index');
         }
+    
+        try {
+            $dependencies = [];
+            
+            $villeCount = $entityManager->getRepository(Ville::class)
+                ->createQueryBuilder('v')
+                ->select('COUNT(v.seqville)')
+                ->where('v.pays = :pays')
+                ->setParameter('pays', $pay)
+                ->getQuery()
+                ->getSingleScalarResult();
+                
+            if ($villeCount > 0) {
+                $dependencies[] = 'Villes associées ('.$villeCount.')';
+            }
+            
+            $sousPaysCount = $entityManager->getRepository(SousPays::class)
+                ->createQueryBuilder('sp')
+                ->select('COUNT(sp.seqsouspays)')
+                ->where('sp.pays = :pays')
+                ->setParameter('pays', $pay)
+                ->getQuery()
+                ->getSingleScalarResult();
+                
+            if ($sousPaysCount > 0) {
+                $dependencies[] = 'Sous-pays associés ('.$sousPaysCount.')';
+            }
+    
+            if (!empty($dependencies)) {
+                $message = 'Impossible de supprimer ce pays car il est utilisé dans : ';
+                $message .= implode(' et ', $dependencies);
+                
+                if ($request->isXmlHttpRequest()) {
+                    return $this->json([
+                        'success' => false,
+                        'message' => $message,
+                        'relations' => $dependencies
+                    ], Response::HTTP_CONFLICT);
+                }
+                
+                $this->addFlash('error', $message);
+                return $this->redirectToRoute('app_pays_index');
+            }
+    
+            // Suppression
+            $entityManager->remove($pay);
+            $entityManager->flush();
+            
+            // Réponse
+            if ($request->isXmlHttpRequest()) {
+                return $this->json([
+                    'success' => true,
+                    'message' => 'Pays supprimé avec succès',
+                    'redirect' => $this->generateUrl('app_pays_index')
+                ]);
+            }
+            
+            $this->addFlash('success', 'Le pays a été supprimé avec succès.');
+        } catch (\Exception $e) {
+            $errorData = [
+                'success' => false,
+                'message' => 'Erreur lors de la suppression du pays',
+                'details' => $this->getParameter('kernel.debug') ? [
+                    'exception' => get_class($e),
+                    'message' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString()
+                ] : null
+            ];
+    
+            if ($request->isXmlHttpRequest()) {
+                return $this->json($errorData, Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+            
+            $this->addFlash('error', $errorData['message']);
+        }
+    
+        return $this->redirectToRoute('app_pays_index');
     }
 }

@@ -1,5 +1,5 @@
-<form method="post"
-      action="{{ path('app_utilisateur_delete', {'SEQUTIL': utilisateur.SEQUTIL}) }}"
+<form method="post" 
+      action="{{ path('app_utilisateur_delete', {'SEQUTIL': utilisateur.SEQUTIL}) }}" 
       class="delete-form">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ utilisateur.SEQUTIL) }}">
     <button type="button" 

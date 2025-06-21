@@ -69,11 +69,40 @@ class VilleController extends AbstractController
     public function delete(Request $request, Ville $ville, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$ville->getSeqville(), $request->request->get('_token'))) {
-            $entityManager->remove($ville);
-            $entityManager->flush();
-            $this->addFlash('success', 'La ville a été supprimée avec succès.');
+            try {
+                $entityManager->remove($ville);
+                $entityManager->flush();
+                
+                if ($request->isXmlHttpRequest()) {
+                    return $this->json([
+                        'success' => true,
+                        'message' => 'La ville a été supprimée avec succès'
+                    ]);
+                }
+                
+                $this->addFlash('success', 'La ville a été supprimée avec succès.');
+            } catch (\Exception $e) {
+                if ($request->isXmlHttpRequest()) {
+                    return $this->json([
+                        'success' => false,
+                        'message' => 'Échec de la suppression : ' . $e->getMessage(),
+                        'reference' => $ville->getSeqville()
+                    ], Response::HTTP_INTERNAL_SERVER_ERROR);
+                }
+                
+                $this->addFlash('error', 'Échec de la suppression : ' . $e->getMessage());
+            }
+        } else {
+            if ($request->isXmlHttpRequest()) {
+                return $this->json([
+                    'success' => false,
+                    'message' => 'Token CSRF invalide'
+                ], Response::HTTP_BAD_REQUEST);
+            }
+            
+            $this->addFlash('error', 'Token CSRF invalide');
         }
-
+    
         return $this->redirectToRoute('app_ville_index', [], Response::HTTP_SEE_OTHER);
     }
 
