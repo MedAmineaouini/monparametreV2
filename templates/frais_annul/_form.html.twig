@@ -18,9 +18,9 @@
             {{ form_widget(form.facteur, {'attr': {'class': 'form-control', 'placeholder': 'Facteur'}}) }}
         </div>
         <div class="col-md-12">
-            {{ form_label(form.typemodif, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_label(form.typeannul, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
             <div>
-                {{ form_widget(form.typemodif) }}
+                {{ form_widget(form.typeannul) }}
             </div>
         </div>
     </div>
@@ -54,8 +54,8 @@
         <button type="submit" class="btn btn-primary w-100 mb-2">
             <i class="bx bx-save me-2"></i>{{ button_label|default('Enregistrer') }}
         </button>
-        {% if form.vars.data.seqmodif %}
-            <a href="{{ path('app_frais_modif_index') }}" class="btn btn-outline-danger w-100 px-4">
+        {% if form.vars.data.seqannul is defined and form.vars.data.seqannul %}
+            <a href="{{ path('app_frais_annul_index') }}" class="btn btn-outline-danger w-100 px-4">
                 <i class="bx bx-x me-2"></i>Annuler
             </a>
         {% else %}
