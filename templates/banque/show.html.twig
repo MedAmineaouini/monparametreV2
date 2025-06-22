@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Banque{% endblock %}
+
+{% block body %}
+    <h1>Banque</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>SEQBANQUE</th>
+                <td>{{ banque.SEQBANQUE }}</td>
+            </tr>
+            <tr>
+                <th>LIBBANQUE</th>
+                <td>{{ banque.LIBBANQUE }}</td>
+            </tr>
+            <tr>
+                <th>CPTBANQUE</th>
+                <td>{{ banque.CPTBANQUE }}</td>
+            </tr>
+            <tr>
+                <th>SWFBANQUE</th>
+                <td>{{ banque.SWFBANQUE }}</td>
+            </tr>
+            <tr>
+                <th>ADRBANQUE</th>
+                <td>{{ banque.ADRBANQUE }}</td>
+            </tr>
+            <tr>
+                <th>CPBANQUE</th>
+                <td>{{ banque.CPBANQUE }}</td>
+            </tr>
+            <tr>
+                <th>TELBANQUE</th>
+                <td>{{ banque.TELBANQUE }}</td>
+            </tr>
+            <tr>
+                <th>FAXBANQUE</th>
+                <td>{{ banque.FAXBANQUE }}</td>
+            </tr>
+            <tr>
+                <th>EMLBANQUE</th>
+                <td>{{ banque.EMLBANQUE }}</td>
+            </tr>
+            <tr>
+                <th>OBSBANQUE</th>
+                <td>{{ banque.OBSBANQUE }}</td>
+            </tr>
+            <tr>
+                <th>Numterminal</th>
+                <td>{{ banque.numterminal }}</td>
+            </tr>
+            <tr>
+                <th>Journal1</th>
+                <td>{{ banque.Journal1 }}</td>
+            </tr>
+            <tr>
+                <th>Journal2</th>
+                <td>{{ banque.Journal2 }}</td>
+            </tr>
+            <tr>
+                <th>Compte1</th>
+                <td>{{ banque.compte1 }}</td>
+            </tr>
+            <tr>
+                <th>Compte2</th>
+                <td>{{ banque.compte2 }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_banque_index') }}">back to list</a>
+
+    <a href="{{ path('app_banque_edit', {'SEQBANQUE': banque.SEQBANQUE}) }}">edit</a>
+
+    {{ include('banque/_delete_form.html.twig') }}
+{% endblock %}

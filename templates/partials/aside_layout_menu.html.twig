@@ -131,7 +131,7 @@
         </li>
 
         <li class="menu-item {% if app.request.get('_route') starts with 'app_type_produit' %}active open{% endif %}">
-            <a href="{{ path('app_pays_index') }}" class="menu-link">
+            <a href="{{ path('app_typeprod_index') }}" class="menu-link">
                 <i class="fa fa-box-open me-2"></i>Type Produit
             </a>
         </li>
@@ -149,13 +149,13 @@
         </li>
 
         <li class="menu-item {% if app.request.get('_route') starts with 'app_banque' %}active open{% endif %}">
-            <a href="{{ path('app_pays_index')}}" class="menu-link">
+            <a href="{{ path('app_banque_index')}}" class="menu-link">
                 <i class="fa fa-university me-2"></i>Banque
             </a>
         </li>
 
         <li class="menu-item {% if app.request.get('_route') starts with 'app_frais_modification' %}active open{% endif %}">
-            <a href="{{ path('app_pays_index') }}" class="menu-link">
+            <a href="{{ path('app_frais_modif_index') }}" class="menu-link">
                 <i class="fa fa-pen me-2"></i>Frais de Modification
             </a>
         </li>

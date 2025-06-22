@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+
 #[ORM\Entity(repositoryClass: PaysRepository::class)]
 #[ORM\Table(name: 'PAYS')]
 class Pays
@@ -43,7 +44,8 @@ class Pays
     #[ORM\Column(length: 4, nullable: true)]
     private ?string $code_iata = null;
 
-
+    #[ORM\OneToMany(mappedBy: 'PAYBANQUE', targetEntity: Banque::class)]
+    private Collection $banques;
 
     public function __construct()
     {

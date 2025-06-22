@@ -1,0 +1,107 @@
+<div class="card-body" style="font-size: 12px">
+    {{ form_start(form, {'attr': {'class': 'browser-default-validation'}}) }}
+
+    <div class="row g-3 mb-4 align-items-center">
+        <div class="col-md-12">
+            {{ form_label(form.LIBBANQUE, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.LIBBANQUE, {'attr': {'class': 'form-control', 'required': true}}) }}
+        </div>
+
+        <div class="col-md-12">
+            {{ form_label(form.CPTBANQUE, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.CPTBANQUE, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="col-md-12">
+            {{ form_label(form.SWFBANQUE, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.SWFBANQUE, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="col-md-12">
+            {{ form_label(form.ADRBANQUE, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.ADRBANQUE, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="col-md-12"> 
+            {{ form_label(form.CPBANQUE, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }} 
+            {{ form_widget(form.CPBANQUE, {'attr': {'class': 'form-control'}}) }} 
+        </div> 
+    </div>
+
+    <div class="row g-3 mb-4 align-items-center">
+        <div class="col-md-12">
+            {{ form_label(form.TELBANQUE, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.TELBANQUE, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="col-md-12">
+            {{ form_label(form.FAXBANQUE, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.FAXBANQUE, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="col-md-12">
+            {{ form_label(form.EMLBANQUE, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.EMLBANQUE, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="col-md-12">
+            {{ form_label(form.numterminal, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.numterminal, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4 align-items-center">
+        <div class="col-md-12">
+            {{ form_label(form.Journal1, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.Journal1, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="col-md-12">
+            {{ form_label(form.Journal2, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.Journal2, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="col-md-12">
+            {{ form_label(form.compte1, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.compte1, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="col-md-12">
+            {{ form_label(form.compte2, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.compte2, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4 align-items-center">
+        <div class="col-md-12">
+            {{ form_label(form.VILBANQUE, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.VILBANQUE, {'attr': {'class': 'form-select'}}) }}
+        </div>
+
+        <div class="col-md-12">
+            {{ form_label(form.PAYBANQUE, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.PAYBANQUE, {'attr': {'class': 'form-select'}}) }}
+        </div>
+
+        <div class="col-md-12">
+            {{ form_label(form.OBSBANQUE, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.OBSBANQUE, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+    <div class="pt-3 border-top text-end">
+        <button type="submit" class="btn btn-primary w-100 mb-2">
+            <i class="bx bx-save me-2"></i>{{ button_label|default('Enregistrer') }}
+        </button>
+        {% if form.vars.data.SEQBANQUE %}
+            <a href="{{ path('app_banque_index') }}" class="btn btn-outline-danger w-100 px-4">
+                <i class="bx bx-x me-2"></i>Annuler
+            </a>
+        {% else %}
+            <button type="button" class="btn btn-outline-danger w-100 px-4" data-bs-dismiss="offcanvas">
+                <i class="bx bx-x me-2"></i>Annuler
+            </button>
+        {% endif %}
+    </div>
+    {{ form_end(form) }}
+</div>
