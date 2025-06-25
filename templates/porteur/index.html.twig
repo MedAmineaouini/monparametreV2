@@ -1,4 +1,4 @@
-{% extends 'base2.html.twig' %}
+{% extends 'base.html.twig' %}
 {% form_theme form 'bootstrap_5_layout.html.twig' %}
 
 {% block title %}RFT | Listes des Porteurs{% endblock %}
@@ -63,18 +63,18 @@
     </div>
 
     <!-- Modal: Nouveau Porteur -->
-    <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Nouveau Apporteur</h5>
+                <div class="modal-header" style="border-bottom: 1px solid lightgray;padding: 1rem">
+                    <h5 class="modal-title"><i class="bx bx-plus"></i> Nouvel Apporteur</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
                 </div>
 
                 {{ form_start(form, {'attr': {'class': 'browser-default-validation'}}) }}
                     <div class="modal-body">
                         <div class="mb-3">
-                            {{ form_label(form.libPorteur, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+                            {{ form_label(form.libPorteur, 'Libellé', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
                             <strong class="text-danger">*</strong>
                             {{ form_widget(form.libPorteur, {
                                 'attr': {
@@ -97,7 +97,7 @@
                         </div>#}
                     </div>
 
-                    <div class="modal-footer">
+                    <div class="modal-footer" style="border-top: 1px solid lightgray;padding: 1rem">
                         <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
                              <i class="bx bx-x me-2"></i>Annuler
                         </button>

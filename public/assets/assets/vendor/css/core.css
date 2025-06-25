@@ -2339,6 +2339,7 @@ progress {
   vertical-align: inherit;
 }
 .table > thead {
+  font-style: italic;
   vertical-align: bottom;
 }
 

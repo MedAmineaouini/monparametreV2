@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Typechambre{% endblock %}
+
+{% block body %}
+    <h1>Typechambre</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Seqtypechambre</th>
+                <td>{{ typechambre.seqtypechambre }}</td>
+            </tr>
+            <tr>
+                <th>Libtypechambre</th>
+                <td>{{ typechambre.libtypechambre }}</td>
+            </tr>
+            <tr>
+                <th>Libtypechambre2</th>
+                <td>{{ typechambre.libtypechambre2 }}</td>
+            </tr>
+            <tr>
+                <th>AdultesMini</th>
+                <td>{{ typechambre.adultesMini }}</td>
+            </tr>
+            <tr>
+                <th>AdultesMaxi</th>
+                <td>{{ typechambre.adultesMaxi }}</td>
+            </tr>
+            <tr>
+                <th>EnfantsMini</th>
+                <td>{{ typechambre.enfantsMini }}</td>
+            </tr>
+            <tr>
+                <th>EnfantsMaxi</th>
+                <td>{{ typechambre.enfantsMaxi }}</td>
+            </tr>
+            <tr>
+                <th>BebesMaxi</th>
+                <td>{{ typechambre.bebesMaxi }}</td>
+            </tr>
+            <tr>
+                <th>Suppsg</th>
+                <td>{{ typechambre.suppsg }}</td>
+            </tr>
+            <tr>
+                <th>Capacite</th>
+                <td>{{ typechambre.capacite }}</td>
+            </tr>
+            <tr>
+                <th>Sel</th>
+                <td>{{ typechambre.sel ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Abrtypechambre</th>
+                <td>{{ typechambre.abrtypechambre }}</td>
+            </tr>
+            <tr>
+                <th>Ordre</th>
+                <td>{{ typechambre.ordre }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_typechambre_index') }}">back to list</a>
+
+    <a href="{{ path('app_typechambre_edit', {'seqtypechambre': typechambre.seqtypechambre}) }}">edit</a>
+
+    {{ include('typechambre/_delete_form.html.twig') }}
+{% endblock %}

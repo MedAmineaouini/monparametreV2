@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Typeregle{% endblock %}
+
+{% block body %}
+    <h1>Typeregle</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Seqtyperegle</th>
+                <td>{{ typeregle.seqtyperegle }}</td>
+            </tr>
+            <tr>
+                <th>Libtyperegle</th>
+                <td>{{ typeregle.libtyperegle }}</td>
+            </tr>
+            <tr>
+                <th>Contrepartie</th>
+                <td>{{ typeregle.contrepartie }}</td>
+            </tr>
+            <tr>
+                <th>Comptabilisable</th>
+                <td>{{ typeregle.comptabilisable }}</td>
+            </tr>
+            <tr>
+                <th>Journal</th>
+                <td>{{ typeregle.journal }}</td>
+            </tr>
+            <tr>
+                <th>Sens</th>
+                <td>{{ typeregle.sens }}</td>
+            </tr>
+            <tr>
+                <th>Xx</th>
+                <td>{{ typeregle.xx }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_typeregle_index') }}">back to list</a>
+
+    <a href="{{ path('app_typeregle_edit', {'seqtyperegle': typeregle.seqtyperegle}) }}">edit</a>
+
+    {{ include('typeregle/_delete_form.html.twig') }}
+{% endblock %}
