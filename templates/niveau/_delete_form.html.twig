@@ -1,4 +1,13 @@
-<form method="post" action="{{ path('app_niveau_delete', {'id': niveau.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ niveau.id) }}">
-    <button class="btn">Delete</button>
+<form method="post"
+      action="{{ path('app_niveau_delete', {'id': niveau.id}) }}"
+      class="delete-form">
+  <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ niveau.id) }}">
+
+  <button type="button"
+          class="dropdown-item text-danger border-0 bg-transparent w-100 text-start delete-btn"
+          data-entity-type="ce niveau"
+          data-confirm-message="Êtes-vous sûr de vouloir supprimer ce niveau ? Cette action est irréversible."
+          data-success-message="Le niveau a été supprimé avec succès">
+    <i class="icon-base bx bx-trash me-1"></i> Supprimer
+  </button>
 </form>

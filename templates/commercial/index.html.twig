@@ -3,17 +3,17 @@
 {% block title %}Liste des commerciaux{% endblock %}
 
 {% block body %}
-<div class="container-xxl flex-grow-1 container-p-y">
+<div class="flex-grow-1 container-p-y container-fluid">
   <div class="card">
-    <div class="card-header border-bottom d-flex justify-content-between align-items-center">
+    <div class="card-header d-flex justify-content-between align-items-center">
       <h5 class="card-title mb-0">📋 Liste des commerciaux</h5>
       <button class="btn btn-success" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddCommercial">
         <i class="icon-base bx bx-plus me-2"></i>Ajouter un commercial
       </button>
     </div>
 
-    <div class="card-datatable">
-      <table class="datatables-commercials table border-top table-hover">
+    <div class="card-body p-1">
+      <table class="datatables-commercials table table-hover table-striped table-bordered mb-1">
         <thead>
           <tr>
             <th>ID</th>

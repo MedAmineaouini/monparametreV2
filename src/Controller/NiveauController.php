@@ -76,16 +76,57 @@ class NiveauController extends AbstractController
     }
 
     #[Route('/{id}/delete', name: 'app_niveau_delete', methods: ['POST'])]
-    public function delete(Request $request, Niveau $niveau, EntityManagerInterface $em): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$niveau->getId(), $request->request->get('_token'))) {
+    public function delete(
+        Request $request,
+        Niveau $niveau,
+        EntityManagerInterface $em
+    ): Response {
+        $csrfTokenId = 'delete' . $niveau->getId();
+    
+        if (!$this->isCsrfTokenValid($csrfTokenId, $request->request->get('_token'))) {
+            if ($request->isXmlHttpRequest()) {
+                return $this->json([
+                    'success' => false,
+                    'message' => 'Jeton CSRF invalide.',
+                ], Response::HTTP_BAD_REQUEST);
+            }
+    
+            $this->addFlash('error', 'Jeton CSRF invalide.');
+            return $this->redirectToRoute('app_niveau_index');
+        }
+    
+        try {
             $em->remove($niveau);
             $em->flush();
+    
+            if ($request->isXmlHttpRequest()) {
+                return $this->json([
+                    'success' => true,
+                    'message' => 'Niveau supprimé avec succès.',
+                    'redirect' => $this->generateUrl('app_niveau_index')
+                ]);
+            }
+    
             $this->addFlash('success', 'Niveau supprimé avec succès.');
-        } else {
-            $this->addFlash('error', 'Jeton CSRF invalide.');
+        } catch (\Exception $e) {
+            $errorData = [
+                'success' => false,
+                'message' => 'Erreur lors de la suppression du niveau.',
+                'details' => $this->getParameter('kernel.debug') ? [
+                    'exception' => get_class($e),
+                    'message' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                ] : null,
+            ];
+    
+            if ($request->isXmlHttpRequest()) {
+                return $this->json($errorData, Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+    
+            $this->addFlash('error', $errorData['message']);
         }
-
+    
         return $this->redirectToRoute('app_niveau_index');
     }
+    
 }
