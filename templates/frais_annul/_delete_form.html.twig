@@ -1,4 +1,12 @@
-<form method="post" action="{{ path('app_frais_annul_delete', {'seqannul': frais_annul.seqannul}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ frais_annul.seqannul) }}">
-    <button class="btn">Delete</button>
+<form method="post"
+      action="{{ path('app_frais_annul_delete', {'seqannul': frais_annul.seqannul}) }}"
+      class="delete-form">
+  <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ frais_annul.seqannul) }}">
+  <button type="button"
+          class="dropdown-item text-danger border-0 bg-transparent w-100 text-start delete-btn"
+          data-entity-type="ce frais d'annulation"
+          data-confirm-message="Êtes-vous sûr de vouloir supprimer ce frais d'annulation ? Cette action est irréversible."
+          data-success-message="Le frais d'annulation a été supprimé avec succès">
+    <i class="icon-base bx bx-trash me-1"></i> Supprimer
+  </button>
 </form>

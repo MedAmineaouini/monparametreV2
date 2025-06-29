@@ -4,76 +4,94 @@
 
 {% block body %}
 <div class="container-xxl flex-grow-1 container-p-y">
-  <div class="card">
-    <div class="card-header border-bottom">
-      <h5 class="card-title mb-0">📋 Liste des frais de modification</h5>
-      <div class="d-flex justify-content-end align-items-center row pt-4 gap-md-0 g-6">
-        <div class="col-md-4 d-flex justify-content-end">
-          <button class="btn btn-success" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddFraisModif">
-            <i class="icon-base bx bx-plus me-2"></i>Ajouter un frais
+  <div class="card shadow rounded-3 border-0">
+    <div class="card-header text-white">
+      <div class="row align-items-center">
+        <div class="col-12 col-md-8 mb-2 mb-md-0">
+          <h5 class="mb-0 text-center text-md-start">📋 Liste des frais de modification</h5>
+        </div>
+        <div class="col-9 col-md-4 d-flex flex-column flex-md-row justify-content-md-end gap-2">
+          <button class="btn btn-success w-100 w-md-auto" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddFraisModif">
+            <i class="bx bx-plus me-2"></i>Ajouter un frais
           </button>
+          {# Si tu veux, tu peux ajouter un export PDF ou autre bouton ici #}
         </div>
       </div>
     </div>
 
-    <div class="card-datatable">
-      <table class="datatables-frais table border-top">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Jour 1</th>
-            <th>Jour 2</th>
-            <th>Facteur</th>
-            <th>Type</th>
-            <th>Libellé</th>
-            <th>Barème</th>
-            <th>Montant min</th>
-            <th>À appliquer</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for frais in frais_modifs %}
+    <div class="card-body p-1">
+      <div class="table-responsive">
+        <table class="table table-hover table-striped table-bordered mb-1">
+          <thead>
             <tr>
-              <td>{{ frais.seqmodif }}</td>
-              <td>{{ frais.jour1 }}</td>
-              <td>{{ frais.jour2 }}</td>
-              <td>{{ frais.facteur }}</td>
-              <td>{{ frais.typemodif|capitalize }}</td>
-              <td>{{ frais.libelle }}</td>
-              <td>{{ frais.bareme }}</td>
-              <td>{{ frais.montantmini }}</td>
-              <td>{{ frais.applicable == 'personne' ? 'Par personne' : 'Par dossier' }}</td>
-              <td>
-                <div class="dropdown">
-                  <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                    <i class="icon-base bx bx-dots-vertical-rounded"></i>
-                  </button>
-                  <div class="dropdown-menu">
-                    <a class="dropdown-item" href="{{ path('app_frais_modif_index', {'edit': frais.seqmodif}) }}">
-                      <i class="icon-base bx bx-edit-alt me-1"></i> Modifier
-                    </a>
-                    {{ include('frais_modif/_delete_form.html.twig', { frais_modif: frais }) }}
+              <th class="text-center" width="60">#</th>
+              <th>Jour 1</th>
+              <th>Jour 2</th>
+              <th>Facteur</th>
+              <th>Type</th>
+              <th>Libellé</th>
+              <th>Barème</th>
+              <th>Montant min</th>
+              <th>À appliquer</th>
+              <th class="text-center" width="100">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for frais in frais_modifs %}
+              <tr>
+                <td class="text-center">{{ frais.seqmodif }}</td>
+                <td>{{ frais.jour1 }}</td>
+                <td>{{ frais.jour2 }}</td>
+                <td>{{ frais.facteur }}</td>
+                <td>{{ frais.typemodif|capitalize }}</td>
+                <td>{{ frais.libelle }}</td>
+                <td>{{ frais.bareme }}</td>
+                <td>{{ frais.montantmini }}</td>
+                <td>{{ frais.applicable == 'personne' ? 'Par personne' : 'Par dossier' }}</td>
+                <td class="text-center">
+                  <div class="dropdown">
+                    <button type="button"
+                            class="btn p-0 dropdown-toggle hide-arrow"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                            aria-label="Actions">
+                      <i class="bx bx-dots-vertical-rounded"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                      <li>
+                        <a class="dropdown-item"
+                           href="{{ path('app_frais_modif_index', {'edit': frais.seqmodif}) }}"
+                           aria-label="Modifier">
+                          <i class="bx bx-edit-alt me-2"></i>Modifier
+                        </a>
+                      </li>
+                      <li>
+                        {{ include('frais_modif/_delete_form.html.twig', {
+                          frais_modif: frais,
+                          btn_class: 'dropdown-item'
+                        }) }}
+                      </li>
+                    </ul>
                   </div>
-                </div>
-              </td>
-            </tr>
-          {% else %}
-            <tr>
-              <td colspan="10" class="text-center">Aucun frais trouvé</td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+                </td>
+              </tr>
+            {% else %}
+              <tr>
+                <td colspan="10" class="text-center py-4 text-muted">Aucun frais trouvé</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- Offcanvas pour ajouter un frais -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddFraisModif" aria-labelledby="offcanvasAddFraisModifLabel">
+<!-- Offcanvas ajout frais -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddFraisModif" aria-labelledby="offcanvasAddFraisModifLabel" data-bs-backdrop="static" data-bs-keyboard="false">
   <div class="offcanvas-header border-bottom">
     <h5 id="offcanvasAddFraisModifLabel" class="offcanvas-title">Ajouter un frais</h5>
-    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
   </div>
   <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
     {{ include('frais_modif/_form.html.twig', {
@@ -83,19 +101,39 @@
   </div>
 </div>
 
-<!-- Offcanvas pour modifier un frais -->
+<!-- Offcanvas édition frais -->
 {% if editForm is defined and editForm %}
-  <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasEditFraisModif" style="visibility: visible;" aria-labelledby="offcanvasEditFraisModifLabel">
+  <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasEditFraisModif" data-bs-backdrop="static" data-bs-keyboard="false" style="visibility: visible;" aria-labelledby="offcanvasEditFraisModifLabel">
     <div class="offcanvas-header border-bottom">
       <h5 id="offcanvasEditFraisModifLabel" class="offcanvas-title">Modifier le frais</h5>
-      <a href="{{ path('app_frais_modif_index') }}" class="btn-close text-reset" aria-label="Close"></a>
+      <a href="{{ path('app_frais_modif_index') }}" class="btn-close text-reset" aria-label="Fermer"></a>
     </div>
     <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
-      {{ include('frais_modif/_form.html.twig', {
-        form: editForm,
-        button_label: 'Mettre à jour'
+      {{ form_start(editForm, {
+          'action': path('app_frais_modif_index', {'edit': fraisToEdit.seqmodif}),
+          'attr': {'id': 'edit-form'}
       }) }}
+      {{ form_widget(editForm) }}
+      <hr>
+      <button type="submit" class="btn btn-primary w-100 mb-2">
+        <i class="bx bx-save me-2"></i>{{ button_label|default('Enregistrer') }}
+      </button>
+      <a href="{{ path('app_frais_modif_index') }}" class="btn btn-outline-danger w-100 px-4">
+        <i class="bx bx-x me-2"></i>Annuler
+      </a>
+      {{ form_end(editForm) }}
     </div>
   </div>
+
+  <script>
+    // Fermer l'offcanvas d'ajout si celui d'édition est ouvert
+    const addOffcanvas = document.getElementById('offcanvasAddFraisModif');
+    if (addOffcanvas) {
+      const bsAddOffcanvas = bootstrap.Offcanvas.getInstance(addOffcanvas);
+      if (bsAddOffcanvas) {
+        bsAddOffcanvas.hide();
+      }
+    }
+  </script>
 {% endif %}
 {% endblock %}

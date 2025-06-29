@@ -90,21 +90,55 @@ class FraisModifController extends AbstractController
     }
 
     #[Route('/{seqmodif}', name: 'app_frais_modif_delete', methods: ['POST'])]
-    public function delete(Request $request, FraisModif $fraisModif, EntityManagerInterface $entityManager): Response
-    {
-        if (!$this->isCsrfTokenValid('delete'.$fraisModif->getSeqmodif(), $request->request->get('_token'))) {
+    public function delete(
+        Request $request,
+        FraisModif $fraisModif,
+        EntityManagerInterface $entityManager
+    ): Response {
+        if (!$this->isCsrfTokenValid('delete' . $fraisModif->getSeqmodif(), $request->request->get('_token'))) {
+            if ($request->isXmlHttpRequest()) {
+                return $this->json([
+                    'success' => false,
+                    'message' => 'Token CSRF invalide',
+                ], Response::HTTP_BAD_REQUEST);
+            }
+    
             $this->addFlash('error', 'Token CSRF invalide.');
             return $this->redirectToRoute('app_frais_modif_index');
         }
-
+    
         try {
             $entityManager->remove($fraisModif);
             $entityManager->flush();
-            $this->addFlash('success', 'Frais modificateur supprimé.');
+    
+            if ($request->isXmlHttpRequest()) {
+                return $this->json([
+                    'success' => true,
+                    'message' => 'Frais de modification supprimé avec succès.',
+                    'redirect' => $this->generateUrl('app_frais_modif_index')
+                ]);
+            }
+    
+            $this->addFlash('success', 'Frais de modification supprimé avec succès.');
         } catch (\Exception $e) {
-            $this->addFlash('error', 'Erreur lors de la suppression.');
+            $errorData = [
+                'success' => false,
+                'message' => 'Erreur lors de la suppression du frais.',
+                'details' => $this->getParameter('kernel.debug') ? [
+                    'exception' => get_class($e),
+                    'message' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                ] : null,
+            ];
+    
+            if ($request->isXmlHttpRequest()) {
+                return $this->json($errorData, Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+    
+            $this->addFlash('error', $errorData['message']);
         }
-
+    
         return $this->redirectToRoute('app_frais_modif_index');
     }
+    
 }

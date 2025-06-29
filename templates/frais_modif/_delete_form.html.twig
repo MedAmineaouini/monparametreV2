@@ -1,11 +1,12 @@
-<form method="post" 
-      action="{{ path('app_frais_modif_delete', {'seqmodif': frais_modif.seqmodif}) }}" 
-      class="delete-form d-inline">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ frais_modif.seqmodif) }}">
-    <button type="button" 
-            class="dropdown-item text-danger border-0 bg-transparent w-100 text-start delete-btn"
-            data-confirm-message="Êtes-vous sûr de vouloir supprimer ce frais de modification ?"
-            data-success-message="Le frais de modification a été supprimé avec succès">
-        <i class="icon-base bx bx-trash me-1"></i> Supprimer
-    </button>
+<form method="post"
+      action="{{ path('app_frais_modif_delete', {'seqmodif': frais_modif.seqmodif}) }}"
+      class="delete-form">
+  <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ frais_modif.seqmodif) }}">
+  <button type="button"
+          class="dropdown-item text-danger border-0 bg-transparent w-100 text-start delete-btn"
+          data-entity-type="ce frais de modification"
+          data-confirm-message="Êtes-vous sûr de vouloir supprimer ce frais de modification ? Cette action est irréversible."
+          data-success-message="Le frais de modification a été supprimé avec succès">
+    <i class="icon-base bx bx-trash me-1"></i> Supprimer
+  </button>
 </form>
