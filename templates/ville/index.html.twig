@@ -4,70 +4,79 @@
 
 {% block body %}
   <div class="container-xxl flex-grow-1 container-p-y">
-    <div class="card">
-      <div class="card-header border-bottom">
-        <h5 class="card-title mb-0">📋 Liste des villes</h5>
-        <div class="d-flex justify-content-end align-items-center row pt-4 gap-md-0 g-6">
-          <div class="col-md-4 d-flex justify-content-end gap-2">
-            <button class="btn btn-success" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddVille">
-              <i class="icon-base bx bx-plus me-2"></i>Ajouter une ville
-            </button>
-            <a href="{{ path('app_ville_export_pdf') }}" class="btn btn-danger" target="_blank">
+    <div class="card shadow rounded-3 border-0">
+      <div class="card-header border-bottom text-white">
+        <div class="row align-items-center">
+          <div class="col-12 col-md-8 mb-2 mb-md-0">
+            <h5 class="mb-0 text-center text-md-start">📋 Liste des villes</h5>
+          </div>
+          <div class="col-12 col-md-4 d-flex flex-column flex-md-row justify-content-md-end gap-2">
+            <a class="btn btn-success w-100 w-md-auto" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddVille">
+              <i class="bx bx-plus me-2"></i>Ajouter une ville
+            </a>
+            <a href="{{ path('app_ville_export_pdf') }}" class="btn btn-danger w-100 w-md-auto" target="_blank">
               <i class="bx bxs-file-pdf me-2"></i>Exporter PDF
             </a>
           </div>
         </div>
       </div>
-      <div class="card-datatable">
-        <table class="datatables-villes table-striped table border-top">
-          <thead>
-            <tr>
-              <th>N°</th>
-              <th>Code ville</th>
-              <th>Libellé</th>
-              <th>Pays</th>
-              <th>Sous-pays</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for ville in villes %}
+
+      <div class="card-body p-1">
+        <div class="table-responsive">
+          <table class="table table-hover table-striped table-bordered">
+            <thead class="table-light">
               <tr>
-                <td>{{ ville.seqville }}</td>
-                <td>{{ ville.codeville }}</td>
-                <td>{{ ville.libville }}</td>
-                <td>{{ ville.pays.libpays }}</td>
-                <td>{{ ville.souspays.libsouspays }}</td>
-                <td>
-                  <div class="dropdown">
-                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                      <i class="icon-base bx bx-dots-vertical-rounded"></i>
-                    </button>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="{{ path('app_ville_index', {'edit': ville.seqville}) }}">
-                        <i class="icon-base bx bx-edit-alt me-1"></i> Modifier
-                      </a>
-                      {{ include('ville/_delete_form.html.twig', {'ville': ville}) }}
+                <th>N°</th>
+                <th>Code ville</th>
+                <th>Libellé</th>
+                <th>Pays</th>
+                <th>Sous-pays</th>
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for ville in villes %}
+                <tr>
+                  <td>{{ ville.seqville }}</td>
+                  <td>{{ ville.codeville }}</td>
+                  <td>{{ ville.libville }}</td>
+                  <td>{{ ville.pays.libpays }}</td>
+                  <td>{{ ville.souspays.libsouspays }}</td>
+                  <td class="text-center">
+                    <div class="dropdown">
+                      <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                        <i class="bx bx-dots-vertical-rounded"></i>
+                      </button>
+                      <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                          <a class="dropdown-item" href="{{ path('app_ville_index', {'edit': ville.seqville}) }}">
+                            <i class="bx bx-edit-alt me-2"></i>Modifier
+                          </a>
+                        </li>
+                        <li>
+                          {{ include('ville/_delete_form.html.twig', {'ville': ville}) }}
+                        </li>
+                      </ul>
                     </div>
-                  </div>
-                </td>
-              </tr>
-            {% else %}
-              <tr>
-                <td colspan="6" class="text-center">Aucune ville trouvée</td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+                  </td>
+                </tr>
+              {% else %}
+                <tr>
+                  <td colspan="6" class="text-center text-muted">Aucune ville trouvée</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Offcanvas pour ajouter une ville -->
-  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddVille" aria-labelledby="offcanvasAddVilleLabel">
+  <!-- Offcanvas Ajout -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddVille" aria-labelledby="offcanvasAddVilleLabel" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="offcanvas-header border-bottom">
       <h5 id="offcanvasAddVilleLabel" class="offcanvas-title">Ajouter une ville</h5>
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
     </div>
     <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
       {{ include('ville/_form.html.twig', {
@@ -77,12 +86,12 @@
     </div>
   </div>
 
-  <!-- Offcanvas pour modifier une ville -->
+  <!-- Offcanvas Modification -->
   {% if editForm is defined and editForm %}
-    <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasEditVille" style="visibility: visible;" aria-labelledby="offcanvasEditVilleLabel">
+    <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasEditVille" data-bs-backdrop="static" data-bs-keyboard="false" style="visibility: visible;" aria-labelledby="offcanvasEditVilleLabel">
       <div class="offcanvas-header border-bottom">
         <h5 id="offcanvasEditVilleLabel" class="offcanvas-title">Modifier la ville</h5>
-        <a href="{{ path('app_ville_index') }}" class="btn-close text-reset" aria-label="Close"></a>
+        <a href="{{ path('app_ville_index') }}" class="btn-close text-reset" aria-label="Fermer"></a>
       </div>
       <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
         {{ include('ville/_form.html.twig', {
@@ -91,5 +100,16 @@
         }) }}
       </div>
     </div>
+
+    <script>
+      // Fermer l'offcanvas d'ajout si l'édition est ouverte
+      const addOffcanvas = document.getElementById('offcanvasAddVille');
+      if (addOffcanvas) {
+        const bsAddOffcanvas = bootstrap.Offcanvas.getInstance(addOffcanvas);
+        if (bsAddOffcanvas) {
+          bsAddOffcanvas.hide();
+        }
+      }
+    </script>
   {% endif %}
 {% endblock %}

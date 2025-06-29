@@ -4,81 +4,90 @@
 
 {% block body %}
   <div class="container-xxl flex-grow-1 container-p-y">
-    <div class="card">
-      <div class="card-header border-bottom">
-        <h5 class="card-title mb-0">📋 Liste des Sous-Pays</h5>
-        <div class="d-flex justify-content-end align-items-center row pt-4 gap-md-0 g-6">
-          <div class="col-md-4 d-flex justify-content-end">
-            <button class="btn btn-success" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddSousPays">
-              <i class="icon-base bx bx-plus me-2"></i>Ajouter un sous-pays
-            </button>
+    <div class="card shadow rounded-3 border-0">
+      <div class="card-header border-bottom text-white">
+        <div class="row align-items-center">
+          <div class="col-12 col-md-8 mb-2 mb-md-0">
+            <h5 class="mb-0 text-center text-md-start">📋 Liste des Sous-Pays</h5>
+          </div>
+          <div class="col-12 col-md-4 d-flex flex-column flex-md-row justify-content-md-end gap-2">
+            <a class="btn btn-success w-100 w-md-auto" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddSousPays">
+              <i class="bx bx-plus me-2"></i>Ajouter un sous-pays
+            </a>
           </div>
         </div>
       </div>
-      <div class="card-datatable">
-        <table class="datatables-souspays table border-top">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Libellé</th>
-              <th>TUN</th>
-              <th>MIR</th>
-              <th>NBE</th>
-              <th>DJE</th>
-              <th>TOE</th>
-              <th>TUN Vente</th>
-              <th>MIR Vente</th>
-              <th>NBE Vente</th>
-              <th>DJE Vente</th>
-              <th>TOE Vente</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for souspay in souspays %}
+
+      <div class="card-body p-1">
+        <div class="table-responsive">
+          <table class="table table-hover table-striped table-bordered">
+            <thead class="table-light">
               <tr>
-                <td>{{ souspay.seqsouspays }}</td>
-                <td>{{ souspay.libsouspays }}</td>
-                <td>{{ souspay.tun }}</td>
-                <td>{{ souspay.mir }}</td>
-                <td>{{ souspay.nbe }}</td>
-                <td>{{ souspay.dje }}</td>
-                <td>{{ souspay.toe }}</td>
-                <td>{{ souspay.tunvente }}</td>
-                <td>{{ souspay.mirvente }}</td>
-                <td>{{ souspay.nbevente }}</td>
-                <td>{{ souspay.djevente }}</td>
-                <td>{{ souspay.toevente }}</td>
-                <td>
-                  <div class="dropdown">
-                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                      <i class="icon-base bx bx-dots-vertical-rounded"></i>
-                    </button>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="{{ path('app_souspays_index', {'edit': souspay.seqsouspays}) }}">
-                        <i class="icon-base bx bx-edit-alt me-1"></i> Modifier
-                      </a>
-                      {{ include('souspays/_delete_form.html.twig', {'seqsouspays': souspay.seqsouspays}) }}
+                <th>#</th>
+                <th>Libellé</th>
+                <th>TUN</th>
+                <th>MIR</th>
+                <th>NBE</th>
+                <th>DJE</th>
+                <th>TOE</th>
+                <th>TUN Vente</th>
+                <th>MIR Vente</th>
+                <th>NBE Vente</th>
+                <th>DJE Vente</th>
+                <th>TOE Vente</th>
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for souspay in souspays %}
+                <tr>
+                  <td>{{ souspay.seqsouspays }}</td>
+                  <td>{{ souspay.libsouspays }}</td>
+                  <td>{{ souspay.tun }}</td>
+                  <td>{{ souspay.mir }}</td>
+                  <td>{{ souspay.nbe }}</td>
+                  <td>{{ souspay.dje }}</td>
+                  <td>{{ souspay.toe }}</td>
+                  <td>{{ souspay.tunvente }}</td>
+                  <td>{{ souspay.mirvente }}</td>
+                  <td>{{ souspay.nbevente }}</td>
+                  <td>{{ souspay.djevente }}</td>
+                  <td>{{ souspay.toevente }}</td>
+                  <td class="text-center">
+                    <div class="dropdown">
+                      <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                        <i class="bx bx-dots-vertical-rounded"></i>
+                      </button>
+                      <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                          <a class="dropdown-item" href="{{ path('app_souspays_index', {'edit': souspay.seqsouspays}) }}">
+                            <i class="bx bx-edit-alt me-1"></i> Modifier
+                          </a>
+                        </li>
+                        <li>
+                          {{ include('souspays/_delete_form.html.twig', {'seqsouspays': souspay.seqsouspays}) }}
+                        </li>
+                      </ul>
                     </div>
-                  </div>
-                </td>
-              </tr>
-            {% else %}
-              <tr>
-                <td colspan="13" class="text-center">Aucun sous-pays trouvé</td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+                  </td>
+                </tr>
+              {% else %}
+                <tr>
+                  <td colspan="13" class="text-center text-muted">Aucun sous-pays trouvé</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Offcanvas pour ajouter un sous-pays -->
-  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddSousPays" aria-labelledby="offcanvasAddSousPaysLabel">
+  <!-- Offcanvas Ajout -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddSousPays" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="offcanvasAddSousPaysLabel">
     <div class="offcanvas-header border-bottom">
       <h5 id="offcanvasAddSousPaysLabel" class="offcanvas-title">Ajouter un sous-pays</h5>
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
     </div>
     <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
       {{ include('souspays/_form.html.twig', {
@@ -88,12 +97,12 @@
     </div>
   </div>
 
-  <!-- Offcanvas pour modifier un sous-pays -->
+  <!-- Offcanvas Modification -->
   {% if editForm is defined and editForm %}
-    <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasEditSousPays" style="visibility: visible;" aria-labelledby="offcanvasEditSousPaysLabel">
+    <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasEditSousPays" data-bs-backdrop="static" data-bs-keyboard="false" style="visibility: visible;" aria-labelledby="offcanvasEditSousPaysLabel">
       <div class="offcanvas-header border-bottom">
         <h5 id="offcanvasEditSousPaysLabel" class="offcanvas-title">Modifier le sous-pays</h5>
-        <a href="{{ path('app_souspays_index') }}" class="btn-close text-reset" aria-label="Close"></a>
+        <a href="{{ path('app_souspays_index') }}" class="btn-close text-reset" aria-label="Fermer"></a>
       </div>
       <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
         {{ include('souspays/_form.html.twig', {
@@ -102,5 +111,16 @@
         }) }}
       </div>
     </div>
+
+    <script>
+      // Fermer l'offcanvas d'ajout si l'édition est ouverte
+      const addOffcanvas = document.getElementById('offcanvasAddSousPays');
+      if (addOffcanvas) {
+        const bsAddOffcanvas = bootstrap.Offcanvas.getInstance(addOffcanvas);
+        if (bsAddOffcanvas) {
+          bsAddOffcanvas.hide();
+        }
+      }
+    </script>
   {% endif %}
 {% endblock %}

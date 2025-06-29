@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Pays</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #333; text-align: center; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>Liste des Pays</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Code</th>
+                <th>Libellé</th>
+                <th>Place</th>
+                <th>Nature</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for pay in pays %}
+            <tr>
+                <td>{{ pay.IDPAYS }}</td>
+                <td>{{ pay.CODEPAYS }}</td>
+                <td>{{ pay.LIBPAYS }}</td>
+                <td>{{ pay.PLACE }}</td>
+                <td>{{ pay.NATURE == 1 ? 'Moyen courrier' : 'Long courrier' }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
