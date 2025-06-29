@@ -64,14 +64,14 @@
     <link rel="stylesheet" href="{{ asset('assets/assets/vendor/libs/jquery-timepicker/jquery-timepicker.css') }}"/>
     <link rel="stylesheet" href="{{ asset('assets/assets/vendor/libs/pickr/pickr-themes.css') }}"/>
 
-    <link rel="stylesheet" href="{{ asset('assets/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}">
+{#    <link rel="stylesheet" href="{{ asset('assets/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}">#}
     <link rel="stylesheet"
           href="{{ asset('assets/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}">
     <link rel="stylesheet"
           href="{{ asset('assets/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css') }}">
-    <!-- Row Group CSS -->
-    <link rel="stylesheet"
-          href="{{ asset('assets/assets/vendor/libs/datatables-rowgroup-bs5/rowgroup.bootstrap5.css') }}">
+{#    <!-- Row Group CSS -->#}
+{#    <link rel="stylesheet"#}
+{#          href="{{ asset('assets/assets/vendor/libs/datatables-rowgroup-bs5/rowgroup.bootstrap5.css') }}">#}
     <link rel="stylesheet" href="{{ asset('assets/assets/vendor/libs/sweetalert2/sweetalert2.css') }}">
 
 </head>
@@ -438,7 +438,6 @@ document.querySelectorAll('.delete-btn').forEach(button => {
                 } else {
                     let html = `
                         <div class="text-center">
-                            <i class="bx bx-error-circle text-danger fs-1 mb-3"></i>
                             <h5 class="text-danger mb-3">Impossible de supprimer ${entityType}</h5>
                             <div class="alert alert-warning text-start">
                                 <p class="mb-2">${data.message}</p>
@@ -458,7 +457,7 @@ document.querySelectorAll('.delete-btn').forEach(button => {
                         title: 'Erreur',
                         html: html,
                         icon: 'error',
-                        confirmButtonText: 'Compris'
+                        confirmButtonText: 'Fermer'
                     });
                 }
             }

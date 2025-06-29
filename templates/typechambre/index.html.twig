@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RFT | Liste des Typechambre {% endblock %}
+
+{% block body %}
+<div class="card shadow rounded-3 border-0">
+
+    <div class="card-header  text-white">
+        <div class="row align-items-center">
+            <div class="col-12 col-md-8 mb-2 mb-md-0">
+                <h5 class="mb-0 text-center text-md-start">📋 Types de règlements</h5>
+            </div>
+            <div class="col-9 col-md-4 d-flex flex-column flex-md-row justify-content-md-end gap-2">
+                <a class="btn btn-success w-100 w-md-auto" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddtypechambre">
+                    <i class="bx bx-plus me-2"></i>Ajouter un type de réglement
+                </a>
+                <a href="{{ path('app_typechambre_export_pdf') }}" class="btn btn-danger  w-100 w-md-auto">
+                    <i class="bx bxs-file-pdf me-2"></i>Export PDF
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-1">
+        <div class="table-responsive">
+            <table class="table table-hover table-striped table-bordered mb-1">
+        <thead>
+                <th>#</th>
+                <th>Type de chambre</th>
+                <th>Abrv</th>
+                <th>Mini adultes</th>
+                <th>Maxi adultes</th>
+                <th>Mini enfants</th>
+                <th>Maxi enfants</th>
+                <th>Bébés</th>
+                <th>Capacité</th>
+                <th>Activer</th>
+                <th>actions</th>
+        </thead>
+        <tbody>
+        {% for typechambre in typechambres %}
+            <tr>
+                <td>{{ typechambre.seqtypechambre }}</td>
+                <td>{{ typechambre.libtypechambre }}</td>
+                <td> {{ typechambre.abrtypechambre }}</td>
+                <td style="text-align: end;">{{ typechambre.adultesMini }}</td>
+                <td style="text-align: end;">{{ typechambre.adultesMaxi }}</td>
+                <td style="text-align: end;">{{ typechambre.enfantsMini }}</td>
+                <td style="text-align: end;">{{ typechambre.enfantsMaxi }}</td>
+                <td style="text-align: end;">{{ typechambre.bebesMaxi }}</td>
+                <td style="text-align: end;">{{ typechambre.capacite }}</td>
+                <td>{{ typechambre.sel ? 'Oui' : 'Non' }}</td>
+                <td class="text-center">
+                    <div class="dropdown">
+                        <button type="button"
+                                class="btn p-0 dropdown-toggle hide-arrow"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                aria-label="Actions">
+                            <i class="bx bx-dots-vertical-rounded"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <a class="dropdown-item"
+                                   href="{{ path('app_typechambre_index', {'edit': typechambre.seqtypechambre}) }}"
+                                   aria-label="Modifier">
+                                    <i class="bx bx-edit-alt me-2"></i>Consulter | Modifier
+                                </a>
+                            </li>
+                            <li>
+                                {{ include('typechambre/_delete_form.html.twig', {
+                                    'typechambre': typechambre,
+                                    'btn_class': 'dropdown-item'
+                                }) }}
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="14"class="text-center py-4 text-muted">
+                    Aucun Types de chambres enregistré
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+        </div>
+    </div>
+</div>
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddtypechambre" aria-labelledby="offcanvasAddtypechambreLabel"   data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="offcanvas-header border-bottom">
+        <h5 id="offcanvasAddtypechambreLabel" class="offcanvas-title">Ajouter un Type de règle</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
+    </div>
+    <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
+        {{ include('typechambre/_form.html.twig', {
+            form: form,
+            button_label: 'Enregistrer'
+        }) }}
+    </div>
+</div>
+<!-- Offcanvas pour modification -->
+{% if editForm is defined and editForm %}
+    <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasEdittypechambre" data-bs-backdrop="static" data-bs-keyboard="false" style="visibility: visible;" aria-labelledby="offcanvasEdittypechambreLabel">
+        <div class="offcanvas-header border-bottom">
+            <h5 id="offcanvasEdittypechambreLabel" class="offcanvas-title">Modifier le Type de règle</h5>
+            <a href="{{ path('app_typechambre_index') }}" class="btn-close text-reset" aria-label="Fermer"></a>
+        </div>
+        <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
+            {{ form_start(editForm, {
+                'action': path('app_typechambre_index', {'edit': typechambreToEdit.seqtypechambre}),
+                'attr': {'id': 'edit-form'}
+            }) }}
+            {{ form_widget(editForm) }}
+            <hr>
+            {#                <button type="submit" class="btn btn-primary">Enregistrer</button>#}
+            <button type="submit" class="btn btn-primary w-100 mb-2">
+                <i class="bx bx-save me-2"></i>{{ button_label|default('Enregistrer') }}
+            </button>
+            {#                <button type="button" class="btn btn-outline-danger w-100 px-4" data-bs-dismiss="offcanvas">#}
+            {#                    <i class="bx bx-x me-2"></i>Annuler#}
+            {#                </button>#}
+            <a href="{{ path('app_typechambre_index') }}" class="btn btn-outline-danger w-100 px-4">
+                <i class="bx bx-x me-2"></i>Annuler
+            </a>
+            {{ form_end(editForm) }}
+        </div>
+    </div>
+
+    <script>
+        // Fermer l'offcanvas d'ajout si l'offcanvas d'édition est ouvert
+        const addOffcanvas = document.getElementById('offcanvasAddtypechambre');
+        if (addOffcanvas) {
+            const bsAddOffcanvas = bootstrap.Offcanvas.getInstance(addOffcanvas);
+            if (bsAddOffcanvas) {
+                bsAddOffcanvas.hide();
+            }
+        }
+    </script>
+{% endif %}
+<!-- Offcanvas -
+    <a href="{{ path('app_typechambre_new') }}">Create new</a>
+{% endblock %}

@@ -139,7 +139,7 @@ class PaysController extends AbstractController
                 ->getSingleScalarResult();
                 
             if ($villeCount > 0) {
-                $dependencies[] = 'Villes associées ('.$villeCount.')';
+                $dependencies[] = 'Villes ';
             }
             
             $sousPaysCount = $entityManager->getRepository(SousPays::class)
@@ -151,7 +151,7 @@ class PaysController extends AbstractController
                 ->getSingleScalarResult();
                 
             if ($sousPaysCount > 0) {
-                $dependencies[] = 'Sous-pays associés ('.$sousPaysCount.')';
+                $dependencies[] = 'Sous-pays ';
             }
     
             if (!empty($dependencies)) {
