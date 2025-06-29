@@ -1,8 +1,9 @@
 <form method="post" 
       action="{{ path('app_prest_delete', {'SEQPREST': prest.SEQPREST}) }}" 
-      class="delete-form">
+      class="delete-form" 
+      onsubmit="return confirm(this.querySelector('button').dataset.confirmMessage);">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ prest.SEQPREST) }}">
-    <button type="button" 
+    <button type="submit" 
             class="dropdown-item text-danger border-0 bg-transparent w-100 text-start delete-btn"
             data-confirm-message="Êtes-vous sûr de vouloir supprimer cette prestation ?"
             data-success-message="La prestation a été supprimée avec succès">
