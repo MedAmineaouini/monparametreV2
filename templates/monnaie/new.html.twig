@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Monnaie{% endblock %}
+
+{% block body %}
+    <h1>Create new Monnaie</h1>
+
+    {{ include('monnaie/_form.html.twig') }}
+
+    <a href="{{ path('app_monnaie_index') }}">back to list</a>
+{% endblock %}

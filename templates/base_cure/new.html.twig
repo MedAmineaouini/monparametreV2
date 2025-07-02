@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New BaseCure{% endblock %}
+
+{% block body %}
+    <h1>Create new BaseCure</h1>
+
+    {{ include('base_cure/_form.html.twig') }}
+
+    <a href="{{ path('app_base_cure_index') }}">back to list</a>
+{% endblock %}

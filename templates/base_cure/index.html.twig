@@ -1,0 +1,136 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RFT | Liste des bases de cures{% endblock %}
+
+{% block body %}
+<div class="card shadow rounded-3 border-0">
+    <div class="card-header text-white">
+        <div class="row align-items-center">
+            <div class="col-12 col-md-8 mb-2 mb-md-0">
+                <h5 class="mb-0 text-center text-md-start">🧾 Bases de Cures</h5>
+            </div>
+            <div class="col-9 col-md-4 d-flex flex-column flex-md-row justify-content-md-end gap-2">
+                <a class="btn btn-success w-100 w-md-auto" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddBaseCure">
+                    <i class="bx bx-plus me-2"></i>Ajouter une base de cure
+                </a>
+                <a href="{{ path('app_base_cure_export_pdf') }}" class="btn btn-danger w-100 w-md-auto">
+                    <i class="bx bxs-file-pdf me-2"></i>Export PDF
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body p-1">
+        <div class="table-responsive">
+            <table class="table table-hover table-striped table-bordered mb-1">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Libellé</th>
+                        <th>Type de Cure</th>
+                        <th>Ancien</th>
+                        <th>Archivé</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for base_cure in base_cures %}
+                        <tr>
+                            <td>{{ base_cure.codelibcure }}</td>
+                            <td>{{ base_cure.libelleCure }}</td>
+                            <td>{{ base_cure.typecure }}</td>
+                            <td>{{ base_cure.ancien }}</td>
+                            <td>
+                                {% if base_cure.archiver %}
+                                    <span class="text-success">Oui</span>
+                                {% else %}
+                                    <span class="text-danger">Non</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-center">
+                                <div class="dropdown">
+                                    <button type="button"
+                                            class="btn p-0 dropdown-toggle hide-arrow"
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false"
+                                            aria-label="Actions">
+                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li>
+                                            <a class="dropdown-item"
+                                               href="{{ path('app_base_cure_index', {'edit': base_cure.codelibcure}) }}">
+                                                <i class="bx bx-edit-alt me-2"></i>Consulter | Modifier
+                                            </a>
+                                        </li>
+                                        <li>
+                                            {{ include('base_cure/_delete_form.html.twig', {
+                                                'base_cure': base_cure
+                                            }) }}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="6" class="text-center py-4 text-muted">
+                                Aucune base de cure enregistrée.
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Offcanvas pour l'ajout -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddBaseCure" aria-labelledby="offcanvasAddBaseCureLabel" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="offcanvas-header border-bottom">
+        <h5 id="offcanvasAddBaseCureLabel" class="offcanvas-title">Ajouter une Base de Cure</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
+    </div>
+    <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
+        {{ include('base_cure/_form.html.twig', {
+            form: form,
+            button_label: 'Enregistrer'
+        }) }}
+    </div>
+</div>
+
+<!-- Offcanvas pour modification -->
+{% if editForm is defined and editForm %}
+    <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasEditBaseCure" data-bs-backdrop="static" data-bs-keyboard="false" style="visibility: visible;" aria-labelledby="offcanvasEditBaseCureLabel">
+        <div class="offcanvas-header border-bottom">
+            <h5 id="offcanvasEditBaseCureLabel" class="offcanvas-title">Modifier la Base de Cure</h5>
+            <a href="{{ path('app_base_cure_index') }}" class="btn-close text-reset" aria-label="Fermer"></a>
+        </div>
+        <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
+            {{ form_start(editForm, {
+                'action': path('app_base_cure_index', {'edit': baseCureToEdit.codelibcure}),
+                'attr': {'id': 'edit-form'}
+            }) }}
+            {{ form_widget(editForm) }}
+            <hr>
+            <button type="submit" class="btn btn-primary w-100 mb-2">
+                <i class="bx bx-save me-2"></i>Enregistrer
+            </button>
+            <a href="{{ path('app_base_cure_index') }}" class="btn btn-outline-danger w-100 px-4">
+                <i class="bx bx-x me-2"></i>Annuler
+            </a>
+            {{ form_end(editForm) }}
+        </div>
+    </div>
+
+    <script>
+        const addOffcanvas = document.getElementById('offcanvasAddBaseCure');
+        if (addOffcanvas) {
+            const bsAddOffcanvas = bootstrap.Offcanvas.getInstance(addOffcanvas);
+            if (bsAddOffcanvas) {
+                bsAddOffcanvas.hide();
+            }
+        }
+    </script>
+{% endif %}
+{% endblock %}

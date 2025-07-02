@@ -1,0 +1,73 @@
+<div class="card-body p-1" style="font-size: 12px">
+    {{ form_start(form, {'attr': {'class': 'browser-default-validation'}}) }}
+
+    <div class="row g-3 mb-4 align-items-center">
+        {# Libellé monnaie #}
+        <div class="col-md-12">
+            {{ form_label(form.libmonnaie, null, {'label_attr': {'class': 'form-label'}}) }}
+            <strong class="text-danger">*</strong>
+            {{ form_widget(form.libmonnaie) }}
+        </div>
+
+        {# Nom monnaie #}
+        <div class="col-md-12">
+            {{ form_label(form.nommonnaie, null, {'label_attr': {'class': 'form-label'}}) }}
+            <strong class="text-danger">*</strong>
+            {{ form_widget(form.nommonnaie) }}
+        </div>
+
+        {# Taux #}
+        <div class="col-md-12">
+            {{ form_label(form.taux, null, {'label_attr': {'class': 'form-label'}}) }}
+            <strong class="text-danger">*</strong>
+            {{ form_widget(form.taux) }}
+        </div>
+
+        {# Libellé pays #}
+        <div class="col-md-12">
+            {{ form_label(form.libpays, null, {'label_attr': {'class': 'form-label'}}) }}
+            <strong class="text-danger">*</strong>
+            {{ form_widget(form.libpays) }}
+        </div>
+
+        {# Mode de calcul #}
+        <div class="col-md-12">
+            {{ form_label(form.calcul, null, {'label_attr': {'class': 'form-label'}}) }}
+            <strong class="text-danger">*</strong>
+            {{ form_widget(form.calcul) }}
+        </div>
+
+        {# Date de mise à jour #}
+        <div class="col-md-12">
+            {{ form_label(form.datemaj, null, {'label_attr': {'class': 'form-label'}}) }}
+            <strong class="text-danger">*</strong>
+            {{ form_widget(form.datemaj) }}
+        </div>
+
+        {# Code pays #}
+        <div class="col-md-12">
+            {{ form_label(form.idpays, null, {'label_attr': {'class': 'form-label'}}) }}
+            <strong class="text-danger">*</strong>
+            {{ form_widget(form.idpays) }}
+        </div>
+    </div>
+
+    {# Boutons #}
+    <div class="pt-3 border-top text-end">
+        <button type="submit" class="btn btn-primary w-100 mb-2">
+            <i class="bx bx-save me-2"></i>{{ button_label|default('Enregistrer') }}
+        </button>
+
+        {% if form.vars.data.seqmonnaie is defined and form.vars.data.seqmonnaie %}
+            <a href="{{ path('app_monnaie_index') }}" class="btn btn-outline-danger w-100 px-4">
+                <i class="bx bx-x me-2"></i>Annuler
+            </a>
+        {% else %}
+            <button type="button" class="btn btn-outline-danger w-100 px-4" data-bs-dismiss="offcanvas">
+                <i class="bx bx-x me-2"></i>Annuler
+            </button>
+        {% endif %}
+    </div>
+
+    {{ form_end(form) }}
+</div>

@@ -1,0 +1,153 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RFT | Gestion des départements{% endblock %}
+
+{% block body %}
+<div class="container-fluid py-4">
+    <div class="card shadow rounded-3 border-0">
+        <div class="card-header text-white">
+            <div class="row align-items-center">
+                <div class="col-12 col-md-8 mb-2 mb-md-0">
+                    <h5 class="mb-0 text-center text-md-start">📋 Gestion des départements</h5>
+                </div>
+                <div class="col-9 col-md-4 d-flex flex-column flex-md-row justify-content-md-end gap-2">
+                    <a class="btn btn-success w-100 w-md-auto" data-bs-toggle="offcanvas" 
+                       data-bs-target="#offcanvasAddDepartement">
+                        <i class="bx bx-plus me-2"></i>Ajouter un département
+                    </a>
+                    <a href="{{ path('app_departement_export_pdf') }}" class="btn btn-danger w-100 w-md-auto">
+                        <i class="bx bxs-file-pdf me-2"></i>Export PDF
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-1">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped table-bordered mb-1">
+                    <thead>
+                        <tr>
+                            <th class="text-center" width="60">#</th>
+                            <th>Code Département</th>
+                            <th>Libellé</th>
+                            <th>Code Commercial</th>
+                            <th>Région</th>
+                            <th>Commercial</th>
+                            <th class="text-center" width="100">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for departement in departements %}
+                        <tr>
+                            <td class="text-center">{{ departement.seqdepartement }}</td>
+                            <td>{{ departement.codeDepartement }}</td>
+                            <td>{{ departement.libDepartement }}</td>
+                            <td>{{ departement.codecommercial }}</td>
+                            <td>{{ departement.region.libregion }}</td>
+                            <td>
+                                {% if departement.commercial %}
+                                    {{ departement.commercial.codeCommercial }} - 
+                                    {{ departement.commercial.nomCommercial }}
+                                {% else %}
+                                    <span class="text-muted">Non assigné</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-center">
+                                <div class="dropdown">
+                                    <button type="button"
+                                            class="btn p-0 dropdown-toggle hide-arrow"
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false"
+                                            aria-label="Actions">
+                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li>
+                                            <a class="dropdown-item"
+                                               href="{{ path('app_departement_index', {'edit': departement.seqdepartement}) }}"
+                                               aria-label="Modifier">
+                                                <i class="bx bx-edit-alt me-2"></i>Consulter | Modifier
+                                            </a>
+                                        </li>
+                                        <li>
+                                            {{ include('departement/_delete_form.html.twig', {
+                                                'departement': departement,
+                                                'btn_class': 'dropdown-item'
+                                            }) }}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="7" class="text-center py-4 text-muted">
+                                Aucun département enregistré
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Offcanvas pour ajout -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddDepartement" 
+         aria-labelledby="offcanvasAddDepartementLabel" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="offcanvas-header border-bottom">
+            <h5 id="offcanvasAddDepartementLabel" class="offcanvas-title">Ajouter un département</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
+        </div>
+        <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
+            {{ form_start(form, {'attr': {'id': 'add-form'}}) }}
+                {{ form_widget(form) }}
+                <hr>
+                <button type="submit" class="btn btn-primary w-100 mb-2">
+                    <i class="bx bx-save me-2"></i>Enregistrer
+                </button>
+                <button type="button" class="btn btn-outline-danger w-100 px-4" data-bs-dismiss="offcanvas">
+                    <i class="bx bx-x me-2"></i>Annuler
+                </button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+    <!-- Offcanvas pour modification -->
+    {% if editForm is defined and editForm and departementToEdit %}
+        <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasEditDepartement" 
+             data-bs-backdrop="static" data-bs-keyboard="false" style="visibility: visible;" 
+             aria-labelledby="offcanvasEditDepartementLabel">
+            <div class="offcanvas-header border-bottom">
+                <h5 id="offcanvasEditDepartementLabel" class="offcanvas-title">Modifier le département</h5>
+                <a href="{{ path('app_departement_index') }}" class="btn-close text-reset" aria-label="Fermer"></a>
+            </div>
+            <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
+                {{ form_start(editForm, {
+                    'action': path('app_departement_index', {'edit': departementToEdit.seqdepartement}),
+                    'attr': {'id': 'edit-form'}
+                }) }}
+                {{ form_widget(editForm) }}
+                <hr>
+                <button type="submit" class="btn btn-primary w-100 mb-2">
+                    <i class="bx bx-save me-2"></i>Mettre à jour
+                </button>
+                <a href="{{ path('app_departement_index') }}" class="btn btn-outline-danger w-100 px-4">
+                    <i class="bx bx-x me-2"></i>Annuler
+                </a>
+                {{ form_end(editForm) }}
+            </div>
+        </div>
+
+        <script>
+            // Fermer l'offcanvas d'ajout si l'offcanvas d'édition est ouvert
+            const addOffcanvas = document.getElementById('offcanvasAddDepartement');
+            if (addOffcanvas) {
+                const bsAddOffcanvas = bootstrap.Offcanvas.getInstance(addOffcanvas);
+                if (bsAddOffcanvas) {
+                    bsAddOffcanvas.hide();
+                }
+            }
+        </script>
+    {% endif %}
+</div>
+{% endblock %}

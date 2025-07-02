@@ -1,0 +1,52 @@
+<div class="card-body p-1" style="font-size: 12px">
+    {{ form_start(form, {'attr': {'class': 'browser-default-validation'}}) }}
+
+    <div class="row g-3 mb-4 align-items-center">
+        {# Champ Code Département #}
+        <div class="col-md-12">
+            {{ form_label(form.code_departement, null, {'label_attr': {'class': 'form-label'}}) }}
+            <strong class="text-danger">*</strong>
+            {{ form_widget(form.code_departement, {'attr': {'class': 'form-control', 'maxlength': 5}}) }}
+        </div>
+
+        {# Champ Libellé Département #}
+        <div class="col-md-12">
+            {{ form_label(form.lib_departement, null, {'label_attr': {'class': 'form-label'}}) }}
+            <strong class="text-danger">*</strong>
+            {{ form_widget(form.lib_departement, {'attr': {'class': 'form-control', 'maxlength': 100}}) }}
+        </div>
+
+        {# Champ Code Commercial #}
+        <div class="col-md-12">
+            {{ form_label(form.codecommercial, null, {'label_attr': {'class': 'form-label'}}) }}
+            <strong class="text-danger">*</strong>
+            {{ form_widget(form.codecommercial, {'attr': {'class': 'form-control', 'maxlength': 4}}) }}
+        </div>
+        <div class="col-md-12">
+            {{ form_label(form.region, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.region, {'attr': {'class': 'form-select'}}) }}
+        </div>
+        <div class="col-md-12">
+            {{ form_label(form.commercial, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.commercial, {'attr': {'class': 'form-select'}}) }}
+        </div>
+    </div>
+
+    {# Boutons de soumission #}
+    <div class="pt-3 border-top text-end">
+        <button type="submit" class="btn btn-primary w-100 mb-2">
+            <i class="bx bx-save me-2"></i>{{ button_label|default('Enregistrer') }}
+        </button>
+        {% if form.vars.data.seqdepartement %}
+            <a href="{{ path('app_departement_index') }}" class="btn btn-outline-danger w-100 px-4">
+                <i class="bx bx-x me-2"></i>Annuler
+            </a>
+        {% else %}
+            <button type="button" class="btn btn-outline-danger w-100 px-4" data-bs-dismiss="offcanvas">
+                <i class="bx bx-x me-2"></i>Annuler
+            </button>
+        {% endif %}
+    </div>
+
+    {{ form_end(form) }}
+</div>

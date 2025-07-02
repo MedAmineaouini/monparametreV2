@@ -185,25 +185,25 @@
         </li>
 
         <li class="menu-item {% if app.request.get('_route') starts with 'app_base_cure' %}active open{% endif %}">
-            <a href="{{ path('app_pays_index')}}" class="menu-link">
+            <a href="{{ path('app_base_cure_index')}}" class="menu-link">
                 <i class="fa fa-heartbeat me-2"></i>Base Cure
             </a>
         </li>
 
         <li class="menu-item {% if app.request.get('_route') starts with 'app_monnaie' %}active open{% endif %}">
-            <a href="{{ path('app_pays_index') }}" class="menu-link">
+            <a href="{{ path('app_monnaie_index') }}" class="menu-link">
                 <i class="fa fa-euro-sign me-2"></i>Monnaie
             </a>
         </li>
 
         <li class="menu-item {% if app.request.get('_route') starts with 'app_departement' %}active open{% endif %}">
-            <a href="{{ path('app_pays_index') }}" class="menu-link">
+            <a href="{{ path('app_departement_index') }}" class="menu-link">
                 <i class="fa fa-map-marked me-2"></i>Département
             </a>
         </li>
 
         <li class="menu-item {% if app.request.get('_route') starts with 'app_region' %}active open{% endif %}">
-            <a href="{{ path('app_pays_index') }}" class="menu-link">
+            <a href="{{ path('app_region_index') }}" class="menu-link">
                 <i class="fa fa-map me-2"></i>Région
             </a>
         </li>

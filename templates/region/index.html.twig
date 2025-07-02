@@ -1,0 +1,133 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Régions{% endblock %}
+
+{% block body %}
+<div class="card shadow-sm border-0">
+    <div class="card-header text-white">
+        <div class="row align-items-center">
+            <div class="col-12 col-md-9 mb-2 mb-md-0">
+                <h5 class="mb-0 text-center text-md-start">📋 Liste des Régions</h5>
+            </div>
+            <div class="col-12 col-md-3 d-flex flex-column flex-md-row justify-content-md-end gap-2">
+                <button class="btn btn-success w-100 w-md-auto" data-bs-toggle="modal" data-bs-target="#modalRegion">
+                    <i class="bx bx-plus"></i> Nouvelle région
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body p-1">
+        <table class="table table-hover table-striped table-bordered mb-1">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Libellé</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for region in regions %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ region.libregion }}</td>
+                    <td class="text-center">
+                        <div class="dropdown">
+                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="icon-base bx bx-dots-vertical-rounded"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#editModal{{ region.seqregion }}">
+                                        <i class="icon-base bx bx-edit-alt me-1"></i> Modifier
+                                    </a>
+                                    {# Include your delete form here, e.g. #}
+                                    {{ include('region/_delete_form.html.twig', { 'seqregion': region.seqregion }) }}
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+
+                {# Modal édition #}
+                <div class="modal fade" id="editModal{{ region.seqregion }}" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            {{ form_start(forms_edit[region.seqregion]) }}
+                            <div class="modal-header bg-primary text-white">
+                                <h5 class="modal-title">Modifier Région</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3 row align-items-center">
+                                    <label for="{{ forms_edit[region.seqregion].libregion.vars.id }}" class="col-sm-4 col-form-label fw-semibold">
+                                        Libellé <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-sm-8">
+                                        {{ form_widget(forms_edit[region.seqregion].libregion, {attr: {'class': 'form-control', 'placeholder': 'Libellé de la région'}}) }}
+                                        {{ form_errors(forms_edit[region.seqregion].libregion) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary text-white">
+                                    <i class="bx bx-save me-2"></i> Enregistrer
+                                </button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    <i class="bx bx-x me-2"></i> Annuler
+                                </button>
+                            </div>
+                            {{ form_end(forms_edit[region.seqregion]) }}
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <tr><td colspan="3" class="text-center">Aucune région trouvée</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{# Modal ajout #}
+{# Modal ajout #}
+<div class="modal fade" id="modalRegion" tabindex="-1" aria-hidden="true"
+     data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            {{ form_start(form_new) }}
+            <div class="modal-header text-white">
+                <h5 class="modal-title">Nouvelle Région</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3 row align-items-center">
+                    <label for="{{ form_new.libregion.vars.id }}" class="col-sm-4 col-form-label fw-semibold">
+                        Libellé <span class="text-danger">*</span>
+                    </label>
+                    <div class="col-sm-8">
+                        {{ form_widget(form_new.libregion, {
+                            'attr': {
+                                'class': 'form-control',
+                                'maxlength': 50,
+                                'placeholder': 'Libellé de la région',
+                                'required': 'required'
+                            }
+                        }) }}
+                        {{ form_errors(form_new.libregion) }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bx bx-save me-2"></i> Enregistrer
+                </button>
+                <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
+                    <i class="bx bx-x me-2"></i> Annuler
+                </button>
+            </div>
+            {{ form_end(form_new) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

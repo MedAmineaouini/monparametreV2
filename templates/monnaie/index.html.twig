@@ -1,0 +1,141 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Monnaies{% endblock %}
+
+{% block body %}
+    <div class="card shadow rounded-3 border-0">
+
+        <div class="card-header text-white">
+            <div class="row align-items-center">
+                <div class="col-12 col-md-8 mb-2 mb-md-0">
+                    <h5 class="mb-0 text-center text-md-start">💰 Liste des monnaies</h5>
+                </div>
+                <div class="col-9 col-md-4 d-flex flex-column flex-md-row justify-content-md-end gap-2">
+                    <a class="btn btn-success w-100 w-md-auto" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddMonnaie">
+                        <i class="bx bx-plus me-2"></i> Ajouter une monnaie
+                    </a>
+                    {# Exemple export PDF, à adapter si besoin #}
+                    {# <a href="{{ path('app_monnaie_export_pdf') }}" class="btn btn-danger w-100 w-md-auto">
+                        <i class="bx bxs-file-pdf me-2"></i> Export PDF
+                    </a> #}
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body p-1">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped table-bordered mb-1">
+                    <thead>
+                        <tr>
+                            <th class="text-center" style="width: 60px;">#</th>
+                            <th>Libellé</th>
+                            <th>Nom</th>
+                            <th>Taux</th>
+                            <th>Lib. Pays</th>
+                            <th>Calcul</th>
+                            <th>Date MAJ</th>
+                            <th>ID Pays</th>
+                            <th class="text-center" style="width: 100px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for monnaie in monnaies %}
+                        <tr>
+                            <td class="text-center">{{ monnaie.seqmonnaie }}</td>
+                            <td>{{ monnaie.libmonnaie }}</td>
+                            <td>{{ monnaie.nommonnaie }}</td>
+                            <td>{{ monnaie.taux }}</td>
+                            <td>{{ monnaie.libpays }}</td>
+                            <td>{{ monnaie.calcul }}</td>
+                            <td>{{ monnaie.datemaj ? monnaie.datemaj|date('Y-m-d H:i:s') : '' }}</td>
+                            <td>{{ monnaie.idpays }}</td>
+                            <td class="text-center">
+                                <div class="dropdown">
+                                    <button type="button"
+                                            class="btn p-0 dropdown-toggle hide-arrow"
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false"
+                                            aria-label="Actions">
+                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li>
+                                            <a class="dropdown-item"
+                                               href="{{ path('app_monnaie_edit', {'seqmonnaie': monnaie.seqmonnaie}) }}"
+                                               aria-label="Modifier">
+                                                <i class="bx bx-edit-alt me-2"></i>Consulter | Modifier
+                                            </a>
+                                        </li>
+                                        <li>
+                                            {{ include('monnaie/_delete_form.html.twig', {
+                                                'monnaie': monnaie,
+                                                'btn_class': 'dropdown-item text-danger'
+                                            }) }}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="9" class="text-center py-4 text-muted">
+                                Aucune monnaie enregistrée
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Offcanvas ajout -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddMonnaie" aria-labelledby="offcanvasAddMonnaieLabel" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="offcanvas-header border-bottom">
+            <h5 id="offcanvasAddMonnaieLabel" class="offcanvas-title">Ajouter une monnaie</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
+        </div>
+        <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
+            {{ include('monnaie/_form.html.twig', {
+                form: form,
+                button_label: 'Enregistrer'
+            }) }}
+        </div>
+    </div>
+
+    {# Offcanvas pour modification inline possible (si tu implémentes ce mode comme dans Typeregle) #}
+    {% if editForm is defined and editForm %}
+        <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasEditMonnaie" data-bs-backdrop="static" data-bs-keyboard="false" style="visibility: visible;" aria-labelledby="offcanvasEditMonnaieLabel">
+            <div class="offcanvas-header border-bottom">
+                <h5 id="offcanvasEditMonnaieLabel" class="offcanvas-title">Modifier la monnaie</h5>
+                <a href="{{ path('app_monnaie_index') }}" class="btn-close text-reset" aria-label="Fermer"></a>
+            </div>
+            <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
+                {{ form_start(editForm, {
+                    'action': path('app_monnaie_index', {'edit': monnaieToEdit.seqmonnaie}),
+                    'attr': {'id': 'edit-form'}
+                }) }}
+                {{ form_widget(editForm) }}
+                <hr>
+                <button type="submit" class="btn btn-primary w-100 mb-2">
+                    <i class="bx bx-save me-2"></i>{{ button_label|default('Enregistrer') }}
+                </button>
+                <a href="{{ path('app_monnaie_index') }}" class="btn btn-outline-danger w-100 px-4">
+                    <i class="bx bx-x me-2"></i>Annuler
+                </a>
+                {{ form_end(editForm) }}
+            </div>
+        </div>
+
+        <script>
+            // Fermer l'offcanvas d'ajout si l'offcanvas d'édition est ouvert
+            const addOffcanvas = document.getElementById('offcanvasAddMonnaie');
+            if (addOffcanvas) {
+                const bsAddOffcanvas = bootstrap.Offcanvas.getInstance(addOffcanvas);
+                if (bsAddOffcanvas) {
+                    bsAddOffcanvas.hide();
+                }
+            }
+        </script>
+    {% endif %}
+{% endblock %}

@@ -1,6 +1,9 @@
 <?php
+
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -13,27 +16,29 @@ class Commercial
     private int $seqCommercial;
 
     #[ORM\Column(name: "CODECOMMERCIAL", type: "string", length: 4)]
-    private string $codeCommercial;
+    private string $codeCommercial = '';
 
     #[ORM\Column(name: "NOMCOMMERCIAL", type: "string", length: 30)]
-    private string $nomCommercial;
+    private string $nomCommercial = '';
 
     #[ORM\Column(name: "PRENOMCOMMERCIAL", type: "string", length: 25)]
-    private string $prenomCommercial;
+    private string $prenomCommercial = '';
 
     #[ORM\Column(name: "TELCOMMERCIAL", type: "string", length: 20)]
-    private string $telCommercial;
+    private string $telCommercial = '';
+
+    #[ORM\OneToMany(
+        mappedBy: 'commercial', 
+        targetEntity: Departement::class,
+        cascade: ['persist', 'remove']
+    )]
+    private Collection $departements;
 
     public function __construct()
     {
-        $this->codeCommercial = '';
-        $this->nomCommercial = '';
-        $this->prenomCommercial = '';
-        $this->telCommercial = '';
-        $this->seqCommercial = 0; 
+        $this->departements = new ArrayCollection();
+        $this->seqCommercial = 0;
     }
-
-    // Getters et Setters...
 
     public function getSeqCommercial(): int
     {
@@ -82,5 +87,39 @@ class Commercial
     {
         $this->telCommercial = $tel;
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Departement>
+     */
+    public function getDepartements(): Collection
+    {
+        return $this->departements;
+    }
+
+    public function addDepartement(Departement $departement): static
+    {
+        if (!$this->departements->contains($departement)) {
+            $this->departements->add($departement);
+            $departement->setCommercial($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDepartement(Departement $departement): static
+    {
+        if ($this->departements->removeElement($departement)) {
+            if ($departement->getCommercial() === $this) {
+                $departement->setCommercial(null);
+            }
+        }
+
+        return $this;
+    }
+    
+    public function __toString(): string
+    {
+        return $this->codeCommercial . ' - ' . $this->nomCommercial;
     }
 }
