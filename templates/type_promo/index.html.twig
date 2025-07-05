@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+{% block title %}Liste des Types Promo{% endblock %}
+
+{% block body %}
+<div class="card shadow-sm border-0">
+    <div class="card-header  text-white">
+        <div class="d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">📋 Liste des Types Promo</h5>
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalTypePromo">
+                <i class="bx bx-plus"></i> Nouveau
+            </button>
+        </div>
+    </div>
+    <div class="card-body p-1" style="font-size: 13px">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Libellé</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for promo in type_promos %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ promo.libTypePromo }}</td>
+                    <td class="text-center">
+                        <div class="dropdown">
+                            <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                <i class="bx bx-dots-vertical-rounded"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#editModal{{ promo.seqTypePromo }}">
+                                        <i class="bx bx-edit-alt me-1"></i> Modifier
+                                    </a>
+                                    {{ include('type_promo/_delete_form.html.twig', { id: promo.seqTypePromo }) }}
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+
+                {# Modal d'édition #}
+                <div class="modal fade" id="editModal{{ promo.seqTypePromo }}" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            {{ form_start(forms_edit[promo.seqTypePromo]) }}
+                            <div class="modal-header">
+                                <h5 class="modal-title">Modifier Type Promo</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row mb-3 align-items-center">
+                                    <label class="col-md-4 form-label fw-semibold">Libellé <span class="text-danger">*</span></label>
+                                    <div class="col-md-8">
+                                        {{ form_widget(forms_edit[promo.seqTypePromo].libTypePromo, {'attr': {'class': 'form-control'}}) }}
+                                        {{ form_errors(forms_edit[promo.seqTypePromo].libTypePromo) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            </div>
+                            {{ form_end(forms_edit[promo.seqTypePromo]) }}
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <tr><td colspan="3" class="text-center">Aucun type promo trouvé</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{# Modal ajout #}
+<div class="modal fade" id="modalTypePromo" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            {{ form_start(form_new) }}
+            <div class="modal-header  text-white">
+                <h5 class="modal-title">Nouveau Type Promo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-3 align-items-center">
+                    <label class="col-md-4 form-label fw-semibold">Libellé <span class="text-danger">*</span></label>
+                    <div class="col-md-8">
+                        {{ form_widget(form_new.libTypePromo, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form_new.libTypePromo) }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Enregistrer</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+            </div>
+            {{ form_end(form_new) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

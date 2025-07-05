@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New TypeOption{% endblock %}
+
+{% block body %}
+    <h1>Create new TypeOption</h1>
+
+    {{ include('type_option/_form.html.twig') }}
+
+    <a href="{{ path('app_type_option_index') }}">back to list</a>
+{% endblock %}

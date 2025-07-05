@@ -2,6 +2,19 @@
     {{ form_start(form, {'attr': {'class': 'browser-default-validation'}}) }}
 
     <div class="row g-3 mb-4 align-items-center">
+        {# Champ Code Commercial - input texte #}
+        <div class="col-md-12">
+            {{ form_label(form.codecommercial, null, {'label_attr': {'class': 'form-label'}}) }}
+            <strong class="text-danger">*</strong>
+            {{ form_widget(form.codecommercial, {'attr': {'class': 'form-control', 'maxlength': 4, 'id': 'codeCommercialInput'}}) }}
+        </div>
+
+        {# Champ Commercial - select lié #}
+        <div class="col-md-12">
+            {{ form_label(form.commercial, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.commercial, {'attr': {'class': 'form-select', 'id': 'commercialSelect'}}) }}
+        </div>
+
         {# Champ Code Département #}
         <div class="col-md-12">
             {{ form_label(form.code_departement, null, {'label_attr': {'class': 'form-label'}}) }}
@@ -16,19 +29,10 @@
             {{ form_widget(form.lib_departement, {'attr': {'class': 'form-control', 'maxlength': 100}}) }}
         </div>
 
-        {# Champ Code Commercial #}
-        <div class="col-md-12">
-            {{ form_label(form.codecommercial, null, {'label_attr': {'class': 'form-label'}}) }}
-            <strong class="text-danger">*</strong>
-            {{ form_widget(form.codecommercial, {'attr': {'class': 'form-control', 'maxlength': 4}}) }}
-        </div>
+        {# Champ Région #}
         <div class="col-md-12">
             {{ form_label(form.region, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
             {{ form_widget(form.region, {'attr': {'class': 'form-select'}}) }}
-        </div>
-        <div class="col-md-12">
-            {{ form_label(form.commercial, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
-            {{ form_widget(form.commercial, {'attr': {'class': 'form-select'}}) }}
         </div>
     </div>
 
@@ -50,3 +54,35 @@
 
     {{ form_end(form) }}
 </div>
+
+{# Script JS pour filtrer le select commercial au fur et à mesure #}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const input = document.getElementById('codeCommercialInput');
+    const select = document.getElementById('commercialSelect');
+
+    // Garder une copie originale des options
+    const allOptions = Array.from(select.options);
+
+    input.addEventListener('input', function() {
+        const filter = input.value.toLowerCase();
+
+        // Vider le select
+        select.innerHTML = '';
+
+        // Filtrer les options
+        const filtered = allOptions.filter(option => option.text.toLowerCase().includes(filter));
+
+        // Ajouter les options filtrées
+        if (filtered.length > 0) {
+            filtered.forEach(option => select.appendChild(option));
+        } else {
+            // Option message si rien ne correspond
+            const option = document.createElement('option');
+            option.text = 'Aucun commercial trouvé';
+            option.disabled = true;
+            select.appendChild(option);
+        }
+    });
+});
+</script>

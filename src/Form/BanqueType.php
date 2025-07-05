@@ -14,6 +14,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Doctrine\ORM\EntityRepository;
 
 class BanqueType extends AbstractType
@@ -47,9 +48,12 @@ class BanqueType extends AbstractType
                 'label' => 'Email',
                 'required' => false,
             ])
-            ->add('OBSBANQUE', TextType::class, [
+            ->add('OBSBANQUE', TextareaType::class, [  
                 'label' => 'Observations',
-                'required' => false,
+                'required' => false, 
+                'attr' => [
+                    'rows' => 5, 
+                ],
             ])
             // ->add('numterminal', TextType::class, [
             //     'label' => 'Numéro terminal'

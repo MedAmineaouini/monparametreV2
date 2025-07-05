@@ -1,0 +1,128 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Types d'Options{% endblock %}
+
+{% block body %}
+<div class="card shadow rounded-3 border-0">
+
+    <div class="card-header text-white d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">📋 Types d'options</h5>
+        <div>
+            <a class="btn btn-success" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddTypeOption">
+                <i class="bx bx-plus me-2"></i>Ajouter un type d'option
+            </a>
+            <a href="{{ path('app_type_option_export_pdf') }}" class="btn btn-danger">
+                <i class="bx bxs-file-pdf me-2"></i>Export PDF
+            </a>
+        </div>
+    </div>
+
+    <div class="card-body p-1">
+        <div class="table-responsive">
+            <table class="table table-hover table-striped table-bordered mb-1">
+                <thead>
+                    <tr>
+                        <th class="text-center" style="width: 60px;">#</th>
+                        <th>Code</th>
+                        <th>Nom</th>
+                        <th class="text-center">Autoriser</th>
+                        <th class="text-center">Ordre</th>
+                        <th class="text-center" style="width: 100px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for type_option in type_options %}
+                        <tr>
+                            <td class="text-center">{{ type_option.seqTypeOption }}</td>
+                            <td>{{ type_option.codeOption }}</td>
+                            <td>{{ type_option.nomOption }}</td>
+                            <td class="text-center">{{ type_option.autoriser ? 'Oui' : 'Non' }}</td>
+                            <td class="text-center">{{ type_option.ordre ? 'Oui' : 'Non' }}</td>
+                            <td class="text-center">
+                                <div class="dropdown">
+                                    <button type="button"
+                                            class="btn p-0 dropdown-toggle hide-arrow"
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false"
+                                            aria-label="Actions">
+                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li>
+                                            <a class="dropdown-item" href="{{ path('app_type_option_index', {'edit': type_option.seqTypeOption}) }}">
+                                                <i class="bx bx-edit-alt me-2"></i>Consulter | Modifier
+                                            </a>
+                                        </li>
+                                        <li>
+                                            {{ include('type_option/_delete_form.html.twig', {
+                                                'type_option': type_option,
+                                                'btn_class': 'dropdown-item'
+                                            }) }}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="6" class="text-center py-4 text-muted">
+                                Aucun type d'option enregistré
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{# Offcanvas pour ajout #}
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddTypeOption" aria-labelledby="offcanvasAddTypeOptionLabel" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="offcanvas-header border-bottom">
+        <h5 id="offcanvasAddTypeOptionLabel" class="offcanvas-title">Ajouter un Type d'option</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
+    </div>
+    <div class="offcanvas-body p-4">
+        {{ include('type_option/_form.html.twig', {
+            form: form,
+            button_label: 'Enregistrer'
+        }) }}
+    </div>
+</div>
+
+{# Offcanvas pour modification (affiché si editForm défini) #}
+{% if editForm is defined and editForm %}
+    <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasEditTypeOption" data-bs-backdrop="static" data-bs-keyboard="false" style="visibility: visible;" aria-labelledby="offcanvasEditTypeOptionLabel">
+        <div class="offcanvas-header border-bottom">
+            <h5 id="offcanvasEditTypeOptionLabel" class="offcanvas-title">Modifier le Type d'option</h5>
+            <a href="{{ path('app_type_option_index') }}" class="btn-close text-reset" aria-label="Fermer"></a>
+        </div>
+        <div class="offcanvas-body p-4">
+            {{ form_start(editForm, {
+                'action': path('app_type_option_index', {'edit': typeOptionToEdit.seqTypeOption}),
+                'attr': {'id': 'edit-form'}
+            }) }}
+            {{ form_widget(editForm) }}
+            <hr>
+            <button type="submit" class="btn btn-primary w-100 mb-2">
+                <i class="bx bx-save me-2"></i>Enregistrer
+            </button>
+            <a href="{{ path('app_type_option_index') }}" class="btn btn-outline-danger w-100 px-4">
+                <i class="bx bx-x me-2"></i>Annuler
+            </a>
+            {{ form_end(editForm) }}
+        </div>
+    </div>
+
+    <script>
+        // Fermer offcanvas ajout si édition ouverte
+        const addOffcanvas = document.getElementById('offcanvasAddTypeOption');
+        if (addOffcanvas) {
+            const bsAddOffcanvas = bootstrap.Offcanvas.getInstance(addOffcanvas);
+            if (bsAddOffcanvas) {
+                bsAddOffcanvas.hide();
+            }
+        }
+    </script>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,54 @@
+<div class="card-body p-1" style="font-size: 12px">
+    {{ form_start(form, {'attr': {'class': 'browser-default-validation'}}) }}
+
+    <div class="row g-3 mb-4 align-items-center">
+        {# Champ CodeOption #}
+        <div class="col-md-12">
+            {{ form_label(form.codeOption, null, {'label_attr': {'class': 'form-label'}}) }}
+            <strong class="text-danger">*</strong>
+            {{ form_widget(form.codeOption) }}
+        </div>
+
+        {# Champ NomOption #}
+        <div class="col-md-12">
+            {{ form_label(form.nomOption, null, {'label_attr': {'class': 'form-label'}}) }}
+            <strong class="text-danger">*</strong>
+            {{ form_widget(form.nomOption) }}
+        </div>
+
+        {# Champ Autoriser (checkbox) #}
+        <div class="col-md-12">
+            <div class="form-check">
+                {{ form_widget(form.autoriser, {'attr': {'class': 'form-check-input'}}) }}
+                {{ form_label(form.autoriser, null, {'label_attr': {'class': 'form-check-label'}}) }}
+            </div>
+        </div>
+
+        {# Champ Ordre (checkbox) #}
+        <div class="col-md-12">
+            <div class="form-check">
+                {{ form_widget(form.ordre, {'attr': {'class': 'form-check-input'}}) }}
+                {{ form_label(form.ordre, null, {'label_attr': {'class': 'form-check-label'}}) }}
+            </div>
+        </div>
+    </div>
+
+    {# Boutons de soumission #}
+    <div class="pt-3 border-top text-end">
+        <button type="submit" class="btn btn-primary w-100 mb-2">
+            <i class="bx bx-save me-2"></i>{{ button_label|default('Enregistrer') }}
+        </button>
+
+        {% if form.vars.data.seqTypeOption %}
+            <a href="{{ path('app_type_option_index') }}" class="btn btn-outline-danger w-100 px-4">
+                <i class="bx bx-x me-2"></i>Annuler
+            </a>
+        {% else %}
+            <button type="button" class="btn btn-outline-danger w-100 px-4" data-bs-dismiss="offcanvas">
+                <i class="bx bx-x me-2"></i>Annuler
+            </button>
+        {% endif %}
+    </div>
+
+    {{ form_end(form) }}
+</div>

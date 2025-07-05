@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New PensionOrchestra{% endblock %}
+
+{% block body %}
+    <h1>Create new PensionOrchestra</h1>
+
+    {{ include('pension_orchestra/_form.html.twig') }}
+
+    <a href="{{ path('app_pension_orchestra_index') }}">back to list</a>
+{% endblock %}

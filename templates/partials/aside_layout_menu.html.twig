@@ -209,19 +209,19 @@
         </li>
 
         <li class="menu-item {% if app.request.get('_route') starts with 'app_type_option' %}active open{% endif %}">
-            <a href="{{ path('app_pays_index') }}" class="menu-link">
+            <a href="{{ path('app_type_option_index') }}" class="menu-link">
                 <i class="fa fa-check-square me-2"></i>Type d'option
             </a>
         </li>
 
         <li class="menu-item {% if app.request.get('_route') starts with 'app_type_promo' %}active open{% endif %}">
-            <a href="{{ path('app_pays_index') }}" class="menu-link">
+            <a href="{{ path('app_type_promo_index') }}" class="menu-link">
                 <i class="fa fa-tags me-2"></i>Type de promo
             </a>
         </li>
 
         <li class="menu-item {% if app.request.get('_route') starts with 'app_pension_orchestra' %}active open{% endif %}">
-            <a href="{{ path('app_pays_index') }}" class="menu-link">
+            <a href="{{ path('app_pension_orchestra_index') }}" class="menu-link">
                 <i class="fa fa-utensils me-2"></i>Pension Orchestra
             </a>
         </li>

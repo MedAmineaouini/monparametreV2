@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TypePromo{% endblock %}
+
+{% block body %}
+    <h1>TypePromo</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>SeqTypePromo</th>
+                <td>{{ type_promo.seqTypePromo }}</td>
+            </tr>
+            <tr>
+                <th>LibTypePromo</th>
+                <td>{{ type_promo.libTypePromo }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_type_promo_index') }}">back to list</a>
+
+    <a href="{{ path('app_type_promo_edit', {'seqTypePromo': type_promo.seqTypePromo}) }}">edit</a>
+
+    {{ include('type_promo/_delete_form.html.twig') }}
+{% endblock %}

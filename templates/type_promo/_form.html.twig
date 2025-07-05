@@ -1,0 +1,30 @@
+<div class="card-body p-1" style="font-size: 12px">
+    {{ form_start(form, {'attr': {'class': 'browser-default-validation'}}) }}
+
+    <div class="row align-items-center mb-3">
+        <label class="col-md-2 form-label fw-semibold">
+            {{ form_label(form.libPensionOrchestra) }}
+            <strong class="text-danger">*</strong>
+        </label>
+        <div class="col-md-4">
+            {{ form_widget(form.libPensionOrchestra, {
+                'attr': {
+                    'class': 'form-control',
+                    'placeholder': 'Libellé Pension Orchestra'
+                }
+            }) }}
+            {{ form_errors(form.libPensionOrchestra) }}
+        </div>
+    </div>
+
+    <div class="pt-3 border-top text-end">
+        <button type="submit" class="btn btn-primary px-4">
+            <i class="bx bx-save me-2"></i>{{ button_label|default('Enregistrer') }}
+        </button>
+        <a href="{{ path('app_pension_orchestra_index') }}" class="btn btn-outline-secondary px-4">
+            <i class="bx bx-x me-2"></i>Annuler
+        </a>
+    </div>
+
+    {{ form_end(form) }}
+</div>

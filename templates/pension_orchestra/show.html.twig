@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PensionOrchestra{% endblock %}
+
+{% block body %}
+    <h1>PensionOrchestra</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>SeqPensionOrchestra</th>
+                <td>{{ pension_orchestra.seqPensionOrchestra }}</td>
+            </tr>
+            <tr>
+                <th>LibPensionOrchestra</th>
+                <td>{{ pension_orchestra.libPensionOrchestra }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_pension_orchestra_index') }}">back to list</a>
+
+    <a href="{{ path('app_pension_orchestra_edit', {'seqPensionOrchestra': pension_orchestra.seqPensionOrchestra}) }}">edit</a>
+
+    {{ include('pension_orchestra/_delete_form.html.twig') }}
+{% endblock %}
