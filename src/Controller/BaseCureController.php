@@ -23,11 +23,11 @@ class BaseCureController extends AbstractController
         $baseCures = $baseCureRepository->findAll();
 
         // Gestion de la modification (doit être avant l'ajout)
-        $editId = $request->query->get('edit');
+        $editId = $request->query->getInt('edit');
         $editForm = null;
         $baseCureToEdit = null;
 
-        if ($editId) {
+        if ($editId > 0) {
             $baseCureToEdit = $baseCureRepository->find($editId);
 
             if ($baseCureToEdit) {
@@ -45,7 +45,7 @@ class BaseCureController extends AbstractController
         $baseCure = new BaseCure();
         $form = $this->createForm(BaseCureType::class, $baseCure);
 
-        if (!$editId) {
+        if ($editId <= 0) {
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
@@ -56,9 +56,9 @@ class BaseCureController extends AbstractController
         }
 
         return $this->render('base_cure/index.html.twig', [
-            'base_cures' => $baseCures,
-            'form' => $form->createView(),
-            'editForm' => $editForm ? $editForm->createView() : null,
+            'base_cures'     => $baseCures,
+            'form'           => $form->createView(),
+            'editForm'       => $editForm ? $editForm->createView() : null,
             'baseCureToEdit' => $baseCureToEdit,
         ]);
     }
@@ -79,11 +79,11 @@ class BaseCureController extends AbstractController
 
         return $this->renderForm('base_cure/new.html.twig', [
             'base_cure' => $baseCure,
-            'form' => $form,
+            'form'      => $form,
         ]);
     }
 
-    #[Route('/{codelibcure}', name: 'app_base_cure_show', methods: ['GET'])]
+    #[Route('/{seqcure}', name: 'app_base_cure_show', methods: ['GET'])]
     public function show(BaseCure $baseCure): Response
     {
         return $this->render('base_cure/show.html.twig', [
@@ -91,7 +91,7 @@ class BaseCureController extends AbstractController
         ]);
     }
 
-    #[Route('/{codelibcure}/edit', name: 'app_base_cure_edit', methods: ['GET', 'POST'])]
+    #[Route('/{seqcure}/edit', name: 'app_base_cure_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, BaseCure $baseCure, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(BaseCureType::class, $baseCure);
@@ -105,58 +105,32 @@ class BaseCureController extends AbstractController
 
         return $this->renderForm('base_cure/edit.html.twig', [
             'base_cure' => $baseCure,
-            'form' => $form,
+            'form'      => $form,
         ]);
     }
 
-    #[Route('/{codelibcure}', name: 'app_base_cure_delete', methods: ['POST'])]
+    #[Route('/{seqcure}', name: 'app_base_cure_delete', methods: ['POST'])]
     public function delete(Request $request, BaseCure $baseCure, EntityManagerInterface $entityManager): Response
     {
-        if (!$this->isCsrfTokenValid('delete' . $baseCure->getCodelibcure(), $request->request->get('_token'))) {
-            if ($request->isXmlHttpRequest()) {
-                return $this->json([
-                    'success' => false,
-                    'message' => 'Token CSRF invalide',
-                ], Response::HTTP_BAD_REQUEST);
-            }
+        if (!$this->isCsrfTokenValid('delete_'.$baseCure->getSeqcure(), $request->request->get('_token'))) {
             return $this->redirectToRoute('app_base_cure_index');
         }
 
-        try {
-            $entityManager->remove($baseCure);
-            $entityManager->flush();
+        $entityManager->remove($baseCure);
+        $entityManager->flush();
 
-            if ($request->isXmlHttpRequest()) {
-                return $this->json([
-                    'success' => true,
-                    'message' => 'Base Cure supprimée avec succès.',
-                    'redirect' => $this->generateUrl('app_base_cure_index')
-                ]);
-            }
-
-            $this->addFlash('success', 'La base cure a été supprimée avec succès.');
-        } catch (\Exception $e) {
-            $errorData = [
-                'success' => false,
-                'message' => 'Erreur lors de la suppression de la base cure.',
-                'details' => $this->getParameter('kernel.debug') ? [
-                    'exception' => get_class($e),
-                    'message' => $e->getMessage(),
-                    'trace' => $e->getTraceAsString(),
-                ] : null,
-            ];
-
-            if ($request->isXmlHttpRequest()) {
-                return $this->json($errorData, Response::HTTP_INTERNAL_SERVER_ERROR);
-            }
-
-            $this->addFlash('error', $errorData['message']);
+        if ($request->isXmlHttpRequest()) {
+            return $this->json([
+                'success' => true,
+                'redirect' => $this->generateUrl('app_base_cure_index'),
+            ]);
         }
+
+        $this->addFlash('success', 'Base Cure supprimée avec succès.');
 
         return $this->redirectToRoute('app_base_cure_index');
     }
 
-    // Optionnel : export PDF si besoin, à adapter selon la structure et template
     #[Route('/export/pdf', name: 'app_base_cure_export_pdf', methods: ['GET'])]
     public function exportPdf(BaseCureRepository $baseCureRepository): Response
     {
@@ -164,7 +138,7 @@ class BaseCureController extends AbstractController
 
         $html = $this->renderView('base_cure/export_pdf.html.twig', [
             'base_cures' => $baseCures,
-            'title' => 'Liste des bases de cures'
+            'title'      => 'Liste des bases de cures',
         ]);
 
         $dompdf = new \Dompdf\Dompdf();

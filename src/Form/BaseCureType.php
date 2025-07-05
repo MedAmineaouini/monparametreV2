@@ -15,53 +15,53 @@ class BaseCureType extends AbstractType
     {
         $builder
             ->add('codelibcure', TextType::class, [
-                'label' => 'Code Lib Cure : ',
+                'label' => 'Code: ',
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'Code Lib Cure...',
                 ],
             ])
-            ->add('seqcure', TextType::class, [
-                'label' => 'Seq Cure : ',
-                'attr' => [
-                    'class' => 'form-control',
-                    'placeholder' => 'Séquence Cure...',
-                ],
-            ])
-            ->add('seq', TextType::class, [
-                'label' => 'Séquence : ',
-                'attr' => [
-                    'class' => 'form-control',
-                    'placeholder' => 'Séquence...',
-                ],
-            ])
+            // ->add('seqcure', TextType::class, [
+            //     'label' => 'Seq Cure : ',
+            //     'attr' => [
+            //         'class' => 'form-control',
+            //         'placeholder' => 'Séquence Cure...',
+            //     ],
+            // ])
+            // ->add('seq', TextType::class, [
+            //     'label' => 'Séquence : ',
+            //     'attr' => [
+            //         'class' => 'form-control',
+            //         'placeholder' => 'Séquence...',
+            //     ],
+            // ])
             ->add('libelleCure', TextType::class, [
-                'label' => 'Libellé Cure : ',
+                'label' => 'Libellé : ',
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'Libellé de la cure...',
                 ],
             ])
-            ->add('typecure', TextType::class, [
-                'label' => 'Type de Cure : ',
-                'attr' => [
-                    'class' => 'form-control',
-                    'placeholder' => 'Type de cure...',
-                ],
-            ])
-            ->add('ancien', ChoiceType::class, [
-                'label' => 'Ancien : ',
-                'choices' => [
-                    'Oui' => true,
-                    'Non' => false,
-                ],
-                'attr' => [
-                    'class' => 'form-select',
-                ],
-                'required' => true,
-            ])
+            // ->add('typecure', TextType::class, [
+            //     'label' => 'Type de Cure : ',
+            //     'attr' => [
+            //         'class' => 'form-control',
+            //         'placeholder' => 'Type de cure...',
+            //     ],
+            // ])
+            // ->add('ancien', ChoiceType::class, [
+            //     'label' => 'Ancien : ',
+            //     'choices' => [
+            //         'Oui' => true,
+            //         'Non' => false,
+            //     ],
+            //     'attr' => [
+            //         'class' => 'form-select',
+            //     ],
+            //     'required' => true,
+            // ])
             ->add('archiver', ChoiceType::class, [
-                'label' => 'Archivé : ',
+                'label' => 'Archiver : ',
                 'choices' => [
                     'Oui' => true,
                     'Non' => false,
@@ -70,21 +70,21 @@ class BaseCureType extends AbstractType
                     'class' => 'form-select',
                 ],
                 'required' => true,
-            ])
-            ->add('seqtypecure', TextType::class, [
-                'label' => 'Seq Type Cure : ',
-                'attr' => [
-                    'class' => 'form-control',
-                    'placeholder' => 'Séquence type cure...',
-                ],
-            ])
-            ->add('libtypecure', TextType::class, [
-                'label' => 'Lib Type Cure : ',
-                'attr' => [
-                    'class' => 'form-control',
-                    'placeholder' => 'Libellé type cure...',
-                ],
             ]);
+            // ->add('seqtypecure', TextType::class, [
+            //     'label' => 'Seq Type Cure : ',
+            //     'attr' => [
+            //         'class' => 'form-control',
+            //         'placeholder' => 'Séquence type cure...',
+            //     ],
+            // ])
+            // ->add('libtypecure', TextType::class, [
+            //     'label' => 'Lib Type Cure : ',
+            //     'attr' => [
+            //         'class' => 'form-control',
+            //         'placeholder' => 'Libellé type cure...',
+            //     ],
+            // ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

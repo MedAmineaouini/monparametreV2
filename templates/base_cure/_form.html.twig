@@ -9,19 +9,7 @@
             {{ form_widget(form.codelibcure) }}
         </div>
 
-        {# Champ Seq Cure #}
-        <div class="col-md-12">
-            {{ form_label(form.seqcure, null, {'label_attr': {'class': 'form-label'}}) }}
-            <strong class="text-danger">*</strong>
-            {{ form_widget(form.seqcure) }}
-        </div>
 
-        {# Champ Séquence #}
-        <div class="col-md-12">
-            {{ form_label(form.seq, null, {'label_attr': {'class': 'form-label'}}) }}
-            <strong class="text-danger">*</strong>
-            {{ form_widget(form.seq) }}
-        </div>
 
         {# Champ Libellé Cure #}
         <div class="col-md-12">
@@ -30,19 +18,7 @@
             {{ form_widget(form.libelleCure) }}
         </div>
 
-        {# Champ Type de Cure #}
-        <div class="col-md-12">
-            {{ form_label(form.typecure, null, {'label_attr': {'class': 'form-label'}}) }}
-            <strong class="text-danger">*</strong>
-            {{ form_widget(form.typecure) }}
-        </div>
-
-        {# Champ Ancien (Oui / Non) #}
-        <div class="col-md-12">
-            {{ form_label(form.ancien, null, {'label_attr': {'class': 'form-label'}}) }}
-            <strong class="text-danger">*</strong>
-            {{ form_widget(form.ancien) }}
-        </div>
+     
 
         {# Champ Archivé (Oui / Non) #}
         <div class="col-md-12">
@@ -51,19 +27,7 @@
             {{ form_widget(form.archiver) }}
         </div>
 
-        {# Champ Seq Type Cure #}
-        <div class="col-md-12">
-            {{ form_label(form.seqtypecure, null, {'label_attr': {'class': 'form-label'}}) }}
-            <strong class="text-danger">*</strong>
-            {{ form_widget(form.seqtypecure) }}
-        </div>
-
-        {# Champ Lib Type Cure #}
-        <div class="col-md-12">
-            {{ form_label(form.libtypecure, null, {'label_attr': {'class': 'form-label'}}) }}
-            <strong class="text-danger">*</strong>
-            {{ form_widget(form.libtypecure) }}
-        </div>
+       
     </div>
 
     {# Boutons de soumission #}
@@ -72,7 +36,7 @@
             <i class="bx bx-save me-2"></i>{{ button_label|default('Enregistrer') }}
         </button>
 
-        {% if form.vars.data.codelibcure %}
+       {% if form.vars.data.seqcure %} 
             <a href="{{ path('app_base_cure_index') }}" class="btn btn-outline-danger w-100 px-4">
                 <i class="bx bx-x me-2"></i>Annuler
             </a>
