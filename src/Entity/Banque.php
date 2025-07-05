@@ -10,8 +10,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity]
 #[ORM\Table(name: "BANQUE")]
 #[UniqueEntity('LIBBANQUE', message: 'Cette banque existe déjà')]
-#[UniqueEntity('CPTBANQUE', message: 'Ce compte bancaire existe déjà')]
-#[UniqueEntity('numterminal', message: 'Ce numéro de terminal existe déjà')]
 class Banque
 {
     #[ORM\Id]
@@ -19,37 +17,48 @@ class Banque
     #[ORM\Column(name: 'SEQBANQUE', type: 'integer')]
     private ?int $SEQBANQUE = null;
 
-    #[ORM\Column(name: 'LIBBANQUE', type: 'string', length: 30, unique: true)]
-    #[Assert\NotBlank(message: 'Le nom de la banque est obligatoire')]
-    #[Assert\Length(max: 30, maxMessage: 'Le nom ne doit pas dépasser 30 caractères')]
+    #[ORM\Column(name: 'LIBBANQUE', type: 'string', length: 100)]
+    #[Assert\NotBlank]
     private string $LIBBANQUE = '';
 
-    #[ORM\Column(name: 'CPTBANQUE', type: 'string', length: 30, unique: true)]
-    #[Assert\NotBlank(message: 'Le compte bancaire est obligatoire')]
+    #[ORM\Column(name: 'CPTBANQUE', type: 'string', length: 30)]
+    #[Assert\NotBlank]
     private string $CPTBANQUE = '';
 
-    #[ORM\Column(name: 'SWFBANQUE', type: 'string', length: 30)]
-    #[Assert\NotBlank(message: 'Le code SWIFT est obligatoire')]
-    private string $SWFBANQUE = '';
+    #[ORM\Column(name: 'SWFBANQUE', type: 'string', length: 30, nullable: true)]
+    private ?string $SWFBANQUE = null;
 
-    #[ORM\Column(name: 'ADRBANQUE', type: 'string', length: 30)]
-    #[Assert\NotBlank(message: "L'adresse est obligatoire")]
-    private string $ADRBANQUE = '';
+    #[ORM\Column(name: 'ADRBANQUE', type: 'string', length: 255, nullable: true)]
+    private ?string $ADRBANQUE = null;
 
-    #[ORM\Column(name: 'CPBANQUE', type: 'string', length: 8)]
-    #[Assert\NotBlank(message: 'Le code postal est obligatoire')]
-    private string $CPBANQUE = '';
+    #[ORM\Column(name: 'CPBANQUE', type: 'string', length: 10, nullable: true)]
+    private ?string $CPBANQUE = null;
+
+    #[ORM\Column(name: 'ADRESSE', type: 'string', length: 100)]
+    private string $adresse = '';
+
+    #[ORM\Column(name: 'CODEPOSTAL', type: 'string', length: 10)]
+    private string $codePostal = '';
+
+    #[ORM\Column(name: 'TELEPHONE', type: 'string', length: 20)]
+    private string $telephone = '';
+
+    #[ORM\Column(name: 'EMAIL', type: 'string', length: 100)]
+    #[Assert\Email(message: "L'email n'est pas valide")]
+    private string $email = '';
+
+    #[ORM\Column(name: 'ACTIVE', type: 'boolean', options: ['default' => true])]
+    private bool $active = true;
 
     #[ORM\ManyToOne(targetEntity: Ville::class)]
     #[ORM\JoinColumn(name: 'VILBANQUE', referencedColumnName: 'SEQVILLE', nullable: false)]
     private ?Ville $VILBANQUE = null;
-  
+
     #[ORM\ManyToOne(targetEntity: Pays::class)]
     #[ORM\JoinColumn(name: 'PAYBANQUE', referencedColumnName: 'IDPAYS', nullable: false)]
     private ?Pays $PAYBANQUE = null;
 
     #[ORM\Column(name: 'TELBANQUE', type: 'string', length: 30)]
-    #[Assert\NotBlank(message: 'Le téléphone est obligatoire')]
     private string $TELBANQUE = '';
 
     #[ORM\Column(name: 'FAXBANQUE', type: 'string', length: 30, nullable: true)]
@@ -62,13 +71,8 @@ class Banque
     #[ORM\Column(name: 'OBSBANQUE', type: 'text', nullable: true)]
     private ?string $OBSBANQUE = null;
 
-    #[ORM\Column(name: 'numterminal', type: 'string', length: 5, unique: true)]
-    #[Assert\Length(
-        min: 5,
-        max: 5,
-        minMessage: 'Le numéro terminal doit faire exactement 5 caractères',
-        maxMessage: 'Le numéro terminal doit faire exactement 5 caractères'
-    )]
+    #[ORM\Column(name: 'numterminal', type: 'string', length: 5)]
+    #[Assert\Length(exactly: 5, exactMessage: 'Le numéro terminal doit faire exactement 5 caractères')]
     private string $numterminal = '00000';
 
     #[ORM\Column(name: 'Journal1', type: 'string', length: 10, nullable: true)]
@@ -82,6 +86,7 @@ class Banque
 
     #[ORM\Column(name: 'compte2', type: 'string', length: 15, nullable: true)]
     private ?string $compte2 = null;
+
 
     public function __construct()
     {
@@ -273,4 +278,15 @@ class Banque
     {
         return $this->LIBBANQUE;
     }
+
+public function getAdresse(): ?string
+{
+    return $this->adresse;
+}
+
+public function setAdresse(string $adresse): self
+{
+    $this->adresse = $adresse;
+    return $this;
+}
 }

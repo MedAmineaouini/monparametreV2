@@ -22,13 +22,13 @@ class BanqueType extends AbstractType
     {
         $builder
             ->add('LIBBANQUE', TextType::class, [
-                'label' => 'Nom de la banque'
+                'label' => 'Banque'
             ])
             ->add('CPTBANQUE', TextType::class, [
-                'label' => 'Compte bancaire'
+                'label' => 'N° de compte'
             ])
             ->add('SWFBANQUE', TextType::class, [
-                'label' => 'Code SWIFT'
+                'label' => 'Code Swift'
             ])
             ->add('ADRBANQUE', TextType::class, [
                 'label' => 'Adresse'
@@ -51,25 +51,25 @@ class BanqueType extends AbstractType
                 'label' => 'Observations',
                 'required' => false,
             ])
-            ->add('numterminal', TextType::class, [
-                'label' => 'Numéro terminal'
-            ])
-            ->add('Journal1', TextType::class, [
-                'label' => 'Journal 1',
-                'required' => false,
-            ])
-            ->add('Journal2', TextType::class, [
-                'label' => 'Journal 2',
-                'required' => false,
-            ])
-            ->add('compte1', TextType::class, [
-                'label' => 'Compte 1',
-                'required' => false,
-            ])
-            ->add('compte2', TextType::class, [
-                'label' => 'Compte 2',
-                'required' => false,
-            ])
+            // ->add('numterminal', TextType::class, [
+            //     'label' => 'Numéro terminal'
+            // ])
+            // ->add('Journal1', TextType::class, [
+            //     'label' => 'Journal 1',
+            //     'required' => false,
+            // ])
+            // ->add('Journal2', TextType::class, [
+            //     'label' => 'Journal 2',
+            //     'required' => false,
+            // ])
+            // ->add('compte1', TextType::class, [
+            //     'label' => 'Compte 1',
+            //     'required' => false,
+            // ])
+            // ->add('compte2', TextType::class, [
+            //     'label' => 'Compte 2',
+            //     'required' => false,
+            // ])
             ->add('VILBANQUE', EntityType::class, [
                 'class' => Ville::class,
                 'choice_label' => 'libville',
