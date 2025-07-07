@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Monnaie;
 use App\Form\MonnaieType;
 use App\Repository\MonnaieRepository;
+use App\Repository\PaysRepository; // 🔄 ajouter le repository
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,20 +16,29 @@ use Symfony\Component\Routing\Annotation\Route;
 class MonnaieController extends AbstractController
 {
     #[Route('/', name: 'app_monnaie_index', methods: ['GET', 'POST'])]
-    public function index(MonnaieRepository $monnaieRepository, Request $request, EntityManagerInterface $em): Response
-    {
+    public function index(
+        MonnaieRepository $monnaieRepository,
+        Request $request,
+        EntityManagerInterface $em,
+        PaysRepository $paysRepository
+    ): Response {
         $monnaies = $monnaieRepository->findAll();
 
-        // Gestion de la modification inline (avant ajout)
-        $editId = $request->query->get('edit');
         $editForm = null;
         $monnaieToEdit = null;
 
+        $editId = $request->query->get('edit');
+
+        // S'il y a un ID à éditer
         if ($editId) {
             $monnaieToEdit = $monnaieRepository->find($editId);
 
             if ($monnaieToEdit) {
                 $editForm = $this->createForm(MonnaieType::class, $monnaieToEdit);
+                $editForm->get('codepays')->setData(
+                    $monnaieToEdit->getPays() ? $monnaieToEdit->getPays()->getCODEPAYS() : ''
+                );
+
                 $editForm->handleRequest($request);
 
                 if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -38,25 +48,51 @@ class MonnaieController extends AbstractController
             }
         }
 
-        // Formulaire d'ajout (uniquement si pas en édition)
-        $monnaie = new Monnaie();
-        $form = $this->createForm(MonnaieType::class, $monnaie);
-
+        // Création uniquement si on n'est PAS en mode édition
+        $form = null;
         if (!$editId) {
-            $form->handleRequest($request);
+            $monnaie = new Monnaie();
+            $formObj = $this->createForm(MonnaieType::class, $monnaie);
+            $formObj->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
+            if ($formObj->isSubmitted() && $formObj->isValid()) {
                 $em->persist($monnaie);
                 $em->flush();
                 return $this->redirectToRoute('app_monnaie_index');
             }
+
+            $form = $formObj->createView();
         }
 
         return $this->render('monnaie/index.html.twig', [
             'monnaies' => $monnaies,
-            'form' => $form->createView(),
+            'form' => $form, // null si on est en mode édition
             'editForm' => $editForm ? $editForm->createView() : null,
             'monnaieToEdit' => $monnaieToEdit,
+        ]);
+    }
+
+    #[Route('/{seqmonnaie}/edit', name: 'app_monnaie_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Monnaie $monnaie, EntityManagerInterface $em, PaysRepository $paysRepository): Response
+    {
+        $form = $this->createForm(MonnaieType::class, $monnaie);
+
+        // 🔄 pré-remplir "codepays"
+        $form->get('codepays')->setData(
+            $monnaie->getPays() ? $monnaie->getPays()->getCODEPAYS() : ''
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush();
+
+            return $this->redirectToRoute('app_monnaie_index');
+        }
+
+        return $this->renderForm('monnaie/edit.html.twig', [
+            'monnaie' => $monnaie,
+            'form' => $form,
         ]);
     }
 
@@ -71,7 +107,7 @@ class MonnaieController extends AbstractController
             $entityManager->persist($monnaie);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_monnaie_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_monnaie_index');
         }
 
         return $this->renderForm('monnaie/new.html.twig', [
@@ -79,6 +115,24 @@ class MonnaieController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    #[Route('/get-libpays', name: 'get_libpays_by_code', methods: ['GET'])]
+public function getLibpaysByCode(Request $request, PaysRepository $paysRepository): Response
+{
+    $code = strtoupper($request->query->get('codepays'));
+
+    $pays = $paysRepository->findOneBy(['CODEPAYS' => $code]);
+
+    if (!$pays) {
+        return $this->json(['success' => false, 'message' => 'Code pays invalide.'], 404);
+    }
+
+    return $this->json([
+        'success' => true,
+        'libpays' => $pays->getLIBPAYS()
+    ]);
+}
+
 
     #[Route('/{seqmonnaie}', name: 'app_monnaie_show', methods: ['GET'])]
     public function show(Monnaie $monnaie): Response
@@ -88,67 +142,15 @@ class MonnaieController extends AbstractController
         ]);
     }
 
-    #[Route('/{seqmonnaie}/edit', name: 'app_monnaie_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Monnaie $monnaie, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(MonnaieType::class, $monnaie);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_monnaie_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('monnaie/edit.html.twig', [
-            'monnaie' => $monnaie,
-            'form' => $form,
-        ]);
-    }
-
     #[Route('/{seqmonnaie}', name: 'app_monnaie_delete', methods: ['POST'])]
     public function delete(Request $request, Monnaie $monnaie, EntityManagerInterface $entityManager): Response
     {
         if (!$this->isCsrfTokenValid('delete' . $monnaie->getSeqmonnaie(), $request->request->get('_token'))) {
-            if ($request->isXmlHttpRequest()) {
-                return $this->json([
-                    'success' => false,
-                    'message' => 'Token CSRF invalide',
-                ], Response::HTTP_BAD_REQUEST);
-            }
             return $this->redirectToRoute('app_monnaie_index');
         }
 
-        try {
-            $entityManager->remove($monnaie);
-            $entityManager->flush();
-
-            if ($request->isXmlHttpRequest()) {
-                return $this->json([
-                    'success' => true,
-                    'message' => 'Monnaie supprimée avec succès.',
-                    'redirect' => $this->generateUrl('app_monnaie_index')
-                ]);
-            }
-
-            $this->addFlash('success', 'La monnaie a été supprimée avec succès.');
-        } catch (\Exception $e) {
-            $errorData = [
-                'success' => false,
-                'message' => 'Erreur lors de la suppression de la monnaie.',
-                'details' => $this->getParameter('kernel.debug') ? [
-                    'exception' => get_class($e),
-                    'message' => $e->getMessage(),
-                    'trace' => $e->getTraceAsString(),
-                ] : null,
-            ];
-
-            if ($request->isXmlHttpRequest()) {
-                return $this->json($errorData, Response::HTTP_INTERNAL_SERVER_ERROR);
-            }
-
-            $this->addFlash('error', $errorData['message']);
-        }
+        $entityManager->remove($monnaie);
+        $entityManager->flush();
 
         return $this->redirectToRoute('app_monnaie_index');
     }

@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\MonnaieRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Pays;
 
 #[ORM\Entity(repositoryClass: MonnaieRepository::class)]
 #[ORM\Table(name: 'MONNAIE')]
@@ -15,30 +16,31 @@ class Monnaie
     #[ORM\Column(name: 'SEQMONNAIE', type: Types::INTEGER)]
     private ?int $seqmonnaie = null;
 
-    #[ORM\Column(name: 'LIBMONNAIE', type: Types::STRING, length: 3, unique: true)]
+    #[ORM\Column(name: 'LIBMONNAIE', type: Types::STRING, length: 3, unique: true, options: ['default' => ''])]
     private ?string $libmonnaie = '';
 
-    #[ORM\Column(name: 'NOMMONNAIE', type: Types::STRING, length: 20)]
+    #[ORM\Column(name: 'NOMMONNAIE', type: Types::STRING, length: 20, options: ['default' => ''])]
     private ?string $nommonnaie = '';
 
-    #[ORM\Column(name: 'TAUX', type: Types::DECIMAL, precision: 8, scale: 5)]
-    private ?string $taux = '0.00000';
+    #[ORM\Column(name: 'TAUX', type: Types::DECIMAL, precision: 9, scale: 6, options: ['default' => '0.000000'])]
+    private ?string $taux = '0.000000';
 
-    #[ORM\Column(name: 'LIBPAYS', type: Types::STRING, length: 30)]
+    #[ORM\Column(name: 'LIBPAYS', type: Types::STRING, length: 30, options: ['default' => ''])]
     private ?string $libpays = '';
 
-    #[ORM\Column(name: 'CALCUL', type: Types::INTEGER)]
-    private ?int $calcul = 1;
+    #[ORM\Column(name: 'CALCUL', type: Types::INTEGER, options: ['default' => 0])]
+    private ?int $calcul = 0;
 
     #[ORM\Column(name: 'DATEMAJ', type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $datemaj = null;
 
-    #[ORM\Column(name: 'IDPAYS', type: Types::INTEGER)]
-    private ?int $idpays = 0;
+    #[ORM\ManyToOne(targetEntity: Pays::class)]
+    #[ORM\JoinColumn(name: 'IDPAYS', referencedColumnName: 'IDPAYS', nullable: false)]
+    private ?Pays $pays = null;
 
     public function __construct()
     {
-        $this->datemaj = new \DateTime(); // Valeur par défaut = date actuelle
+        $this->datemaj = new \DateTime(); 
     }
 
     // Getters and Setters
@@ -114,14 +116,14 @@ class Monnaie
         return $this;
     }
 
-    public function getIdpays(): ?int
+    public function getPays(): ?Pays
     {
-        return $this->idpays;
+        return $this->pays;
     }
 
-    public function setIdpays(int $idpays): static
+    public function setPays(Pays $pays): static
     {
-        $this->idpays = $idpays;
+        $this->pays = $pays;
         return $this;
     }
 }

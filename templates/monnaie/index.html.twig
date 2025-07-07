@@ -11,13 +11,11 @@
                     <h5 class="mb-0 text-center text-md-start">💰 Liste des monnaies</h5>
                 </div>
                 <div class="col-9 col-md-4 d-flex flex-column flex-md-row justify-content-md-end gap-2">
-                    <a class="btn btn-success w-100 w-md-auto" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddMonnaie">
-                        <i class="bx bx-plus me-2"></i> Ajouter une monnaie
-                    </a>
-                    {# Exemple export PDF, à adapter si besoin #}
-                    {# <a href="{{ path('app_monnaie_export_pdf') }}" class="btn btn-danger w-100 w-md-auto">
-                        <i class="bx bxs-file-pdf me-2"></i> Export PDF
-                    </a> #}
+                    {% if form is defined and form %}
+                        <a class="btn btn-success w-100 w-md-auto" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddMonnaie">
+                            <i class="bx bx-plus me-2"></i> Ajouter une monnaie
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -28,13 +26,11 @@
                     <thead>
                         <tr>
                             <th class="text-center" style="width: 60px;">#</th>
-                            <th>Libellé</th>
+                            <th>Monnaie</th>
                             <th>Nom</th>
                             <th>Taux</th>
-                            <th>Lib. Pays</th>
-                            <th>Calcul</th>
+                            <th>Pays</th>
                             <th>Date MAJ</th>
-                            <th>ID Pays</th>
                             <th class="text-center" style="width: 100px;">Actions</th>
                         </tr>
                     </thead>
@@ -45,10 +41,8 @@
                             <td>{{ monnaie.libmonnaie }}</td>
                             <td>{{ monnaie.nommonnaie }}</td>
                             <td>{{ monnaie.taux }}</td>
-                            <td>{{ monnaie.libpays }}</td>
-                            <td>{{ monnaie.calcul }}</td>
+                            <td>{{ monnaie.pays ? monnaie.pays.LIBPAYS : '' }}</td>
                             <td>{{ monnaie.datemaj ? monnaie.datemaj|date('Y-m-d H:i:s') : '' }}</td>
-                            <td>{{ monnaie.idpays }}</td>
                             <td class="text-center">
                                 <div class="dropdown">
                                     <button type="button"
@@ -61,7 +55,7 @@
                                     <ul class="dropdown-menu dropdown-menu-end">
                                         <li>
                                             <a class="dropdown-item"
-                                               href="{{ path('app_monnaie_edit', {'seqmonnaie': monnaie.seqmonnaie}) }}"
+                                               href="{{ path('app_monnaie_index', {'edit': monnaie.seqmonnaie}) }}"
                                                aria-label="Modifier">
                                                 <i class="bx bx-edit-alt me-2"></i>Consulter | Modifier
                                             </a>
@@ -89,21 +83,23 @@
         </div>
     </div>
 
-    <!-- Offcanvas ajout -->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddMonnaie" aria-labelledby="offcanvasAddMonnaieLabel" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="offcanvas-header border-bottom">
-            <h5 id="offcanvasAddMonnaieLabel" class="offcanvas-title">Ajouter une monnaie</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
+    {# Offcanvas ajout uniquement si on n'est pas en mode édition #}
+    {% if form is defined and form %}
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddMonnaie" aria-labelledby="offcanvasAddMonnaieLabel" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="offcanvas-header border-bottom">
+                <h5 id="offcanvasAddMonnaieLabel" class="offcanvas-title">Ajouter une monnaie</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
+            </div>
+            <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
+                {{ include('monnaie/_form.html.twig', {
+                    form: form,
+                    button_label: 'Enregistrer'
+                }) }}
+            </div>
         </div>
-        <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
-            {{ include('monnaie/_form.html.twig', {
-                form: form,
-                button_label: 'Enregistrer'
-            }) }}
-        </div>
-    </div>
+    {% endif %}
 
-    {# Offcanvas pour modification inline possible (si tu implémentes ce mode comme dans Typeregle) #}
+    {# Offcanvas édition visible si editForm est défini #}
     {% if editForm is defined and editForm %}
         <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasEditMonnaie" data-bs-backdrop="static" data-bs-keyboard="false" style="visibility: visible;" aria-labelledby="offcanvasEditMonnaieLabel">
             <div class="offcanvas-header border-bottom">
@@ -128,7 +124,7 @@
         </div>
 
         <script>
-            // Fermer l'offcanvas d'ajout si l'offcanvas d'édition est ouvert
+            // Fermer offcanvas d’ajout s’il est ouvert
             const addOffcanvas = document.getElementById('offcanvasAddMonnaie');
             if (addOffcanvas) {
                 const bsAddOffcanvas = bootstrap.Offcanvas.getInstance(addOffcanvas);
@@ -139,3 +135,40 @@
         </script>
     {% endif %}
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% if form is defined and form %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const codePaysInput = document.querySelector('#{{ form.codepays.vars.id }}');
+            const libPaysInput = document.querySelector('#{{ form.libpays.vars.id }}');
+
+            if (codePaysInput && libPaysInput) {
+                codePaysInput.addEventListener('input', () => {
+                    const code = codePaysInput.value.trim().toUpperCase();
+
+                    if (code.length === 2) {
+                        fetch(`/monnaie/get-libpays?codepays=${code}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    libPaysInput.value = data.libpays;
+                                } else {
+                                    libPaysInput.value = '';
+                                }
+                            })
+                            .catch(() => {
+                                libPaysInput.value = '';
+                            });
+                    } else {
+                        libPaysInput.value = '';
+                    }
+                });
+            }
+        });
+    </script>
+    {% endif %}
+{% endblock %}
+
