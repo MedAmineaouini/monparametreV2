@@ -10,7 +10,7 @@
                 <div class="col-12 col-md-8 mb-2 mb-md-0">
                     <h5 class="mb-0 text-center text-md-start">📋 Gestion des départements</h5>
                 </div>
-                <div class="col-9 col-md-4 d-flex flex-column flex-md-row justify-content-md-end gap-2">
+                <div class="col-12 col-md-4 d-flex flex-column flex-md-row justify-content-md-end gap-2">
                     <a class="btn btn-success w-100 w-md-auto" data-bs-toggle="offcanvas" 
                        data-bs-target="#offcanvasAddDepartement">
                         <i class="bx bx-plus me-2"></i>Ajouter un département
@@ -21,16 +21,16 @@
                 </div>
             </div>
         </div>
+
         <div class="card-body p-1">
             <div class="table-responsive">
                 <table class="table table-hover table-striped table-bordered mb-1">
-                    <thead>
+                    <thead >
                         <tr>
                             <th class="text-center" width="60">#</th>
                             <th>Code Département</th>
                             <th>Libellé</th>
                             <th>Code Commercial</th>
-                            <th>Région</th>
                             <th>Commercial</th>
                             <th class="text-center" width="100">Actions</th>
                         </tr>
@@ -42,7 +42,6 @@
                             <td>{{ departement.codeDepartement }}</td>
                             <td>{{ departement.libDepartement }}</td>
                             <td>{{ departement.codecommercial }}</td>
-                            <td>{{ departement.region.libregion }}</td>
                             <td>
                                 {% if departement.commercial %}
                                     {{ departement.commercial.codeCommercial }} - 
@@ -91,37 +90,37 @@
         </div>
     </div>
 
-    <!-- Offcanvas pour ajout -->
+    <!-- Offcanvas Ajout -->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddDepartement" 
          aria-labelledby="offcanvasAddDepartementLabel" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="offcanvas-header border-bottom">
             <h5 id="offcanvasAddDepartementLabel" class="offcanvas-title">Ajouter un département</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
         </div>
-        <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
+        <div class="offcanvas-body p-4">
             {{ form_start(form, {'attr': {'id': 'add-form'}}) }}
                 {{ form_widget(form) }}
                 <hr>
                 <button type="submit" class="btn btn-primary w-100 mb-2">
                     <i class="bx bx-save me-2"></i>Enregistrer
                 </button>
-                <button type="button" class="btn btn-outline-danger w-100 px-4" data-bs-dismiss="offcanvas">
+                <button type="button" class="btn btn-outline-secondary w-100" data-bs-dismiss="offcanvas">
                     <i class="bx bx-x me-2"></i>Annuler
                 </button>
             {{ form_end(form) }}
         </div>
     </div>
 
-    <!-- Offcanvas pour modification -->
+    <!-- Offcanvas Modification -->
     {% if editForm is defined and editForm and departementToEdit %}
         <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasEditDepartement" 
              data-bs-backdrop="static" data-bs-keyboard="false" style="visibility: visible;" 
              aria-labelledby="offcanvasEditDepartementLabel">
-            <div class="offcanvas-header border-bottom">
+            <div class="offcanvas-header bg-light border-bottom">
                 <h5 id="offcanvasEditDepartementLabel" class="offcanvas-title">Modifier le département</h5>
                 <a href="{{ path('app_departement_index') }}" class="btn-close text-reset" aria-label="Fermer"></a>
             </div>
-            <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
+            <div class="offcanvas-body p-4">
                 {{ form_start(editForm, {
                     'action': path('app_departement_index', {'edit': departementToEdit.seqdepartement}),
                     'attr': {'id': 'edit-form'}
@@ -131,7 +130,7 @@
                 <button type="submit" class="btn btn-primary w-100 mb-2">
                     <i class="bx bx-save me-2"></i>Mettre à jour
                 </button>
-                <a href="{{ path('app_departement_index') }}" class="btn btn-outline-danger w-100 px-4">
+                <a href="{{ path('app_departement_index') }}" class="btn btn-outline-secondary w-100">
                     <i class="bx bx-x me-2"></i>Annuler
                 </a>
                 {{ form_end(editForm) }}
@@ -139,7 +138,7 @@
         </div>
 
         <script>
-            // Fermer l'offcanvas d'ajout si l'offcanvas d'édition est ouvert
+            // Ferme l'offcanvas ajout si édition ouverte
             const addOffcanvas = document.getElementById('offcanvasAddDepartement');
             if (addOffcanvas) {
                 const bsAddOffcanvas = bootstrap.Offcanvas.getInstance(addOffcanvas);
@@ -150,4 +149,53 @@
         </script>
     {% endif %}
 </div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Fonction pour mettre à jour le nom du commercial
+    const updateCommercialName = async (input, output) => {
+        const code = input.value.trim();
+        if (code.length < 1) {
+            output.value = '';
+            return;
+        }
+        
+        try {
+            const response = await fetch(`/departement/fetch-commercial?code=${encodeURIComponent(code)}`);
+            const data = await response.json();
+            output.value = data.success ? data.nom : '';
+        } catch (error) {
+            console.error('Erreur:', error);
+            output.value = '';
+        }
+    };
+
+    // Gestion pour tous les formulaires
+    document.querySelectorAll('form').forEach(form => {
+        const codeInput = form.querySelector('.commercial-code-input');
+        const commercialInput = form.querySelector('.commercial-name-input');
+        
+        if (codeInput && commercialInput) {
+            // Écouter les changements
+            codeInput.addEventListener('input', () => updateCommercialName(codeInput, commercialInput));
+            codeInput.addEventListener('blur', () => updateCommercialName(codeInput, commercialInput));
+            
+            // Empêcher la soumission du formulaire avec Enter
+            codeInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    updateCommercialName(codeInput, commercialInput);
+                    return false;
+                }
+            });
+            
+            // Initialiser si valeur existante (édition)
+            if (codeInput.value) updateCommercialName(codeInput, commercialInput);
+        }
+    });
+});
+</script>
 {% endblock %}

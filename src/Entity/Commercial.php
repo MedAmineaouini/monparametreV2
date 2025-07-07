@@ -13,9 +13,9 @@ class Commercial
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: "IDENTITY")]
     #[ORM\Column(name: "SEQCOMMERCIAL", type: "integer")]
-    private int $seqCommercial;
+    private ?int $seqCommercial = null;  // Changé en nullable
 
-    #[ORM\Column(name: "CODECOMMERCIAL", type: "string", length: 4)]
+    #[ORM\Column(name: "CODECOMMERCIAL", type: "string", length: 4, unique: true)]  // Ajout unique
     private string $codeCommercial = '';
 
     #[ORM\Column(name: "NOMCOMMERCIAL", type: "string", length: 30)]
@@ -30,17 +30,16 @@ class Commercial
     #[ORM\OneToMany(
         mappedBy: 'commercial', 
         targetEntity: Departement::class,
-        cascade: ['persist', 'remove']
+        orphanRemoval: true  // Ajout pour la suppression automatique
     )]
     private Collection $departements;
 
     public function __construct()
     {
         $this->departements = new ArrayCollection();
-        $this->seqCommercial = 0;
     }
 
-    public function getSeqCommercial(): int
+    public function getSeqCommercial(): ?int
     {
         return $this->seqCommercial;
     }
