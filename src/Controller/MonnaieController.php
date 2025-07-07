@@ -143,15 +143,65 @@ public function getLibpaysByCode(Request $request, PaysRepository $paysRepositor
     }
 
     #[Route('/{seqmonnaie}', name: 'app_monnaie_delete', methods: ['POST'])]
-    public function delete(Request $request, Monnaie $monnaie, EntityManagerInterface $entityManager): Response
-    {
-        if (!$this->isCsrfTokenValid('delete' . $monnaie->getSeqmonnaie(), $request->request->get('_token'))) {
-            return $this->redirectToRoute('app_monnaie_index');
+public function delete(Request $request, Monnaie $monnaie, EntityManagerInterface $entityManager): Response
+{
+    if (!$this->isCsrfTokenValid('delete' . $monnaie->getSeqmonnaie(), $request->request->get('_token'))) {
+        if ($request->isXmlHttpRequest()) {
+            return $this->json([
+                'success' => false,
+                'message' => 'Token CSRF invalide'
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        $this->addFlash('error', 'Token CSRF invalide');
+        return $this->redirectToRoute('app_monnaie_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    try {
+        $dependencies = [];
+
+        $usedIn = array_filter($dependencies, fn($count) => $count > 0);
+
+        if (!empty($usedIn)) {
+            $message = 'Cette monnaie ne peut pas être supprimée car elle est utilisée dans : ';
+            $message .= implode(', ', array_keys($usedIn));
+            throw new \Exception($message);
         }
 
         $entityManager->remove($monnaie);
         $entityManager->flush();
 
-        return $this->redirectToRoute('app_monnaie_index');
+        if ($request->isXmlHttpRequest()) {
+            return $this->json([
+                'success' => true,
+                'message' => 'La monnaie a été supprimée avec succès'
+            ]);
+        }
+
+        $this->addFlash('success', 'La monnaie a été supprimée avec succès.');
+    } catch (\Exception $e) {
+        $errorData = [
+            'success' => false,
+            'message' => $e->getMessage(),
+            'reference' => $monnaie->getSeqmonnaie(),
+            'details' => []
+        ];
+
+        if ($this->getParameter('kernel.environment') === 'dev') {
+            $errorData['details'] = [
+                'exception' => get_class($e),
+                'trace' => $e->getTraceAsString()
+            ];
+        }
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->json($errorData, Response::HTTP_CONFLICT);
+        }
+
+        $this->addFlash('error', $errorData['message']);
     }
+
+    return $this->redirectToRoute('app_monnaie_index', [], Response::HTTP_SEE_OTHER);
+}
+
 }
