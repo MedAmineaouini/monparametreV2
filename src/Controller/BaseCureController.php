@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/base/cure')]
+#[Route('/base_cure')]
 class BaseCureController extends AbstractController
 {
     #[Route('/', name: 'app_base_cure_index', methods: ['GET', 'POST'])]

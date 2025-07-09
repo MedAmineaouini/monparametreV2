@@ -82,20 +82,59 @@ class PorteurController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
     #[Route('/{seqPorteur}', name: 'app_porteur_delete', methods: ['POST'])]
     public function delete(
         Request $request,
         Porteur $porteur,
         EntityManagerInterface $entityManager
     ): Response {
-        if ($this->isCsrfTokenValid('delete' . $porteur->getSeqPorteur(), $request->request->get('_token'))) {
+        $token = $request->request->get('_token');
+        $csrfId = 'delete' . $porteur->getSeqPorteur();
+    
+        if (!$this->isCsrfTokenValid($csrfId, $token)) {
+            if ($request->isXmlHttpRequest()) {
+                return $this->json([
+                    'success' => false,
+                    'message' => 'Token CSRF invalide',
+                ], Response::HTTP_BAD_REQUEST);
+            }
+    
+            $this->addFlash('error', 'Token CSRF invalide');
+            return $this->redirectToRoute('app_porteur_index');
+        }
+    
+        try {
             $entityManager->remove($porteur);
             $entityManager->flush();
-
-            $this->addFlash('success', 'Le porteur a été supprimé.');
+    
+            if ($request->isXmlHttpRequest()) {
+                return $this->json([
+                    'success' => true,
+                    'message' => 'Le porteur a été supprimé avec succès.',
+                    'redirect' => $this->generateUrl('app_porteur_index')
+                ]);
+            }
+    
+            $this->addFlash('success', 'Le porteur a été supprimé avec succès.');
+        } catch (\Exception $e) {
+            $errorData = [
+                'success' => false,
+                'message' => 'Erreur lors de la suppression du porteur.',
+                'details' => $this->getParameter('kernel.debug') ? [
+                    'exception' => get_class($e),
+                    'message' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                ] : null,
+            ];
+    
+            if ($request->isXmlHttpRequest()) {
+                return $this->json($errorData, Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+    
+            $this->addFlash('error', $errorData['message']);
         }
-
+    
         return $this->redirectToRoute('app_porteur_index');
     }
+    
 }
