@@ -50,10 +50,7 @@
                     </button>
                     <div class="dropdown-menu">
                       <a class="dropdown-item" href="{{ path('app_banque_index', {'edit': banque.SEQBANQUE}) }}">
-                        <i class="icon-base bx bx-edit-alt me-1"></i> Modifier
-                      </a>
-                      <a class="dropdown-item" href="{{ path('app_banque_show', {'SEQBANQUE': banque.SEQBANQUE}) }}">
-                        <i class="icon-base bx bx-show me-1"></i> Détails
+                        <i class="icon-base bx bx-edit-alt me-1"></i> Consulter | Modifier
                       </a>
                       {{ include('banque/_delete_form.html.twig', {'banque': banque}) }}
                     </div>
