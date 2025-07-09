@@ -1,4 +1,93 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="card-body p-1" style="font-size: 12px">
+    {{ form_start(form, {'attr': {'class': 'browser-default-validation'}}) }}
+
+    <div class="mb-4">
+        <div class="mb-3">
+            {{ form_label(form.libtypechambre, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.libtypechambre, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.libtypechambre2, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.libtypechambre2, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.adultesMini, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.adultesMini, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.adultesMaxi, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.adultesMaxi, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.enfantsMini, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.enfantsMini, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.enfantsMaxi, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.enfantsMaxi, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.bebesMaxi, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.bebesMaxi, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.suppsg, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.suppsg, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.capacite, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.capacite, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.sel, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.sel, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.ordre, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.ordre, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="mb-3">
+                {{ form_label(form.abrtypechambre, 'Abréviation', {
+                    'label_attr': {
+                        'class': 'form-label fw-semibold'
+                    }
+                }) }}
+                {{ form_widget(form.abrtypechambre, {
+                    'attr': {
+                        'class': 'form-control',
+                        'placeholder': 'Ex: DBL, SGL, TWN...',
+                        'maxlength': '10'
+                    }
+                }) }}
+            </div>
+    </div>
+
+    <div class="pt-3 border-top text-end">
+        <button type="submit" class="btn btn-primary w-100 mb-2">
+            <i class="bx bx-save me-2"></i>{{ button_label|default('Enregistrer') }}
+        </button>
+
+        {% if form.vars.data.id is defined and form.vars.data.id %}
+            <a href="{{ path('app_typechambre_index') }}" class="btn btn-outline-danger w-100 px-4">
+                <i class="bx bx-x me-2"></i>Annuler
+            </a>
+        {% else %}
+            <button type="button" class="btn btn-outline-danger w-100 px-4" data-bs-dismiss="offcanvas">
+                <i class="bx bx-x me-2"></i>Annuler
+            </button>
+        {% endif %}
+    </div>
+
+    {{ form_end(form) }}
+</div>
