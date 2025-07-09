@@ -1,63 +1,72 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des commerciaux{% endblock %}
+{% block title %}RFT | Liste des commerciaux{% endblock %}
 
 {% block body %}
-<div class="flex-grow-1 container-p-y container-fluid">
-  <div class="card">
-    <div class="card-header d-flex justify-content-between align-items-center">
-      <h5 class="card-title mb-0">📋 Liste des commerciaux</h5>
-      <button class="btn btn-success" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddCommercial">
-        <i class="icon-base bx bx-plus me-2"></i>Ajouter un commercial
-      </button>
+<div class="card shadow rounded-3 border-0">
+  <div class="card-header text-white">
+    <div class="row align-items-center">
+      <div class="col-12 col-md-8 mb-2 mb-md-0">
+        <h5 class="mb-0 text-center text-md-start">📋 Liste des commerciaux</h5>
+      </div>
+      <div class="col-9 col-md-4 d-flex flex-column flex-md-row justify-content-md-end gap-2">
+        <a class="btn btn-success w-100 w-md-auto" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddCommercial">
+          <i class="bx bx-plus me-2"></i>Ajouter un commercial
+        </a>
+      </div>
     </div>
+  </div>
 
-    <div class="card-body p-1">
-      <table class="datatables-commercials table table-hover table-striped table-bordered mb-1">
+  <div class="card-body p-1">
+    <div class="table-responsive">
+      <table class="table table-hover table-striped table-bordered mb-1">
         <thead>
           <tr>
-            <th>ID</th>
+            <th class="text-center" width="60">#</th>
             <th>Code</th>
             <th>Nom</th>
             <th>Prénom</th>
             <th>Téléphone</th>
-            <th class="text-center">Actions</th>
+            <th class="text-center" width="100">Actions</th>
           </tr>
         </thead>
         <tbody>
-          {% for commercial in commercials %}
-            <tr>
-              <td>{{ commercial.seqCommercial }}</td>
-              <td>{{ commercial.codeCommercial }}</td>
-              <td>{{ commercial.nomCommercial }}</td>
-              <td>{{ commercial.prenomCommercial }}</td>
-              <td>{{ commercial.telCommercial }}</td>
-              <td class="text-center">
-                <div class="dropdown">
-                  <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="icon-base bx bx-dots-vertical-rounded"></i>
-                  </button>
-                  <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
-                      <a href="#" class="dropdown-item"
-                         data-bs-toggle="offcanvas"
-                         data-bs-target="#offcanvasEditCommercial"
-                         data-url="{{ path('app_commercial_edit', {'id': commercial.seqCommercial}) }}">
-                        <i class="bx bx-edit-alt me-1"></i> Modifier
-                      </a>
-                    </li>
-                    <li>
-                      {{ include('commercial/_delete_form.html.twig', {'commercial': commercial}) }}
-                    </li>
-                  </ul>
-                </div>
-              </td>
-            </tr>
-          {% else %}
-            <tr>
-              <td colspan="6" class="text-center">Aucun commercial trouvé</td>
-            </tr>
-          {% endfor %}
+        {% for commercial in commercials %}
+          <tr>
+            <td class="text-center">{{ commercial.seqCommercial }}</td>
+            <td>{{ commercial.codeCommercial }}</td>
+            <td>{{ commercial.nomCommercial }}</td>
+            <td>{{ commercial.prenomCommercial }}</td>
+            <td>{{ commercial.telCommercial }}</td>
+            <td class="text-center">
+              <div class="dropdown">
+                <button class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="bx bx-dots-vertical-rounded"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li>
+                    <a class="dropdown-item"
+                       href="{{ path('app_commercial_index', {'edit': commercial.seqCommercial}) }}">
+                      <i class="bx bx-edit-alt me-2"></i>Consulter | Modifier
+                    </a>
+                  </li>
+                  <li>
+                    {{ include('commercial/_delete_form.html.twig', {
+                      'commercial': commercial,
+                      'btn_class': 'dropdown-item'
+                    }) }}
+                  </li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="6" class="text-center py-4 text-muted">
+              Aucun commercial enregistré
+            </td>
+          </tr>
+        {% endfor %}
         </tbody>
       </table>
     </div>
@@ -71,69 +80,37 @@
     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
   </div>
   <div class="offcanvas-body p-6 h-100">
-    {{ form_start(addForm, {'attr': {'class': 'add-new-commercial'}}) }}
-      <div class="mb-3">
-        {{ form_label(addForm.codeCommercial, 'Code commercial', {'label_attr': {'class': 'form-label'}}) }}
-        {{ form_widget(addForm.codeCommercial, {'attr': {'class': 'form-control', 'placeholder': 'CODE'}}) }}
-      </div>
-      <div class="mb-3">
-        {{ form_label(addForm.nomCommercial, 'Nom', {'label_attr': {'class': 'form-label'}}) }}
-        {{ form_widget(addForm.nomCommercial, {'attr': {'class': 'form-control', 'placeholder': 'Nom du commercial'}}) }}
-      </div>
-      <div class="mb-3">
-        {{ form_label(addForm.prenomCommercial, 'Prénom', {'label_attr': {'class': 'form-label'}}) }}
-        {{ form_widget(addForm.prenomCommercial, {'attr': {'class': 'form-control', 'placeholder': 'Prénom du commercial'}}) }}
-      </div>
-      <div class="mb-3">
-        {{ form_label(addForm.telCommercial, 'Téléphone', {'label_attr': {'class': 'form-label'}}) }}
-        {{ form_widget(addForm.telCommercial, {'attr': {'class': 'form-control', 'placeholder': 'Numéro de téléphone'}}) }}
-      </div>
-
-      <div class="d-flex gap-2 justify-content-end mt-4">
-        <button type="submit" class="btn btn-primary">
-          <i class="bx bx-save me-2"></i>{{ button_label|default('Enregistrer') }}
-        </button>
-        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="offcanvas">
-          <i class="bx bx-x me-2"></i>Annuler
-        </button>
-      </div>
-    {{ form_end(addForm) }}
+    {{ include('commercial/_form.html.twig', {
+      form: addForm,
+      button_label: 'Enregistrer'
+    }) }}
   </div>
 </div>
 
-<!-- Offcanvas Modifier Commercial (chargé dynamiquement) -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEditCommercial" aria-labelledby="offcanvasEditCommercialLabel" data-bs-backdrop="static" data-bs-keyboard="false">
-  <div class="offcanvas-header border-bottom">
-    <h5 id="offcanvasEditCommercialLabel" class="offcanvas-title">Modifier le commercial</h5>
-    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
-  </div>
-  <div class="offcanvas-body" id="editCommercialBody">
-    <div class="text-center">
-      <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Chargement...</span>
-      </div>
+<!-- Offcanvas Modifier Commercial -->
+{% if editForm is defined and editForm %}
+  <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasEditCommercial" style="visibility: visible;" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="offcanvasEditCommercialLabel">
+    <div class="offcanvas-header border-bottom">
+      <h5 id="offcanvasEditCommercialLabel" class="offcanvas-title">Modifier le commercial</h5>
+      <a href="{{ path('app_commercial_index') }}" class="btn-close text-reset" aria-label="Fermer"></a>
+    </div>
+    <div class="offcanvas-body p-6 h-100">
+      {{ include('commercial/_form.html.twig', {
+        form: editForm,
+        button_label: 'Mettre à jour'
+      }) }}
     </div>
   </div>
-</div>
 
-<script>
-  // Chargement AJAX du formulaire d'édition dans l'offcanvas
-  const offcanvasEdit = document.getElementById('offcanvasEditCommercial');
-  offcanvasEdit.addEventListener('show.bs.offcanvas', (event) => {
-    const trigger = event.relatedTarget;
-    const url = trigger.getAttribute('data-url');
-    const body = document.getElementById('editCommercialBody');
-
-    body.innerHTML = '<div class="text-center"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Chargement...</span></div></div>';
-
-    fetch(url)
-      .then(response => response.text())
-      .then(html => {
-        body.innerHTML = html;
-      })
-      .catch(() => {
-        body.innerHTML = '<div class="alert alert-danger">Erreur lors du chargement du formulaire.</div>';
-      });
-  });
-</script>
+  <script>
+    // Fermer offcanvas ajout si on édite
+    const addOffcanvas = document.getElementById('offcanvasAddCommercial');
+    if (addOffcanvas) {
+      const bsAddOffcanvas = bootstrap.Offcanvas.getInstance(addOffcanvas);
+      if (bsAddOffcanvas) {
+        bsAddOffcanvas.hide();
+      }
+    }
+  </script>
+{% endif %}
 {% endblock %}
