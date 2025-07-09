@@ -77,11 +77,6 @@
                         <i class="fa fa-cog me-2"></i>Configurations
                     </a>
                 </li>
-                <li class="menu-item {% if app.request.get('_route') starts with 'app_utilisateur' %}active open{% endif %}">
-                    <a href="{{ path('app_utilisateur_index') }}" class="menu-link">
-                        <i class="fa fa-user me-2"></i>Utilisateurs
-                    </a>
-                </li>
 
                 <li class="menu-item {% if app.request.get('_route') starts with 'app_pays' %}active open{% endif %}">
                     <a href="{{ path('app_pays_index') }}" class="menu-link">
@@ -95,247 +90,255 @@
                 </li>
 
                 <li class="menu-item {% if app.request.get('_route') starts with 'app_ville' %}active open{% endif %}">
-        <a href="{{  path('app_ville_index') }}" class="menu-link">
-            <i class="fa fa-city me-2"></i>Ville
-        </a>
+                    <a href="{{ path('app_ville_index') }}" class="menu-link">
+                        <i class="fa fa-city me-2"></i>Ville
+                    </a>
+                    <hr>
+                </li>
+
+                <li class="menu-item {% if app.request.get('_route') starts with 'app_apporteur' %}active open{% endif %}">
+                    <a href="{{ path('app_porteur_index') }}" class="menu-link">
+                        <i class="fa fa-handshake me-2"></i>Apporteur
+                    </a>
+                </li>
+
+                <li class="menu-item {% if app.request.get('_route') starts with 'app_commerciaux' %}active open{% endif %}">
+                    <a href="{{ path('app_commercial_index') }}" class="menu-link">
+                        <i class="fa fa-briefcase me-2"></i>Commerciaux
+                    </a>
+                </li>
+                <hr>
+
+                <li class="menu-item {% if app.request.get('_route') starts with 'app_assurance' %}active open{% endif %}">
+                    <a href="{{ path('app_assur_index') }}" class="menu-link">
+                        <i class="fa fa-shield-alt me-2"></i>Assurance
+                    </a>
+                </li>
+
+                <li class="menu-item {% if app.request.get('_route') starts with 'app_type_assur_index' %}active open{% endif %}">
+                    <a href="{{ path('app_type_assur_index') }}" class="menu-link">
+                        <i class="fa fa-list-alt me-2"></i>Type Assurance
+                    </a>
+                </li>
+                <hr>
+                <li class="menu-item {% if app.request.get('_route') starts with 'app_type_prestation' %}active open{% endif %}">
+                    <a href="{{ path('app_prest_index') }}" class="menu-link">
+                        <i class="fa fa-stethoscope me-2"></i>Type Prestation
+                    </a>
+                </li>
+
+                <li class="menu-item {% if app.request.get('_route') starts with 'app_type_produit' %}active open{% endif %}">
+                    <a href="{{ path('app_typeprod_index') }}" class="menu-link">
+                        <i class="fa fa-box-open me-2"></i>Type Produit
+                    </a>
+                </li>
+
+                <li class="menu-item {% if app.request.get('_route') starts with 'app_affreteur_aerien' %}active open{% endif %}">
+                    <a href="{{ path('app_pays_index') }}" class="menu-link">
+                        <i class="fa fa-plane me-2"></i>Affréteur Aérien
+                    </a>
+                </li>
+
+                <li class="menu-item {% if app.request.get('_route') starts with 'app_typeregle_index' %}active open{% endif %}">
+                    <a href="{{ path('app_typeregle_index') }}" class="menu-link">
+                        <i class="fa fa-credit-card me-2"></i>Type de règlement
+                    </a>
+                </li>
+
+                <li class="menu-item {% if app.request.get('_route') starts with 'app_banque' %}active open{% endif %}">
+                    <a href="{{ path('app_banque_index') }}" class="menu-link">
+                        <i class="fa fa-university me-2"></i>Banque
+                    </a>
+                </li>
+
+                <li class="menu-item {% if app.request.get('_route') starts with 'app_frais_modification' %}active open{% endif %}">
+                    <a href="{{ path('app_frais_modif_index') }}" class="menu-link">
+                        <i class="fa fa-pen me-2"></i>Frais de modification
+                    </a>
+                </li>
+
+                <li class="menu-item {% if app.request.get('_route') starts with 'app_frais_annulation' %}active open{% endif %}">
+                    <a href="{{ path('app_frais_annul_index') }}" class="menu-link">
+                        <i class="fa fa-ban me-2"></i>Frais d'annulation
+                    </a>
+                </li>
+                <hr>
+                <li class="menu-item {% if app.request.get('_route') starts with 'app_niveau' %}active open{% endif %}">
+                    <a href="{{ path('app_niveau_index') }}" class="menu-link">
+                        <i class="fa fa-layer-group me-2"></i>Niveau
+                    </a>
+                </li>
+                <li class="menu-item {% if app.request.get('_route') starts with 'app_utilisateur' %}active open{% endif %}">
+                    <a href="{{ path('app_utilisateur_index') }}" class="menu-link">
+                        <i class="fa fa-user me-2"></i>Utilisateurs
+                    </a>
+                </li>
+                <hr>
+
+                <li class="menu-item {% if app.request.get('_route') starts with 'app_typechambre_index' %}active open{% endif %}">
+                    <a href="{{ path('app_typechambre_index') }}" class="menu-link">
+                        <i class="fa fa-bed me-2"></i>Occupation chambres
+                    </a>
+                </li>
+
+                <li class="menu-item {% if app.request.get('_route') starts with 'app_categorie_chambre' %}active open{% endif %}">
+                    <a href="{{ path('app_typechambre_index') }}" class="menu-link">
+                        <i class="fa fa-th-large me-2"></i>Catégorie chambre
+                    </a>
+                </li>
+
+                <li class="menu-item {% if app.request.get('_route') starts with 'app_base_cure' %}active open{% endif %}">
+                    <a href="{{ path('app_base_cure_index') }}" class="menu-link">
+                        <i class="fa fa-heartbeat me-2"></i>Base Cure
+                    </a>
+                </li>
+                <hr>
+                <li class="menu-item {% if app.request.get('_route') starts with 'app_monnaie' %}active open{% endif %}">
+                    <a href="{{ path('app_monnaie_index') }}" class="menu-link">
+                        <i class="fa fa-euro-sign me-2"></i>Monnaie
+                    </a>
+                </li>
+                <hr>
+                <li class="menu-item {% if app.request.get('_route') starts with 'app_departement' %}active open{% endif %}">
+                    <a href="{{ path('app_departement_index') }}" class="menu-link">
+                        <i class="fa fa-map-marked me-2"></i>Département
+                    </a>
+                </li>
+
+                <li class="menu-item {% if app.request.get('_route') starts with 'app_region' %}active open{% endif %}">
+                    <a href="{{ path('app_region_index') }}" class="menu-link">
+                        <i class="fa fa-map me-2"></i>Région
+                    </a>
+                </li>
+                <hr>
+                <li class="menu-item {% if app.request.get('_route') starts with 'app_type_option' %}active open{% endif %}">
+                    <a href="{{ path('app_type_option_index') }}" class="menu-link">
+                        <i class="fa fa-check-square me-2"></i>Type d'option
+                    </a>
+                </li>
+
+                <li class="menu-item {% if app.request.get('_route') starts with 'app_type_promo' %}active open{% endif %}">
+                    <a href="{{ path('app_type_promo_index') }}" class="menu-link">
+                        <i class="fa fa-tags me-2"></i>Type de promo
+                    </a>
+                </li>
+
+                <li class="menu-item {% if app.request.get('_route') starts with 'app_pension_orchestra' %}active open{% endif %}">
+                    <a href="{{ path('app_pension_orchestra_index') }}" class="menu-link">
+                        <i class="fa fa-utensils me-2"></i>Pension Orchestra
+                    </a>
+                </li>
+
+                <li class="menu-item {% if app.request.get('_route') starts with 'app_commission' %}active open{% endif %}">
+                    <a href="{{ path('app_pays_index') }}" class="menu-link">
+                        <i class="fa fa-percent me-2"></i>Commission
+                    </a>
+                </li>
+            </ul>
         </li>
 
-        <li class="menu-item {% if app.request.get('_route') starts with 'app_apporteur' %}active open{% endif %}">
-            <a href="{{ path('app_porteur_index') }}" class="menu-link">
-                <i class="fa fa-handshake me-2"></i>Apporteur
-            </a>
-        </li>
 
-        <li class="menu-item {% if app.request.get('_route') starts with 'app_commerciaux' %}active open{% endif %}">
-            <a href="{{ path('app_commercial_index')}}" class="menu-link">
-                <i class="fa fa-briefcase me-2"></i>Commerciaux
-            </a>
-        </li>
-
-        <li class="menu-item {% if app.request.get('_route') starts with 'app_assurance' %}active open{% endif %}">
-            <a href="{{ path('app_assur_index') }}" class="menu-link">
-                <i class="fa fa-shield-alt me-2"></i>Assurance
-            </a>
-        </li>
-
-        <li class="menu-item {% if app.request.get('_route') starts with 'app_type_assur_index' %}active open{% endif %}">
-            <a href="{{ path('app_type_assur_index') }}" class="menu-link">
-                <i class="fa fa-list-alt me-2"></i>Type Assurance
-            </a>
-        </li>
-
-        <li class="menu-item {% if app.request.get('_route') starts with 'app_type_prestation' %}active open{% endif %}">
-            <a href="{{ path('app_prest_index')}}" class="menu-link">
-                <i class="fa fa-stethoscope me-2"></i>Type Prestation
-            </a>
-        </li>
-
-        <li class="menu-item {% if app.request.get('_route') starts with 'app_type_produit' %}active open{% endif %}">
-            <a href="{{ path('app_typeprod_index') }}" class="menu-link">
-                <i class="fa fa-box-open me-2"></i>Type Produit
-            </a>
-        </li>
-
-        <li class="menu-item {% if app.request.get('_route') starts with 'app_affreteur_aerien' %}active open{% endif %}">
-            <a href="{{ path('app_pays_index') }}" class="menu-link">
-                <i class="fa fa-plane me-2"></i>Affréteur Aérien
-            </a>
-        </li>
-
-        <li class="menu-item {% if app.request.get('_route') starts with 'app_typeregle_index' %}active open{% endif %}">
-            <a href="{{ path('app_typeregle_index')}}" class="menu-link">
-                <i class="fa fa-credit-card me-2"></i>Type de règlement
-            </a>
-        </li>
-
-        <li class="menu-item {% if app.request.get('_route') starts with 'app_banque' %}active open{% endif %}">
-            <a href="{{ path('app_banque_index')}}" class="menu-link">
-                <i class="fa fa-university me-2"></i>Banque
-            </a>
-        </li>
-
-        <li class="menu-item {% if app.request.get('_route') starts with 'app_frais_modification' %}active open{% endif %}">
-            <a href="{{ path('app_frais_modif_index') }}" class="menu-link">
-                <i class="fa fa-pen me-2"></i>Frais de Modification
-            </a>
-        </li>
-
-        <li class="menu-item {% if app.request.get('_route') starts with 'app_frais_annulation' %}active open{% endif %}">
-            <a href="{{path('app_frais_annul_index') }}" class="menu-link">
-                <i class="fa fa-ban me-2"></i>Frais d'annulation
-            </a>
-        </li>
-
-        <li class="menu-item {% if app.request.get('_route') starts with 'app_niveau' %}active open{% endif %}">
-            <a href="{{ path('app_niveau_index')}}" class="menu-link">
-                <i class="fa fa-layer-group me-2"></i>Niveau
-            </a>
-        </li>
-
-        <li class="menu-item {% if app.request.get('_route') starts with 'app_occupation_chambre' %}active open{% endif %}">
-            <a href="{{path('app_pays_index') }}" class="menu-link">
-                <i class="fa fa-bed me-2"></i>Occupation chambres
-            </a>
-        </li>
-
-        <li class="menu-item {% if app.request.get('_route') starts with 'app_categorie_chambre' %}active open{% endif %}">
-            <a href="{{ path('app_pays_index')}}" class="menu-link">
-                <i class="fa fa-th-large me-2"></i>Catégorie chambre
-            </a>
-        </li>
-
-        <li class="menu-item {% if app.request.get('_route') starts with 'app_base_cure' %}active open{% endif %}">
-            <a href="{{ path('app_base_cure_index')}}" class="menu-link">
-                <i class="fa fa-heartbeat me-2"></i>Base Cure
-            </a>
-        </li>
-
-        <li class="menu-item {% if app.request.get('_route') starts with 'app_monnaie' %}active open{% endif %}">
-            <a href="{{ path('app_monnaie_index') }}" class="menu-link">
-                <i class="fa fa-euro-sign me-2"></i>Monnaie
-            </a>
-        </li>
-
-        <li class="menu-item {% if app.request.get('_route') starts with 'app_departement' %}active open{% endif %}">
-            <a href="{{ path('app_departement_index') }}" class="menu-link">
-                <i class="fa fa-map-marked me-2"></i>Département
-            </a>
-        </li>
-
-        <li class="menu-item {% if app.request.get('_route') starts with 'app_region' %}active open{% endif %}">
-            <a href="{{ path('app_region_index') }}" class="menu-link">
-                <i class="fa fa-map me-2"></i>Région
-            </a>
-        </li>
-
-        <li class="menu-item {% if app.request.get('_route') starts with 'app_type_option' %}active open{% endif %}">
-            <a href="{{ path('app_type_option_index') }}" class="menu-link">
-                <i class="fa fa-check-square me-2"></i>Type d'option
-            </a>
-        </li>
-
-        <li class="menu-item {% if app.request.get('_route') starts with 'app_type_promo' %}active open{% endif %}">
-            <a href="{{ path('app_type_promo_index') }}" class="menu-link">
-                <i class="fa fa-tags me-2"></i>Type de promo
-            </a>
-        </li>
-
-        <li class="menu-item {% if app.request.get('_route') starts with 'app_pension_orchestra' %}active open{% endif %}">
-            <a href="{{ path('app_pension_orchestra_index') }}" class="menu-link">
-                <i class="fa fa-utensils me-2"></i>Pension Orchestra
-            </a>
-        </li>
-
-        <li class="menu-item {% if app.request.get('_route') starts with 'app_commission' %}active open{% endif %}">
-            <a href="{{ path('app_pays_index')}}" class="menu-link">
-                <i class="fa fa-percent me-2"></i>Commission
-            </a>
-        </li>
-                </ul>
-            </li>
-
-
-<li class="menu-item">
-    <a href="javascript:void(0);" class="menu-link menu-toggle">
-        <i class="menu-icon bx bx-user"></i>
-        <div data-i18n="Clients">Clients</div>
-    </a>
-    <ul class="menu-sub">
         <li class="menu-item">
-            <a href="/client/listclient.php" class="menu-link">
-                <i class="bx bx-edit me-2"></i> Mise à jour Clients
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon bx bx-user"></i>
+                <div data-i18n="Clients">Clients</div>
             </a>
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="/client/listclient.php" class="menu-link">
+                        <i class="bx bx-edit me-2"></i> Mise à jour Clients
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="/groupementclient/listgroupementclient.php" class="menu-link">
+                        <i class="bx bx-group me-2"></i> Groupement clients
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="/reseau/listreseau.php" class="menu-link">
+                        <i class="bx bx-network-chart me-2"></i> Réseau de clients
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="/sous-reseau/listsous-reseau.php" class="menu-link">
+                        <i class="bx bx-git-branch me-2"></i> Sous-réseau
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="/super-reseau/listsuper-reseau.php" class="menu-link">
+                        <i class="bx bx-sitemap me-2"></i> Super-réseau
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon bx bx-package"></i>
+                <div data-i18n="Produit">Produit</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="/produit/listproduit.php" class="menu-link">
+                        <i class="bx bx-edit-alt me-2"></i> Mise à jour produit
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="/prestprod/listprestprod.php" class="menu-link">
+                        <i class="bx bx-plus-circle me-2"></i> Produit complémentaire
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="/cureetablissement/listcuriste.php" class="menu-link">
+                        <i class="bx bx-hotel me-2"></i> Cure & établissement
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="/listproduit/listproduit.php" class="menu-link">
+                        <i class="bx bx-list-ul me-2"></i> Listes produits
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="/listtarif/listtarif.php" class="menu-link">
+                        <i class="bx bx-money me-2"></i> Listes tarifs
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="/liststock/liststock.php" class="menu-link">
+                        <i class="bx bx-box me-2"></i> Listes stocks
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="/listretrosession/listretrosession.php" class="menu-link">
+                        <i class="bx bx-time-five me-2"></i> Listes Retro hôtels
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="/receptif/listreceptif.php" class="menu-link">
+                        <i class="bx bx-briefcase-alt-2 me-2"></i> Réceptif
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="/groupehotel/listgroupehotel.php" class="menu-link">
+                        <i class="bx bx-building me-2"></i> Groupe Hôtel
+                    </a>
+                </li>
+            </ul>
         </li>
         <li class="menu-item">
-            <a href="/groupementclient/listgroupementclient.php" class="menu-link">
-                <i class="bx bx-group me-2"></i> Groupement clients
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon bx bx-calendar-check"></i>
+                <div data-i18n="Plateau Résa">Plateau Résa</div>
             </a>
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="/dossier/list-dossier.php" class="menu-link">
+                        <i class="bx bx-search me-2"></i> Recherche Dossiers
+                    </a>
+                </li>
+            </ul>
         </li>
-        <li class="menu-item">
-            <a href="/reseau/listreseau.php" class="menu-link">
-                <i class="bx bx-network-chart me-2"></i> Réseau de clients
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="/sous-reseau/listsous-reseau.php" class="menu-link">
-                <i class="bx bx-git-branch me-2"></i> Sous-réseau
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="/super-reseau/listsuper-reseau.php" class="menu-link">
-                <i class="bx bx-sitemap me-2"></i> Super-réseau
-            </a>
-        </li>
+
+
     </ul>
-</li>
-
-<li class="menu-item">
-    <a href="javascript:void(0);" class="menu-link menu-toggle">
-        <i class="menu-icon bx bx-package"></i>
-        <div data-i18n="Produit">Produit</div>
-    </a>
-    <ul class="menu-sub">
-        <li class="menu-item">
-            <a href="/produit/listproduit.php" class="menu-link">
-                <i class="bx bx-edit-alt me-2"></i> Mise à jour produit
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="/prestprod/listprestprod.php" class="menu-link">
-                <i class="bx bx-plus-circle me-2"></i> Produit complémentaire
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="/cureetablissement/listcuriste.php" class="menu-link">
-                <i class="bx bx-hotel me-2"></i> Cure & établissement
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="/listproduit/listproduit.php" class="menu-link">
-                <i class="bx bx-list-ul me-2"></i> Listes produits
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="/listtarif/listtarif.php" class="menu-link">
-                <i class="bx bx-money me-2"></i> Listes tarifs
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="/liststock/liststock.php" class="menu-link">
-                <i class="bx bx-box me-2"></i> Listes stocks
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="/listretrosession/listretrosession.php" class="menu-link">
-                <i class="bx bx-time-five me-2"></i> Listes Retro hôtels
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="/receptif/listreceptif.php" class="menu-link">
-                <i class="bx bx-briefcase-alt-2 me-2"></i> Réceptif
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="/groupehotel/listgroupehotel.php" class="menu-link">
-                <i class="bx bx-building me-2"></i> Groupe Hôtel
-            </a>
-        </li>
-    </ul>
-</li>
-<li class="menu-item">
-    <a href="javascript:void(0);" class="menu-link menu-toggle">
-        <i class="menu-icon bx bx-calendar-check"></i>
-        <div data-i18n="Plateau Résa">Plateau Résa</div>
-    </a>
-    <ul class="menu-sub">
-        <li class="menu-item">
-            <a href="/dossier/list-dossier.php" class="menu-link">
-                <i class="bx bx-search me-2"></i> Recherche Dossiers
-            </a>
-        </li>
-    </ul>
-</li>
-
-
-        </ul>
 </aside>

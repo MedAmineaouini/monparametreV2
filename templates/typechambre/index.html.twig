@@ -79,7 +79,7 @@
         {% else %}
             <tr>
                 <td colspan="14"class="text-center py-4 text-muted">
-                    Aucun Types de chambres enregistré
+                    Aucun Types de chambres enregistré...
                 </td>
             </tr>
         {% endfor %}
@@ -90,7 +90,7 @@
 </div>
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddtypechambre" aria-labelledby="offcanvasAddtypechambreLabel"   data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="offcanvas-header border-bottom">
-        <h5 id="offcanvasAddtypechambreLabel" class="offcanvas-title">Ajouter un Type de règle</h5>
+        <h5 id="offcanvasAddtypechambreLabel" class="offcanvas-title">Nouvelle type de chambre</h5>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
     </div>
     <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
@@ -104,7 +104,7 @@
 {% if editForm is defined and editForm %}
     <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasEdittypechambre" data-bs-backdrop="static" data-bs-keyboard="false" style="visibility: visible;" aria-labelledby="offcanvasEdittypechambreLabel">
         <div class="offcanvas-header border-bottom">
-            <h5 id="offcanvasEdittypechambreLabel" class="offcanvas-title">Modifier le Type de règle</h5>
+            <h5 id="offcanvasEdittypechambreLabel" class="offcanvas-title">Modifier type de chambre</h5>
             <a href="{{ path('app_typechambre_index') }}" class="btn-close text-reset" aria-label="Fermer"></a>
         </div>
         <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">

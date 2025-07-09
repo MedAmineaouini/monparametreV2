@@ -6,7 +6,6 @@ use App\Entity\Pays;
 use App\Entity\Souspays;
 use App\Entity\Ville;
 use App\Form\PaysType;
-use Dompdf\Dompdf;
 use App\Repository\PaysRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -140,7 +139,7 @@ class PaysController extends AbstractController
                 ->getSingleScalarResult();
                 
             if ($villeCount > 0) {
-                $dependencies[] = 'Villes ';
+                $dependencies[] = 'Villes associées ('.$villeCount.')';
             }
             
             $sousPaysCount = $entityManager->getRepository(SousPays::class)
@@ -152,7 +151,7 @@ class PaysController extends AbstractController
                 ->getSingleScalarResult();
                 
             if ($sousPaysCount > 0) {
-                $dependencies[] = 'Sous-pays ';
+                $dependencies[] = 'Sous-pays associés ('.$sousPaysCount.')';
             }
     
             if (!empty($dependencies)) {
@@ -205,26 +204,4 @@ class PaysController extends AbstractController
     
         return $this->redirectToRoute('app_pays_index');
     }
-
-    #[Route('/export/pdf', name: 'app_pays_export_pdf', methods: ['GET'])]
-public function exportPdf(PaysRepository $paysRepository): Response
-{
-    $pays = $paysRepository->findAll();
-
-    $html = $this->renderView('pays/export_pdf.html.twig', [
-        'pays' => $pays,
-        'title' => 'Liste des pays'
-    ]);
-
-    $dompdf = new \Dompdf\Dompdf();
-    $dompdf->loadHtml($html);
-    $dompdf->setPaper('A4', 'landscape');
-    $dompdf->render();
-
-    $response = new Response($dompdf->output());
-    $response->headers->set('Content-Type', 'application/pdf');
-    $response->headers->set('Content-Disposition', 'attachment;filename="liste_pays.pdf"');
-
-    return $response;
-}
 }
