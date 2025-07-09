@@ -62,8 +62,8 @@
                             <li>
                                 <a class="dropdown-item"
                                    href="{{ path('app_typechambre_index', {'edit': typechambre.seqtypechambre}) }}"
-                                   aria-label="Modifier">
-                                    <i class="bx bx-edit-alt me-2"></i>Consulter | Modifier
+                                   aria-label="Consulter | Modifier">
+                                    <i class="bx bx-edit-alt me-2"></i>Consulter | Consulter | Modifier
                                 </a>
                             </li>
                             <li>
@@ -104,7 +104,7 @@
 {% if editForm is defined and editForm %}
     <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasEdittypechambre" data-bs-backdrop="static" data-bs-keyboard="false" style="visibility: visible;" aria-labelledby="offcanvasEdittypechambreLabel">
         <div class="offcanvas-header border-bottom">
-            <h5 id="offcanvasEdittypechambreLabel" class="offcanvas-title">Modifier type de chambre</h5>
+            <h5 id="offcanvasEdittypechambreLabel" class="offcanvas-title">Consulter | Modifier type de chambre</h5>
             <a href="{{ path('app_typechambre_index') }}" class="btn-close text-reset" aria-label="Fermer"></a>
         </div>
         <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">

@@ -41,7 +41,7 @@
                                         <a class="dropdown-item" href="#"
                                            data-bs-toggle="modal"
                                            data-bs-target="#editModal{{ type_assur.seqtypeassur }}">
-                                            <i class="icon-base bx bx-edit-alt me-1"></i> Modifier
+                                            <i class="icon-base bx bx-edit-alt me-1"></i> Consulter | Modifier
                                         </a>
 
                                          {{ include('type_assur/_delete_form.html.twig', { 'seqtypeassur': type_assur.seqtypeassur }) }}
@@ -58,7 +58,7 @@
                             <div class="modal-content">
                                 {{ form_start(forms_edit[type_assur.seqtypeassur]) }}
                                 <div class="modal-header">
-                                    <h5 class="modal-title">Modifier Type d'assurance</h5>
+                                    <h5 class="modal-title">Consulter | Modifier Type d'assurance</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
                                 </div>
                                 <div class="modal-body">

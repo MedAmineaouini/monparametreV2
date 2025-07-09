@@ -82,14 +82,48 @@ class TypeAssurController extends AbstractController
     #[Route('/{seqtypeassur}/delete', name: 'app_type_assur_delete', methods: ['POST'])]
     public function delete(Request $request, TypeAssur $typeAssur, EntityManagerInterface $em): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$typeAssur->getSeqtypeassur(), $request->request->get('_token'))) {
+        if (!$this->isCsrfTokenValid('delete' . $typeAssur->getSeqtypeassur(), $request->request->get('_token'))) {
+            if ($request->isXmlHttpRequest()) {
+                return $this->json([
+                    'success' => false,
+                    'message' => 'Jeton CSRF invalide',
+                ], Response::HTTP_BAD_REQUEST);
+            }
+            return $this->redirectToRoute('app_type_assur_index');
+        }
+    
+        try {
             $em->remove($typeAssur);
             $em->flush();
-            $this->addFlash('success', 'Type d\'assurance supprimé avec succès.');
-        } else {
-            $this->addFlash('error', 'Jeton CSRF invalide.');
+    
+            if ($request->isXmlHttpRequest()) {
+                return $this->json([
+                    'success' => true,
+                    'message' => 'Type d\'assurance supprimé avec succès.',
+                    'redirect' => $this->generateUrl('app_type_assur_index')
+                ]);
+            }
+    
+            $this->addFlash('success', 'Le type d\'assurance a été supprimé avec succès.');
+        } catch (\Exception $e) {
+            $errorData = [
+                'success' => false,
+                'message' => 'Erreur lors de la suppression du type d\'assurance.',
+                'details' => $this->getParameter('kernel.debug') ? [
+                    'exception' => get_class($e),
+                    'message' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                ] : null,
+            ];
+    
+            if ($request->isXmlHttpRequest()) {
+                return $this->json($errorData, Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+    
+            $this->addFlash('error', $errorData['message']);
         }
-
+    
         return $this->redirectToRoute('app_type_assur_index');
     }
+    
 }

@@ -1,20 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}RFT | Listes des assurances{% endblock %}
+{% block title %}RFT | Liste des assurances{% endblock %}
 
 {% block body %}
 <div class="card shadow rounded-3 border-0">
-    <div class="card-header  text-white">
+    <div class="card-header text-white">
         <div class="row align-items-center">
-            <div class="col-12 col-md-6 mb-2 mb-md-0">
+            <div class="col-12 col-md-8 mb-2 mb-md-0">
                 <h5 class="mb-0 text-center text-md-start">📋 Liste des assurances</h5>
             </div>
-            <div class="col-12 col-md-6 d-flex flex-column flex-md-row justify-content-md-end gap-2">
-                <a href="{{ path('app_assur_new') }}" class="btn btn-success w-100 w-md-auto">
-                    <i class="bx bx-plus"></i> Nouvelle assurance
+            <div class="col-12 col-md-4 d-flex flex-column flex-md-row justify-content-md-end gap-2">
+                <!-- Bouton ouvre offcanvas ajout -->
+                <a class="btn btn-success w-100 w-md-auto" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddAssur" role="button" aria-controls="offcanvasAddAssur">
+                    <i class="bx bx-plus me-2"></i> Ajouter une assurance
                 </a>
                 <a href="{{ path('app_assur_export_pdf') }}" class="btn btn-danger w-100 w-md-auto" target="_blank">
-                    <i class="bx bxs-file-pdf"></i> Exporter en PDF
+                    <i class="bx bxs-file-pdf me-2"></i> Exporter PDF
                 </a>
             </div>
         </div>
@@ -22,17 +23,17 @@
 
     <div class="card-body p-1">
         <div class="table-responsive">
-            <table class="table table-bordered table-striped align-middle small w-100">
+            <table class="table table-hover table-striped table-bordered mb-1 align-middle small w-100">
                 <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Assurance</th>
-                    <th>Mini</th>
-                    <th>Maxi</th>
-                    <th>Montant</th>
-                    <th>Achat</th>
-                    <th>Actions</th>
-                </tr>
+                    <tr>
+                        <th>#</th>
+                        <th>Assurance</th>
+                        <th class="text-end">Mini</th>
+                        <th class="text-end">Maxi</th>
+                        <th class="text-end">Montant</th>
+                        <th class="text-end">Achat</th>
+                        <th class="text-center" style="width:100px;">Actions</th>
+                    </tr>
                 </thead>
                 <tbody>
                 {% for assur in assurs %}
@@ -43,30 +44,90 @@
                         <td class="text-end">{{ '%.2f'|format(assur.maxi1) }} &euro;</td>
                         <td class="text-end">{{ '%.2f'|format(assur.valeur) }} &euro;</td>
                         <td class="text-end">{{ '%.2f'|format(assur.valeurAchat) }} &euro;</td>
-                        <td>
+                        <td class="text-center">
                             <div class="dropdown">
-                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                    <i class="icon-base bx bx-dots-vertical-rounded"></i>
+                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Actions">
+                                    <i class="bx bx-dots-vertical-rounded"></i>
                                 </button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="{{ path('app_assur_edit', {'seqassur': assur.seqassur}) }}">
-                                        <i class="icon-base bx bx-edit-alt me-1"></i> Consulter / Modifier
-                                    </a>
-                                    {{ include('assur/_delete_form.html.twig') }}
-                                </div>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <!-- Lien modification avec param edit -->
+                                        <a class="dropdown-item" href="{{ path('app_assur_index', {'edit': assur.seqassur}) }}">
+                                            <i class="bx bx-edit-alt me-2"></i> Consulter / Modifier
+                                        </a>
+                                    </li>
+                                    <li>
+                                        {{ include('assur/_delete_form.html.twig', {
+                                            'assur': assur,
+                                            'btn_class': 'dropdown-item'
+                                        }) }}
+                                    </li>
+                                </ul>
                             </div>
                         </td>
                     </tr>
                 {% else %}
                     <tr>
-                        <td colspan="7" class="text-center text-muted">aucun enregistrement trouvé.</td>
+                        <td colspan="7" class="text-center py-4 text-muted">Aucun enregistrement trouvé.</td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
-
 </div>
 
-    {% endblock %}
+<!-- Offcanvas Ajout -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddAssur" aria-labelledby="offcanvasAddAssurLabel" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="offcanvas-header border-bottom">
+        <h5 id="offcanvasAddAssurLabel" class="offcanvas-title">Ajouter une assurance</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
+    </div>
+    <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
+        {% if form is defined and form %}
+            {{ include('assur/_form.html.twig', {
+                form: form,
+                button_label: 'Enregistrer'
+            }) }}
+        {% else %}
+            <p class="text-muted">Formulaire indisponible.</p>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Offcanvas Modification -->
+{% if editForm is defined and editForm %}
+    <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasEditAssur" data-bs-backdrop="static" data-bs-keyboard="false" style="visibility: visible;" aria-labelledby="offcanvasEditAssurLabel">
+        <div class="offcanvas-header border-bottom">
+            <h5 id="offcanvasEditAssurLabel" class="offcanvas-title">Modifier l'assurance</h5>
+            <a href="{{ path('app_assur_index') }}" class="btn-close text-reset" aria-label="Fermer"></a>
+        </div>
+        <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
+            {{ form_start(editForm, {
+                'action': path('app_assur_index', {'edit': assurToEdit.seqassur}),
+                'attr': {'id': 'edit-form'}
+            }) }}
+            {{ form_widget(editForm) }}
+            <hr>
+            <button type="submit" class="btn btn-primary w-100 mb-2">
+                <i class="bx bx-save me-2"></i>{{ button_label|default('Enregistrer') }}
+            </button>
+            <a href="{{ path('app_assur_index') }}" class="btn btn-outline-danger w-100 px-4">
+                <i class="bx bx-x me-2"></i>Annuler
+            </a>
+            {{ form_end(editForm) }}
+        </div>
+    </div>
+
+    <script>
+        // Fermer l'offcanvas d'ajout si l'offcanvas d'édition est ouvert
+        const addOffcanvas = document.getElementById('offcanvasAddAssur');
+        if (addOffcanvas) {
+            const bsAddOffcanvas = bootstrap.Offcanvas.getInstance(addOffcanvas);
+            if (bsAddOffcanvas) {
+                bsAddOffcanvas.hide();
+            }
+        }
+    </script>
+{% endif %}
+{% endblock %}

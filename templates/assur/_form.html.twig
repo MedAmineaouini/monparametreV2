@@ -1,73 +1,55 @@
 <div class="card-body p-1" style="font-size: 12px">
     {{ form_start(form, {'attr': {'class': 'browser-default-validation'}}) }}
 
-    <div class="row g-3 mb-4">
-        <div class="col-md-4">
+    <div class="row g-3 mb-4 align-items-center">
+        {# Champ Libellé #}
+        <div class="col-md-12">
             {{ form_label(form.libassur, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
             <strong class="text-danger">*</strong>
             {{ form_widget(form.libassur, {'attr': {'class': 'form-control', 'placeholder': 'Libellé'}}) }}
+            {{ form_errors(form.libassur) }}
         </div>
-        <div class="col-md-2">
+    </div>
+
+    <div class="row g-3 mb-4 align-items-center">
+        {# Champ Mini #}
+        <div class="col-md-12">
             {{ form_label(form.mini1, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
-            {{ form_widget(form.mini1) }}
+            {{ form_widget(form.mini1, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.mini1) }}
         </div>
-        <div class="col-md-2">
+
+        {# Champ Maxi #}
+        <div class="col-md-12">
             {{ form_label(form.maxi1, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
-            {{ form_widget(form.maxi1) }}
-        </div>
-{#        <div class="col-md-4">#}
-{#            {{ form_label(form.total1) }}#}
-{#            {{ form_widget(form.total1) }}#}
-{#        </div>#}
-{#        <div class="col-md-4">#}
-{#            {{ form_label(form.total2) }}#}
-{#            {{ form_widget(form.total2) }}#}
-{#        </div>#}
-    </div>
-
-    <div class="row g-3 mb-4">
-{#        <div class="col-md-4">#}
-{#            {{ form_label(form.typevaleur) }}#}
-{#            {{ form_widget(form.typevaleur) }}#}
-{#        </div>#}
-        <div class="col-md-2">
-            {{ form_label(form.valeur , null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
-            {{ form_widget(form.valeur) }}
-        </div>
-        <div class="col-md-2">
-            {{ form_label(form.valeurAchat , null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
-            {{ form_widget(form.valeurAchat) }}
+            {{ form_widget(form.maxi1, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.maxi1) }}
         </div>
     </div>
 
-    <div class="row g-3 mb-4">
-{#        <div class="col-md-4">#}
-{#            {{ form_label(form.prixvente) }}#}
-{#            {{ form_widget(form.prixvente) }}#}
-{#        </div>#}
-{#        <div class="col-md-4">#}
-{#            {{ form_label(form.prixvente2) }}#}
-{#            {{ form_widget(form.prixvente2) }}#}
-{#        </div>#}
-{#        <div class="col-md-4">#}
-{#            {{ form_label(form.prixachat) }}#}
-{#            {{ form_widget(form.prixachat) }}#}
-{#        </div>#}
+    <div class="row g-3 mb-4 align-items-center">
+        {# Champ Montant #}
+        <div class="col-md-12">
+            {{ form_label(form.valeur, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.valeur, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.valeur) }}
+        </div>
+
+        {# Champ Valeur Achat #}
+        <div class="col-md-12">
+            {{ form_label(form.valeurAchat, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.valeurAchat, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.valeurAchat) }}
+        </div>
     </div>
 
-    <div class="row g-3 mb-4">
-{#        <div class="col-md-4">#}
-{#            {{ form_label(form.prixachat2) }}#}
-{#            {{ form_widget(form.prixachat2) }}#}
-{#        </div>#}
-
-    </div>
+    {# Autres champs à ajouter ici si besoin #}
 
     <div class="pt-3 border-top text-end">
-        <button type="submit" class="btn btn-primary px-4">
+        <button type="submit" class="btn btn-primary px-4 w-100 mb-2">
             <i class="bx bx-save me-2"></i>{{ button_label|default('Enregistrer') }}
         </button>
-        <a href="{{ path('app_assur_index') }}" class="btn btn-outline-secondary px-4">
+        <a href="{{ path('app_assur_index') }}" class="btn btn-outline-danger px-4 w-100">
             <i class="bx bx-x me-2"></i>Annuler
         </a>
     </div>

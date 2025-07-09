@@ -1,23 +1,9 @@
-{#<form method="post" action="{{ path('app_type_assur_delete', {'seqtypeassur': type_assur.seqtypeassur}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">#}
-{#    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ type_assur.seqtypeassur) }}">#}
-{#    <button class="btn">Delete</button>#}
-{#</form>#}
-
-{#<form method="post"#}
-{#      action="{{ path('app_type_assur_delete', {'seqtypeassur': type_assur.seqtypeassur}) }}"#}
-{#      class="assur-delete-form delete-form"#}
-{#      data-confirm="Êtes-vous sûr de vouloir supprimer cet type Assurance?"#}
-{#      style="display: inline;">#}
-{#    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ type_assur.seqtypeassur) }}">#}
-{#    <button type="submit" class="dropdown-item text-danger border-0 bg-transparent w-100 text-start">#}
-{#        <i class="icon-base bx bx-trash me-1"></i> Supprimer#}
-{#    </button>#}
-{#</form>#}
 <form method="post"
       action="{{ path('app_type_assur_delete', {'seqtypeassur': type_assur.seqtypeassur}) }}"
       class="delete-form">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ type_assur.seqtypeassur) }}">
-    <button type="button" class="dropdown-item text-danger border-0 bg-transparent w-100 text-start delete-btn"
+    <button type="button"
+            class="dropdown-item text-danger border-0 bg-transparent w-100 text-start delete-btn"
             data-confirm-message="Êtes-vous sûr de vouloir supprimer cet type Assurance ?"
             data-success-message="Le type Assurance a été supprimé avec succès">
         <i class="icon-base bx bx-trash me-1"></i> Supprimer
