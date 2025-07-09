@@ -22,7 +22,7 @@ class BaseCureController extends AbstractController
     ): Response {
         $baseCures = $baseCureRepository->findAll();
 
-        // Gestion de la modification (doit être avant l'ajout)
+        // Gestion de la modification
         $editId = $request->query->getInt('edit');
         $editForm = null;
         $baseCureToEdit = null;
@@ -41,11 +41,11 @@ class BaseCureController extends AbstractController
             }
         }
 
-        // Formulaire d'ajout (uniquement si pas en mode édition)
+        // Formulaire d'ajout
         $baseCure = new BaseCure();
         $form = $this->createForm(BaseCureType::class, $baseCure);
 
-        if ($editId <= 0) {
+        if (!$editForm || !$editForm->isSubmitted()) {
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
@@ -56,9 +56,9 @@ class BaseCureController extends AbstractController
         }
 
         return $this->render('base_cure/index.html.twig', [
-            'base_cures'     => $baseCures,
-            'form'           => $form->createView(),
-            'editForm'       => $editForm ? $editForm->createView() : null,
+            'base_cures' => $baseCures,
+            'form' => $form->createView(),
+            'editForm' => $editForm ? $editForm->createView() : null,
             'baseCureToEdit' => $baseCureToEdit,
         ]);
     }
@@ -110,23 +110,48 @@ class BaseCureController extends AbstractController
     }
 
     #[Route('/{seqcure}', name: 'app_base_cure_delete', methods: ['POST'])]
-    public function delete(Request $request, BaseCure $baseCure, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, BaseCure $baseCure, EntityManagerInterface $em): Response
     {
-        if (!$this->isCsrfTokenValid('delete_'.$baseCure->getSeqcure(), $request->request->get('_token'))) {
+        if (!$this->isCsrfTokenValid('delete' . $baseCure->getSeqcure(), $request->request->get('_token'))) {
+            if ($request->isXmlHttpRequest()) {
+                return $this->json([
+                    'success' => false,
+                    'message' => 'Token CSRF invalide',
+                ], Response::HTTP_BAD_REQUEST);
+            }
             return $this->redirectToRoute('app_base_cure_index');
         }
 
-        $entityManager->remove($baseCure);
-        $entityManager->flush();
+        try {
+            $em->remove($baseCure);
+            $em->flush();
 
-        if ($request->isXmlHttpRequest()) {
-            return $this->json([
-                'success' => true,
-                'redirect' => $this->generateUrl('app_base_cure_index'),
-            ]);
+            if ($request->isXmlHttpRequest()) {
+                return $this->json([
+                    'success' => true,
+                    'message' => 'Base Cure supprimée avec succès.',
+                    'redirect' => $this->generateUrl('app_base_cure_index')
+                ]);
+            }
+
+            $this->addFlash('success', 'La base cure a été supprimée avec succès.');
+        } catch (\Exception $e) {
+            $errorData = [
+                'success' => false,
+                'message' => 'Erreur lors de la suppression de la base cure.',
+                'details' => $this->getParameter('kernel.debug') ? [
+                    'exception' => get_class($e),
+                    'message' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                ] : null,
+            ];
+
+            if ($request->isXmlHttpRequest()) {
+                return $this->json($errorData, Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
+            $this->addFlash('error', $errorData['message']);
         }
-
-        $this->addFlash('success', 'Base Cure supprimée avec succès.');
 
         return $this->redirectToRoute('app_base_cure_index');
     }

@@ -9,18 +9,13 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: 'BASE_CURE')]
 class BaseCure
 {
-    #[ORM\Column(name: 'CODELIBCURE', type: 'string', length: 6, options: ['default' => ''])]
-    private string $codelibcure = '';
-
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
-    #[ORM\Column(
-        name: 'SEQCURE', 
-        type: 'integer', 
-        insertable: false,
-        updatable: false   
-    )]
-    private ?int $seqcure = null;
+    #[ORM\Column(name: 'SEQCURE', type: 'integer')]
+    private ?int $seqcure = null;  // Initialisé à null
+
+    #[ORM\Column(name: 'CODELIBCURE', type: 'string', length: 6, options: ['default' => ''])]
+    private string $codelibcure = '';
 
     #[ORM\Column(name: 'seq', type: 'integer', options: ['default' => 0])]
     private int $seq = 0;
@@ -28,12 +23,7 @@ class BaseCure
     #[ORM\Column(name: 'LIBELLE_CURE', type: 'string', length: 60, nullable: true)]
     private ?string $libelleCure = null;
 
-    #[ORM\Column(
-        name: 'TYPECURE',
-        type: 'string',
-        length: 25,
-        options: ['default' => '']
-    )]
+    #[ORM\Column(name: 'TYPECURE', type: 'string', length: 25, options: ['default' => ''])]
     private string $typecure = '';
 
     #[ORM\Column(name: 'ANCIEN', type: 'string', length: 5, options: ['default' => ''])]
@@ -48,98 +38,150 @@ class BaseCure
     #[ORM\Column(name: 'LIBTYPECURE', type: 'string', length: 30, options: ['default' => ''])]
     private string $libtypecure = '';
 
-    // Getters and setters...
-
-    public function getCodelibcure(): string
-    {
-        return $this->codelibcure;
-    }
-
-    public function setCodelibcure(string $codelibcure): static
-    {
-        $this->codelibcure = $codelibcure;
-        return $this;
-    }
-
+    /**
+     * @return int|null
+     */
     public function getSeqcure(): ?int
     {
         return $this->seqcure;
     }
 
+    /**
+     * @param int|null $seqcure
+     */
+    public function setSeqcure(?int $seqcure): void
+    {
+        $this->seqcure = $seqcure;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCodelibcure(): string
+    {
+        return $this->codelibcure;
+    }
+
+    /**
+     * @param string $codelibcure
+     */
+    public function setCodelibcure(string $codelibcure): void
+    {
+        $this->codelibcure = $codelibcure;
+    }
+
+    /**
+     * @return int
+     */
     public function getSeq(): int
     {
         return $this->seq;
     }
 
-    public function setSeq(int $seq): static
+    /**
+     * @param int $seq
+     */
+    public function setSeq(int $seq): void
     {
         $this->seq = $seq;
-        return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getLibelleCure(): ?string
     {
         return $this->libelleCure;
     }
 
-    public function setLibelleCure(?string $libelleCure): static
+    /**
+     * @param string|null $libelleCure
+     */
+    public function setLibelleCure(?string $libelleCure): void
     {
         $this->libelleCure = $libelleCure;
-        return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getTypecure(): string
     {
         return $this->typecure;
     }
 
-    public function setTypecure(string $typecure): static
+    /**
+     * @param string $typecure
+     */
+    public function setTypecure(string $typecure): void
     {
         $this->typecure = $typecure;
-        return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getAncien(): string
     {
         return $this->ancien;
     }
 
-    public function setAncien(string $ancien): static
+    /**
+     * @param string $ancien
+     */
+    public function setAncien(string $ancien): void
     {
         $this->ancien = $ancien;
-        return $this;
     }
 
+    /**
+     * @return bool
+     */
     public function isArchiver(): bool
     {
         return $this->archiver;
     }
 
-    public function setArchiver(bool $archiver): static
+    /**
+     * @param bool $archiver
+     */
+    public function setArchiver(bool $archiver): void
     {
         $this->archiver = $archiver;
-        return $this;
     }
 
+    /**
+     * @return int
+     */
     public function getSeqtypecure(): int
     {
         return $this->seqtypecure;
     }
 
-    public function setSeqtypecure(int $seqtypecure): static
+    /**
+     * @param int $seqtypecure
+     */
+    public function setSeqtypecure(int $seqtypecure): void
     {
         $this->seqtypecure = $seqtypecure;
-        return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getLibtypecure(): string
     {
         return $this->libtypecure;
     }
 
-    public function setLibtypecure(string $libtypecure): static
+    /**
+     * @param string $libtypecure
+     */
+    public function setLibtypecure(string $libtypecure): void
     {
         $this->libtypecure = $libtypecure;
-        return $this;
     }
+
+    // Getters et setters inchangés...
+    
 }

@@ -2,41 +2,63 @@
     {{ form_start(form, {'attr': {'class': 'browser-default-validation'}}) }}
 
     <div class="row g-3 mb-4 align-items-center">
-        {# Champ Code Lib Cure #}
         <div class="col-md-12">
-            {{ form_label(form.codelibcure, null, {'label_attr': {'class': 'form-label'}}) }}
-            <strong class="text-danger">*</strong>
-            {{ form_widget(form.codelibcure) }}
+            {{ form_label(form.codelibcure, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.codelibcure, {'attr': {'class': 'form-control', 'required': true}}) }}
+            <div class="invalid-feedback">
+                Veuillez saisir un code valide.
+            </div>
         </div>
 
-
-
-        {# Champ Libellé Cure #}
         <div class="col-md-12">
-            {{ form_label(form.libelleCure, null, {'label_attr': {'class': 'form-label'}}) }}
-            <strong class="text-danger">*</strong>
-            {{ form_widget(form.libelleCure) }}
+            {{ form_label(form.libelle_cure, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.libelle_cure, {'attr': {'class': 'form-control'}}) }}
         </div>
-
-     
-
-        {# Champ Archivé (Oui / Non) #}
-        <div class="col-md-12">
-            {{ form_label(form.archiver, null, {'label_attr': {'class': 'form-label'}}) }}
-            <strong class="text-danger">*</strong>
-            {{ form_widget(form.archiver) }}
-        </div>
-
-       
     </div>
 
-    {# Boutons de soumission #}
+    <div class="row g-3 mb-4 align-items-center">
+        <div class="col-md-12">
+            {{ form_label(form.archiver, null, {
+                'label_attr': {
+                    'class': 'form-label fw-semibold d-block mb-3'
+                }
+            }) }}
+
+            <div class="d-flex gap-5">
+                <div class="form-check">
+                    {{ form_widget(form.archiver[0], {
+                        'attr': {
+                            'class': 'form-check-input',
+                            'id': 'archiver_non'
+                        }
+                    }) }}
+                    <label class="form-check-label" for="archiver_non">
+                        Non
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    {{ form_widget(form.archiver[1], {
+                        'attr': {
+                            'class': 'form-check-input',
+                            'id': 'archiver_oui'
+                        }
+                    }) }}
+                    <label class="form-check-label" for="archiver_oui">
+                        Oui
+                    </label>
+                </div>
+            </div>
+
+            {{ form_errors(form.archiver) }}
+        </div>
+    </div>
+
     <div class="pt-3 border-top text-end">
         <button type="submit" class="btn btn-primary w-100 mb-2">
             <i class="bx bx-save me-2"></i>{{ button_label|default('Enregistrer') }}
         </button>
-
-       {% if form.vars.data.seqcure %} 
+        {% if form.vars.data.seqcure %}
             <a href="{{ path('app_base_cure_index') }}" class="btn btn-outline-danger w-100 px-4">
                 <i class="bx bx-x me-2"></i>Annuler
             </a>
@@ -46,6 +68,5 @@
             </button>
         {% endif %}
     </div>
-
     {{ form_end(form) }}
 </div>

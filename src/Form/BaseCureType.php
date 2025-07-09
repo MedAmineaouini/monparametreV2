@@ -35,56 +35,61 @@ class BaseCureType extends AbstractType
             //         'placeholder' => 'Séquence...',
             //     ],
             // ])
-            ->add('libelleCure', TextType::class, [
+            ->add('libelle_cure', TextType::class, [
                 'label' => 'Libellé : ',
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'Libellé de la cure...',
                 ],
             ])
-            // ->add('typecure', TextType::class, [
-            //     'label' => 'Type de Cure : ',
-            //     'attr' => [
-            //         'class' => 'form-control',
-            //         'placeholder' => 'Type de cure...',
-            //     ],
-            // ])
-            // ->add('ancien', ChoiceType::class, [
-            //     'label' => 'Ancien : ',
-            //     'choices' => [
-            //         'Oui' => true,
-            //         'Non' => false,
-            //     ],
-            //     'attr' => [
-            //         'class' => 'form-select',
-            //     ],
-            //     'required' => true,
-            // ])
-            ->add('archiver', ChoiceType::class, [
-                'label' => 'Archiver : ',
-                'choices' => [
-                    'Oui' => true,
-                    'Non' => false,
-                ],
-                'attr' => [
-                    'class' => 'form-select',
-                ],
-                'required' => true,
-            ]);
-            // ->add('seqtypecure', TextType::class, [
-            //     'label' => 'Seq Type Cure : ',
-            //     'attr' => [
-            //         'class' => 'form-control',
-            //         'placeholder' => 'Séquence type cure...',
-            //     ],
-            // ])
-            // ->add('libtypecure', TextType::class, [
-            //     'label' => 'Lib Type Cure : ',
-            //     'attr' => [
-            //         'class' => 'form-control',
-            //         'placeholder' => 'Libellé type cure...',
-            //     ],
-            // ]);
+        // ->add('typecure', TextType::class, [
+        //     'label' => 'Type de Cure : ',
+        //     'attr' => [
+        //         'class' => 'form-control',
+        //         'placeholder' => 'Type de cure...',
+        //     ],
+        // ])
+        // ->add('ancien', ChoiceType::class, [
+        //     'label' => 'Ancien : ',
+        //     'choices' => [
+        //         'Oui' => true,
+        //         'Non' => false,
+        //     ],
+        //     'attr' => [
+        //         'class' => 'form-select',
+        //     ],
+        //     'required' => true,
+        // ])
+        -> add('archiver', ChoiceType::class, [
+            'label' => 'Archivé :',
+            'choices' => [
+                'Oui' => true,
+                'Non' => false,
+            ],
+            'expanded' => true,
+            'multiple' => false,
+            'label_attr' => ['class' => 'form-label fw-semibold d-block mb-3'],
+            'attr' => ['class' => 'form-check-input'],
+            'required' => true,
+            'choice_attr' => [
+                true => ['id' => 'archiver_oui'],
+                false => ['id' => 'archiver_non']
+            ],
+        ]);
+        // ->add('seqtypecure', TextType::class, [
+        //     'label' => 'Seq Type Cure : ',
+        //     'attr' => [
+        //         'class' => 'form-control',
+        //         'placeholder' => 'Séquence type cure...',
+        //     ],
+        // ])
+        // ->add('libtypecure', TextType::class, [
+        //     'label' => 'Lib Type Cure : ',
+        //     'attr' => [
+        //         'class' => 'form-control',
+        //         'placeholder' => 'Libellé type cure...',
+        //     ],
+        // ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
