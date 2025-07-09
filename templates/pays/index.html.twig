@@ -100,7 +100,8 @@
     </div>
 
     <!-- Offcanvas pour modifier un pays -->
-    {% if editForm is defined and editForm %}
+    <!-- Offcanvas pour modifier un pays -->
+    {% if editForm is defined and editForm and paysToEdit is defined and paysToEdit %}
         <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasEditPays" data-bs-backdrop="static" data-bs-keyboard="false" style="visibility: visible;" aria-labelledby="offcanvasEditPaysLabel">
             <div class="offcanvas-header border-bottom">
                 <h5 id="offcanvasEditPaysLabel" class="offcanvas-title">Modifier le pays</h5>
@@ -108,30 +109,61 @@
             </div>
             <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
                 {{ form_start(editForm, {
-                    'action': path('app_pays_index', {'edit': payToEdit.IDPAYS}),
+                    'action': path('app_pays_index', {'edit': paysToEdit.IDPAYS}),
                     'attr': {'id': 'edit-form'}
                 }) }}
-                {{ form_widget(editForm) }}
+
+                <div class="mb-3">
+                    {{ form_label(editForm.CODEPAYS, null, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(editForm.CODEPAYS, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(editForm.CODEPAYS) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(editForm.LIBPAYS, null, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(editForm.LIBPAYS, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(editForm.LIBPAYS) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(editForm.CODE_IATA, null, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(editForm.CODE_IATA, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(editForm.CODE_IATA) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(editForm.PLACE, null, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(editForm.PLACE, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(editForm.PLACE) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(editForm.NATURE, null, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(editForm.NATURE, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(editForm.NATURE) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(editForm.FORMALITE, null, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(editForm.FORMALITE, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(editForm.FORMALITE) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(editForm.OBSERVATION, null, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(editForm.OBSERVATION, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(editForm.OBSERVATION) }}
+                </div>
                 <hr>
+
                 <button type="submit" class="btn btn-primary w-100 mb-2">
                     <i class="bx bx-save me-2"></i>Enregistrer
                 </button>
                 <a href="{{ path('app_pays_index') }}" class="btn btn-outline-danger w-100 px-4">
                     <i class="bx bx-x me-2"></i>Annuler
                 </a>
+
                 {{ form_end(editForm) }}
+
             </div>
         </div>
-
-        <script>
-            // Fermer l'offcanvas d'ajout si l'offcanvas d'édition est ouvert
-            const addOffcanvas = document.getElementById('offcanvasAddPays');
-            if (addOffcanvas) {
-                const bsAddOffcanvas = bootstrap.Offcanvas.getInstance(addOffcanvas);
-                if (bsAddOffcanvas) {
-                    bsAddOffcanvas.hide();
-                }
-            }
-        </script>
     {% endif %}
+
 {% endblock %}
