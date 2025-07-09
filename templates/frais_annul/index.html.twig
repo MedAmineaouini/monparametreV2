@@ -3,85 +3,84 @@
 {% block title %}Liste des frais d'annulation{% endblock %}
 
 {% block body %}
-<div class="card shadow rounded-3 border-0">
-  <div class="card-header text-white">
-    <div class="row align-items-center">
-      <div class="col-12 col-md-8 mb-2 mb-md-0">
-        <h5 class="mb-0 text-center text-md-start">📋 Liste des frais d'annulation</h5>
-      </div>
-      <div class="col-9 col-md-4 d-flex flex-column flex-md-row justify-content-md-end gap-2">
-        <a class="btn btn-success w-100 w-md-auto" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddFraisAnnul">
-          <i class="bx bx-plus me-2"></i>Ajouter un frais
-        </a>
-        {# Tu peux ajouter un export PDF ici si souhaité #}
+<div class="flex-grow-1 container-p-y container-fluid">
+  <div class="card shadow rounded-3 border-0">
+    <div class="card-header text-white">
+      <div class="row align-items-center">
+        <div class="col-12 col-md-8 mb-2 mb-md-0">
+          <h5 class="mb-0 text-center text-md-start">📋 Liste des frais d'annulation</h5>
+        </div>
+        <div class="col-9 col-md-4 d-flex flex-column flex-md-row justify-content-md-end gap-2">
+          <button class="btn btn-success w-100 w-md-auto" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddFraisAnnul">
+            <i class="bx bx-plus me-2"></i>Ajouter un frais
+          </button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="card-body p-1">
-    <div class="table-responsive">
-      <table class="table table-hover table-striped table-bordered mb-1">
-        <thead>
-          <tr>
-            <th class="text-center" width="60">#</th>
-            <th>Jour 1</th>
-            <th>Jour 2</th>
-            <th>Facteur</th>
-            <th>Type</th>
-            <th>Libellé</th>
-            <th>Barème</th>
-            <th>Montant min</th>
-            <th>À appliquer</th>
-            <th class="text-center" width="100">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-        {% for frais in frais_annuls %}
-          <tr>
-            <td class="text-center">{{ frais.seqannul }}</td>
-            <td>{{ frais.jour1 }}</td>
-            <td>{{ frais.jour2 }}</td>
-            <td>{{ frais.facteur }}</td>
-            <td>{{ frais.typeannul == 0 ? 'Taux' : 'Valeur' }}</td>
-            <td>{{ frais.libelle }}</td>
-            <td>{{ frais.bareme }}</td>
-            <td>{{ frais.montantmini }}</td>
-            <td>{{ frais.applicable == 0 ? 'Par personne' : 'Par dossier' }}</td>
-            <td class="text-center">
-              <div class="dropdown">
-                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                  <i class="bx bx-dots-vertical-rounded"></i>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end">
-                  <li>
-                    <a class="dropdown-item"
-                       href="{{ path('app_frais_annul_index', {'edit': frais.seqannul}) }}">
-                      <i class="bx bx-edit-alt me-2"></i>Modifier
-                    </a>
-                  </li>
-                  <li>
-                    {{ include('frais_annul/_delete_form.html.twig', {
-                      'frais_annul': frais,
-                      'btn_class': 'dropdown-item'
-                    }) }}
-                  </li>
-                </ul>
-              </div>
-            </td>
-          </tr>
-        {% else %}
-          <tr>
-            <td colspan="10" class="text-center py-4 text-muted">Aucun frais trouvé</td>
-          </tr>
-        {% endfor %}
-        </tbody>
-      </table>
+    <div class="card-body p-1" style="font-size: 12px;">
+      <div class="table-responsive">
+        <table class="table table-hover table-striped table-bordered mb-1">
+          <thead>
+            <tr>
+              <th class="text-center" width="60">#</th>
+              <th>Libellé</th>
+              <th>De</th>
+              <th>A</th>
+              <th>Valeur</th>
+              <th>Type</th>
+              <th>Montant mini</th>
+              <th>À appliquer</th>
+              <th class="text-center" width="100">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for frais in frais_annuls %}
+              <tr>
+                <td class="text-center">{{ frais.seqannul }}</td>
+                <td>{{ frais.libelle }}</td>
+                <td>{{ frais.jour1 }}</td>
+                <td>{{ frais.jour2 }}</td>
+                <td>{{ frais.facteur }}</td>
+                <td>{{ frais.typeannul == 0 ? 'Taux' : 'Valeur' }}</td>
+                <td>{{ frais.montantmini }}</td>
+                <td>{{ frais.applicable == 0 ? 'Par personne' : 'Par dossier' }}</td>
+                <td class="text-center">
+                  <div class="dropdown">
+                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Actions">
+                      <i class="bx bx-dots-vertical-rounded"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                      <li>
+                        <a class="dropdown-item" href="{{ path('app_frais_annul_index', {'edit': frais.seqannul}) }}">
+                          <i class="bx bx-edit-alt me-2"></i>Consulter | Modifier
+                        </a>
+                      </li>
+                      <li>
+                        {{ include('frais_annul/_delete_form.html.twig', {
+                          frais_annul: frais,
+                          btn_class: 'dropdown-item'
+                        }) }}
+                      </li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+            {% else %}
+              <tr>
+                <td colspan="10" class="text-center py-4 text-muted">Aucun frais trouvé</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- Offcanvas : Ajout frais -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddFraisAnnul" aria-labelledby="offcanvasAddFraisAnnulLabel" data-bs-backdrop="static" data-bs-keyboard="false">
+{# Offcanvas Ajout #}
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddFraisAnnul"
+     aria-labelledby="offcanvasAddFraisAnnulLabel" data-bs-backdrop="static" data-bs-keyboard="false">
   <div class="offcanvas-header border-bottom">
     <h5 id="offcanvasAddFraisAnnulLabel" class="offcanvas-title">Ajouter un frais</h5>
     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
@@ -94,27 +93,20 @@
   </div>
 </div>
 
-<!-- Offcanvas : Édition frais -->
+{# Offcanvas Édition #}
 {% if editForm is defined and editForm %}
-  <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasEditFraisAnnul" data-bs-backdrop="static" data-bs-keyboard="false" style="visibility: visible;" aria-labelledby="offcanvasEditFraisAnnulLabel">
+  <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasEditFraisAnnul"
+       data-bs-backdrop="static" data-bs-keyboard="false"
+       style="visibility: visible;" aria-labelledby="offcanvasEditFraisAnnulLabel">
     <div class="offcanvas-header border-bottom">
       <h5 id="offcanvasEditFraisAnnulLabel" class="offcanvas-title">Modifier le frais</h5>
       <a href="{{ path('app_frais_annul_index') }}" class="btn-close text-reset" aria-label="Fermer"></a>
     </div>
     <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
-      {{ form_start(editForm, {
-        'action': path('app_frais_annul_index', {'edit': fraisToEdit.seqannul}),
-        'attr': {'id': 'edit-form'}
+      {{ include('frais_annul/_form.html.twig', {
+        form: editForm,
+        button_label: 'Enregistrer'
       }) }}
-      {{ form_widget(editForm) }}
-      <hr>
-      <button type="submit" class="btn btn-primary w-100 mb-2">
-        <i class="bx bx-save me-2"></i>{{ button_label|default('Enregistrer') }}
-      </button>
-      <a href="{{ path('app_frais_annul_index') }}" class="btn btn-outline-danger w-100 px-4">
-        <i class="bx bx-x me-2"></i>Annuler
-      </a>
-      {{ form_end(editForm) }}
     </div>
   </div>
 

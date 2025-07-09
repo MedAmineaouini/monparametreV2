@@ -14,56 +14,54 @@ class FraisAnnulType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('jour1', TextType::class, [
-                'label' => 'Jour 1',
-                'attr' => [
-                    'class' => 'form-control mode',
-                ],
-            ])
-            ->add('jour2', TextType::class, [
-                'label' => 'Jour 2',
-                'attr' => [
-                    'class' => 'form-control mode',
-                ],
-            ])
-            ->add('facteur', TextType::class, [
-                'label' => 'Facteur',
-                'attr' => [
-                    'class' => 'form-control mode',
-                ],
-            ])
-            ->add('typeannul', ChoiceType::class, [
-                'label' => 'Type d\'annulation',
-                'choices' => [
-                    'Taux' => 0,
-                    'Valeur' => 1,
-                ],
-                'expanded' => true,
-                'multiple' => false,
-                'attr' => [
-                    'class' => 'form-check mode',
-                ],
-            ])
             ->add('libelle', TextType::class, [
                 'label' => 'Libellé',
                 'attr' => [
                     'class' => 'form-control mode',
                 ],
             ])
-            ->add('bareme', TextType::class, [
-                'label' => 'Barème',
+            ->add('jour1', TextType::class, [
+                'label' => 'De :',
                 'attr' => [
                     'class' => 'form-control mode',
                 ],
             ])
+            ->add('jour2', TextType::class, [
+                'label' => 'A :',
+                'attr' => [
+                    'class' => 'form-control mode',
+                ],
+            ])
+            ->add('facteur', TextType::class, [
+                'label' => 'Valeur :',
+                'attr' => [
+                    'class' => 'form-control mode',
+                ],
+            ])
+            ->add('typeannul', ChoiceType::class, [
+                'label' => 'Type :',
+                'choices' => [
+                    'Taux' => 0,
+                    'Valeur' => 1,
+                ],
+                'expanded' => true,
+                'multiple' => false,
+                'label_attr' => [
+                    'class' => 'fw-bold mb-2',
+                ],
+                'choice_attr' => function($choice, $key, $value) {
+                    return ['class' => 'form-check-input'];
+                },
+            ])
+
             ->add('montantmini', TextType::class, [
-                'label' => 'Montant minimum',
+                'label' => 'Mnt mini :',
                 'attr' => [
                     'class' => 'form-control mode',
                 ],
             ])
             ->add('applicable', ChoiceType::class, [
-                'label' => 'À appliquer',
+                'label' => 'À appliquer :',
                 'choices' => [
                     'Par personne' => 0,
                     'Par dossier' => 1,
