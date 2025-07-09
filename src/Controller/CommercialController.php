@@ -21,25 +21,13 @@ class CommercialController extends AbstractController
         CommercialRepository $commercialRepository,
         EntityManagerInterface $entityManager
     ): Response {
-        // Liste des commerciaux
+        // === Liste des commerciaux ===
         $commercials = $commercialRepository->findAll();
     
-        // === Formulaire d'ajout ===
-        $newCommercial = new Commercial();
-        $addForm = $this->createForm(CommercialType::class, $newCommercial);
-        $addForm->handleRequest($request);
-    
-        if ($addForm->isSubmitted() && $addForm->isValid() && !$request->query->get('edit')) {
-            $entityManager->persist($newCommercial);
-            $entityManager->flush();
-            $this->addFlash('success', 'Le commercial a été ajouté avec succès.');
-            return $this->redirectToRoute('app_commercial_index');
-        }
-    
-        // === Formulaire de modification ===
+        // === Gestion de l'édition ===
         $editId = $request->query->get('edit');
-        $commercialToEdit = null;
         $editForm = null;
+        $commercialToEdit = null;
     
         if ($editId) {
             $commercialToEdit = $commercialRepository->find($editId);
@@ -53,6 +41,21 @@ class CommercialController extends AbstractController
                     $this->addFlash('success', 'Le commercial a été modifié avec succès.');
                     return $this->redirectToRoute('app_commercial_index');
                 }
+            }
+        }
+    
+        // === Gestion de l'ajout ===
+        $newCommercial = new Commercial();
+        $addForm = $this->createForm(CommercialType::class, $newCommercial);
+    
+        if (!$editId) {
+            $addForm->handleRequest($request);
+    
+            if ($addForm->isSubmitted() && $addForm->isValid()) {
+                $entityManager->persist($newCommercial);
+                $entityManager->flush();
+                $this->addFlash('success', 'Le commercial a été ajouté avec succès.');
+                return $this->redirectToRoute('app_commercial_index');
             }
         }
     
