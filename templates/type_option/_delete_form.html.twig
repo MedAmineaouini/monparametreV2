@@ -1,0 +1,12 @@
+<form method="post"
+      action="{{ path('app_type_option_delete', {'seqTypeOption': type_option.seqTypeOption}) }}"
+      class="delete-form">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ type_option.seqTypeOption) }}">
+    <button type="button"
+            class="dropdown-item text-danger border-0 bg-transparent w-100 text-start delete-btn"
+            data-entity-type="cette option"
+            data-confirm-message="Êtes-vous sûr de vouloir supprimer cette option ? Cette action est irréversible."
+            data-success-message="L'option a été supprimée avec succès">
+        <i class="icon-base bx bx-trash me-1"></i> Supprimer
+    </button>
+</form>

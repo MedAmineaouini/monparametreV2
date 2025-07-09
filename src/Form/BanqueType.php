@@ -14,6 +14,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Doctrine\ORM\EntityRepository;
 
 class BanqueType extends AbstractType
@@ -22,13 +23,13 @@ class BanqueType extends AbstractType
     {
         $builder
             ->add('LIBBANQUE', TextType::class, [
-                'label' => 'Nom de la banque'
+                'label' => 'Banque'
             ])
             ->add('CPTBANQUE', TextType::class, [
-                'label' => 'Compte bancaire'
+                'label' => 'N° de compte'
             ])
             ->add('SWFBANQUE', TextType::class, [
-                'label' => 'Code SWIFT'
+                'label' => 'Code Swift'
             ])
             ->add('ADRBANQUE', TextType::class, [
                 'label' => 'Adresse'
@@ -47,29 +48,32 @@ class BanqueType extends AbstractType
                 'label' => 'Email',
                 'required' => false,
             ])
-            ->add('OBSBANQUE', TextType::class, [
+            ->add('OBSBANQUE', TextareaType::class, [  
                 'label' => 'Observations',
-                'required' => false,
+                'required' => false, 
+                'attr' => [
+                    'rows' => 5, 
+                ],
             ])
-            ->add('numterminal', TextType::class, [
-                'label' => 'Numéro terminal'
-            ])
-            ->add('Journal1', TextType::class, [
-                'label' => 'Journal 1',
-                'required' => false,
-            ])
-            ->add('Journal2', TextType::class, [
-                'label' => 'Journal 2',
-                'required' => false,
-            ])
-            ->add('compte1', TextType::class, [
-                'label' => 'Compte 1',
-                'required' => false,
-            ])
-            ->add('compte2', TextType::class, [
-                'label' => 'Compte 2',
-                'required' => false,
-            ])
+            // ->add('numterminal', TextType::class, [
+            //     'label' => 'Numéro terminal'
+            // ])
+            // ->add('Journal1', TextType::class, [
+            //     'label' => 'Journal 1',
+            //     'required' => false,
+            // ])
+            // ->add('Journal2', TextType::class, [
+            //     'label' => 'Journal 2',
+            //     'required' => false,
+            // ])
+            // ->add('compte1', TextType::class, [
+            //     'label' => 'Compte 1',
+            //     'required' => false,
+            // ])
+            // ->add('compte2', TextType::class, [
+            //     'label' => 'Compte 2',
+            //     'required' => false,
+            // ])
             ->add('VILBANQUE', EntityType::class, [
                 'class' => Ville::class,
                 'choice_label' => 'libville',

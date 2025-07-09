@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TypeOption{% endblock %}
+
+{% block body %}
+    <h1>TypeOption</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>SeqTypeOption</th>
+                <td>{{ type_option.seqTypeOption }}</td>
+            </tr>
+            <tr>
+                <th>CodeOption</th>
+                <td>{{ type_option.codeOption }}</td>
+            </tr>
+            <tr>
+                <th>NomOption</th>
+                <td>{{ type_option.nomOption }}</td>
+            </tr>
+            <tr>
+                <th>Autoriser</th>
+                <td>{{ type_option.autoriser }}</td>
+            </tr>
+            <tr>
+                <th>Ordre</th>
+                <td>{{ type_option.ordre }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_type_option_index') }}">back to list</a>
+
+    <a href="{{ path('app_type_option_edit', {'seqTypeOption': type_option.seqTypeOption}) }}">edit</a>
+
+    {{ include('type_option/_delete_form.html.twig') }}
+{% endblock %}

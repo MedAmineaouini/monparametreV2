@@ -26,9 +26,8 @@
                 <thead>
                     <tr>
                         <th>#</th>
+                        <th>Code</th>
                         <th>Libellé</th>
-                        <th>Type de Cure</th>
-                        <th>Ancien</th>
                         <th>Archivé</th>
                         <th>Actions</th>
                     </tr>
@@ -36,10 +35,10 @@
                 <tbody>
                     {% for base_cure in base_cures %}
                         <tr>
+                            {# On affiche maintenant seqcure #}
                             <td>{{ base_cure.codelibcure }}</td>
+                            <td>{{ base_cure.seqcure }}</td>
                             <td>{{ base_cure.libelleCure }}</td>
-                            <td>{{ base_cure.typecure }}</td>
-                            <td>{{ base_cure.ancien }}</td>
                             <td>
                                 {% if base_cure.archiver %}
                                     <span class="text-success">Oui</span>
@@ -58,8 +57,9 @@
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end">
                                         <li>
+                                            {# On passe seqcure à la route #}
                                             <a class="dropdown-item"
-                                               href="{{ path('app_base_cure_index', {'edit': base_cure.codelibcure}) }}">
+                                               href="{{ path('app_base_cure_index', {'edit': base_cure.seqcure}) }}">
                                                 <i class="bx bx-edit-alt me-2"></i>Consulter | Modifier
                                             </a>
                                         </li>
@@ -108,7 +108,7 @@
         </div>
         <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
             {{ form_start(editForm, {
-                'action': path('app_base_cure_index', {'edit': baseCureToEdit.codelibcure}),
+                'action': path('app_base_cure_index', {'edit': baseCureToEdit.seqcure}),
                 'attr': {'id': 'edit-form'}
             }) }}
             {{ form_widget(editForm) }}
@@ -117,8 +117,7 @@
                 <i class="bx bx-save me-2"></i>Enregistrer
             </button>
             <a href="{{ path('app_base_cure_index') }}" class="btn btn-outline-danger w-100 px-4">
-                <i class="bx bx-x me-2"></i>Annuler
-            </a>
+                <i class="bx bx-x me-2"></i>Annuler</a>
             {{ form_end(editForm) }}
         </div>
     </div>

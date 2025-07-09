@@ -1,0 +1,12 @@
+<form method="post"
+      action="{{ path('app_type_promo_delete', {'seqTypePromo': id}) }}"
+      class="delete-form">
+  <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ id) }}">
+
+  <button type="button"
+          class="dropdown-item text-danger border-0 bg-transparent w-100 text-start delete-btn"
+          data-confirm-message="Êtes-vous sûr de vouloir supprimer ce type promo ?"
+          data-success-message="Le type promo a été supprimé avec succès.">
+    <i class="bx bx-trash me-1"></i> Supprimer
+  </button>
+</form>

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit PensionOrchestra{% endblock %}
+
+{% block body %}
+    <h1>Edit PensionOrchestra</h1>
+
+    {{ include('pension_orchestra/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_pension_orchestra_index') }}">back to list</a>
+
+    {{ include('pension_orchestra/_delete_form.html.twig') }}
+{% endblock %}

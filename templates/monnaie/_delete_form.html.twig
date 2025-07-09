@@ -4,8 +4,7 @@
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ monnaie.seqmonnaie) }}">
     <button type="button"
             class="dropdown-item text-danger border-0 bg-transparent w-100 text-start delete-btn"
-            data-entity-type="cette monnaie"
-            data-confirm-message="Êtes-vous sûr de vouloir supprimer cette monnaie ? Cette action est irréversible."
+            data-confirm-message="Êtes-vous sûr de vouloir supprimer cette monnaie ?"
             data-success-message="La monnaie a été supprimée avec succès">
         <i class="icon-base bx bx-trash me-1"></i> Supprimer
     </button>

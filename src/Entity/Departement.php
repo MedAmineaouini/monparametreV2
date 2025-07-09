@@ -35,13 +35,8 @@ class Departement
     )]
     private string $libDepartement = '';
 
-    #[ORM\Column(name: 'CODECOMMERCIAL', type: 'string', length: 4)]
-    #[Assert\NotBlank(message: 'Le code commercial est obligatoire')]
-    #[Assert\Length(
-        max: 4,
-        maxMessage: 'Le code commercial ne doit pas dépasser 4 caractères'
-    )]
-    private string $codeCommercial = '';
+    #[ORM\Column(name: 'CODECOMMERCIAL', type: 'string', length: 4, nullable: true)]
+    private ?string $codeCommercial = null;
 
     #[ORM\ManyToOne(targetEntity: Region::class, inversedBy: 'departements')]
     #[ORM\JoinColumn(name: 'SEQREGION', referencedColumnName: 'SEQREGION', nullable: false)]
@@ -81,12 +76,12 @@ class Departement
         return $this;
     }
 
-    public function getCodeCommercial(): string
+    public function getCodeCommercial(): ?string
     {
         return $this->codeCommercial;
     }
 
-    public function setCodeCommercial(string $codeCommercial): self
+    public function setCodeCommercial(?string $codeCommercial): self
     {
         $this->codeCommercial = $codeCommercial;
         return $this;
@@ -111,6 +106,14 @@ class Departement
     public function setCommercial(?Commercial $commercial): self
     {
         $this->commercial = $commercial;
+        
+        // Synchroniser automatiquement le code commercial
+        if ($commercial) {
+            $this->codeCommercial = $commercial->getCodeCommercial();
+        } else {
+            $this->codeCommercial = null;
+        }
+        
         return $this;
     }
 
