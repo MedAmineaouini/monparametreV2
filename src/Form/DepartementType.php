@@ -80,7 +80,7 @@ class DepartementType extends AbstractType
                 'mapped' => false,
                 'required' => false,
                 'attr' => [
-                    'readonly' => true,
+                    'readonly' => false,
                     'class' => 'form-control commercial-name-input',
                     'id' => 'commercialInput',
                     'placeholder' => 'Saisissez un code commercial'
