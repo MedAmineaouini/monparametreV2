@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
 #[ORM\Table(name: "COMMERCIAL")]
+#[UniqueEntity('codeCommercial', message: 'Cet commercial est  existe déjà')]
 class Commercial
 {
     #[ORM\Id]

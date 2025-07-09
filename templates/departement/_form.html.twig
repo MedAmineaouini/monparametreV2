@@ -3,25 +3,27 @@
 
     <div class="row g-3 mb-3">
         <div class="col-md-12">
-            {{ form_label(form.code_departement) }} <strong class="text-danger">*</strong>
+            {{ form_label(form.code_departement, 'Code département', {'label_attr': {'class': 'form-label fw-semibold '}}) }}
+            <strong class="text-danger">*</strong>
             {{ form_widget(form.code_departement, {'attr': {'class': 'form-control'}}) }}
             {{ form_errors(form.code_departement) }}
         </div>
 
         <div class="col-md-12">
-            {{ form_label(form.lib_departement) }} <strong class="text-danger">*</strong>
+            {{ form_label(form.lib_departement, 'Département', {'label_attr': {'class': 'form-label fw-semibold '}}) }}
+            <strong class="text-danger">*</strong>
             {{ form_widget(form.lib_departement, {'attr': {'class': 'form-control'}}) }}
             {{ form_errors(form.lib_departement) }}
         </div>
 
         <div class="col-md-12">
-            {{ form_label(form.region) }}
+            {{ form_label(form.region, 'Région', {'label_attr': {'class': 'form-label fw-semibold '}}) }}
             {{ form_widget(form.region, {'attr': {'class': 'form-select'}}) }}
             {{ form_errors(form.region) }}
         </div>
 
         <div class="col-md-12">
-            {{ form_label(form.commercialCode) }}
+            {{ form_label(form.commercialCode, 'Code commercial', {'label_attr': {'class': 'form-label fw-semibold '}}) }}
             {{ form_widget(form.commercialCode, {
                 'attr': {
                     'class': 'form-control commercial-code-input',
@@ -33,7 +35,7 @@
         </div>
 
         <div class="col-md-12">
-            {{ form_label(form.commercial) }}
+            {{ form_label(form.commercial, 'Commercial', {'label_attr': {'class': 'form-label fw-semibold '}}) }}
             {{ form_widget(form.commercial, {
                 'attr': {
                     'class': 'form-control commercial-name-input',

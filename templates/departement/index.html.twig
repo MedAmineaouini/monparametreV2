@@ -7,17 +7,17 @@
     <div class="card shadow rounded-3 border-0">
         <div class="card-header text-white">
             <div class="row align-items-center">
-                <div class="col-12 col-md-8 mb-2 mb-md-0">
+                <div class="col-12 col-md-10 mb-2 mb-md-0">
                     <h5 class="mb-0 text-center text-md-start">📋 Gestion des départements</h5>
                 </div>
-                <div class="col-12 col-md-4 d-flex flex-column flex-md-row justify-content-md-end gap-2">
+                <div class="col-12 col-md-2 d-flex flex-column flex-md-row justify-content-md-end gap-2">
                     <a class="btn btn-success w-100 w-md-auto" data-bs-toggle="offcanvas" 
                        data-bs-target="#offcanvasAddDepartement">
                         <i class="bx bx-plus me-2"></i>Ajouter un département
                     </a>
-                    <a href="{{ path('app_departement_export_pdf') }}" class="btn btn-danger w-100 w-md-auto">
-                        <i class="bx bxs-file-pdf me-2"></i>Export PDF
-                    </a>
+{#                    <a href="{{ path('app_departement_export_pdf') }}" class="btn btn-danger w-100 w-md-auto">#}
+{#                        <i class="bx bxs-file-pdf me-2"></i>Export PDF#}
+{#                    </a>#}
                 </div>
             </div>
         </div>
@@ -98,16 +98,20 @@
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
         </div>
         <div class="offcanvas-body p-4">
-            {{ form_start(form, {'attr': {'id': 'add-form'}}) }}
-                {{ form_widget(form) }}
-                <hr>
-                <button type="submit" class="btn btn-primary w-100 mb-2">
-                    <i class="bx bx-save me-2"></i>Enregistrer
-                </button>
-                <button type="button" class="btn btn-outline-secondary w-100" data-bs-dismiss="offcanvas">
-                    <i class="bx bx-x me-2"></i>Annuler
-                </button>
-            {{ form_end(form) }}
+{#            {{ form_start(form, {'attr': {'id': 'add-form'}}) }}#}
+{#                {{ form_widget(form) }}#}
+{#                <hr>#}
+{#                <button type="submit" class="btn btn-primary w-100 mb-2">#}
+{#                    <i class="bx bx-save me-2"></i>Enregistrer#}
+{#                </button>#}
+{#                <button type="button" class="btn btn-outline-secondary w-100" data-bs-dismiss="offcanvas">#}
+{#                    <i class="bx bx-x me-2"></i>Annuler#}
+{#                </button>#}
+{#            {{ form_end(form) }}#}
+            {{ include('departement/_form.html.twig', {
+                form: form,
+                button_label: 'Enregistrer'
+            }) }}
         </div>
     </div>
 
