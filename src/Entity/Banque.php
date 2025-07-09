@@ -34,21 +34,21 @@ class Banque
     #[ORM\Column(name: 'CPBANQUE', type: 'string', length: 10, nullable: true)]
     private ?string $CPBANQUE = null;
 
-    #[ORM\Column(name: 'ADRESSE', type: 'string', length: 100)]
-    private string $adresse = '';
+//    #[ORM\Column(name: 'ADRESSE', type: 'string', length: 100)]
+//    private string $adresse = '';
+//
+//    #[ORM\Column(name: 'CODEPOSTAL', type: 'string', length: 10)]
+//    private string $codePostal = '';
+//
+//    #[ORM\Column(name: 'TELEPHONE', type: 'string', length: 20)]
+//    private string $telephone = '';
+//
+//    #[ORM\Column(name: 'EMAIL', type: 'string', length: 100)]
+//    #[Assert\Email(message: "L'email n'est pas valide")]
+//    private string $email = '';
 
-    #[ORM\Column(name: 'CODEPOSTAL', type: 'string', length: 10)]
-    private string $codePostal = '';
-
-    #[ORM\Column(name: 'TELEPHONE', type: 'string', length: 20)]
-    private string $telephone = '';
-
-    #[ORM\Column(name: 'EMAIL', type: 'string', length: 100)]
-    #[Assert\Email(message: "L'email n'est pas valide")]
-    private string $email = '';
-
-    #[ORM\Column(name: 'ACTIVE', type: 'boolean', options: ['default' => true])]
-    private bool $active = true;
+//    #[ORM\Column(name: 'ACTIVE', type: 'boolean', options: ['default' => true])]
+//    private bool $active = true;
 
     #[ORM\ManyToOne(targetEntity: Ville::class)]
     #[ORM\JoinColumn(name: 'VILBANQUE', referencedColumnName: 'SEQVILLE', nullable: false)]

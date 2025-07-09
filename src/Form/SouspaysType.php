@@ -7,6 +7,7 @@ use App\Entity\Souspays;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,7 +16,13 @@ class SouspaysType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('libsouspays')
+            ->add('libsouspays', TextType::class, [
+                'label' => 'Libellé',
+                'attr' => [
+                    'class' => 'form-control mode',
+                    'placeholder' => 'Libellé ...',
+                ],
+            ])
             ->add('tun', NumberType::class, [
                 'label' => 'Tun',
                 'required' => false,
