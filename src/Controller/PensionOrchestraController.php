@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/pension/orchestra')]
+#[Route('/pension_orchestra')]
 class PensionOrchestraController extends AbstractController
 {
     #[Route('/', name: 'app_pension_orchestra_index', methods: ['GET'])]
