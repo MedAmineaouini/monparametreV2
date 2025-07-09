@@ -79,14 +79,50 @@ class TypeprodController extends AbstractController
     #[Route('/{SEQTYPEPROD}/delete', name: 'app_typeprod_delete', methods: ['POST'])]
     public function delete(Request $request, Typeprod $typeprod, EntityManagerInterface $em): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$typeprod->getSEQTYPEPROD(), $request->request->get('_token'))) {
+        if (!$this->isCsrfTokenValid('delete' . $typeprod->getSEQTYPEPROD(), $request->request->get('_token'))) {
+            if ($request->isXmlHttpRequest()) {
+                return $this->json([
+                    'success' => false,
+                    'message' => 'Jeton CSRF invalide.',
+                ], Response::HTTP_BAD_REQUEST);
+            }
+    
+            $this->addFlash('error', 'Jeton CSRF invalide.');
+            return $this->redirectToRoute('app_typeprod_index');
+        }
+    
+        try {
             $em->remove($typeprod);
             $em->flush();
+    
+            if ($request->isXmlHttpRequest()) {
+                return $this->json([
+                    'success' => true,
+                    'message' => 'Type de produit supprimé avec succès.',
+                    'redirect' => $this->generateUrl('app_typeprod_index'),
+                ]);
+            }
+    
             $this->addFlash('success', 'Type de produit supprimé avec succès.');
-        } else {
-            $this->addFlash('error', 'Jeton CSRF invalide.');
+        } catch (\Exception $e) {
+            $errorData = [
+                'success' => false,
+                'message' => 'Erreur lors de la suppression du type de produit.',
+                'details' => $this->getParameter('kernel.debug') ? [
+                    'exception' => get_class($e),
+                    'message' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                ] : null,
+            ];
+    
+            if ($request->isXmlHttpRequest()) {
+                return $this->json($errorData, Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+    
+            $this->addFlash('error', $errorData['message']);
         }
-
+    
         return $this->redirectToRoute('app_typeprod_index');
     }
+    
 }

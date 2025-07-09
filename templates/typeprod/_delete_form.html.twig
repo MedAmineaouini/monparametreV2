@@ -4,7 +4,8 @@
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ typeprod.SEQTYPEPROD) }}">
     <button type="button"
             class="dropdown-item text-danger border-0 bg-transparent w-100 text-start delete-btn"
-            data-confirm-message="Êtes-vous sûr de vouloir supprimer ce type de produit ?"
+            data-entity-type="type de produit"
+            data-confirm-message="Êtes-vous sûr de vouloir supprimer ce type de produit ? Cette action est irréversible."
             data-success-message="Le type de produit a été supprimé avec succès">
         <i class="icon-base bx bx-trash me-1"></i> Supprimer
     </button>
