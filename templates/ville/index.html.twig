@@ -50,7 +50,7 @@
                       <ul class="dropdown-menu dropdown-menu-end">
                         <li>
                           <a class="dropdown-item" href="{{ path('app_ville_index', {'edit': ville.seqville}) }}">
-                            <i class="bx bx-edit-alt me-2"></i>Modifier
+                            <i class="bx bx-edit-alt me-2"></i>Consulter | Modifier
                           </a>
                         </li>
                         <li>
@@ -90,7 +90,7 @@
   {% if editForm is defined and editForm %}
     <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasEditVille" data-bs-backdrop="static" data-bs-keyboard="false" style="visibility: visible;" aria-labelledby="offcanvasEditVilleLabel">
       <div class="offcanvas-header border-bottom">
-        <h5 id="offcanvasEditVilleLabel" class="offcanvas-title">Modifier la ville</h5>
+        <h5 id="offcanvasEditVilleLabel" class="offcanvas-title">Consulter | Modifier la ville</h5>
         <a href="{{ path('app_ville_index') }}" class="btn-close text-reset" aria-label="Fermer"></a>
       </div>
       <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">

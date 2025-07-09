@@ -49,7 +49,7 @@
                   </button>
                   <div class="dropdown-menu">
                     <a class="dropdown-item" href="{{ path('app_utilisateur_index', {'edit': utilisateur.SEQUTIL}) }}">
-                      <i class="icon-base bx bx-edit-alt me-1"></i> Modifier
+                      <i class="icon-base bx bx-edit-alt me-1"></i> Consulter | Modifier
                     </a>
                     {{ include('utilisateur/_delete_form.html.twig', {'utilisateur': utilisateur}) }}
                   </div>
@@ -143,7 +143,7 @@
 {% if editForm is defined and editForm %}
   <div class="offcanvas offcanvas-end show" id="offcanvasEditUtilisateur" style="visibility: visible;">
     <div class="offcanvas-header border-bottom">
-      <h5 class="offcanvas-title">Modifier l'utilisateur</h5>
+      <h5 class="offcanvas-title">Consulter | Modifier l'utilisateur</h5>
       <a href="{{ path('app_utilisateur_index') }}" class="btn-close text-reset"></a>
     </div>
     <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">

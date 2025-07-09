@@ -12,40 +12,53 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Dompdf\Dompdf;
 use Dompdf\Options;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 #[Route('/assur')]
 class AssurController extends AbstractController
 {
-    #[Route('/', name: 'app_assur_index', methods: ['GET'])]
-    public function index(EntityManagerInterface $entityManager): Response
+    #[Route('/', name: 'app_assur_index', methods: ['GET', 'POST'])]
+    public function index(Request $request, AssurRepository $assurRepository, EntityManagerInterface $em): Response
     {
-        $assurs = $entityManager
-            ->getRepository(Assur::class)
-            ->findAll();
+        $assurs = $assurRepository->findAll();
+
+        $editId = $request->query->get('edit');
+        $editForm = null;
+        $assurToEdit = null;
+
+        // Formulaire de modification (édition)
+        if ($editId) {
+            $assurToEdit = $assurRepository->find($editId);
+
+            if ($assurToEdit) {
+                $editForm = $this->createForm(AssurType::class, $assurToEdit);
+                $editForm->handleRequest($request);
+
+                if ($editForm->isSubmitted() && $editForm->isValid()) {
+                    $em->flush();
+                    return $this->redirectToRoute('app_assur_index');
+                }
+            }
+        }
+
+        // Formulaire d’ajout (uniquement si on n’est pas en mode édition)
+        $form = null;
+        if (!$editId) {
+            $assur = new Assur();
+            $form = $this->createForm(AssurType::class, $assur);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em->persist($assur);
+                $em->flush();
+                return $this->redirectToRoute('app_assur_index');
+            }
+        }
 
         return $this->render('assur/index.html.twig', [
             'assurs' => $assurs,
-        ]);
-    }
-
-    #[Route('/new', name: 'app_assur_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $assur = new Assur();
-        $form = $this->createForm(AssurType::class, $assur);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($assur);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_assur_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('assur/new.html.twig', [
-            'assur' => $assur,
-            'form' => $form,
+            'form' => $form ? $form->createView() : null,
+            'editForm' => $editForm ? $editForm->createView() : null,
+            'assurToEdit' => $assurToEdit,
         ]);
     }
 
@@ -57,62 +70,73 @@ class AssurController extends AbstractController
         ]);
     }
 
-    #[Route('/{seqassur}/edit', name: 'app_assur_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Assur $assur, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(AssurType::class, $assur);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_assur_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('assur/edit.html.twig', [
-            'assur' => $assur,
-            'form' => $form,
-        ]);
-    }
-
     #[Route('/{seqassur}', name: 'app_assur_delete', methods: ['POST'])]
-    public function delete(Request $request, Assur $assur, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Assur $assur, EntityManagerInterface $em): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$assur->getSeqassur(), $request->request->get('_token'))) {
-            $entityManager->remove($assur);
-            $entityManager->flush();
+        if (!$this->isCsrfTokenValid('delete' . $assur->getSeqassur(), $request->request->get('_token'))) {
+            if ($request->isXmlHttpRequest()) {
+                return $this->json([
+                    'success' => false,
+                    'message' => 'Token CSRF invalide',
+                ], Response::HTTP_BAD_REQUEST);
+            }
+            return $this->redirectToRoute('app_assur_index');
         }
 
-        return $this->redirectToRoute('app_assur_index', [], Response::HTTP_SEE_OTHER);
+        try {
+            $em->remove($assur);
+            $em->flush();
+
+            if ($request->isXmlHttpRequest()) {
+                return $this->json([
+                    'success' => true,
+                    'message' => 'Assurance supprimée avec succès.',
+                    'redirect' => $this->generateUrl('app_assur_index')
+                ]);
+            }
+
+            $this->addFlash('success', 'L\'assurance a été supprimée avec succès.');
+        } catch (\Exception $e) {
+            $errorData = [
+                'success' => false,
+                'message' => 'Erreur lors de la suppression de l\'assurance.',
+                'details' => $this->getParameter('kernel.debug') ? [
+                    'exception' => get_class($e),
+                    'message' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                ] : null,
+            ];
+
+            if ($request->isXmlHttpRequest()) {
+                return $this->json($errorData, Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
+            $this->addFlash('error', $errorData['message']);
+        }
+
+        return $this->redirectToRoute('app_assur_index');
     }
 
-    #[Route('/assur/export/pdf', name: 'app_assur_export_pdf')]
+    #[Route('/export/pdf', name: 'app_assur_export_pdf', methods: ['GET'])]
     public function exportPdf(AssurRepository $assurRepository): Response
     {
-        // 1. Récupération des données
         $assurs = $assurRepository->findAll();
 
-        // 2. Générer le HTML à partir d'un template
-        $html = $this->renderView('assur/pdf.html.twig', [
+        $html = $this->renderView('assur/export_pdf.html.twig', [
             'assurs' => $assurs,
+            'title' => 'Liste des assurances'
         ]);
 
-        // 3. Configuration de Dompdf
         $options = new Options();
         $options->set('defaultFont', 'Arial');
         $dompdf = new Dompdf($options);
         $dompdf->loadHtml($html);
-        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->setPaper('A4', 'landscape');
         $dompdf->render();
 
-        // 4. Télécharger le fichier PDF
-        return new Response(
-            $dompdf->output(),
-            200,
-            [
-                'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'attachment; filename="assurances.pdf"',
-            ]
-        );
+        return new Response($dompdf->output(), 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename="assurances.pdf"',
+        ]);
     }
 }

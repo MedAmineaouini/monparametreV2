@@ -50,7 +50,7 @@
                                     <ul class="dropdown-menu dropdown-menu-end">
                                         <li>
                                             <a class="dropdown-item" href="{{ path('app_type_option_index', {'edit': type_option.seqTypeOption}) }}">
-                                                <i class="bx bx-edit-alt me-2"></i>Consulter | Modifier
+                                                <i class="bx bx-edit-alt me-2"></i>Consulter | Consulter | Modifier
                                             </a>
                                         </li>
                                         <li>
@@ -94,7 +94,7 @@
 {% if editForm is defined and editForm %}
     <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasEditTypeOption" data-bs-backdrop="static" data-bs-keyboard="false" style="visibility: visible;" aria-labelledby="offcanvasEditTypeOptionLabel">
         <div class="offcanvas-header border-bottom">
-            <h5 id="offcanvasEditTypeOptionLabel" class="offcanvas-title">Modifier le Type d'option</h5>
+            <h5 id="offcanvasEditTypeOptionLabel" class="offcanvas-title">Consulter | Modifier le Type d'option</h5>
             <a href="{{ path('app_type_option_index') }}" class="btn-close text-reset" aria-label="Fermer"></a>
         </div>
         <div class="offcanvas-body p-4">

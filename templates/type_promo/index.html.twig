@@ -33,7 +33,7 @@
                             <ul class="dropdown-menu">
                                 <li>
                                     <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#editModal{{ promo.seqTypePromo }}">
-                                        <i class="bx bx-edit-alt me-1"></i> Modifier
+                                        <i class="bx bx-edit-alt me-1"></i> Consulter | Modifier
                                     </a>
                                     {{ include('type_promo/_delete_form.html.twig', { id: promo.seqTypePromo }) }}
                                 </li>
@@ -48,7 +48,7 @@
                         <div class="modal-content">
                             {{ form_start(forms_edit[promo.seqTypePromo]) }}
                             <div class="modal-header">
-                                <h5 class="modal-title">Modifier Type Promo</h5>
+                                <h5 class="modal-title">Consulter | Modifier Type Promo</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
                             <div class="modal-body">

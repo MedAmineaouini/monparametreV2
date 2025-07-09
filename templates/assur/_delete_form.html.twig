@@ -1,20 +1,12 @@
-
-{#<form method="post"#}
-{#      action="{{ path('app_assur_delete', {'seqassur': assur.seqassur})  }}"#}
-{#      onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');"#}
-{#      style="display: inline;">#}
-{#    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ assur.seqassur) }}">#}
-{#    <button type="submit" class="dropdown-item text-danger border-0 bg-transparent w-100 text-start">#}
-{#        <i class="icon-base bx bx-trash me-1"></i> Supprimer#}
-{#    </button>#}
-{#</form>#}
 <form method="post"
       action="{{ path('app_assur_delete', {'seqassur': assur.seqassur}) }}"
-      class="assur-delete-form"
-      data-confirm="Êtes-vous sûr de vouloir supprimer cet Assurance ?"
-      style="display: inline;">
+      class="assur-delete-form">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ assur.seqassur) }}">
-    <button type="submit" class="dropdown-item text-danger border-0 bg-transparent w-100 text-start">
+    <button type="button"
+            class="dropdown-item text-danger border-0 bg-transparent w-100 text-start delete-btn"
+            data-entity-type="cette assurance"
+            data-confirm-message="Êtes-vous sûr de vouloir supprimer cette assurance ? Cette action est irréversible."
+            data-success-message="L'assurance a été supprimée avec succès.">
         <i class="icon-base bx bx-trash me-1"></i> Supprimer
     </button>
 </form>
