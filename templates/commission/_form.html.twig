@@ -1,0 +1,148 @@
+{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+    <div class="col-md-12 card">
+        <div class="box box-info">
+            <div class="card-header text-white">
+            </div>
+            <div class="card-body">
+                <table class="tg table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th class="tg-ce7t" style="background-color:#efefef" colspan="4" style="width: 30%;">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Catégorie</label>
+                                    <div class="col-md-4" style="background-color:white">
+                                        {{ form_widget(form.categorie) }}
+                                    </div>
+                                </div>    
+                            </th>
+                            <th class="tg-ce7t" style="background-color:#efefef" colspan="3"><label class="col-sm-12 control-label" style="text-align: center; display: flex
+; white-space: nowrap;">TN1</label></th>
+                            <th class="tg-ce7t" style="background-color:#efefef" colspan="3"><label class="col-sm-12 control-label" style="text-align: center; display: flex
+; white-space: nowrap;">Ô VOYAGES</label></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background-color:#efefef">
+                            <td class="tg-gk2d" colspan="2"></td>
+                            <td class="tg-ce7t" colspan="2"><label class="col-sm-8 control-label" style="text-align: left; display: flex
+; white-space: nowrap;">Type de commission</label></td>
+                            <td class="tg-gk2d"><label class="col-sm-12 control-label" style="text-align: center; display: flex
+; white-space: nowrap;">France</label></td>
+                            <td class="tg-ce7t"><label class="col-sm-12 control-label" style="text-align: center; display: flex
+; white-space: nowrap;">CEE</label></td>
+                            <td class="tg-ce7t"><label class="col-sm-12 control-label" style="text-align: center; display: flex
+; white-space: nowrap;">Etranger</label></td>
+                            <td class="tg-ce7t"><label class="col-sm-12 control-label" style="text-align: center; display: flex
+; white-space: nowrap;">France</label></td>
+                            <td class="tg-ce7t"><label class="col-sm-12 control-label" style="text-align: center; display: flex
+; white-space: nowrap;">CEE</label></td>
+                            <td class="tg-ce7t"><label class="col-sm-12 control-label" style="text-align: center; display: flex
+; white-space: nowrap;">Etranger</label></td>
+                        </tr>
+                        
+                        {# Ligne Brochures #}
+                        <tr>
+                            <td class="tg-ua6j" style="background-color: #04adff;" colspan="2"><label class="col-sm-8 control-label" style="text-align: left; display: flex
+; white-space: nowrap;">Brochure</label></td>
+                            <td class="tg-od47" style="background-color: #04adff;" colspan="2"><label class="col-sm-8 control-label" style="text-align: left; display: flex
+; white-space: nowrap;">Brochures</label></td>
+                            {% for i in 1..6 %}
+                                <td class="tg-i21v">
+                                    <div class="col-md-12">
+                                        {{ form_widget(form['comm' ~ i]) }}
+                                    </div>
+                                </td>
+                            {% endfor %}
+                        </tr>
+                        
+                        {# Répétez le pattern pour chaque ligne #}
+                        <tr>
+                            <td class="tg-gk2d" style="background-color: #04adff;"  colspan="2"></td>
+                            <td class="tg-od47" style="background-color: #04adff;"  colspan="2"><label class="col-sm-8 control-label" style="text-align: left; display: flex
+; white-space: nowrap;">Brochure Promo</label></td>
+                            {% for i in 7..12 %}
+                                <td class="tg-i21v">
+                                    <div class="col-md-12">
+                                        {{ form_widget(form['comm' ~ i]) }}
+                                    </div>
+                                </td>
+                            {% endfor %}
+                        </tr>
+                        
+                        {# Continuez pour chaque ligne... #}
+                        {# Web #}
+                        <tr>
+                            <td class="tg-ltuk" style="background-color: #bbffff;" colspan="2"><label class="col-sm-2 control-label" style="text-align: left; display: flex
+; white-space: nowrap;">Web</label></td>
+                            <td class="tg-ltuk" style="background-color: #bbffff;" colspan="2"><label class="col-sm-2 control-label" style="text-align: left; display: flex
+; white-space: nowrap;">Web</label></td>
+                            {% for i in 13..18 %}
+                                <td class="tg-i21v">
+                                    <div class="col-md-12">
+                                        {{ form_widget(form['comm' ~ i]) }}
+                                    </div>
+                                </td>
+                            {% endfor %}
+                        </tr>
+                        
+                        {# Co production #}
+                        <tr>
+                            <td class="tg-ltuk" style="background-color: #bbffff;" colspan="2"><label class="col-sm-8 control-label" style="text-align: left; display: flex
+; white-space: nowrap;">Co production</label></td>
+                            <td class="tg-ltuk" style="background-color: #bbffff;" colspan="2"><label class="col-sm-8 control-label" style="text-align: left; display: flex
+; white-space: nowrap;">Co production</label></td>
+                            {% for i in 19..24 %}
+                                <td class="tg-i21v">
+                                    <div class="col-md-12">
+                                        {{ form_widget(form['comm' ~ i]) }}
+                                    </div>
+                                </td>
+                            {% endfor %}
+                        </tr>
+                        
+                        {# VF #}
+                        <tr>
+                            <td class="tg-l4he" style="background-color: #ff9bcd;"  colspan="2"><label class="col-sm-8 control-label" style="text-align: left; display: flex
+; white-space: nowrap;">VF</label></td>
+                            <td class="tg-l4he" style="background-color: #ff9bcd;" colspan="2"><label class="col-sm-8 control-label" style="text-align: left; display: flex
+; white-space: nowrap;">VF</label></td>
+                            {% for i in 25..30 %}
+                                <td class="tg-i21v">
+                                    <div class="col-md-12">
+                                        {{ form_widget(form['comm' ~ i]) }}
+                                    </div>
+                                </td>
+                            {% endfor %}
+                        </tr>
+                        
+                        {# OPN #}
+                        <tr>
+                            <td class="tg-9x9g" style="background-color: #ffff80;" colspan="2"><label class="col-sm-8 control-label" style="text-align: left; display: flex
+; white-space: nowrap;">OPN</label></td>
+                            <td class="tg-9x9g" style="background-color: #ffff80;" colspan="2"><label class="col-sm-8 control-label" style="text-align: left; display: flex
+; white-space: nowrap;">OPN</label></td>
+                            {% for i in 31..36 %}
+                                <td class="tg-i21v">
+                                    <div class="col-md-12">
+                                        {{ form_widget(form['comm' ~ i]) }}
+                                    </div>
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    </tbody>
+                </table>
+
+                  <!-- 🔹 Submit -->
+            <div class="form-group row justify-content-between mt-5 mb-5">
+                <div class="col-auto">
+                    <a href="{{ path('app_commission_index') }}" class="btn btn-secondary">Annuler</a>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                </div>
+            </div>
+            </div>
+           
+        </div>
+    </div>
+{{ form_end(form) }}

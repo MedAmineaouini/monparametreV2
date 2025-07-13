@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commission index{% endblock %}
+
+{% block body %}
+    <div class="flex-grow-1 container-p-y container-fluid">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title mb-0">📋 Liste des Commission</h5>
+        <div class="d-flex justify-content-end align-items-center row pt-4 gap-md-0 g-6">
+          <div class="col-md-4 d-flex justify-content-end gap-2">
+           <a href="{{ path('app_commission_new') }}" class="btn btn-success">
+                <i class="icon-base bx bx-plus me-2"></i> Ajouter une banque
+            </a>
+
+          </div>
+        </div>
+      </div>
+    <div class="card-body p-1 mb-5" style="font-size: 12px;overflow: overlay;">
+    <div class="table-responsive">
+        <table id="commission" class="tg table table-bordered table-striped table-hover dataTable no-footer" role="grid" aria-describedby="commission_info">
+            <thead>
+                <tr role="row" style="background-color:#efefef">
+                    <th class="tg-y698" rowspan="1" colspan="1"></th>
+                    <th class="tg-yj5y" colspan="18" rowspan="1"><span>TN1</span></th>
+                    <th class="tg-yj5y" colspan="18" rowspan="1"><span>Ô VOYAGES</span></th>
+                    <th class="tg-yj5y" rowspan="1" colspan="1"><span>Action</span></th>
+                </tr>
+                <tr role="row">
+                    <th class="tg-yj5y sorting_disabled" rowspan="1" colspan="1" style="background-color:#efefef"><span>Catégorie</span></th>
+                    <th class="tg-57ka" colspan="3" rowspan="1" style="background-color: #04adff;"><span>Brochure</span></th>
+                    <th class="tg-57ka" colspan="3" rowspan="1" style="background-color: #04adff;"><span>Brochure Promo</span></th>
+                    <th class="tg-p3j7" colspan="3" rowspan="1" style="background-color: #bbffff;"><span>Web</span></th>
+                    <th class="tg-p3j7" colspan="3" rowspan="1" style="background-color: #bbffff;"><span>Co production</span></th>
+                    <th class="tg-pswd" colspan="3" rowspan="1" style="background-color: #ff9bcd;" ><span>VF</span></th>
+                    <th class="tg-g38p" colspan="3" rowspan="1" style="background-color: #ffff80;"><span style="font-weight:bold;color:#000;">OPN</span></th>
+                    <th class="tg-57ka" colspan="3" rowspan="1" style="background-color: #04adff;"><span>Brochure</span></th>
+                    <th class="tg-57ka" colspan="3" rowspan="1" style="background-color: #04adff;"><span>Brochure Promo</span></th>
+                    <th class="tg-p3j7" colspan="3" rowspan="1" style="background-color: #bbffff;"><span>Web</span></th>
+                    <th class="tg-p3j7" colspan="3" rowspan="1" style="background-color: #bbffff;"><span>Co production</span></th>
+                    <th class="tg-pswd" colspan="3" rowspan="1" style="background-color: #ff9bcd;" ><span>VF</span></th>
+                    <th class="tg-yzvp" colspan="3" rowspan="1" style="background-color: #ffff80;"><span>OPN</span></th>
+                    <th class="tg-y698 sorting_disabled" rowspan="1" colspan="1" style="background-color:#efefef"></th>
+                </tr>
+            </thead>
+            <tbody style="font-size: x-small;">
+                {% for commission in commissions %}
+                <tr class="tr-commission-{{ commission.id }}">
+                    <td class="td-categorie">{{ commission.categorie }}</td>
+                    {% for i in 1..36 %}
+                    <td class="td-comm{{ i }}">{{ attribute(commission, 'comm' ~ i) }}</td>
+                    {% endfor %}
+                    <td class="text-center td-actions">
+                        <div class="dropdown">
+                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Actions">
+                        <i class="bx bx-dots-vertical-rounded"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" href="{{ path('app_commission_edit', {'id': commission.id}) }}">
+                            <i class="bx bx-edit-alt me-2"></i>Consulter | Modifier
+                            </a>
+                        </li>
+                        <li>
+                            {{ include('commission/_delete_form.html.twig', {
+                            commission: commission,
+                            btn_class: 'dropdown-item'
+                            }) }}
+                        </li>
+                        </ul>
+                    </div>
+                    </td>
+                </tr>
+                {% else %}
+                <tr class="odd">
+                    <td valign="top" colspan="38" class="dataTables_empty">Aucune donnée disponible dans le tableau</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+
+
+  
+{% endblock %}
