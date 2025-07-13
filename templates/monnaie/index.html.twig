@@ -83,7 +83,7 @@
         </div>
     </div>
 
-    {# Offcanvas ajout uniquement si on n'est pas en mode édition #}
+    {# Offcanvas ajout #}
     {% if form is defined and form %}
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddMonnaie" aria-labelledby="offcanvasAddMonnaieLabel" data-bs-backdrop="static" data-bs-keyboard="false">
             <div class="offcanvas-header border-bottom">
@@ -99,7 +99,7 @@
         </div>
     {% endif %}
 
-    {# Offcanvas édition visible si editForm est défini #}
+    {# Offcanvas édition - Utilisation du même template _form.html.twig #}
     {% if editForm is defined and editForm %}
         <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasEditMonnaie" data-bs-backdrop="static" data-bs-keyboard="false" style="visibility: visible;" aria-labelledby="offcanvasEditMonnaieLabel">
             <div class="offcanvas-header border-bottom">
@@ -107,19 +107,11 @@
                 <a href="{{ path('app_monnaie_index') }}" class="btn-close text-reset" aria-label="Fermer"></a>
             </div>
             <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
-                {{ form_start(editForm, {
-                    'action': path('app_monnaie_index', {'edit': monnaieToEdit.seqmonnaie}),
-                    'attr': {'id': 'edit-form'}
+                {# Correction: Utilisation du même template pour l'édition #}
+                {{ include('monnaie/_form.html.twig', {
+                    form: editForm,
+                    button_label: 'Enregistrer'
                 }) }}
-                {{ form_widget(editForm) }}
-                <hr>
-                <button type="submit" class="btn btn-primary w-100 mb-2">
-                    <i class="bx bx-save me-2"></i>{{ button_label|default('Enregistrer') }}
-                </button>
-                <a href="{{ path('app_monnaie_index') }}" class="btn btn-outline-danger w-100 px-4">
-                    <i class="bx bx-x me-2"></i>Annuler
-                </a>
-                {{ form_end(editForm) }}
             </div>
         </div>
 
@@ -171,4 +163,3 @@
     </script>
     {% endif %}
 {% endblock %}
-
