@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Commission{% endblock %}
+
+{% block body %}
+    <div class="flex-grow-1 container-p-y container-fluid">
+        <h1>Ajouter une nouvelle Commission</h1>
+        {{ include('commission/_form.html.twig') }}
+    </div>
+{% endblock %}

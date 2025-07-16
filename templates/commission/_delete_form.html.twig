@@ -1,0 +1,12 @@
+<form method="post"
+      action="{{ path('app_commission_delete', {'id': commission.id}) }}"
+      class="delete-form">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ commission.id) }}">
+    <button type="button"
+            class="dropdown-item text-danger border-0 bg-transparent w-100 text-start delete-btn"
+            data-entity-type="cette commission"
+            data-confirm-message="Êtes-vous sûr de vouloir supprimer cette commission ? Cette action est irréversible."
+            data-success-message="La commission a été supprimée avec succès.">
+        <i class="icon-base bx bx-trash me-1"></i> Supprimer
+    </button>
+</form>

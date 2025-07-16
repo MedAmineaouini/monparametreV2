@@ -1,0 +1,170 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commission{% endblock %}
+
+{% block body %}
+    <h1>Commission</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ commission.id }}</td>
+            </tr>
+            <tr>
+                <th>Categorie</th>
+                <td>{{ commission.categorie }}</td>
+            </tr>
+            <tr>
+                <th>Comm1</th>
+                <td>{{ commission.comm1 }}</td>
+            </tr>
+            <tr>
+                <th>Comm2</th>
+                <td>{{ commission.comm2 }}</td>
+            </tr>
+            <tr>
+                <th>Comm3</th>
+                <td>{{ commission.comm3 }}</td>
+            </tr>
+            <tr>
+                <th>Comm4</th>
+                <td>{{ commission.comm4 }}</td>
+            </tr>
+            <tr>
+                <th>Comm5</th>
+                <td>{{ commission.comm5 }}</td>
+            </tr>
+            <tr>
+                <th>Comm6</th>
+                <td>{{ commission.comm6 }}</td>
+            </tr>
+            <tr>
+                <th>Comm7</th>
+                <td>{{ commission.comm7 }}</td>
+            </tr>
+            <tr>
+                <th>Comm8</th>
+                <td>{{ commission.comm8 }}</td>
+            </tr>
+            <tr>
+                <th>Comm9</th>
+                <td>{{ commission.comm9 }}</td>
+            </tr>
+            <tr>
+                <th>Comm10</th>
+                <td>{{ commission.comm10 }}</td>
+            </tr>
+            <tr>
+                <th>Comm11</th>
+                <td>{{ commission.comm11 }}</td>
+            </tr>
+            <tr>
+                <th>Comm12</th>
+                <td>{{ commission.comm12 }}</td>
+            </tr>
+            <tr>
+                <th>Comm13</th>
+                <td>{{ commission.comm13 }}</td>
+            </tr>
+            <tr>
+                <th>Comm14</th>
+                <td>{{ commission.comm14 }}</td>
+            </tr>
+            <tr>
+                <th>Comm15</th>
+                <td>{{ commission.comm15 }}</td>
+            </tr>
+            <tr>
+                <th>Comm16</th>
+                <td>{{ commission.comm16 }}</td>
+            </tr>
+            <tr>
+                <th>Comm17</th>
+                <td>{{ commission.comm17 }}</td>
+            </tr>
+            <tr>
+                <th>Comm18</th>
+                <td>{{ commission.comm18 }}</td>
+            </tr>
+            <tr>
+                <th>Comm19</th>
+                <td>{{ commission.comm19 }}</td>
+            </tr>
+            <tr>
+                <th>Comm20</th>
+                <td>{{ commission.comm20 }}</td>
+            </tr>
+            <tr>
+                <th>Comm21</th>
+                <td>{{ commission.comm21 }}</td>
+            </tr>
+            <tr>
+                <th>Comm22</th>
+                <td>{{ commission.comm22 }}</td>
+            </tr>
+            <tr>
+                <th>Comm23</th>
+                <td>{{ commission.comm23 }}</td>
+            </tr>
+            <tr>
+                <th>Comm24</th>
+                <td>{{ commission.comm24 }}</td>
+            </tr>
+            <tr>
+                <th>Comm25</th>
+                <td>{{ commission.comm25 }}</td>
+            </tr>
+            <tr>
+                <th>Comm26</th>
+                <td>{{ commission.comm26 }}</td>
+            </tr>
+            <tr>
+                <th>Comm27</th>
+                <td>{{ commission.comm27 }}</td>
+            </tr>
+            <tr>
+                <th>Comm28</th>
+                <td>{{ commission.comm28 }}</td>
+            </tr>
+            <tr>
+                <th>Comm29</th>
+                <td>{{ commission.comm29 }}</td>
+            </tr>
+            <tr>
+                <th>Comm30</th>
+                <td>{{ commission.comm30 }}</td>
+            </tr>
+            <tr>
+                <th>Comm31</th>
+                <td>{{ commission.comm31 }}</td>
+            </tr>
+            <tr>
+                <th>Comm32</th>
+                <td>{{ commission.comm32 }}</td>
+            </tr>
+            <tr>
+                <th>Comm33</th>
+                <td>{{ commission.comm33 }}</td>
+            </tr>
+            <tr>
+                <th>Comm34</th>
+                <td>{{ commission.comm34 }}</td>
+            </tr>
+            <tr>
+                <th>Comm35</th>
+                <td>{{ commission.comm35 }}</td>
+            </tr>
+            <tr>
+                <th>Comm36</th>
+                <td>{{ commission.comm36 }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_commission_index') }}">back to list</a>
+
+    <a href="{{ path('app_commission_edit', {'id': commission.id}) }}">edit</a>
+
+    {{ include('commission/_delete_form.html.twig') }}
+{% endblock %}
