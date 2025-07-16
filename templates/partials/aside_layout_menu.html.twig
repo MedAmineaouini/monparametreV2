@@ -264,9 +264,9 @@
                         <i class="bx bx-network-chart me-2"></i> Réseau de clients
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="/sous-reseau/listsous-reseau.php" class="menu-link">
-                        <i class="bx bx-git-branch me-2"></i> Sous-réseau
+                <li class="menu-item {% if app.request.get('_route') starts with 'sousreseau' %}active open{% endif %}">
+                    <a href="{{ path('app_sous_reseau_index') }}" class="menu-link">
+                        <i class="bx bx-sitemap me-2"></i> Sous-réseau
                     </a>
                 </li>
                 <li class="menu-item {% if app.request.get('_route') starts with 'superreseau' %}active open{% endif %}">

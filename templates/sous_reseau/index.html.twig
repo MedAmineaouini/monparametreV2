@@ -56,7 +56,7 @@
                             </tr>
                         {% else %}
                             <tr>
-                                <td colspan="3" class="text-center py-4 text-muted">Aucun sous-réseau trouvé</td>
+                                <td colspan="5" class="text-center py-4 text-muted">Aucun sous-réseau trouvé</td>
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -109,4 +109,19 @@
             }
         </script>
     {% endif %}
+
+    {# Gestion des messages flash #}
+    {% for type, messages in app.flashes %}
+        {% for message in messages %}
+            <script>
+                const flash = JSON.parse('{{ message|raw }}');
+                Swal.fire({
+                    title: flash.title,
+                    text: flash.message,
+                    icon: flash.type,
+                    confirmButtonText: 'OK'
+                });
+            </script>
+        {% endfor %}
+    {% endfor %}
 {% endblock %}

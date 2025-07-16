@@ -30,6 +30,7 @@ class MonnaieType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'Libellé de la monnaie...',
+                    'maxlength' => '3'
                 ],
             ])
             ->add('nommonnaie', TextType::class, [
