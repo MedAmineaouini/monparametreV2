@@ -14,55 +14,44 @@ class Typechambre
     private ?int $seqtypechambre = null;
 
     #[ORM\Column(name: 'LIBTYPECHAMBRE', type: 'string', length: 50)]
-    private string $libtypechambre;
+    private string $libtypechambre = ' ';
 
     #[ORM\Column(name: 'LIBTYPECHAMBRE2', type: 'string', length: 50)]
-    private string $libtypechambre2;
+    private string $libtypechambre2 = ' ';
 
     #[ORM\Column(name: 'ADULTES_MINI', type: 'integer')]
-    private int $adultesMini;
+    private int $adultesMini = 0;
 
     #[ORM\Column(name: 'ADULTES_MAXI', type: 'integer')]
-    private int $adultesMaxi;
+    private int $adultesMaxi = 0;
 
     #[ORM\Column(name: 'ENFANTS_MINI', type: 'integer')]
-    private int $enfantsMini;
+    private int $enfantsMini = 0;
 
     #[ORM\Column(name: 'ENFANTS_MAXI', type: 'integer')]
-    private int $enfantsMaxi;
+    private int $enfantsMaxi = 0;
 
     #[ORM\Column(name: 'BEBES_MAXI', type: 'integer')]
-    private int $bebesMaxi;
+    private int $bebesMaxi = 0;
 
     #[ORM\Column(name: 'SUPPSG', type: 'integer')]
-    private int $suppsg;
+    private int $suppsg = 0;
 
     #[ORM\Column(name: 'CAPACITE', type: 'integer')]
-    private int $capacite;
+    private int $capacite = 0;
 
     #[ORM\Column(name: 'SEL', type: 'boolean')]
-    private bool $sel;
+    private bool $sel = false;
 
     #[ORM\Column(name: 'ABRTYPECHAMBRE', type: 'string', length: 10)]
-    private string $abrtypechambre;
+    private string $abrtypechambre = ' ';
 
     #[ORM\Column(name: 'ORDRE', type: 'integer')]
-    private int $ordre;
+    private int $ordre = 0;
 
+    // Le constructeur peut être supprimé ou gardé vide
     public function __construct()
     {
-        $this->libtypechambre = ' ';
-        $this->libtypechambre2 = ' ';
-        $this->adultesMini = 0;
-        $this->adultesMaxi = 0;
-        $this->enfantsMini = 0;
-        $this->enfantsMaxi = 0;
-        $this->bebesMaxi = 0;
-        $this->suppsg = 0;
-        $this->capacite = 0;
-        $this->sel = false;
-        $this->abrtypechambre = ' ';
-        $this->ordre = 0;
     }
 
     // Getters et Setters...
@@ -72,35 +61,31 @@ class Typechambre
         return $this->seqtypechambre;
     }
 
-
     public function setSeqtypechambre(?int $seqtypechambre): void
     {
         $this->seqtypechambre = $seqtypechambre;
     }
-
 
     public function getLibtypechambre(): string
     {
         return $this->libtypechambre;
     }
 
-
     public function setLibtypechambre(string $libtypechambre): void
     {
         $this->libtypechambre = $libtypechambre;
     }
-
 
     public function getLibtypechambre2(): string
     {
         return $this->libtypechambre2;
     }
 
-    public function setLibtypechambre2(string $libtypechambre2): void
+    public function setLibtypechambre2(?string $libtypechambre2): self
     {
-        $this->libtypechambre2 = $libtypechambre2;
+        $this->libtypechambre2 = $libtypechambre2 ?? ' ';
+        return $this;
     }
-
 
     public function getAdultesMini(): int
     {
@@ -117,18 +102,15 @@ class Typechambre
         return $this->adultesMaxi;
     }
 
-
     public function setAdultesMaxi(int $adultesMaxi): void
     {
         $this->adultesMaxi = $adultesMaxi;
     }
 
-
     public function getEnfantsMini(): int
     {
         return $this->enfantsMini;
     }
-
 
     public function setEnfantsMini(int $enfantsMini): void
     {
@@ -139,7 +121,6 @@ class Typechambre
     {
         return $this->enfantsMaxi;
     }
-
 
     public function setEnfantsMaxi(int $enfantsMaxi): void
     {
@@ -161,7 +142,6 @@ class Typechambre
         return $this->suppsg;
     }
 
-
     public function setSuppsg(int $suppsg): void
     {
         $this->suppsg = $suppsg;
@@ -171,7 +151,6 @@ class Typechambre
     {
         return $this->capacite;
     }
-
 
     public function setCapacite(int $capacite): void
     {
@@ -188,31 +167,23 @@ class Typechambre
         $this->sel = $sel;
     }
 
-
     public function getAbrtypechambre(): string
     {
         return $this->abrtypechambre;
     }
-
 
     public function setAbrtypechambre(string $abrtypechambre): void
     {
         $this->abrtypechambre = $abrtypechambre;
     }
 
-
     public function getOrdre(): int
     {
         return $this->ordre;
     }
 
-
     public function setOrdre(int $ordre): void
     {
         $this->ordre = $ordre;
     }
-
-
-
-
 }

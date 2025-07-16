@@ -1,0 +1,12 @@
+<form method="post"
+      action="{{ path('app_affreteur_delete', {'seqaffret': affreteur.seqaffret}) }}"
+      class="affreteur-delete-form">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ affreteur.seqaffret) }}">
+    <button type="button"
+            class="dropdown-item text-danger border-0 bg-transparent w-100 text-start delete-btn"
+            data-entity-type="cet affréteur"
+            data-confirm-message="Êtes-vous sûr de vouloir supprimer cet affréteur ? Cette action est irréversible."
+            data-success-message="L'affréteur a été supprimé avec succès.">
+        <i class="bx bx-trash me-1"></i> Supprimer
+    </button>
+</form>

@@ -1,0 +1,62 @@
+<div class="card-body p-1" style="font-size: 12px">
+    {{ form_start(form, {'attr': {'class': 'browser-default-validation'}}) }}
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-12">
+            {{ form_label(form.groupeclient, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.groupeclient, {
+                'attr': {
+                    'class': 'form-control',
+                    'placeholder': 'Code groupement (10 caractères max)'
+                }
+            }) }}
+            {{ form_errors(form.groupeclient) }}
+        </div>
+        <div class="col-md-12">
+            {{ form_label(form.nomgroupeclient, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.nomgroupeclient, {
+                'attr': {
+                    'class': 'form-control',
+                    'placeholder': 'Nom du groupement'
+                }
+            }) }}
+            {{ form_errors(form.nomgroupeclient) }}
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-12">
+            {{ form_label(form.archiver, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            <div class="form-check form-switch">
+                {{ form_widget(form.archiver, {
+                    'attr': {
+                        'class': 'form-check-input',
+                        'role': 'switch'
+                    }
+                }) }}
+                {{ form_label(form.archiver, null, {
+                    'label_attr': {'class': 'form-check-label'}
+                }) }}
+            </div>
+            {{ form_errors(form.archiver) }}
+        </div>
+    </div>
+
+    <div class="pt-3 border-top text-end">
+        <button type="submit" class="btn btn-primary w-100 mb-2">
+            <i class="bx bx-save me-2"></i>{{ button_label|default('Enregistrer') }}
+        </button>
+
+        {% if form.vars.data.seqgroupementclient is defined and form.vars.data.seqgroupementclient %}
+            <a href="{{ path('app_groupement_client_index') }}" class="btn btn-outline-danger w-100 px-4">
+                <i class="bx bx-x me-2"></i>Annuler
+            </a>
+        {% else %}
+            <button type="button" class="btn btn-outline-danger w-100 px-4" data-bs-dismiss="offcanvas">
+                <i class="bx bx-x me-2"></i>Annuler
+            </button>
+        {% endif %}
+    </div>
+
+    {{ form_end(form) }}
+</div>

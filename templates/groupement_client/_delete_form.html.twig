@@ -1,0 +1,12 @@
+<form method="post"
+      action="{{ path('app_groupement_client_delete', {'seqgroupementclient': groupement_client.seqgroupementclient}) }}"
+      class="delete-form">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ groupement_client.seqgroupementclient) }}">
+    <button type="button"
+            class="dropdown-item text-danger border-0 bg-transparent w-100 text-start delete-btn"
+            data-entity-type="ce groupement client"
+            data-confirm-message="Êtes-vous sûr de vouloir supprimer ce groupement client ? Cette action est irréversible."
+            data-success-message="Le groupement client a été supprimé avec succès">
+        <i class="icon-base bx bx-trash me-1"></i> Supprimer
+    </button>
+</form>

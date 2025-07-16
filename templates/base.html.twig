@@ -74,6 +74,32 @@
 {#          href="{{ asset('assets/assets/vendor/libs/datatables-rowgroup-bs5/rowgroup.bootstrap5.css') }}">#}
     <link rel="stylesheet" href="{{ asset('assets/assets/vendor/libs/sweetalert2/sweetalert2.css') }}">
 
+    <!-- Tempus Dominus CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.7.7/dist/css/tempus-dominus.min.css" crossorigin="anonymous">
+
+    <!-- jQuery (nécessaire pour Tempus Dominus) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+
+    <!-- Tempus Dominus JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.7.7/dist/js/tempus-dominus.min.js" crossorigin="anonymous"></script>
+
+    <!-- Extension d'icônes pour Tempus Dominus -->
+    <script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.7.7/dist/js/plugins/icons.min.js"></script>
+
+    <!-- Localisation française -->
+    <script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.7.7/dist/locales/fr.min.js"></script>
+<style>
+    .required:after {
+        content: " *";
+        color: red;
+    }
+    .is-invalid {
+        border-color: #dc3545 !important;
+    }
+</style>
 </head>
 
 <body>
@@ -473,6 +499,32 @@ document.querySelectorAll('.delete-btn').forEach(button => {
         }
     });
 });
+    document.addEventListener('DOMContentLoaded', function() {
+        // Gestion des messages flash
+        {% for type, messages in app.flashes %}
+        {% for message in messages %}
+        {% if type == 'error' or type == 'success' %}
+        try {
+            const flashData = JSON.parse('{{ message|raw|escape('js') }}');
+            Swal.fire({
+                title: flashData.title || '{{ type|capitalize }}',
+                text: flashData.message,
+                icon: flashData.type || '{{ type }}',
+                confirmButtonText: 'OK'
+            });
+        } catch (e) {
+            // Si le message n'est pas un JSON, afficher le message brut
+            Swal.fire({
+                title: '{{ type|capitalize }}',
+                text: '{{ message|raw|escape('js') }}',
+                icon: '{{ type }}',
+                confirmButtonText: 'OK'
+            });
+        }
+        {% endif %}
+        {% endfor %}
+        {% endfor %}
+    });
 </script>
 
 </body>

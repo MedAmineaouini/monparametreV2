@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit SuperReseau{% endblock %}
+
+{% block body %}
+    <h1>Edit SuperReseau</h1>
+
+    {{ include('super_reseau/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_super_reseau_index') }}">back to list</a>
+
+    {{ include('super_reseau/_delete_form.html.twig') }}
+{% endblock %}

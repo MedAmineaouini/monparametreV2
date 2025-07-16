@@ -1,0 +1,78 @@
+<div class="card-body p-1" style="font-size: 12px">
+    {{ form_start(form, {'attr': {'class': 'browser-default-validation'}}) }}
+
+    <div class="row g-3 mb-4">
+        {# Champ nomsuperreseau #}
+        <div class="col-md-12">
+            {{ form_label(form.nomsuperreseau, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.nomsuperreseau, {
+                'attr': {
+                    'class': 'form-control',
+                    'placeholder': 'Nom du super réseau',
+                    'required': 'required'
+                }
+            }) }}
+            {{ form_errors(form.nomsuperreseau) }}
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+        {# Champ datesaisie #}
+        <div class="col-md-12">
+            {{ form_label(form.datesaisie, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            <div class="input-group">
+                {{ form_widget(form.datesaisie, {
+                    'attr': {
+                        'class': 'form-control datetimepicker',
+                        'placeholder': 'Date de saisie'
+                    }
+                }) }}
+                <span class="input-group-text"><i class="bx bx-calendar"></i></span>
+            </div>
+            {{ form_errors(form.datesaisie) }}
+        </div>
+    </div>
+
+    <div class="pt-3 border-top text-end">
+        <button type="submit" class="btn btn-primary w-100 mb-2">
+            <i class="bx bx-save me-2"></i>{{ button_label|default('Enregistrer') }}
+        </button>
+
+        {% if form.vars.data.seqsuperreseau is defined and form.vars.data.seqsuperreseau %}
+            <a href="{{ path('app_super_reseau_index') }}" class="btn btn-outline-danger w-100 px-4">
+                <i class="bx bx-x me-2"></i>Annuler
+            </a>
+        {% else %}
+            <button type="button" class="btn btn-outline-danger w-100 px-4" data-bs-dismiss="offcanvas">
+                <i class="bx bx-x me-2"></i>Annuler
+            </button>
+        {% endif %}
+    </div>
+
+    {{ form_end(form) }}
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('.datetimepicker').datetimepicker({
+            locale: 'fr',
+            format: 'DD/MM/YYYY HH:mm',
+            buttons: {
+                showToday: true,
+                showClear: true,
+                showClose: true
+            },
+            icons: {
+                time: 'bx bx-time',
+                date: 'bx bx-calendar',
+                up: 'bx bx-chevron-up',
+                down: 'bx bx-chevron-down',
+                previous: 'bx bx-chevron-left',
+                next: 'bx bx-chevron-right',
+                today: 'bx bx-calendar-check',
+                clear: 'bx bx-trash',
+                close: 'bx bx-x'
+            }
+        });
+    });
+</script>

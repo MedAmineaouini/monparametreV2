@@ -1,0 +1,113 @@
+<div class="card-body p-1" style="font-size: 12px">
+    {{ form_start(form, {'attr': {'class': 'browser-default-validation'}}) }}
+
+    <div class="row g-3 mb-4">
+        {# Champ libtypeclt #}
+        <div class="col-md-12">
+            {{ form_label(form.libtypeclt, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.libtypeclt) }}
+            {{ form_errors(form.libtypeclt) }}
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+        {# Champ depart #}
+        <div class="col-md-6">
+            {{ form_label(form.depart, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.depart, {
+                'attr': {
+                    'class': 'form-control',
+                    'placeholder': 'Code départ'
+                }
+            }) }}
+            {{ form_errors(form.depart) }}
+        </div>
+
+        {# Champ jourFixe #}
+        <div class="col-md-6">
+            {{ form_label(form.jourFixe, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.jourFixe, {
+                'attr': {
+                    'class': 'form-control',
+                    'placeholder': 'Jour fixe (1-31)'
+                }
+            }) }}
+            {{ form_errors(form.jourFixe) }}
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+        {# Champ moisPlus #}
+        <div class="col-md-6">
+            {{ form_label(form.moisPlus, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.moisPlus, {
+                'attr': {
+                    'class': 'form-control',
+                    'placeholder': 'Mois plus (0-12)'
+                }
+            }) }}
+            {{ form_errors(form.moisPlus) }}
+        </div>
+
+        {# Champ reservation #}
+        <div class="col-md-6">
+            {{ form_label(form.reservation, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.reservation, {
+                'attr': {
+                    'class': 'form-control',
+                    'placeholder': 'Jours de réservation'
+                }
+            }) }}
+            {{ form_errors(form.reservation) }}
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+        {# Champ dateFixe #}
+        <div class="col-md-6">
+            {{ form_label(form.dateFixe, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+            {{ form_widget(form.dateFixe, {
+                'attr': {
+                    'class': 'form-control',
+                    'placeholder': 'Date fixe (1-31)'
+                }
+            }) }}
+            {{ form_errors(form.dateFixe) }}
+        </div>
+
+        {# Champ echeancement #}
+        <div class="col-md-6">
+            {{ form_label(form.echeancement, null, {
+                'label_attr': {
+                    'class': 'form-label fw-semibold required'
+                }
+            }) }}
+            {{ form_widget(form.echeancement, {
+                'attr': {
+                    'class': 'form-control',
+                    'placeholder': 'Type échéancement',
+                    'required': 'required'
+                }
+            }) }}
+            {{ form_errors(form.echeancement) }}
+        </div>
+    </div>
+
+    <div class="pt-3 border-top text-end">
+        <button type="submit" class="btn btn-primary w-100 mb-2">
+            <i class="bx bx-save me-2"></i>{{ button_label|default('Enregistrer') }}
+        </button>
+
+        {% if form.vars.data.id is defined and form.vars.data.id %}
+            <a href="{{ path('app_type_clt_index') }}" class="btn btn-outline-danger w-100 px-4">
+                <i class="bx bx-x me-2"></i>Annuler
+            </a>
+        {% else %}
+            <button type="button" class="btn btn-outline-danger w-100 px-4" data-bs-dismiss="offcanvas">
+                <i class="bx bx-x me-2"></i>Annuler
+            </button>
+        {% endif %}
+    </div>
+
+    {{ form_end(form) }}
+</div>

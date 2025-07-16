@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SuperReseau{% endblock %}
+
+{% block body %}
+    <h1>SuperReseau</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Seqsuperreseau</th>
+                <td>{{ super_reseau.seqsuperreseau }}</td>
+            </tr>
+            <tr>
+                <th>Nomsuperreseau</th>
+                <td>{{ super_reseau.nomsuperreseau }}</td>
+            </tr>
+            <tr>
+                <th>Datesaisie</th>
+                <td>{{ super_reseau.datesaisie ? super_reseau.datesaisie|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_super_reseau_index') }}">back to list</a>
+
+    <a href="{{ path('app_super_reseau_edit', {'seqsuperreseau': super_reseau.seqsuperreseau}) }}">edit</a>
+
+    {{ include('super_reseau/_delete_form.html.twig') }}
+{% endblock %}

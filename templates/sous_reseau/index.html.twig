@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des sous-réseaux{% endblock %}
+
+{% block body %}
+    <div class="flex-grow-1 container-p-y container-fluid">
+        <div class="card shadow rounded-3 border-0">
+            <div class="card-header text-white">
+                <div class="row align-items-center">
+                    <div class="col-12 col-md-10 mb-2 mb-md-0">
+                        <h5 class="mb-0 text-center text-md-start">🌐 Sous-réseaux</h5>
+                    </div>
+                    <div class="col-9 col-md-2 d-flex flex-column flex-md-row justify-content-md-end gap-2">
+                        <button class="btn btn-success w-100 w-md-auto" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddSousReseau">
+                            <i class="bx bx-plus me-2"></i>Ajouter un sous-réseau
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body p-1 table-responsive" style="font-size: 12px;">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped table-bordered mb-1">
+                        <thead>
+                        <tr>
+                            <th class="text-center" width="60">#</th>
+                            <th>Nom du sous-réseau</th>
+                            <th class="text-center" width="100">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for sous_reseau in sous_reseaus %}
+                            <tr>
+                                <td class="text-center">{{ sous_reseau.seqsousreseau }}</td>
+                                <td>{{ sous_reseau.nomsousreseau }}</td>
+                                <td class="text-center">
+                                    <div class="dropdown">
+                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Actions">
+                                            <i class="bx bx-dots-vertical-rounded"></i>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                            <li>
+                                                <a class="dropdown-item" href="{{ path('app_sous_reseau_index', {'edit': sous_reseau.seqsousreseau}) }}">
+                                                    <i class="bx bx-edit-alt me-2"></i>Consulter | Modifier
+                                                </a>
+                                            </li>
+                                            <li>
+                                                {{ include('sous_reseau/_delete_form.html.twig', {
+                                                    sous_reseau: sous_reseau,
+                                                    btn_class: 'dropdown-item'
+                                                }) }}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="3" class="text-center py-4 text-muted">Aucun sous-réseau trouvé</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Offcanvas Ajout #}
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddSousReseau"
+         aria-labelledby="offcanvasAddSousReseauLabel" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="offcanvas-header border-bottom">
+            <h5 id="offcanvasAddSousReseauLabel" class="offcanvas-title">Ajouter un sous-réseau</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
+        </div>
+        <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
+            {{ include('sous_reseau/_form.html.twig', {
+                form: addForm,
+                button_label: 'Enregistrer'
+            }) }}
+        </div>
+    </div>
+
+    {# Offcanvas Édition #}
+    {% if editForm is defined and editForm %}
+        <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasEditSousReseau"
+             data-bs-backdrop="static" data-bs-keyboard="false"
+             style="visibility: visible;" aria-labelledby="offcanvasEditSousReseauLabel">
+            <div class="offcanvas-header border-bottom">
+                <h5 id="offcanvasEditSousReseauLabel" class="offcanvas-title">Modifier le sous-réseau</h5>
+                <a href="{{ path('app_sous_reseau_index') }}" class="btn-close text-reset" aria-label="Fermer"></a>
+            </div>
+            <div class="offcanvas-body mx-0 flex-grow-0 p-6 h-100">
+                {{ include('sous_reseau/_form.html.twig', {
+                    form: editForm,
+                    button_label: 'Enregistrer'
+                }) }}
+            </div>
+        </div>
+
+        <script>
+            // Ferme l'offcanvas "ajouter" si l'édition est active
+            const addOffcanvas = document.getElementById('offcanvasAddSousReseau');
+            if (addOffcanvas) {
+                const bsAddOffcanvas = bootstrap.Offcanvas.getInstance(addOffcanvas);
+                if (bsAddOffcanvas) {
+                    bsAddOffcanvas.hide();
+                }
+            }
+        </script>
+    {% endif %}
+{% endblock %}

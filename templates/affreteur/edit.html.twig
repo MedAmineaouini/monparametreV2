@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Affreteur{% endblock %}
+
+{% block body %}
+    <h1>Edit Affreteur</h1>
+
+    {{ include('affreteur/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_affreteur_index') }}">back to list</a>
+
+    {{ include('affreteur/_delete_form.html.twig') }}
+{% endblock %}

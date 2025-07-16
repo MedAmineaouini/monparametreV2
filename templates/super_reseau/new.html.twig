@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New SuperReseau{% endblock %}
+
+{% block body %}
+    <h1>Create new SuperReseau</h1>
+
+    {{ include('super_reseau/_form.html.twig') }}
+
+    <a href="{{ path('app_super_reseau_index') }}">back to list</a>
+{% endblock %}

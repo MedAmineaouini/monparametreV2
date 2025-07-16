@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TypeClt{% endblock %}
+
+{% block body %}
+    <h1>TypeClt</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Seqtypeclt</th>
+                <td>{{ type_clt.seqtypeclt }}</td>
+            </tr>
+            <tr>
+                <th>Libtypeclt</th>
+                <td>{{ type_clt.libtypeclt }}</td>
+            </tr>
+            <tr>
+                <th>Prime</th>
+                <td>{{ type_clt.prime }}</td>
+            </tr>
+            <tr>
+                <th>Depart1</th>
+                <td>{{ type_clt.depart1 }}</td>
+            </tr>
+            <tr>
+                <th>Depart2</th>
+                <td>{{ type_clt.depart2 }}</td>
+            </tr>
+            <tr>
+                <th>Depart3</th>
+                <td>{{ type_clt.depart3 }}</td>
+            </tr>
+            <tr>
+                <th>Depart4</th>
+                <td>{{ type_clt.depart4 }}</td>
+            </tr>
+            <tr>
+                <th>Jo1</th>
+                <td>{{ type_clt.jo1 }}</td>
+            </tr>
+            <tr>
+                <th>Jo2</th>
+                <td>{{ type_clt.jo2 }}</td>
+            </tr>
+            <tr>
+                <th>Mois1</th>
+                <td>{{ type_clt.mois1 }}</td>
+            </tr>
+            <tr>
+                <th>Mois2</th>
+                <td>{{ type_clt.mois2 }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_type_clt_index') }}">back to list</a>
+
+    <a href="{{ path('app_type_clt_edit', {'seqtypeclt': type_clt.seqtypeclt}) }}">edit</a>
+
+    {{ include('type_clt/_delete_form.html.twig') }}
+{% endblock %}
