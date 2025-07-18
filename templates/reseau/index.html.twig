@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RFT | Listes des Réseaux {% endblock %}
+
+{% block body %}
+    <div class="flex-grow-1 container-p-y container-fluid">
+        <div class="card shadow rounded-3 border-0">
+            <div class="card-header text-white">
+                <div class="row align-items-center">
+                    <div class="col-12 col-md-10 mb-2 mb-md-0">
+                        <h5 class="mb-0 text-center text-md-start">📋 Liste des réseaux</h5>
+                    </div>
+                    <div class="col-9 col-md-2 d-flex flex-column flex-md-row justify-content-md-end gap-2">
+                        <a class="btn btn-success w-100 w-md-auto" href="{{ path('app_reseau_new') }}">
+                            <i class="bx bx-plus me-2"></i>Ajouter un réseau
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body p-1" style="font-size: 12px;">
+
+                <table class="table table-hover table-striped table-bordered mb-1">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Libellé</th>
+                        <th>Desactive</th>
+                        <th>Date saisie</th>
+                        <th>Email réseau</th>
+                        <th>Codeorx</th>
+                        <th>actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for reseau in reseaus %}
+                        <tr>
+                            <td>{{ reseau.seqreseau }}</td>
+                            <td>{{ reseau.nomreseau }}</td>
+                            <td>{{ reseau.desactive ? 'Yes' : 'No' }}</td>
+                            <td>{{ reseau.datesaisie ? reseau.datesaisie|date('Y-m-d H:i:s') : '' }}</td>
+                            <td>{{ reseau.emailReseau }}</td>
+                            <td>{{ reseau.codeorx }}</td>
+                            <td class="text-center">
+                                <div class="dropdown">
+                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Actions">
+                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                       <li>
+                                            <a class="dropdown-item" href="{{ path('app_reseau_edit', {'seqreseau': reseau.seqreseau}) }}">
+                                                <i class="bx bx-edit-alt me-2"></i>Consulter | Modifier
+                                            </a>
+                                        </li>
+                                        <li>
+                                            {{ include('reseau/_delete_form.html.twig', {
+                                                reseau: reseau,
+                                                btn_class: 'dropdown-item'
+                                            }) }}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="7" style="text-align: center">Aucun  réseau trouvé ....</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

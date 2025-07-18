@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reseau{% endblock %}
+
+{% block body %}
+    <h1>Reseau</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Seqreseau</th>
+                <td>{{ reseau.seqreseau }}</td>
+            </tr>
+            <tr>
+                <th>Nomreseau</th>
+                <td>{{ reseau.nomreseau }}</td>
+            </tr>
+            <tr>
+                <th>Desactive</th>
+                <td>{{ reseau.desactive ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Datesaisie</th>
+                <td>{{ reseau.datesaisie ? reseau.datesaisie|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>EmailReseau</th>
+                <td>{{ reseau.emailReseau }}</td>
+            </tr>
+            <tr>
+                <th>Codeorx</th>
+                <td>{{ reseau.codeorx }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_reseau_index') }}">back to list</a>
+
+    <a href="{{ path('app_reseau_edit', {'seqreseau': reseau.seqreseau}) }}">edit</a>
+
+    {{ include('reseau/_delete_form.html.twig') }}
+{% endblock %}

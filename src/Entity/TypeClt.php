@@ -117,4 +117,8 @@ class TypeClt
         $this->echeancement = $echeancement;
         return $this;
     }
+    public function __toString(): string
+    {
+        return (string) $this->getlibtypeclt(); // Or whatever property you want to display
+    }
 }
