@@ -92,6 +92,10 @@ class Typeregle
         $this->sens = $sens;
         return $this;
     }
+    public function __toString(): string
+    {
+        return $this->libtyperegle ?? '';
+    }
 
 
 }

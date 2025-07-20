@@ -1,0 +1,354 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Client{% endblock %}
+
+{% block body %}
+    <h1>Client</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Numclt</th>
+                <td>{{ client.numclt }}</td>
+            </tr>
+            <tr>
+                <th>Seqclt</th>
+                <td>{{ client.seqclt }}</td>
+            </tr>
+            <tr>
+                <th>Nomreseau</th>
+                <td>{{ client.nomreseau }}</td>
+            </tr>
+            <tr>
+                <th>Sousreseau</th>
+                <td>{{ client.sousreseau }}</td>
+            </tr>
+            <tr>
+                <th>Seqcltpackdb</th>
+                <td>{{ client.seqcltpackdb }}</td>
+            </tr>
+            <tr>
+                <th>Refpackdb</th>
+                <td>{{ client.refpackdb }}</td>
+            </tr>
+            <tr>
+                <th>Nomclt</th>
+                <td>{{ client.nomclt }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ client.adresse }}</td>
+            </tr>
+            <tr>
+                <th>Cp</th>
+                <td>{{ client.cp }}</td>
+            </tr>
+            <tr>
+                <th>Ville</th>
+                <td>{{ client.ville }}</td>
+            </tr>
+            <tr>
+                <th>Pays</th>
+                <td>{{ client.pays }}</td>
+            </tr>
+            <tr>
+                <th>Tel1</th>
+                <td>{{ client.tel1 }}</td>
+            </tr>
+            <tr>
+                <th>Tel2</th>
+                <td>{{ client.tel2 }}</td>
+            </tr>
+            <tr>
+                <th>Tel3</th>
+                <td>{{ client.tel3 }}</td>
+            </tr>
+            <tr>
+                <th>Fax</th>
+                <td>{{ client.fax }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ client.email }}</td>
+            </tr>
+            <tr>
+                <th>Patron</th>
+                <td>{{ client.patron }}</td>
+            </tr>
+            <tr>
+                <th>Contact</th>
+                <td>{{ client.contact }}</td>
+            </tr>
+            <tr>
+                <th>Ccompta</th>
+                <td>{{ client.ccompta }}</td>
+            </tr>
+            <tr>
+                <th>Commiss</th>
+                <td>{{ client.commiss }}</td>
+            </tr>
+            <tr>
+                <th>Commiss2</th>
+                <td>{{ client.commiss2 }}</td>
+            </tr>
+            <tr>
+                <th>Commiss3</th>
+                <td>{{ client.commiss3 }}</td>
+            </tr>
+            <tr>
+                <th>Commiss4</th>
+                <td>{{ client.commiss4 }}</td>
+            </tr>
+            <tr>
+                <th>Comttc</th>
+                <td>{{ client.comttc }}</td>
+            </tr>
+            <tr>
+                <th>Obs</th>
+                <td>{{ client.obs }}</td>
+            </tr>
+            <tr>
+                <th>Libre</th>
+                <td>{{ client.libre }}</td>
+            </tr>
+            <tr>
+                <th>Confirmation</th>
+                <td>{{ client.confirmation }}</td>
+            </tr>
+            <tr>
+                <th>Frais</th>
+                <td>{{ client.frais }}</td>
+            </tr>
+            <tr>
+                <th>Taxe</th>
+                <td>{{ client.taxe }}</td>
+            </tr>
+            <tr>
+                <th>Codecommercial</th>
+                <td>{{ client.codecommercial }}</td>
+            </tr>
+            <tr>
+                <th>Libtyperegle</th>
+                <td>{{ client.libtyperegle }}</td>
+            </tr>
+            <tr>
+                <th>Paiement</th>
+                <td>{{ client.paiement }}</td>
+            </tr>
+            <tr>
+                <th>Datesaisie</th>
+                <td>{{ client.datesaisie ? client.datesaisie|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Compta</th>
+                <td>{{ client.compta }}</td>
+            </tr>
+            <tr>
+                <th>Convoc</th>
+                <td>{{ client.convoc }}</td>
+            </tr>
+            <tr>
+                <th>Resa</th>
+                <td>{{ client.resa }}</td>
+            </tr>
+            <tr>
+                <th>Typeregle</th>
+                <td>{{ client.typeregle }}</td>
+            </tr>
+            <tr>
+                <th>Libtypeclt</th>
+                <td>{{ client.libtypeclt }}</td>
+            </tr>
+            <tr>
+                <th>Ccredit</th>
+                <td>{{ client.ccredit }}</td>
+            </tr>
+            <tr>
+                <th>Adresse2</th>
+                <td>{{ client.adresse2 }}</td>
+            </tr>
+            <tr>
+                <th>Pointcom</th>
+                <td>{{ client.pointcom }}</td>
+            </tr>
+            <tr>
+                <th>Refunique</th>
+                <td>{{ client.refunique }}</td>
+            </tr>
+            <tr>
+                <th>Groupeclient</th>
+                <td>{{ client.groupeclient }}</td>
+            </tr>
+            <tr>
+                <th>Litige</th>
+                <td>{{ client.litige }}</td>
+            </tr>
+            <tr>
+                <th>Login</th>
+                <td>{{ client.login }}</td>
+            </tr>
+            <tr>
+                <th>Mdp</th>
+                <td>{{ client.mdp }}</td>
+            </tr>
+            <tr>
+                <th>Codeamadeus</th>
+                <td>{{ client.codeamadeus }}</td>
+            </tr>
+            <tr>
+                <th>AnnulationTechnique</th>
+                <td>{{ client.annulationTechnique ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>DelaiAt</th>
+                <td>{{ client.delaiAt }}</td>
+            </tr>
+            <tr>
+                <th>Carnetvoyage</th>
+                <td>{{ client.carnetvoyage }}</td>
+            </tr>
+            <tr>
+                <th>Archiver</th>
+                <td>{{ client.archiver }}</td>
+            </tr>
+            <tr>
+                <th>LoginGalileo</th>
+                <td>{{ client.loginGalileo }}</td>
+            </tr>
+            <tr>
+                <th>MdpGalileo</th>
+                <td>{{ client.mdpGalileo }}</td>
+            </tr>
+            <tr>
+                <th>Couleur</th>
+                <td>{{ client.couleur }}</td>
+            </tr>
+            <tr>
+                <th>Libclassification</th>
+                <td>{{ client.libclassification }}</td>
+            </tr>
+            <tr>
+                <th>Categorie</th>
+                <td>{{ client.categorie }}</td>
+            </tr>
+            <tr>
+                <th>Comcoffret</th>
+                <td>{{ client.comcoffret }}</td>
+            </tr>
+            <tr>
+                <th>LoginAdpack</th>
+                <td>{{ client.loginAdpack }}</td>
+            </tr>
+            <tr>
+                <th>MdpAdpack</th>
+                <td>{{ client.mdpAdpack }}</td>
+            </tr>
+            <tr>
+                <th>CodeAgence</th>
+                <td>{{ client.codeAgence }}</td>
+            </tr>
+            <tr>
+                <th>ComAnnul</th>
+                <td>{{ client.comAnnul }}</td>
+            </tr>
+            <tr>
+                <th>TvaInvisible</th>
+                <td>{{ client.tvaInvisible }}</td>
+            </tr>
+            <tr>
+                <th>Seqreseau</th>
+                <td>{{ client.seqreseau }}</td>
+            </tr>
+            <tr>
+                <th>Seqsousreseau</th>
+                <td>{{ client.seqsousreseau }}</td>
+            </tr>
+            <tr>
+                <th>Seqcommercial</th>
+                <td>{{ client.seqcommercial }}</td>
+            </tr>
+            <tr>
+                <th>Seqtyperegle</th>
+                <td>{{ client.seqtyperegle }}</td>
+            </tr>
+            <tr>
+                <th>Seqtypeclt</th>
+                <td>{{ client.seqtypeclt }}</td>
+            </tr>
+            <tr>
+                <th>Seqcomm</th>
+                <td>{{ client.seqcomm }}</td>
+            </tr>
+            <tr>
+                <th>LoginBtob</th>
+                <td>{{ client.loginBtob }}</td>
+            </tr>
+            <tr>
+                <th>MdpBtob</th>
+                <td>{{ client.mdpBtob }}</td>
+            </tr>
+            <tr>
+                <th>Analytique</th>
+                <td>{{ client.analytique }}</td>
+            </tr>
+            <tr>
+                <th>BasculeAutoReglement</th>
+                <td>{{ client.basculeAutoReglement }}</td>
+            </tr>
+            <tr>
+                <th>DocLangue</th>
+                <td>{{ client.docLangue }}</td>
+            </tr>
+            <tr>
+                <th>EnvoiMctoGestour</th>
+                <td>{{ client.envoiMctoGestour }}</td>
+            </tr>
+            <tr>
+                <th>Nomclt2</th>
+                <td>{{ client.nomclt2 }}</td>
+            </tr>
+            <tr>
+                <th>Codeiso</th>
+                <td>{{ client.codeiso }}</td>
+            </tr>
+            <tr>
+                <th>Modereglt</th>
+                <td>{{ client.modereglt }}</td>
+            </tr>
+            <tr>
+                <th>Echancement</th>
+                <td>{{ client.echancement }}</td>
+            </tr>
+            <tr>
+                <th>Siren</th>
+                <td>{{ client.siren }}</td>
+            </tr>
+            <tr>
+                <th>Siret</th>
+                <td>{{ client.siret }}</td>
+            </tr>
+            <tr>
+                <th>Numtva</th>
+                <td>{{ client.numtva }}</td>
+            </tr>
+            <tr>
+                <th>Typepers</th>
+                <td>{{ client.typepers }}</td>
+            </tr>
+            <tr>
+                <th>Grouperelance</th>
+                <td>{{ client.grouperelance }}</td>
+            </tr>
+            <tr>
+                <th>Clientpayeur</th>
+                <td>{{ client.clientpayeur }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_client_index') }}">back to list</a>
+
+    <a href="{{ path('app_client_edit', {'numclt': client.numclt}) }}">edit</a>
+
+    {{ include('client/_delete_form.html.twig') }}
+{% endblock %}
