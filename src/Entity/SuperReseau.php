@@ -79,6 +79,9 @@ class SuperReseau
     }
 
     // ... (getters and setters)
-
+    public function __toString(): string
+    {
+        return $this->nomsuperreseau;
+    }
 
 }

@@ -1,0 +1,13 @@
+
+<form method="post"
+      action="{{ path('app_reseau_delete', {'seqreseau': reseau.seqreseau}) }}"
+      class="delete-form">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ reseau.seqreseau) }}">
+    <button type="button"
+            class="dropdown-item text-danger border-0 bg-transparent w-100 text-start delete-btn"
+            data-entity-type="ce frais d'annulation"
+            data-confirm-message="Êtes-vous sûr de vouloir supprimer ce frais d'annulation ? Cette action est irréversible."
+            data-success-message="Le frais d'annulation a été supprimé avec succès">
+        <i class="icon-base bx bx-trash me-1"></i> Supprimer
+    </button>
+</form>
