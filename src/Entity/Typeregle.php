@@ -94,7 +94,8 @@ class Typeregle
     }
     public function __toString(): string
     {
-        return (string) $this->getLibtyperegle(); // Or whatever property you want to display
+        return $this->libtyperegle ?? '';
     }
+
 
 }

@@ -1,0 +1,556 @@
+
+                <!-- /.box-header -->
+                {{ form_start(form, {'attr': {'class': 'form-horizontal', 'style': 'font-size: x-small;'}}) }}
+                <div class="box-body d-flex gap-5">
+                    <div class="col-sm-8 card card-body">
+    <!-- First row -->
+    <div class="form-group row align-items-center mb-2">
+        <div class="col-sm-4 d-flex align-items-center">
+            {{ form_label(form.seqclt, 'Code:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+            {{ form_widget(form.seqclt, {'attr': {'class': 'form-select'}}) }}
+            {{ form_errors(form.seqclt) }}
+        </div>
+
+        <div class="col-sm-4 d-flex align-items-center">
+            {{ form_label(form.seqcltpackdb, '(seqcltpackdb):', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+            {{ form_widget(form.seqcltpackdb, {'attr': {'class': 'form-control mode'}}) }}
+            {{ form_errors(form.seqcltpackdb) }}
+        </div>
+
+            <div class="col-sm-4 d-flex align-items-center">
+            {{ form_label(form.refpackdb, 'Groupement agence:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+            {{ form_widget(form.refpackdb, {'attr': {'class': 'form-control mode'}}) }}
+            {{ form_errors(form.refpackdb) }}
+        </div>
+    </div>
+
+    <!-- Second row: Nom & Réseau -->
+    <div class="form-group row align-items-center mb-2">
+        <div class="col-sm-6 d-flex align-items-center">
+            {{ form_label(form.nomclt, 'Nom & Prénom:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+            {{ form_widget(form.nomclt, {
+                'attr': {
+                    'class': 'form-control mode',
+                    'style': 'text-transform: uppercase'
+                }
+            }) }}
+            {{ form_errors(form.nomclt) }}
+        </div>
+
+        <div class="col-sm-6 d-flex align-items-center">
+            {{ form_label(form.nomreseau, 'Réseau:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+            {{ form_widget(form.nomreseau, {
+                'attr': {
+                    'class': 'form-control mode'
+                }
+            }) }}
+            {{ form_errors(form.nomreseau) }}
+        </div>
+    </div>
+
+    <!-- Third row: Adresse -->
+    <div class="form-group row align-items-center mb-2">
+        <div class="col-sm-6 d-flex align-items-center">
+            {{ form_label(form.adresse, 'Adresse(1):', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+            {{ form_widget(form.adresse, {
+                'attr': {
+                    'class': 'form-control mode',
+                    'style': 'text-transform: uppercase',
+                    'maxlength': '250'
+                }
+            }) }}
+            {{ form_errors(form.adresse) }}
+        </div>
+
+        <div class="col-sm-6 d-flex align-items-center">
+            {{ form_label(form.adresse2, 'Adresse(2):', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+            {{ form_widget(form.adresse2, {
+                'attr': {
+                    'class': 'form-control mode',
+                    'style': 'text-transform: uppercase',
+                    'maxlength': '60'
+                }
+            }) }}
+            {{ form_errors(form.adresse2) }}
+        </div>
+    </div>
+
+    <!-- Fourth row - CP/Ville/Pays -->
+    <div class="form-group row align-items-center mb-2">
+        <div class="col-sm-4 d-flex align-items-center">
+            {{ form_label(form.cp, 'CP:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+            {{ form_widget(form.cp, {
+                'attr': {
+                    'class': 'form-control mode',
+                    'style': 'text-transform: uppercase',
+                    'maxlength': '6'
+                }
+            }) }}
+            {{ form_errors(form.cp) }}
+        </div>
+
+        <div class="col-sm-4 d-flex align-items-center">
+            {{ form_label(form.ville, 'Ville:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+            {{ form_widget(form.ville, {
+                'attr': {
+                    'class': 'form-control mode',
+                    'style': 'text-transform: uppercase',
+                    'maxlength': '80'
+                }
+            }) }}
+            {{ form_errors(form.ville) }}
+        </div>
+
+        <div class="col-sm-4 d-flex align-items-center">
+            {{ form_label(form.pays, 'Pays:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+            {{ form_widget(form.pays, {'attr': {'class': 'form-control mode'}}) }}
+            {{ form_errors(form.pays) }}
+        </div>
+    </div>
+
+    <!-- Fifth row - Phones -->
+    <div class="form-group row align-items-center mb-2">
+        <div class="col-sm-6 d-flex align-items-center">
+            {{ form_label(form.tel1, 'Tel(1):', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+            {{ form_widget(form.tel1, {
+                'attr': {
+                    'class': 'form-control mode',
+                    'style': 'text-transform: uppercase',
+                    'maxlength': '50'
+                }
+            }) }}
+            {{ form_errors(form.tel1) }}
+        </div>
+
+        <div class="col-sm-6 d-flex align-items-center">
+            {{ form_label(form.tel2, 'Tel(2):', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+            {{ form_widget(form.tel2, {
+                'attr': {
+                    'class': 'form-control mode',
+                    'style': 'text-transform: uppercase',
+                    'maxlength': '50'
+                }
+            }) }}
+            {{ form_errors(form.tel2) }}
+        </div>
+    </div>
+
+    <!-- Sixth row - Mobile/Fax -->
+    <div class="form-group row align-items-center mb-2">
+        <div class="col-sm-6 d-flex align-items-center">
+            {{ form_label(form.tel3, 'Tel portable:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+            {{ form_widget(form.tel3, {
+                'attr': {
+                    'class': 'form-control mode',
+                    'style': 'text-transform: uppercase',
+                    'maxlength': '20'
+                }
+            }) }}
+            {{ form_errors(form.tel3) }}
+        </div>
+
+        <div class="col-sm-6 d-flex align-items-center">
+            {{ form_label(form.fax, 'Fax:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+            {{ form_widget(form.fax, {
+                'attr': {
+                    'class': 'form-control mode',
+                    'style': 'text-transform: uppercase',
+                    'maxlength': '20'
+                }
+            }) }}
+            {{ form_errors(form.fax) }}
+        </div>
+    </div>
+
+    <!-- Responsable / Groupe client -->
+    <div class="form-group row align-items-center mb-2">
+        <div class="col-sm-6 d-flex align-items-center">
+            {{ form_label(form.patron, 'Premier Responsable:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+            {{ form_widget(form.patron, {
+                'attr': {
+                    'class': 'form-control mode',
+                    'style': 'text-transform: uppercase',
+                    'maxlength': '30'
+                }
+            }) }}
+            {{ form_errors(form.patron) }}
+        </div>
+
+        <div class="col-sm-6 d-flex align-items-center">
+            {{ form_label(form.groupeclient, 'G.Client:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+            {{ form_widget(form.groupeclient, {
+                'attr': {
+                    'class': 'form-control mode',
+                    'style': 'text-transform: uppercase',
+                    'maxlength': '50'
+                }
+            }) }}
+            {{ form_errors(form.groupeclient) }}
+        </div>
+    </div>
+
+    <!-- Contact / Analytique -->
+    <div class="form-group row align-items-center mb-2">
+        <div class="col-sm-6 d-flex align-items-center">
+            {{ form_label(form.contact, 'Contact Tourisme:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+            {{ form_widget(form.contact, {
+                'attr': {
+                    'class': 'form-control mode',
+                    'style': 'text-transform: uppercase',
+                    'maxlength': '30'
+                }
+            }) }}
+            {{ form_errors(form.contact) }}
+        </div>
+
+        <div class="col-sm-6 d-flex align-items-center">
+            {{ form_label(form.analytique, 'S.Analytique:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+            {{ form_widget(form.analytique, {'attr': {'class': 'form-control mode'}}) }}
+            {{ form_errors(form.analytique) }}
+        </div>
+    </div>
+
+    <!-- Comptable / Principal / Commercial -->
+    <div class="form-group row align-items-center mb-2">
+        <div class="col-sm-4 d-flex align-items-center">
+            {{ form_label(form.ccompta, 'Code comptable:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+            {{ form_widget(form.ccompta, {
+                'attr': {
+                    'class': 'form-control mode',
+                    'style': 'text-transform: uppercase',
+                    'maxlength': '25'
+                }
+            }) }}
+            {{ form_errors(form.ccompta) }}
+        </div>
+
+        <div class="col-sm-4 d-flex align-items-center">
+            {{ form_label(form.principal, 'Ag.principale:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+            {{ form_widget(form.principal, {
+                'attr': {
+                    'class': 'form-control mode',
+                    'style': 'text-transform: uppercase',
+                    'maxlength': '10'
+                }
+            }) }}
+            {{ form_errors(form.principal) }}
+        </div>
+
+        <div class="col-sm-4 d-flex align-items-center">
+            <label for="commercial" class="form-label-fixed me-2 mb-0 fw-semibold">Commercial:</label>
+            <select class="form-control mode" name="commercial" id="commercial">
+                <option style="font-weight: bolder;width: auto" value="0"></option>
+                <option value="2" selected>THALASSO N°1</option>
+                <option value="9">SANS</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Tenth row - Email principal -->
+    <div class="form-group row align-items-center mb-2">
+        <div class="col-sm-12 d-flex align-items-center">
+            {{ form_label(form.email, 'Email Principal:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+            {{ form_widget(form.email, {
+                'attr': {
+                    'class': 'form-control mode',
+                    'style': 'text-transform: uppercase',
+                    'maxlength': '50'
+                }
+            }) }}
+            {{ form_errors(form.email) }}
+        </div>
+    </div>
+
+    <!-- Eleventh row - Email compta / Code agence -->
+    <div class="form-group row align-items-center mb-2">
+        <div class="col-sm-6 d-flex align-items-center">
+            {{ form_label(form.compta, 'Email Compta:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+            {{ form_widget(form.compta, {
+                'attr': {
+                    'class': 'form-control mode',
+                    'style': 'text-transform: uppercase',
+                    'maxlength': '150'
+                }
+            }) }}
+            {{ form_errors(form.compta) }}
+        </div>
+
+        <div class="col-sm-6 d-flex align-items-center">
+            {{ form_label(form.codeAgence, 'C.agence:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+            {{ form_widget(form.codeAgence, {
+                'attr': {
+                    'class': 'form-control mode',
+                    'style': 'text-transform: uppercase',
+                    'maxlength': '10'
+                }
+            }) }}
+            {{ form_errors(form.codeAgence) }}
+        </div>
+    </div>
+
+    <!-- Twelfth row - Email resa -->
+    <div class="form-group row align-items-center mb-2">
+        <div class="col-sm-12 d-flex align-items-center">
+            {{ form_label(form.resa, 'Email Resa:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+            {{ form_widget(form.resa, {
+                'attr': {
+                    'class': 'form-control mode',
+                    'style': 'text-transform: uppercase',
+                    'maxlength': '150'
+                }
+            }) }}
+            {{ form_errors(form.resa) }}
+        </div>
+    </div>
+
+    <!-- Thirteenth row - Email convocation -->
+    <div class="form-group row align-items-center mb-2">
+        <div class="col-sm-12 d-flex align-items-center">
+            {{ form_label(form.convoc, 'Email Convocation:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+            {{ form_widget(form.convoc, {
+                'attr': {
+                    'class': 'form-control mode',
+                    'style': 'text-transform: uppercase',
+                    'maxlength': '150'
+                }
+            }) }}
+            {{ form_errors(form.convoc) }}
+        </div>
+    </div>
+
+    <!-- Payment section -->
+    <div class="row mb-2">
+        <div class="col-md-12" style="background: #99ccff; padding-top: 5px;">
+            <!-- Type réglement / Commission TTC -->
+            <div class="form-group row align-items-center mb-2">
+                <div class="col-sm-6 d-flex align-items-center">
+                    {{ form_label(form.libtyperegle, 'Type réglement:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+                    {{ form_widget(form.libtyperegle, {
+                        'attr': {'class': 'form-control mode'}
+                    }) }}
+                    {{ form_errors(form.libtyperegle) }}
+                </div>
+
+                <div class="col-sm-6 d-flex align-items-center">
+                    {{ form_widget(form.comttc, {'attr': {'class': 'mode'}}) }}
+                    <label class="ms-2 mb-0">Commission applicable sur TTC</label>
+                    {{ form_errors(form.comttc) }}
+                </div>
+            </div>
+
+            <!-- Modalité de réglement / Commission -->
+            <div class="form-group row align-items-center mb-2">
+                <div class="col-sm-6 d-flex align-items-center">
+                    {{ form_label(form.libtypeclt, 'Modalité de réglement:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+                    {{ form_widget(form.libtypeclt, {
+                        'attr': {'class': 'form-control mode'}
+                    }) }}
+                    {{ form_errors(form.libtypeclt) }}
+                </div>
+
+                <div class="col-sm-6 d-flex align-items-center">
+                    <label for="commission" class="form-label-fixed me-2 mb-0 fw-semibold">Commission:</label>
+                    <select class="form-control mode" name="commission" id="commission">
+                        <option style="font-weight: bolder;width: auto" value=" "></option>
+                        <option value="1">1</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Observation -->
+    <div class="form-group row align-items-center mb-2">
+        <div class="col-sm-12 d-flex align-items-center">
+            {{ form_label(form.obs, 'Observation:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+            {{ form_widget(form.obs, {'attr': {'class': 'form-control mode'}}) }}
+            {{ form_errors(form.obs) }}
+        </div>
+    </div>
+
+            </div>
+
+                    <!-- Right column -->
+                      <!-- Right column -->
+<div class="col-sm-4 pr-10 pl-10">
+    <!-- Reste à payer -->
+    <div class="form-group row align-items-center mb-3">
+        <div class="col-sm-6">
+            <label for="resteg" class="form-label-fixed me-2 mb-0 fw-semibold">Reste à payer global:</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" class="form-control mode text-end fw-bold" 
+                   name="resteg" id="resteg" maxlength="6" value="0.00">
+        </div>
+    </div>
+
+    <!-- Paiement avant départ warning -->
+    <div class="form-group mb-3 hidden" id="affichage">
+        <div class="alert alert-danger text-center py-2 mb-0">
+            <label for="paiement" class="fw-bold mb-0">Paiement avant départ</label>
+        </div>
+    </div>
+
+    <!-- Checkbox section -->
+    <div class="card mb-3 ">
+        <div class="card-body p-3">
+            <div class="row">
+                {% for field, label in {
+                    libre: 'Main libre',
+                    confirmation: 'Avec confirmation',
+                    paiement: 'Paiement avant départ',
+                    refunique: 'Ref dossier uniquement',
+                    litige: 'Litige',
+                    carnetvoyage: 'Carnet de voyage',
+                    pointcom: 'Client.com',
+                    basculeAutoReglement: 'Bascule Auto Réglement'
+                } %}
+                    <div class="col-md-12 d-flex align-items-center mb-2">
+                        {{ form_widget(attribute(form, field), {'attr': {'class': 'form-check-input mode'}}) }}
+                        <label class="form-check-label ms-2">{{ label }}</label>
+                    </div>
+                {% endfor %}
+
+                <div class="col-md-12 d-flex align-items-center mb-2">
+                    <input type="checkbox" class="form-check-input mode" id="com_annul" name="com_annul">
+                    <label class="form-check-label ms-2">Fact.Annul.avec Com</label>
+                </div>
+
+                <div class="col-md-12 d-flex align-items-center mb-2">
+                    <input type="checkbox" class="form-check-input mode" id="tva_invisible" name="tva_invisible">
+                    <label class="form-check-label ms-2">Ne pas afficher la TVA</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Technical Section -->
+    <div class="card">
+        <div class="card-body p-3">
+            <!-- Amadeus -->
+            <div class="form-group row align-items-center mb-3">
+                <div class="col-sm-5">
+                    <label for="{{ form.codeamadeus.vars.id }}" class="form-label-fixed me-2 mb-0 fw-semibold text-primary">Obligat. pour MCTO Amadeus</label>
+                </div>
+                <div class="col-sm-7">
+                    {{ form_widget(form.codeamadeus, {
+                        'attr': {
+                            'class': 'form-control mode',
+                            'style': 'text-transform: uppercase',
+                            'maxlength': '50'
+                        }
+                    }) }}
+                    {{ form_errors(form.codeamadeus) }}
+                </div>
+            </div>
+
+            <hr class="my-3">
+
+            <!-- BTOB Credentials -->
+            <div class="form-group row align-items-center mb-3">
+                <div class="col-sm-5">
+                    <label for="{{ form.loginbtob.vars.id }}" class="form-label-fixed me-2 mb-0 fw-semibold">LOGIN BTOB</label>
+                </div>
+                <div class="col-sm-7">
+                    {{ form_widget(form.loginbtob, {
+                        'attr': {
+                            'class': 'form-control mode',
+                            'style': 'text-transform: uppercase',
+                            'maxlength': '10'
+                        }
+                    }) }}
+                    {{ form_errors(form.loginbtob) }}
+                </div>
+            </div>
+
+            <div class="form-group row align-items-center mb-3">
+                <div class="col-sm-5">
+                    <label for="{{ form.mdpbtob.vars.id }}" class="form-label-fixed me-2 mb-0 fw-semibold">MDP BTOB</label>
+                </div>
+                <div class="col-sm-7">
+                    {{ form_widget(form.mdpbtob, {
+                        'attr': {
+                            'class': 'form-control mode',
+                            'style': 'text-transform: uppercase',
+                            'maxlength': '10'
+                        }
+                    }) }}
+                    {{ form_errors(form.mdpbtob) }}
+                </div>
+            </div>
+
+            <hr class="my-3">
+
+            <!-- Langue carnet de voyage -->
+            <div class="form-group row align-items-center mb-3">
+                <div class="col-sm-5">
+                    <label class="form-label-fixed me-2 mb-0 fw-semibold text-primary">Langue carnet de voyage</label>
+                </div>
+                <div class="col-sm-7">
+                    {{ form_widget(form.docLangue, {
+                        'attr': {
+                            'class': 'form-control mode'
+                        }
+                    }) }}
+                    {{ form_errors(form.docLangue) }}
+                </div>
+            </div>
+
+            <!-- Date création -->
+            <div class="form-group row align-items-center mb-3">
+                <div class="col-sm-5">
+                    {{ form_label(form.datesaisie, 'D.création:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+                </div>
+                <div class="col-sm-7">
+                    {{ form_widget(form.datesaisie, {
+                        'attr': {
+                            'class': 'form-control mode datepicker',
+                            'style': 'text-transform: uppercase'
+                        }
+                    }) }}
+                    {{ form_errors(form.datesaisie) }}
+                </div>
+            </div>
+
+            <!-- Archiver -->
+            <div class="form-group row align-items-center">
+                <div class="col-sm-5">
+                    <div id="clientarchiver">
+                        <label class="text-danger small fw-bold"></label>
+                    </div>
+                </div>
+                <div class="col-sm-7 d-flex align-items-center">
+                    {{ form_widget(form.archiver, {
+                        'attr': {
+                            'class': 'form-check-input mode',
+                            'style': 'background: rgb(232, 240, 254);'
+                        }
+                    }) }}
+                    <label class="form-check-label ms-2">Archiver ce client</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                </div>
+                <!-- /.box-body -->
+
+
+
+            <div class="form-group row justify-content-between mt-5 mb-5">
+                <div class="col-auto">
+                    <a href="{{ path('app_client_index') }}" class="btn btn-secondary">Annuler</a>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                </div>
+            </div>
+                <!-- /.box-footer -->
+                {{ form_end(form) }}
+
+                                <style>
+    .form-label-fixed {
+        width: 105px;
+        min-width: 105px; 
+    }
+</style>

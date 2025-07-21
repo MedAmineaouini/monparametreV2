@@ -240,7 +240,7 @@ class Commission
     public function setComm36(string $val): static { $this->comm36 = $val; return $this; }
 
     public function __toString(): string
-    {
-        return (string) $this->getCategorie(); // Or whatever property you want to display
-    }
+{
+    return $this->categorie ?? ''; 
+}
 }
