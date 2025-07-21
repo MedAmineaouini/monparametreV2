@@ -1,0 +1,14 @@
+
+<form method="post"
+      action="{{ path('app_curiste_delete', {'seqCuriste': curiste.seqCuriste}) }}"
+      class="delete-form"
+      data-confirm
+      data-confirm-message="Êtes-vous sûr de vouloir supprimer ce curiste ? Cette action est irréversible.">
+    <input type="hidden" name="_method" value="POST">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ curiste.seqCuriste) }}">
+    <button type="submit"
+            class="dropdown-item text-danger border-0 bg-transparent w-100 text-start"
+            title="Supprimer ce curiste">
+        <i class="fas fa-trash-alt me-2"></i> Supprimer
+    </button>
+</form>

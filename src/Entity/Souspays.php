@@ -194,4 +194,8 @@ class Souspays
     {
         $this->ordre = $ordre;
     }
+    public function __toString(): string
+    {
+        return $this->getLibsouspays(); // Remplacez getLibelle() par la propriété que vous voulez afficher
+    }
 }

@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Groupe index{% endblock %}
+
+{% block body %}
+    <h1>Groupe index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Seqgroupe</th>
+                <th>Libgroupe</th>
+                <th>Principal</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for groupe in groupes %}
+            <tr>
+                <td>{{ groupe.seqgroupe }}</td>
+                <td>{{ groupe.libgroupe }}</td>
+                <td>{{ groupe.principal }}</td>
+                <td>
+                    <a href="{{ path('app_groupe_show', {'seqgroupe': groupe.seqgroupe}) }}">show</a>
+                    <a href="{{ path('app_groupe_edit', {'seqgroupe': groupe.seqgroupe}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_groupe_new') }}">Create new</a>
+{% endblock %}

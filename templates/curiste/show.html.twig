@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Curiste{% endblock %}
+
+{% block body %}
+    <h1>Curiste</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>SeqCuriste</th>
+                <td>{{ curiste.seqCuriste }}</td>
+            </tr>
+            <tr>
+                <th>CodeCuriste</th>
+                <td>{{ curiste.codeCuriste }}</td>
+            </tr>
+            <tr>
+                <th>NomCuriste</th>
+                <td>{{ curiste.nomCuriste }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ curiste.adresse }}</td>
+            </tr>
+            <tr>
+                <th>Cp</th>
+                <td>{{ curiste.cp }}</td>
+            </tr>
+            <tr>
+                <th>LibVille</th>
+                <td>{{ curiste.libVille }}</td>
+            </tr>
+            <tr>
+                <th>Tel1</th>
+                <td>{{ curiste.tel1 }}</td>
+            </tr>
+            <tr>
+                <th>Tel2</th>
+                <td>{{ curiste.tel2 }}</td>
+            </tr>
+            <tr>
+                <th>Fax</th>
+                <td>{{ curiste.fax }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ curiste.email }}</td>
+            </tr>
+            <tr>
+                <th>Contact1</th>
+                <td>{{ curiste.contact1 }}</td>
+            </tr>
+            <tr>
+                <th>Contact2</th>
+                <td>{{ curiste.contact2 }}</td>
+            </tr>
+            <tr>
+                <th>Obs</th>
+                <td>{{ curiste.obs }}</td>
+            </tr>
+            <tr>
+                <th>Marge</th>
+                <td>{{ curiste.marge }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_curiste_index') }}">back to list</a>
+
+    <a href="{{ path('app_curiste_edit', {'seqCuriste': curiste.seqCuriste}) }}">edit</a>
+
+    {{ include('curiste/_delete_form.html.twig') }}
+{% endblock %}

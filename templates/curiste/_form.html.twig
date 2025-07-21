@@ -1,0 +1,262 @@
+{{ form_start(form, {'attr': {'class': 'browser-default-validation needs-validation'}}) }}
+
+<div class="card-body p-3" style="font-size: 13px">
+    {# Section Informations générales #}
+    <div class="row g-2">
+        {# Champ codeCuriste #}
+        <div class="col-md-3">
+            {{ form_label(form.codeCuriste, null, {
+                'label_attr': {'class': 'form-label fw-semibold required'},
+                'label': 'Code curiste :'
+            }) }}
+            {{ form_widget(form.codeCuriste, {
+                'attr': {
+                    'class': 'form-control form-control-sm',
+                    'placeholder': 'Code curiste',
+                    'required': 'required'
+                }
+            }) }}
+            <div class="invalid-feedback">
+                Ce champ est obligatoire.
+            </div>
+        </div>
+
+        {# Champ nomCuriste #}
+        <div class="col-md-9">
+            {{ form_label(form.nomCuriste, null, {
+                'label_attr': {'class': 'form-label fw-semibold required'},
+                'label': 'Nom complet :'
+            }) }}
+            {{ form_widget(form.nomCuriste, {
+                'attr': {
+                    'class': 'form-control form-control-sm',
+                    'placeholder': 'Nom du curiste',
+                    'required': 'required'
+                }
+            }) }}
+            <div class="invalid-feedback">
+                Ce champ est obligatoire.
+            </div>
+        </div>
+    </div>
+
+    {# Section Coordonnées #}
+    <div class="row g-2">
+        {# Champ adresse #}
+        <div class="col-md-8">
+            {{ form_label(form.adresse, null, {
+                'label_attr': {'class': 'form-label fw-semibold required'},
+                'label': 'Adresse :'
+            }) }}
+            {{ form_widget(form.adresse, {
+                'attr': {
+                    'class': 'form-control form-control-sm',
+                    'placeholder': 'Adresse complète',
+                    'required': 'required'
+                }
+            }) }}
+        </div>
+
+        {# Champ cp #}
+        <div class="col-md-2">
+            {{ form_label(form.cp, null, {
+                'label_attr': {'class': 'form-label fw-semibold required'},
+                'label': 'Code postal :'
+            }) }}
+            {{ form_widget(form.cp, {
+                'attr': {
+                    'class': 'form-control form-control-sm',
+                    'placeholder': 'CP',
+                    'required': 'required'
+                }
+            }) }}
+        </div>
+
+        {# Champ libVille #}
+        <div class="col-md-2">
+            {{ form_label(form.libVille, null, {
+                'label_attr': {'class': 'form-label fw-semibold required'},
+                'label': 'Ville :'
+            }) }}
+            {{ form_widget(form.libVille, {
+                'attr': {
+                    'class': 'form-control form-control-sm',
+                    'placeholder': 'Ville',
+                    'required': 'required'
+                }
+            }) }}
+        </div>
+    </div>
+
+    <div class="row g-2 mt-2">
+        {# Champ pays #}
+        <div class="col-md-4">
+            {{ form_label(form.pays, null, {
+                'label_attr': {'class': 'form-label fw-semibold required'},
+                'label': 'Pays :'
+            }) }}
+            {{ form_widget(form.pays, {
+                'attr': {
+                    'class': 'form-select form-select-sm',
+                    'required': 'required'
+                }
+            }) }}
+        </div>
+
+        {# Champ sousPays #}
+        <div class="col-md-4">
+            {{ form_label(form.sousPays, null, {
+                'label_attr': {'class': 'form-label fw-semibold'},
+                'label': 'Région :'
+            }) }}
+            {{ form_widget(form.sousPays, {
+                'attr': {
+                    'class': 'form-select form-select-sm'
+                }
+            }) }}
+        </div>
+        {# Champ marge #}
+        <div class="col-md-4">
+            {{ form_label(form.marge, null, {
+                'label_attr': {'class': 'form-label fw-semibold'},
+                'label': 'Marge :'
+            }) }}
+            <div class="input-group input-group-sm">
+                {{ form_widget(form.marge, {
+                    'attr': {
+                        'class': 'form-control',
+                        'placeholder': '0',
+                        'value' : '0'
+                    }
+                }) }}
+                <span class="input-group-text">%</span>
+            </div>
+        </div>
+
+    </div>
+
+    {# Section Contacts #}
+    <div class="row g-2">
+        {# Champ tel1 #}
+        <div class="col-md-3">
+            {{ form_label(form.tel1, null, {
+                'label_attr': {'class': 'form-label fw-semibold required'},
+                'label': 'Téléphone 1 :'
+            }) }}
+            {{ form_widget(form.tel1, {
+                'attr': {
+                    'class': 'form-control form-control-sm',
+                    'placeholder': 'Téléphone principal',
+                    'required': 'required'
+                }
+            }) }}
+        </div>
+
+        {# Champ tel2 #}
+        <div class="col-md-3">
+            {{ form_label(form.tel2, null, {
+                'label_attr': {'class': 'form-label fw-semibold'},
+                'label': 'Téléphone 2 :'
+            }) }}
+            {{ form_widget(form.tel2, {
+                'attr': {
+                    'class': 'form-control form-control-sm',
+                    'placeholder': 'Téléphone secondaire'
+                }
+            }) }}
+        </div>
+
+        {# Champ fax #}
+        <div class="col-md-3">
+            {{ form_label(form.fax, null, {
+                'label_attr': {'class': 'form-label fw-semibold'},
+                'label': 'Fax :'
+            }) }}
+            {{ form_widget(form.fax, {
+                'attr': {
+                    'class': 'form-control form-control-sm',
+                    'placeholder': 'Numéro de fax'
+                }
+            }) }}
+        </div>
+
+        {# Champ email #}
+        <div class="col-md-3">
+            {{ form_label(form.email, null, {
+                'label_attr': {'class': 'form-label fw-semibold required'},
+                'label': 'Email :'
+            }) }}
+            {{ form_widget(form.email, {
+                'attr': {
+                    'class': 'form-control form-control-sm',
+                    'placeholder': 'email@exemple.com',
+                    'required': 'required'
+                }
+            }) }}
+        </div>
+    </div>
+
+    <div class="row g-2 mt-2">
+        {# Champ contact1 #}
+        <div class="col-md-6">
+            {{ form_label(form.contact1, null, {
+                'label_attr': {'class': 'form-label fw-semibold'},
+                'label': 'Contact principal :'
+            }) }}
+            {{ form_widget(form.contact1, {
+                'attr': {
+                    'class': 'form-control form-control-sm',
+                    'placeholder': 'Personne à contacter'
+                }
+            }) }}
+        </div>
+
+        {# Champ contact2 #}
+        <div class="col-md-6">
+            {{ form_label(form.contact2, null, {
+                'label_attr': {'class': 'form-label fw-semibold'},
+                'label': 'Contact secondaire :'
+            }) }}
+            {{ form_widget(form.contact2, {
+                'attr': {
+                    'class': 'form-control form-control-sm',
+                    'placeholder': 'Autre contact'
+                }
+            }) }}
+        </div>
+    </div>
+
+    {# Section Autres informations #}
+    <div class="row g-2">
+
+        {# Champ obs #}
+        <div class="col-md-12">
+            {{ form_label(form.obs, null, {
+                'label_attr': {'class': 'form-label fw-semibold'},
+                'label': 'Observations :'
+            }) }}
+            {{ form_widget(form.obs, {
+                'attr': {
+                    'class': 'form-control form-control-sm',
+                    'rows': 3,
+                    'placeholder': 'Notes et observations'
+                }
+            }) }}
+        </div>
+    </div>
+</div>
+
+{# Boutons d'action #}
+<hr>
+<div class="card-footer p-3 row justify-content-between">
+    <div class="col-auto">
+        <a href="{{ path('app_curiste_index') }}" class="btn btn-outline-danger btn-sm w-100 px-4">Annuler</a>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary btn-sm w-100 mb-2">
+            <i class="bx bx-save me-2"></i>{{ button_label|default('Enregistrer') }}
+        </button>
+    </div>
+</div>
+
+{{ form_end(form) }}

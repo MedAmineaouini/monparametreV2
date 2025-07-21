@@ -249,6 +249,11 @@
                         <i class="bx bx-edit me-2"></i> Mise à jour Clients
                     </a>
                 </li>
+                <li class="menu-item {% if app.request.get('_route') starts with 'reseau' %}active open{% endif %}">
+                    <a href="{{ path('app_reseau_index') }}" class="menu-link">
+                        <i class="bx bx-network-chart me-2"></i> Réseau de clients
+                    </a>
+                </li>
                 <li class="menu-item {% if app.request.get('_route') starts with 'groupementclient' %}active open{% endif %}">
                     <a href="{{ path('app_groupement_client_index') }}" class="menu-link">
                         <i class="fa fa-list-alt me-2"></i> Groupement clients
@@ -257,11 +262,6 @@
                 <li class="menu-item {% if app.request.get('_route') starts with 'typeclt' %}active open{% endif %}">
                     <a href="{{ path('app_type_clt_index') }}" class="menu-link">
                         <i class="fa fa-user-tag me-2"></i>Type clients
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="/reseau/listreseau.php" class="menu-link">
-                        <i class="bx bx-network-chart me-2"></i> Réseau de clients
                     </a>
                 </li>
                 <li class="menu-item {% if app.request.get('_route') starts with 'sousreseau' %}active open{% endif %}">
