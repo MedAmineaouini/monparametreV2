@@ -25,6 +25,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class ClientType extends AbstractType
 {
@@ -109,6 +110,17 @@ class ClientType extends AbstractType
                 },
                 'label' => 'Type réglement',
                 'placeholder' => 'Sélectionner un type',
+                'attr' => ['class' => 'form-select']
+            ])
+            ->add('seqcomm', EntityType::class, [
+                'class' => Commission::class,
+                'choice_label' => 'categorie',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('t')
+                        ->orderBy('t.categorie', 'ASC');
+                },
+                'label' => 'Comission',
+                'placeholder' => 'Sélectionner Commission',
                 'attr' => ['class' => 'form-select']
             ])
             ->add('tel1', TextType::class, [
@@ -202,9 +214,12 @@ class ClientType extends AbstractType
                 'label' => 'Paiement',
                 'required' => false,
             ])
-            ->add('datesaisie', DateTimeType::class, [
+            ->add('datesaisie', DateType::class, [
                 'label' => 'Date de Saisie',
-                'required' => false,
+                'widget' => 'single_text',
+                'attr' => [
+                    'class' => 'form-control',
+                ],
             ])
             ->add('compta', TextType::class, [
                 'label' => 'Compta',

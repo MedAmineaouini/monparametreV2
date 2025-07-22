@@ -356,11 +356,15 @@
                 </div>
 
                 <div class="col-sm-6 d-flex align-items-center">
-                    <label for="commission" class="form-label-fixed me-2 mb-0 fw-semibold">Commission:</label>
-                    <select class="form-control mode" name="commission" id="commission">
-                        <option style="font-weight: bolder;width: auto" value=" "></option>
-                        <option value="1">1</option>
-                    </select>
+                    {{ form_label(form.seqcomm, 'Commission:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+                    {{ form_widget(form.seqcomm, {
+                        'attr': {
+                            'class': 'form-select mode',
+                            'style': 'text-transform: uppercase',
+                            'maxlength': '80'
+                        }
+                    }) }}
+                    {{ form_errors(form.seqcomm) }}
                 </div>
             </div>
         </div>
@@ -519,6 +523,7 @@
                     }) }}
                     {{ form_errors(form.datesaisie) }}
                 </div>
+                
             </div>
 
             <!-- Archiver -->

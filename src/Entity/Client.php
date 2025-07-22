@@ -251,13 +251,10 @@ class Client
     #[ORM\Column(name: 'SEQSOUSRESEAU', type: Types::INTEGER,nullable: true, options: ['default' => 0])]
     private ?int  $seqsousreseau = 0;
     
-    // #[ORM\Column(name: 'SEQCOMMERCIAL', type: Types::INTEGER, nullable: true,options: ['default' => 0])]
-    // private ?int  $seqcommercial = 0;
-    
     #[ORM\Column(name: 'SEQTYPEREGLE', type: Types::INTEGER,nullable: true, options: ['default' => 0])]
     private ?int  $seqtyperegle = 0;
-    #[ORM\Column(name: 'SEQCOMM', type: Types::INTEGER,nullable: true, options: ['default' => 0])]
-    private ?int  $seqcomm = 0;
+    // #[ORM\Column(name: 'SEQCOMM', type: Types::INTEGER,nullable: true, options: ['default' => 0])]
+    // private ?int  $seqcomm = 0;
     
     #[ORM\Column(name: 'SEQCLIENT_PRINCIPAL', type: Types::INTEGER, nullable: true, options: ['default' => 0])]
     private ?int $seqclientPrincipal = null;
@@ -280,6 +277,10 @@ class Client
     #[ORM\ManyToOne(targetEntity: Typeregle::class)]
     #[ORM\JoinColumn(name: 'LIBTYPEREGLE', referencedColumnName: 'SEQTYPEREGLE', nullable: false)]
     private ?Typeregle $libtyperegle = null;
+
+    #[ORM\ManyToOne(targetEntity: Commission::class)]
+    #[ORM\JoinColumn(name: 'SEQCOMM', referencedColumnName: 'SEQCOMM', nullable: false)]
+    private ?Commission $seqcomm = null;
 
 
 
@@ -690,6 +691,16 @@ class Client
     public function setSEQCOMMERCIAL(?Commercial $seqcommercial): self
     {
         $this->seqcommercial = $seqcommercial;
+        return $this;
+    }
+    public function getSEQCOMM(): ?Commission
+    {
+        return $this->seqcomm;
+    }
+
+    public function setSEQCOMM(?Commission $seqcomm): self
+    {
+        $this->seqcomm = $seqcomm;
         return $this;
     }
 
@@ -1104,17 +1115,8 @@ class Client
         return $this;
     }
 
-    public function getSeqcomm():?int
-    {
-        return $this->seqcomm;
-    }
 
-    public function setSeqcomm(?int $seqcomm): self
-    {
-        $this->seqcomm = $seqcomm;
-        return $this;
-    }
-
+    
     public function getSeqclientPrincipal(): ?int
     {
         return $this->seqclientPrincipal;
