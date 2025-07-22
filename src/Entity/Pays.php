@@ -107,7 +107,10 @@ class Pays
 
         return $this;
     }
-
+    public function __toString(): string
+    {
+        return $this->getLIBPAYS(); // Remplacez getLibelle() par la propriété que vous voulez afficher
+    }
 
 
 }

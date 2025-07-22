@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Groupe{% endblock %}
+
+{% block body %}
+    <h1>Groupe</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Seqgroupe</th>
+                <td>{{ groupe.seqgroupe }}</td>
+            </tr>
+            <tr>
+                <th>Libgroupe</th>
+                <td>{{ groupe.libgroupe }}</td>
+            </tr>
+            <tr>
+                <th>Principal</th>
+                <td>{{ groupe.principal }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_groupe_index') }}">back to list</a>
+
+    <a href="{{ path('app_groupe_edit', {'seqgroupe': groupe.seqgroupe}) }}">edit</a>
+
+    {{ include('groupe/_delete_form.html.twig') }}
+{% endblock %}

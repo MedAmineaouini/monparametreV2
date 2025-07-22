@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RFT | Liste des Curistes{% endblock %}
+
+{% block body %}
+    <div class="flex-grow-1 container-p-y container-fluid">
+        <div class="card shadow rounded-3 border-0">
+            <div class="card-header text-white">
+                <div class="row align-items-center">
+                    <div class="col-12 col-md-10 mb-2 mb-md-0">
+                        <h5 class="mb-0 text-center text-md-start">📋 Liste des curistes</h5>
+                    </div>
+                    <div class="col-9 col-md-2 d-flex flex-column flex-md-row justify-content-md-end gap-2">
+                        <a class="btn btn-success w-100 w-md-auto" href="{{ path('app_curiste_new') }}">
+                            <i class="bx bx-plus me-2"></i>Ajouter un curiste
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body p-1" style="font-size: 12px;">
+                <table class="table table-hover table-striped table-bordered mb-1">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Code</th>
+                        <th>Nom</th>
+                        <th>Adresse</th>
+                        <th>CP</th>
+                        <th>Ville</th>
+                        <th>Tél 1</th>
+                        <th>Email</th>
+                        <th>Contact</th>
+                        <th>Marge</th>
+                        <th>actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for curiste in curistes %}
+                        <tr>
+                            <td>{{ curiste.seqCuriste }}</td>
+                            <td>{{ curiste.codeCuriste }}</td>
+                            <td>{{ curiste.nomCuriste }}</td>
+                            <td>{{ curiste.adresse }}</td>
+                            <td>{{ curiste.cp }}</td>
+                            <td>{{ curiste.libVille }}</td>
+                            <td>{{ curiste.tel1 }}</td>
+                            <td>{{ curiste.email }}</td>
+                            <td>{{ curiste.contact1 }}</td>
+                            <td>{{ curiste.marge }}</td>
+                            <td class="text-center">
+                                <div class="dropdown">
+                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Actions">
+                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                       <li>
+                                            <a class="dropdown-item" href="{{ path('app_curiste_edit', {'seqCuriste': curiste.seqCuriste}) }}">
+                                                <i class="bx bx-edit-alt me-2"></i>Consulter | Modifier
+                                            </a>
+                                        </li>
+                                        <li>
+                                            {{ include('curiste/_delete_form.html.twig', {
+                                                curiste: curiste,
+                                                btn_class: 'dropdown-item'
+                                            }) }}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="11" style="text-align: center">Aucun curiste trouvé...</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
