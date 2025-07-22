@@ -1,4 +1,12 @@
-<form method="post" action="{{ path('app_client_delete', {'numclt': client.numclt}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+<form method="post"
+      action="{{ path('app_client_delete', {'numclt': client.numclt}) }}"
+      class="delete-form">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ client.numclt) }}">
-    <button class="btn">Delete</button>
+    <button type="button"
+            class="btn btn-link text-danger delete-btn"
+            data-entity-type="client"
+            data-confirm-message="Êtes-vous sûr de vouloir supprimer ce client ? Cette action est irréversible."
+            data-success-message="Le client a été supprimé avec succès">
+        <i class="icon-base bx bx-trash me-1"></i> Supprimer
+    </button>
 </form>
