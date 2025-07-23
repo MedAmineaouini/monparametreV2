@@ -122,11 +122,48 @@ class ClientController extends AbstractController
     #[Route('/{numclt}', name: 'app_client_delete', methods: ['POST'])]
     public function delete(Request $request, Client $client, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$client->getNumclt(), $request->request->get('_token'))) {
+        if (!$this->isCsrfTokenValid('delete'.$client->getNumclt(), $request->request->get('_token'))) {
+            if ($request->isXmlHttpRequest()) {
+                return $this->json([
+                    'success' => false,
+                    'message' => 'Token CSRF invalide',
+                ], Response::HTTP_BAD_REQUEST);
+            }
+            return $this->redirectToRoute('app_client_index');
+        }
+    
+        try {
             $entityManager->remove($client);
             $entityManager->flush();
+    
+            if ($request->isXmlHttpRequest()) {
+                return $this->json([
+                    'success' => true,
+                    'message' => 'Client supprimé avec succès.',
+                    'redirect' => $this->generateUrl('app_client_index'),
+                ]);
+            }
+    
+            $this->addFlash('success', 'Le client a été supprimé avec succès.');
+        } catch (\Exception $e) {
+            $errorData = [
+                'success' => false,
+                'message' => 'Erreur lors de la suppression du client.',
+                'details' => $this->getParameter('kernel.debug') ? [
+                    'exception' => get_class($e),
+                    'message' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                ] : null,
+            ];
+    
+            if ($request->isXmlHttpRequest()) {
+                return $this->json($errorData, Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+    
+            $this->addFlash('error', $errorData['message']);
         }
-
-        return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
+    
+        return $this->redirectToRoute('app_client_index');
     }
+    
 }

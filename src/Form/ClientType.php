@@ -7,6 +7,8 @@ use App\Entity\Commission;
 use App\Entity\Typeregle;
 use App\Entity\SousReseau;
 use App\Entity\Commercial;
+use App\Entity\Pays;
+use App\Entity\Ville;
 use App\Entity\TypeClt;
 use App\Entity\SuperReseau;
 use Symfony\Component\Form\AbstractType;
@@ -22,6 +24,8 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class ClientType extends AbstractType
 {
@@ -64,13 +68,60 @@ class ClientType extends AbstractType
                 'label' => 'Code Postal',
                 'required' => false,
             ])
-            ->add('ville', TextType::class, [
+            ->add('VILLE', EntityType::class, [
+                'class' => Ville::class,
+                'choice_label' => 'libville',
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('v')
+                        ->orderBy('v.libville', 'ASC');
+                },
                 'label' => 'Ville',
-                'required' => false,
+                'placeholder' => 'Sélectionner une ville',
+                'attr' => ['class' => 'form-select']
             ])
-            ->add('pays', TextType::class, [
+            ->add('PAYS', EntityType::class, [
+                'class' => Pays::class,
+                'choice_label' => 'LIBPAYS',
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('p')
+                        ->orderBy('p.LIBPAYS', 'ASC');
+                },
                 'label' => 'Pays',
-                'required' => false,
+                'placeholder' => 'Sélectionner un pays',
+                'attr' => ['class' => 'form-select']
+            ])
+            ->add('SEQCOMMERCIAL', EntityType::class, [
+                'class' => Commercial::class,
+                'choice_label' => 'nomCommercial',
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('v')
+                        ->orderBy('v.nomCommercial', 'ASC');
+                },
+                'label' => 'Commercial',
+                'placeholder' => 'Sélectionner Commercial',
+                'attr' => ['class' => 'form-select']
+            ])
+            ->add('libtyperegle', EntityType::class, [
+                'class' => Typeregle::class,
+                'choice_label' => 'libtyperegle',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('t')
+                        ->orderBy('t.libtyperegle', 'ASC');
+                },
+                'label' => 'Type réglement',
+                'placeholder' => 'Sélectionner un type',
+                'attr' => ['class' => 'form-select']
+            ])
+            ->add('seqcomm', EntityType::class, [
+                'class' => Commission::class,
+                'choice_label' => 'categorie',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('t')
+                        ->orderBy('t.categorie', 'ASC');
+                },
+                'label' => 'Comission',
+                'placeholder' => 'Sélectionner Commission',
+                'attr' => ['class' => 'form-select']
             ])
             ->add('tel1', TextType::class, [
                 'label' => 'Téléphone 1',
@@ -154,17 +205,21 @@ class ClientType extends AbstractType
             //     'label' => 'Code Commercial',
             //     'required' => false,
             // ])
-            ->add('libtyperegle', TextType::class, [
-                'label' => 'Libellé Type Règle',
-                'required' => false,
-            ])
+            // ->add('libtyperegle', TextType::class, [
+            //     'label' => 'Libellé Type Règle',
+            //     'required' => false,
+            // ])
+
             ->add('paiement', IntegerType::class, [
                 'label' => 'Paiement',
                 'required' => false,
             ])
-            ->add('datesaisie', DateTimeType::class, [
+            ->add('datesaisie', DateType::class, [
                 'label' => 'Date de Saisie',
-                'required' => false,
+                'widget' => 'single_text',
+                'attr' => [
+                    'class' => 'form-control',
+                ],
             ])
             ->add('compta', TextType::class, [
                 'label' => 'Compta',
@@ -315,18 +370,44 @@ class ClientType extends AbstractType
                 'label' => 'Mot de passe BtoB',
                 'required' => false,
             ])
-            ->add('analytique', TextType::class, [
-                'label' => 'Analytique',
+            ->add('analytique', ChoiceType::class, [
+                'label' => 'S.Analytique',
+                'choices' => [
+                    'GROUPES' => 'GROUPES',
+                    'VPG' => 'VPG',
+                    'B2C' => 'B2C',
+                    'VENTE PRIVEE' => 'VENTE PRIVEE',
+                    'ATTENTE' => 'ATTENTE',
+                    'VOYAGES PRIVE' => 'VOYAGES PRIVE',
+                    'VOLS SECS' => 'VOLS SECS',
+                    'AGENCES' => 'AGENCES',
+                    'COM' => 'COM',
+                    'AUTRES REVENUS' => 'AUTRES REVENUS',
+                ],
+                'placeholder' => 'Sélectionner...',
                 'required' => false,
+                'attr' => [
+                    'class' => 'form-select'
+                ]
             ])
             ->add('basculeAutoReglement', IntegerType::class, [
                 'label' => 'Bascule auto règlement',
                 'required' => false,
             ])
-            ->add('docLangue', TextType::class, [
+            ->add('docLangue', ChoiceType::class, [
                 'label' => 'Langue des documents',
                 'required' => false,
+                'choices' => [
+                    'FR' => 'FR',
+                    'DE' => 'DE',
+                    'EN' => 'EN',
+                    'ES' => 'ES',
+                    'NL' => 'NL',
+                    'IT' => 'IT',
+                ],
+                'placeholder' => 'Choisir...',
             ])
+
             // ->add('envoiMctoGestour', IntegerType::class, [
             //     'label' => 'Envoi MCTO Gestour',
             //     'required' => false,

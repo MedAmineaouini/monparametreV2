@@ -42,12 +42,6 @@ class Client
     #[ORM\Column(name: 'CP', type: Types::STRING, length: 6, nullable: true, options: ['default' => ''])]
     private ?string $cp = '';
     
-    #[ORM\Column(name: 'VILLE', type: Types::STRING, length: 30, nullable: true, options: ['default' => ''])]
-    private ?string $ville = '';  
-    
-    #[ORM\Column(name: 'PAYS', type: Types::STRING, length: 20, nullable: true, options: ['default' => ''])]
-    private ?string $pays = '';
-    
     #[ORM\Column(name: 'TEL1', type: Types::STRING, length: 20, nullable: true, options: ['default' => ''])]
     private ?string $tel1 = '';
     
@@ -104,9 +98,7 @@ class Client
     
     #[ORM\Column(name: 'CODECOMMERCIAL', type: Types::STRING, nullable: true,length: 4, options: ['default' => ''])]
     private ?string $codecommercial = '';
-    
-    #[ORM\Column(name: 'LIBTYPEREGLE', type: Types::STRING, nullable: true,length: 60, options: ['default' => ''])]
-    private ?string $libtyperegle = '';
+
     
     #[ORM\Column(name: 'PAIEMENT', type: Types::INTEGER, nullable: true,options: ['default' => 0])]
     private ?int  $paiement = 0;
@@ -259,21 +251,38 @@ class Client
     #[ORM\Column(name: 'SEQSOUSRESEAU', type: Types::INTEGER,nullable: true, options: ['default' => 0])]
     private ?int  $seqsousreseau = 0;
     
-    #[ORM\Column(name: 'SEQCOMMERCIAL', type: Types::INTEGER, nullable: true,options: ['default' => 0])]
-    private ?int  $seqcommercial = 0;
-    
     #[ORM\Column(name: 'SEQTYPEREGLE', type: Types::INTEGER,nullable: true, options: ['default' => 0])]
     private ?int  $seqtyperegle = 0;
-    
-    #[ORM\Column(name: 'SEQCOMM', type: Types::INTEGER,nullable: true, options: ['default' => 0])]
-    private ?int  $seqcomm = 0;
+    // #[ORM\Column(name: 'SEQCOMM', type: Types::INTEGER,nullable: true, options: ['default' => 0])]
+    // private ?int  $seqcomm = 0;
     
     #[ORM\Column(name: 'SEQCLIENT_PRINCIPAL', type: Types::INTEGER, nullable: true, options: ['default' => 0])]
     private ?int $seqclientPrincipal = null;
     
     #[ORM\Column(name: 'Commission', type: Types::INTEGER, nullable: true, options: ['default' => 0])]
     private ?int $commission = null;
-    
+
+    #[ORM\ManyToOne(targetEntity: Ville::class)]
+    #[ORM\JoinColumn(name: 'VILLE', referencedColumnName: 'SEQVILLE', nullable: false)]
+    private ?ville $VILLE = null;
+
+    #[ORM\ManyToOne(targetEntity: Pays::class)]
+    #[ORM\JoinColumn(name: 'PAYS', referencedColumnName: 'IDPAYS', nullable: false)]
+    private ?pays $PAYS = null;
+
+    #[ORM\ManyToOne(targetEntity: Commercial::class)]
+    #[ORM\JoinColumn(name: 'SEQCOMMERCIAL', referencedColumnName: 'SEQCOMMERCIAL', nullable: false)]
+    private ?Commercial $seqcommercial = null;
+
+    #[ORM\ManyToOne(targetEntity: Typeregle::class)]
+    #[ORM\JoinColumn(name: 'LIBTYPEREGLE', referencedColumnName: 'SEQTYPEREGLE', nullable: false)]
+    private ?Typeregle $libtyperegle = null;
+
+    #[ORM\ManyToOne(targetEntity: Commission::class)]
+    #[ORM\JoinColumn(name: 'SEQCOMM', referencedColumnName: 'SEQCOMM', nullable: false)]
+    private ?Commission $seqcomm = null;
+
+
 
     // #[ORM\OneToOne(targetEntity: Commission::class)]
     // #[ORM\JoinColumn(name: "commission_id", referencedColumnName: "SEQCOMM")]
@@ -404,27 +413,28 @@ class Client
         return $this;
     }
     
-    public function getVille(): string
+    public function getVILLE(): ?Ville
     {
-        return $this->ville ?? '';
+        return $this->VILLE;
     }
-    
-    public function setVille(?string $ville): self
+
+    public function setVILLE(?Ville $VILLE): self
     {
-        $this->ville = $ville ?? '';
+        $this->VILLE = $VILLE;
         return $this;
     }
 
-    public function getPays(): string
+    public function getPAYS(): ?Pays
     {
-        return $this->pays ?? '';
+        return $this->PAYS;
     }
-    
-    public function setPays(?string $pays): self
+
+    public function setPAYS(?Pays $PAYS): self
     {
-        $this->pays = $pays ?? '';
+        $this->PAYS = $PAYS;
         return $this;
     }
+
     
     public function getTel1(): string
     {
@@ -618,17 +628,6 @@ class Client
         return $this;
     }
     
-    public function getLibtyperegle(): ?string
-    {
-        return $this->libtyperegle?? '';
-    }
-    
-    public function setLibtyperegle(?string $libtyperegle): self
-    {
-        $this->libtyperegle = $libtyperegle?? '';
-        return $this;
-    }
-    
     public function getPaiement():?int
     {
         return $this->paiement;
@@ -684,20 +683,41 @@ class Client
         return $this;
     }
     
-    public function getTyperegle(): ?string
+    public function getSEQCOMMERCIAL(): ?Commercial
     {
-        return $this->typeregle?? '';
+        return $this->seqcommercial;
+    }
+
+    public function setSEQCOMMERCIAL(?Commercial $seqcommercial): self
+    {
+        $this->seqcommercial = $seqcommercial;
+        return $this;
+    }
+    public function getSEQCOMM(): ?Commission
+    {
+        return $this->seqcomm;
+    }
+
+    public function setSEQCOMM(?Commission $seqcomm): self
+    {
+        $this->seqcomm = $seqcomm;
+        return $this;
+    }
+
+    public function getLIBTYPEREGLE(): ?Typeregle
+    {
+        return $this->libtyperegle;
     }
     
-    public function setTyperegle(?string $typeregle): self
+    public function setLIBTYPEREGLE(?Typeregle $libtyperegle): self
     {
-        $this->typeregle = $typeregle?? '';
+        $this->libtyperegle = $libtyperegle;
         return $this;
     }
     
     public function getLibtypeclt(): ?string
     {
-        return $this->libtypeclt?? '';
+        return $this->libtypeclt;
     }
     
     public function setLibtypeclt(?string $libtypeclt): self
@@ -1081,16 +1101,8 @@ class Client
         return $this;
     }
 
-    public function getSeqcommercial():?int
-    {
-        return $this->seqcommercial;
-    }
-
-    public function setSeqcommercial(?int $seqcommercial): self
-    {
-        $this->seqcommercial = $seqcommercial;
-        return $this;
-    }
+  
+ 
 
     public function getSeqtyperegle():?int
     {
@@ -1103,17 +1115,8 @@ class Client
         return $this;
     }
 
-    public function getSeqcomm():?int
-    {
-        return $this->seqcomm;
-    }
 
-    public function setSeqcomm(?int $seqcomm): self
-    {
-        $this->seqcomm = $seqcomm;
-        return $this;
-    }
-
+    
     public function getSeqclientPrincipal(): ?int
     {
         return $this->seqclientPrincipal;

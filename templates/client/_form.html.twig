@@ -90,21 +90,21 @@
         </div>
 
         <div class="col-sm-4 d-flex align-items-center">
-            {{ form_label(form.ville, 'Ville:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
-            {{ form_widget(form.ville, {
+            {{ form_label(form.VILLE, 'Ville:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+            {{ form_widget(form.VILLE, {
                 'attr': {
-                    'class': 'form-control mode',
+                    'class': 'form-select mode',
                     'style': 'text-transform: uppercase',
                     'maxlength': '80'
                 }
             }) }}
-            {{ form_errors(form.ville) }}
+            {{ form_errors(form.VILLE) }}
         </div>
 
         <div class="col-sm-4 d-flex align-items-center">
-            {{ form_label(form.pays, 'Pays:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
-            {{ form_widget(form.pays, {'attr': {'class': 'form-control mode'}}) }}
-            {{ form_errors(form.pays) }}
+            {{ form_label(form.PAYS, 'Pays:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+            {{ form_widget(form.PAYS, {'attr': {'class': 'form-select mode'}}) }}
+            {{ form_errors(form.PAYS) }}
         </div>
     </div>
 
@@ -205,7 +205,7 @@
 
         <div class="col-sm-6 d-flex align-items-center">
             {{ form_label(form.analytique, 'S.Analytique:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
-            {{ form_widget(form.analytique, {'attr': {'class': 'form-control mode'}}) }}
+            {{ form_widget(form.analytique, {'attr': {'class': 'form-select'}}) }}
             {{ form_errors(form.analytique) }}
         </div>
     </div>
@@ -237,12 +237,15 @@
         </div>
 
         <div class="col-sm-4 d-flex align-items-center">
-            <label for="commercial" class="form-label-fixed me-2 mb-0 fw-semibold">Commercial:</label>
-            <select class="form-control mode" name="commercial" id="commercial">
-                <option style="font-weight: bolder;width: auto" value="0"></option>
-                <option value="2" selected>THALASSO N°1</option>
-                <option value="9">SANS</option>
-            </select>
+            {{ form_label(form.SEQCOMMERCIAL, 'Commercial:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+            {{ form_widget(form.SEQCOMMERCIAL, {
+                'attr': {
+                    'class': 'form-select mode',
+                    'style': 'text-transform: uppercase',
+                    'maxlength': '80'
+                }
+            }) }}
+            {{ form_errors(form.SEQCOMMERCIAL) }}
         </div>
     </div>
 
@@ -324,9 +327,13 @@
             <!-- Type réglement / Commission TTC -->
             <div class="form-group row align-items-center mb-2">
                 <div class="col-sm-6 d-flex align-items-center">
-                    {{ form_label(form.libtyperegle, 'Type réglement:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+                    {{ form_label(form.libtyperegle, 'Typeregle:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
                     {{ form_widget(form.libtyperegle, {
-                        'attr': {'class': 'form-control mode'}
+                        'attr': {
+                            'class': 'form-select mode',
+                            'style': 'text-transform: uppercase',
+                            'maxlength': '80'
+                        }
                     }) }}
                     {{ form_errors(form.libtyperegle) }}
                 </div>
@@ -349,11 +356,15 @@
                 </div>
 
                 <div class="col-sm-6 d-flex align-items-center">
-                    <label for="commission" class="form-label-fixed me-2 mb-0 fw-semibold">Commission:</label>
-                    <select class="form-control mode" name="commission" id="commission">
-                        <option style="font-weight: bolder;width: auto" value=" "></option>
-                        <option value="1">1</option>
-                    </select>
+                    {{ form_label(form.seqcomm, 'Commission:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+                    {{ form_widget(form.seqcomm, {
+                        'attr': {
+                            'class': 'form-select mode',
+                            'style': 'text-transform: uppercase',
+                            'maxlength': '80'
+                        }
+                    }) }}
+                    {{ form_errors(form.seqcomm) }}
                 </div>
             </div>
         </div>
@@ -487,13 +498,15 @@
                     <label class="form-label-fixed me-2 mb-0 fw-semibold text-primary">Langue carnet de voyage</label>
                 </div>
                 <div class="col-sm-7">
-                    {{ form_widget(form.docLangue, {
-                        'attr': {
-                            'class': 'form-control mode'
-                        }
-                    }) }}
-                    {{ form_errors(form.docLangue) }}
-                </div>
+                {{ form_widget(form.docLangue, {
+                    'attr': {
+                        'class': 'form-control mode',
+                        'style': 'background: rgb(232, 240, 254);'
+                    }
+                }) }}
+                {{ form_errors(form.docLangue) }}
+            </div>
+
             </div>
 
             <!-- Date création -->
@@ -510,6 +523,7 @@
                     }) }}
                     {{ form_errors(form.datesaisie) }}
                 </div>
+                
             </div>
 
             <!-- Archiver -->
