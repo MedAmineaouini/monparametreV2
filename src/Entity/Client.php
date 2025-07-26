@@ -290,17 +290,11 @@ class Client
     #[ORM\JoinColumn(name: 'LIBTYPECLT', referencedColumnName: 'SEQGROUPEMENTCLIENT', nullable: false)]
     private ?GroupementClient $libtypeclt = null;
 
-
-
-
-
-
-
     public function __construct()
     {
         $this->subordonnes = new ArrayCollection();
+        $this->datesaisie = new \DateTime();
     }
-
     public function getNumclt(): ?int
     {
         return $this->numclt;
@@ -905,16 +899,18 @@ class Client
         return $this;
     }
     
-    public function getArchiver():?int
+    public function getArchiver(): bool
     {
-        return $this->archiver;
+        return (bool) $this->archiver;
     }
-    
-    public function setArchiver(int $archiver): self
+
+
+    public function setArchiver(bool $archiver): self
     {
-        $this->archiver = $archiver;
+        $this->archiver = $archiver ? 1 : 0;
         return $this;
     }
+    
     
     public function getLoginGalileo(): ?string
     {

@@ -2,7 +2,7 @@
 {{ form_start(form, {'attr': {'class': 'form-horizontal', 'style': 'font-size: x-small;'}}) }}
 <div class="box-body d-flex gap-5">
 	<div
-		class="col-sm-8 card card-body">
+		class="col-sm-9 card card-body">
 		<!-- First row -->
 		<div class="form-group row align-items-center mb-2">
 			<div class="col-sm-4 d-flex align-items-center">
@@ -401,7 +401,7 @@
 	<!-- Right column -->
 	<!-- Right column -->
 	<div
-		class="col-sm-4 pr-10 pl-10">
+		class="col-sm-3 pr-10 pl-10">
 		<!-- Reste à payer -->
 		<div class="form-group row align-items-center mb-3">
 			<div class="col-sm-6">
@@ -413,11 +413,13 @@
 		</div>
 
 		<!-- Paiement avant départ warning -->
-		<div class="form-group mb-3 hidden" id="affichage">
-			<div class="alert alert-danger text-center py-2 mb-0">
-				<label for="paiement" class="fw-bold mb-0">Paiement avant départ</label>
+		{% if form.vars.value.numclt is not null %}
+			<div class="form-group mb-3" id="affichage">
+				<div class="alert alert-danger text-center py-2 mb-0">
+					<label for="paiement" class="fw-bold mb-0">Paiement avant départ</label>
+				</div>
 			</div>
-		</div>
+		{% endif %}
 
 		<!-- Checkbox section -->
 		<div class="card mb-3 ">
@@ -531,9 +533,17 @@
 
 				<!-- Date création -->
 				<div class="form-group row align-items-center mb-3">
+
+
+					{% if form.vars.value.numclt is not null %}
 					<div class="col-sm-5">
 						{{ form_label(form.datesaisie, 'D.création:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
 					</div>
+					{% else %}
+							<div class="col-sm-5">
+						{{ form_label(form.datesaisie, 'D.saisie:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold'}}) }}
+					</div>
+					{% endif %}
 					<div class="col-sm-7">
 						{{ form_widget(form.datesaisie, {
                         'attr': {
@@ -550,18 +560,21 @@
 				<div class="form-group row align-items-center">
 					<div class="col-sm-5">
 						<div id="clientarchiver">
-							<label class="text-danger small fw-bold"></label>
+							<div class="col-sm-12 form-check form-switch mt-6">
+                        {{ form_widget(form.archiver, {
+                            'attr': {
+                                'class': 'form-check-input',
+                                'role': 'switch'
+                            }
+                        }) }}
+                        {{ form_label(form.archiver, null, {
+                            'label_attr': {'class': 'form-check-label fw-semibold'},
+                            'label': 'Archiver ce client'
+                        }) }}
+                    </div>
 						</div>
 					</div>
-					<div class="col-sm-7 d-flex align-items-center">
-						{{ form_widget(form.archiver, {
-                        'attr': {
-                            'class': 'form-check-input mode',
-                            'style': 'background: rgb(232, 240, 254);'
-                        }
-                    }) }}
-						<label class="form-check-label ms-2">Archiver ce client</label>
-					</div>
+					
 				</div>
 			</div>
 		</div>

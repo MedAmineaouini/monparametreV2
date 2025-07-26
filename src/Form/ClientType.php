@@ -241,8 +241,10 @@ class ClientType extends AbstractType
             ->add('datesaisie', DateType::class, [
                 'label' => 'Date de Saisie',
                 'widget' => 'single_text',
+                'html5' => true,
                 'attr' => [
                     'class' => 'form-control',
+                    'readonly' => true, 
                 ],
             ])
             ->add('compta', TextType::class, [
@@ -316,7 +318,7 @@ class ClientType extends AbstractType
                 'label' => 'Carnet Voyage',
                 'required' => false,
             ])
-            ->add('archiver', IntegerType::class, [
+            ->add('archiver', CheckboxType::class, [
                 'label' => 'Archiver',
                 'required' => false,
             ])
@@ -487,6 +489,12 @@ class ClientType extends AbstractType
                 'label' => 'principal',
                 'required' => false,
             ]);
+            // ->add('principal', CheckboxType::class, [
+            //     'label' => 'Client Principal',
+            //     'required' => false,
+            //     'mapped' => false 
+            // ]);
+            
                         // ->add('superReseau', TextType::class, [
             //     'label' => 'superReseau',
             //     'required' => false,
