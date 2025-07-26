@@ -77,21 +77,34 @@ class ClientController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $client = new Client();
+    
+        $lastSeq = $entityManager->createQueryBuilder()
+            ->select('MAX(c.seqclt)')
+            ->from(Client::class, 'c')
+            ->getQuery()
+            ->getSingleScalarResult();
+    
+        $nextSeq = $lastSeq ? (int)$lastSeq + 1 : 1;
+    
+        $client->setSeqclt(str_pad($nextSeq, 4, '0', STR_PAD_LEFT));
+    
+
         $form = $this->createForm(ClientType::class, $client);
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($client);
             $entityManager->flush();
-
+    
             return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
         }
-
+    
         return $this->renderForm('client/new.html.twig', [
             'client' => $client,
             'form' => $form,
         ]);
     }
+    
 
     #[Route('/{numclt}', name: 'app_client_show', methods: ['GET'])]
     public function show(Client $client): Response

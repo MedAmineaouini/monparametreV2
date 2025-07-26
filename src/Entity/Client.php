@@ -20,8 +20,6 @@ class Client
     #[ORM\Column(name: 'SEQCLT', type: Types::STRING, length: 6, nullable: true,options: ['default' => ''])]
     private ?string $seqclt = '';
     
-    #[ORM\Column(name: 'NOMRESEAU', type: Types::STRING, length: 50, nullable: true,options: ['default' => ''])]
-    private ?string $nomreseau = '';
     
     #[ORM\Column(name: 'SOUSRESEAU', type: Types::STRING, length: 50,nullable: true, options: ['default' => ''])]
     private ?string $sousreseau = '';
@@ -30,8 +28,8 @@ class Client
     private ?int $seqcltpackdb = 0;
     
     
-    #[ORM\Column(name: 'REFPACKDB', type: Types::STRING, length: 6, nullable: true,options: ['default' => ''])]
-    private ?string $refpackdb = '';
+    // #[ORM\Column(name: 'REFPACKDB', type: Types::STRING, length: 6, nullable: true,options: ['default' => ''])]
+    // private ?string $refpackdb = '';
     
     #[ORM\Column(name: 'NOMCLT', type: Types::STRING, length: 50, nullable: true, options: ['default' => ''])]
     private ?string $nomclt = '';
@@ -117,9 +115,6 @@ class Client
     
     #[ORM\Column(name: 'TYPEREGLE', type: Types::STRING,nullable: true, length: 50, options: ['default' => ''])]
     private ?string $typeregle = '';
-    
-    #[ORM\Column(name: 'LIBTYPECLT', type: Types::STRING, nullable: true,length: 100, options: ['default' => ''])]
-    private ?string $libtypeclt = '';
     
     #[ORM\Column(name: 'CCREDIT', type: Types::INTEGER,nullable: true, options: ['default' => 0])]
     private ?int  $ccredit = 0;
@@ -283,10 +278,22 @@ class Client
     private ?Commission $seqcomm = null;
 
 
+    #[ORM\ManyToOne(targetEntity: Reseau::class)]
+    #[ORM\JoinColumn(name: 'NOMRESEAU', referencedColumnName: 'SEQRESEAU', nullable: false)]
+    private ?Reseau $nomreseau = null;
 
-    // #[ORM\OneToOne(targetEntity: Commission::class)]
-    // #[ORM\JoinColumn(name: "commission_id", referencedColumnName: "SEQCOMM")]
-    // private ?Commission $commission = null;
+    #[ORM\ManyToOne(targetEntity: TypeClt::class)]
+    #[ORM\JoinColumn(name: 'REFPACKDB', referencedColumnName: 'SEQTYPECLT', nullable: false)]
+    private ?TypeClt $refpackdb = null;
+
+    #[ORM\ManyToOne(targetEntity: GroupementClient::class)]
+    #[ORM\JoinColumn(name: 'LIBTYPECLT', referencedColumnName: 'SEQGROUPEMENTCLIENT', nullable: false)]
+    private ?GroupementClient $libtypeclt = null;
+
+
+
+
+
 
 
     public function __construct()
@@ -346,16 +353,16 @@ class Client
         return $this;
     }
 
-    public function getNomreseau(): ?string
+    public function getNomreseau(): ?Reseau
     {
-        return $this->nomreseau ?? '';
+        return $this->nomreseau;
     }
-
-    public function setNomreseau(?string $nomreseau): self
+    
+    public function setNomreseau(?Reseau $nomreseau): self
     {
-        $this->nomreseau = $nomreseau ?? '';
+        $this->nomreseau = $nomreseau;
         return $this;
-}
+    }
     
     public function getSeqcltpackdb():?int
     {
@@ -368,12 +375,12 @@ class Client
         return $this;
     }
 
-    public function getRefpackdb(): ?string
+    public function getRefpackdb(): ?TypeClt
     {
         return $this->refpackdb;
     }
 
-    public function setRefpackdb(?string $refpackdb): self
+    public function setRefpackdb(?TypeClt $refpackdb): self
     {
         $this->refpackdb = $refpackdb;
         return $this;
@@ -557,14 +564,15 @@ class Client
         return $this;
     }
     
-    public function getComttc():?int
+    public function getComttc(): bool
     {
-        return $this->comttc;
+        return (bool) $this->comttc;
     }
-    
-    public function setComttc(int $comttc): self
+
+
+    public function setComttc(bool $comttc): self
     {
-        $this->comttc = $comttc;
+        $this->comttc = $comttc ? 1 : 0;
         return $this;
     }
     
@@ -715,14 +723,14 @@ class Client
         return $this;
     }
     
-    public function getLibtypeclt(): ?string
+    public function getLibtypeclt(): ?GroupementClient
     {
         return $this->libtypeclt;
     }
     
-    public function setLibtypeclt(?string $libtypeclt): self
+    public function setLibtypeclt(?GroupementClient $libtypeclt): self
     {
-        $this->libtypeclt = $libtypeclt?? '';
+        $this->libtypeclt = $libtypeclt;
         return $this;
     }
     

@@ -11,6 +11,8 @@ use App\Entity\Pays;
 use App\Entity\Ville;
 use App\Entity\TypeClt;
 use App\Entity\SuperReseau;
+use App\Entity\Reseau;
+use App\Entity\GroupementClient;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -33,12 +35,12 @@ class ClientType extends AbstractType
     {
         $builder
             ->add('seqclt', TextType::class, [
-                'label' => 'Sequence Client',
+                'label' => 'Code',
                 'required' => false,
-            ])
-            ->add('nomreseau', TextType::class, [
-                'label' => 'Nom Réseau',
-                'required' => false,
+                'attr' => [
+                    'readonly' => true,
+                    'class' => 'form-control bg-light text-muted'
+                ],
             ])
             ->add('pointcom', TextType::class, [
                 'label' => 'pointcom',
@@ -101,6 +103,17 @@ class ClientType extends AbstractType
                 'placeholder' => 'Sélectionner Commercial',
                 'attr' => ['class' => 'form-select']
             ])
+            ->add('NOMRESEAU', EntityType::class, [
+                'class' => Reseau::class,
+                'choice_label' => 'nomreseau',
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('v')
+                        ->orderBy('v.nomreseau', 'ASC');
+                },
+                'label' => 'Réseau',
+                'placeholder' => 'Sélectionner Réseau',
+                'attr' => ['class' => 'form-select']
+            ])
             ->add('libtyperegle', EntityType::class, [
                 'class' => Typeregle::class,
                 'choice_label' => 'libtyperegle',
@@ -121,6 +134,17 @@ class ClientType extends AbstractType
                 },
                 'label' => 'Comission',
                 'placeholder' => 'Sélectionner Commission',
+                'attr' => ['class' => 'form-select']
+            ])
+            ->add('refpackdb', EntityType::class, [
+                'class' => TypeClt::class,
+                'choice_label' => 'libtypeclt',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('t')
+                        ->orderBy('t.libtypeclt', 'ASC');
+                },
+                'label' => 'Modalité',
+                'placeholder' => 'Select a client type',
                 'attr' => ['class' => 'form-select']
             ])
             ->add('tel1', TextType::class, [
@@ -175,7 +199,7 @@ class ClientType extends AbstractType
             //     'required' => false,
             //     'scale' => 2,
             // ])
-            ->add('comttc', IntegerType::class, [
+            ->add('comttc', CheckboxType::class, [
                 'label' => 'Compte TTC',
                 'required' => false,
             ])
@@ -237,9 +261,16 @@ class ClientType extends AbstractType
             //     'label' => 'typeRegle',
             //     'required' => false,
             // ])
-            ->add('libtypeclt', TextType::class, [
-                'label' => 'Libellé Type Client',
-                'required' => false,
+            ->add('libtypeclt', EntityType::class, [
+                'class' => GroupementClient::class,
+                'choice_label' => 'nomgroupeclient',
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('p')
+                        ->orderBy('p.nomgroupeclient', 'ASC');
+                },
+                'label' => 'Grp.Agence',
+                'placeholder' => 'Sélectionner Groupement ',
+                'attr' => ['class' => 'form-select']
             ])
             // ->add('ccredit', IntegerType::class, [
             //     'label' => 'Crédit',
