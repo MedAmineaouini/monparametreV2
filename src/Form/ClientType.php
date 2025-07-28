@@ -34,17 +34,23 @@ class ClientType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('seqclt', TextType::class, [
-                'label' => 'Code',
-                'required' => false,
-                'attr' => [
-                    'readonly' => true,
-                    'class' => 'form-control bg-light text-muted'
-                ],
+        ->add('seqclt', TextType::class, [
+            'label' => 'Code',
+            'required' => false,
+            'label_attr' => [
+                'class' => 'text-end d-block' 
+            ],
+            'attr' => [
+                'readonly' => true,
+                'class' => 'form-control bg-light text-muted'
+            ],
             ])
             ->add('pointcom', TextType::class, [
                 'label' => 'pointcom',
                 'required' => false,
+                'label_attr' => [
+                    'class' => 'text-end d-block' 
+                ],
             ])
             // ->add('sousReseau', TextType::class, [
             //     'label' => 'sousReseau',
@@ -53,14 +59,23 @@ class ClientType extends AbstractType
             ->add('seqcltpackdb', IntegerType::class, [
                 'label' => 'Sequence Client Pack DB',
                 'required' => false,
+                'label_attr' => [
+                    'class' => 'text-end d-block' 
+                ],
             ])
             ->add('refpackdb', TextType::class, [
                 'label' => 'Référence Pack DB',
                 'required' => false,
+                'label_attr' => [
+                    'class' => 'text-end d-block' 
+                ],
             ])
             ->add('nomclt', TextType::class, [
                 'label' => 'Nom Client',
                 'required' => false,
+                'label_attr' => [
+                    'class' => 'text-end d-block' 
+                ],
             ])
             ->add('adresse', TextType::class, [
                 'label' => 'Adresse',
