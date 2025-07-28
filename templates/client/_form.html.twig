@@ -343,7 +343,7 @@
 				<!-- Type réglement / Commission TTC -->
 				<div class="form-group row align-items-center mb-2">
 					<div class="col-sm-6 d-flex align-items-center">
-						{{ form_label(form.libtyperegle, 'Typeregle:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold text-end'}}) }}
+						{{ form_label(form.libtyperegle, 'T.réglement:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold text-end'}}) }}
 						{{ form_widget(form.libtyperegle, {
                         'attr': {
                             'class': 'form-select mode bg-white',
@@ -374,9 +374,12 @@
 				<!-- Modalité de réglement / Commission -->
 				<div class="form-group row align-items-center mb-2">
 					<div class="col-sm-6 d-flex align-items-center">
-						{{ form_label(form.libtypeclt, 'Modalité de réglement:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold text-end'}}) }}
+						{{ form_label(form.libtypeclt, 'M.réglement:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold text-end'}}) }}
 						{{ form_widget(form.libtypeclt, {
-                        'attr': {'class': 'form-control mode bg-white'}
+                          'attr': {
+                            'class': 'form-select mode bg-white',
+                            'maxlength': '80'
+                        }
                     }) }}
 						{{ form_errors(form.libtypeclt) }}
 					</div>
