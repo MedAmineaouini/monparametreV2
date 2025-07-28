@@ -5,20 +5,22 @@
 		class="col-sm-9 card card-body">
 		<!-- First row -->
 		<div class="form-group row align-items-center mb-2">
-			<div class="col-sm-4 d-flex align-items-center">
+		<div class="col-sm-6 d-flex align-items-center">
+			<div class="w-40 d-flex align-items-center">
 				{{ form_label(form.seqclt, '(seqclt):', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold text-end text-end'}}) }}
 				{{ form_widget(form.seqclt, {'attr': {'class': 'form-control bg-light text-muted'}}) }}
 				{{ form_errors(form.seqclt) }}
 			</div>
 
-			<div class="col-sm-4 d-flex align-items-center">
+			<div class="w-60 d-flex align-items-center">
 				{{ form_label(form.seqcltpackdb, '(seqcltpackdb):', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold text-end text-end'}}) }}
 				{{ form_widget(form.seqcltpackdb, {'attr': {'class': 'form-control mode'}}) }}
 				{{ form_errors(form.seqcltpackdb) }}
 			</div>
+			</div>
 
-			<div class="col-sm-4 d-flex align-items-center">
-				{{ form_label(form.refpackdb, 'Ville:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold text-end text-end'}}) }}
+			<div class="col-sm-6 d-flex align-items-center">
+				{{ form_label(form.refpackdb, 'G.agence:', {'label_attr': {'class': 'form-label-fixed me-2 mb-0 fw-semibold text-end text-end'}}) }}
 				{{ form_widget(form.refpackdb, {
                 'attr': {
                     'class': 'form-select mode',

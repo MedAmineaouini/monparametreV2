@@ -45,12 +45,9 @@ class ClientType extends AbstractType
                 'class' => 'form-control bg-light text-muted'
             ],
             ])
-            ->add('pointcom', TextType::class, [
+            ->add('pointcom', CheckboxType::class, [
                 'label' => 'pointcom',
                 'required' => false,
-                'label_attr' => [
-                    'class' => 'text-end d-block' 
-                ],
             ])
             // ->add('sousReseau', TextType::class, [
             //     'label' => 'sousReseau',
@@ -222,12 +219,13 @@ class ClientType extends AbstractType
                 'label' => 'Observations',
                 'required' => false,
             ])
-            ->add('libre', IntegerType::class, [
+            ->add('libre', CheckboxType::class, [
                 'label' => 'Libre',
                 'required' => false,
             ])
-            ->add('confirmation', IntegerType::class, [
-                'label' => 'Confirmation',
+
+            ->add('confirmation', CheckboxType::class, [
+                'label' => 'Avec confirmation',
                 'required' => false,
             ])
             // ->add('frais', NumberType::class, [
@@ -248,8 +246,7 @@ class ClientType extends AbstractType
             //     'label' => 'Libellé Type Règle',
             //     'required' => false,
             // ])
-
-            ->add('paiement', IntegerType::class, [
+            ->add('paiement', CheckboxType::class, [
                 'label' => 'Paiement',
                 'required' => false,
             ])
@@ -297,7 +294,7 @@ class ClientType extends AbstractType
                 'label' => 'Adresse 2',
                 'required' => false,
             ])
-            ->add('refunique', TextType::class, [
+            ->add('refunique', CheckboxType::class, [
                 'label' => 'refunique',
                 'required' => false,
             ])
@@ -305,7 +302,7 @@ class ClientType extends AbstractType
                 'label' => 'groupeclient',
                 'required' => false,
             ])
-            ->add('litige', TextType::class, [
+            ->add('litige', CheckboxType::class, [
                 'label' => 'litige',
                 'required' => false,
             ])
@@ -329,8 +326,8 @@ class ClientType extends AbstractType
             //     'label' => 'Délai AT',
             //     'required' => false,
             // ])
-            ->add('carnetvoyage', IntegerType::class, [
-                'label' => 'Carnet Voyage',
+            ->add('carnetvoyage', CheckboxType::class, [
+                'label' => 'Carnetvoyage',
                 'required' => false,
             ])
             ->add('archiver', CheckboxType::class, [
@@ -438,7 +435,8 @@ class ClientType extends AbstractType
                     'class' => 'form-select'
                 ]
             ])
-            ->add('basculeAutoReglement', IntegerType::class, [
+
+            ->add('basculeAutoReglement', CheckboxType::class, [
                 'label' => 'Bascule auto règlement',
                 'required' => false,
             ])

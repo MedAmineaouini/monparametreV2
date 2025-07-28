@@ -580,28 +580,32 @@ class Client
         $this->obs = $obs?? '';
         return $this;
     }
-    
-    public function getLibre():?int
+
+
+    public function getLibre(): bool
     {
-        return $this->libre;
+        return (bool) $this->libre;
     }
-    
-    public function setLibre(int $libre): self
+
+
+    public function setLibre(bool $libre): self
     {
-        $this->libre = $libre;
+        $this->libre = $libre ? 1 : 0;
+        return $this;
+    }
+
+    public function getConfirmation(): bool
+    {
+        return (bool) $this->confirmation;
+    }
+
+
+    public function setConfirmation(bool $confirmation): self
+    {
+        $this->confirmation = $confirmation ? 1 : 0;
         return $this;
     }
     
-    public function getConfirmation():?int
-    {
-        return $this->confirmation;
-    }
-    
-    public function setConfirmation(int $confirmation): self
-    {
-        $this->confirmation = $confirmation;
-        return $this;
-    }
     
     public function getFrais(): ?string
     {
@@ -630,16 +634,20 @@ class Client
         return $this;
     }
     
-    public function getPaiement():?int
+
+    public function getPaiement(): bool
     {
-        return $this->paiement;
+        return (bool) $this->paiement;
     }
-    
-    public function setPaiement(int $paiement): self
+
+
+    public function setPaiement(bool $paiement): self
     {
-        $this->paiement = $paiement;
+        $this->paiement = $paiement ? 1 : 0;
         return $this;
     }
+    
+    
     
     public function getDatesaisie(): \DateTimeInterface
     {
@@ -789,27 +797,31 @@ class Client
         return $this;
     }
     
-    public function getPointcom():?int
+    public function getPointcom(): bool
     {
-        return $this->pointcom;
+        return (bool) $this->pointcom;
     }
-    
-    public function setPointcom(int $pointcom): self
+
+
+    public function setPointcom(bool $pointcom): self
     {
-        $this->pointcom = $pointcom;
+        $this->pointcom = $pointcom ? 1 : 0;
         return $this;
     }
     
-    public function getRefunique():?int
+    public function getRefunique(): bool
     {
-        return $this->refunique;
+        return (bool) $this->refunique;
     }
-    
-    public function setRefunique(int $refunique): self
+
+
+    public function setRefunique(bool $refunique): self
     {
-        $this->refunique = $refunique;
+        $this->refunique = $refunique ? 1 : 0;
         return $this;
     }
+    
+    
     
     public function getGroupeclient(): ?string
     {
@@ -822,16 +834,19 @@ class Client
         return $this;
     }
     
-    public function getLitige():?int
+
+    public function getLitige(): bool
     {
-        return $this->litige;
+        return (bool) $this->litige;
     }
-    
-    public function setLitige(int $litige): self
+
+
+    public function setLitige(bool $litige): self
     {
-        $this->litige = $litige;
+        $this->litige = $litige ? 1 : 0;
         return $this;
     }
+    
     
     public function getLogin(): ?string
     {
@@ -887,15 +902,16 @@ class Client
         $this->delaiAt = $delaiAt;
         return $this;
     }
-    
-    public function getCarnetvoyage():?int
+
+    public function getCarnetvoyage(): bool
     {
-        return $this->carnetvoyage;
+        return (bool) $this->carnetvoyage;
     }
-    
-    public function setCarnetvoyage(int $carnetvoyage): self
+
+
+    public function setCarnetvoyage(bool $carnetvoyage): self
     {
-        $this->carnetvoyage = $carnetvoyage;
+        $this->carnetvoyage = $carnetvoyage ? 1 : 0;
         return $this;
     }
     
@@ -1165,14 +1181,16 @@ public function setAnalytique(?string $analytique): self
     return $this;
 }
 
-public function getBasculeAutoReglement():?int
+
+public function getBasculeAutoReglement(): bool
 {
-    return $this->basculeAutoReglement;
+    return (bool) $this->basculeAutoReglement;
 }
 
-public function setBasculeAutoReglement(?int $basculeAutoReglement): self
+
+public function setBasculeAutoReglement(bool $basculeAutoReglement): self
 {
-    $this->basculeAutoReglement = $basculeAutoReglement;
+    $this->basculeAutoReglement = $basculeAutoReglement ? 1 : 0;
     return $this;
 }
 
