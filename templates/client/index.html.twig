@@ -4,30 +4,32 @@
 
 
 {% block body %}
-<div class="flex-grow-1 container-p-y container-fluid">
+    <div class="flex-grow-1 container-p-y container-fluid">
     <div class="card">
         <div class="card-header text-white d-block d-sm-flex justify-content-between align-items-center">
             <h5 class="mb-0 ">📋 Liste des Clients</h5>
             <div class="d-flex  col-md-2">
-                    <a href="{{ path('app_client_new') }}" class="btn btn-success w-100">
-                        <i class="icon-base bx bx-plus me-2"></i> Ajouter un Client
-                    </a>
+                <a href="{{ path('app_client_new') }}" class="btn btn-success w-100">
+                    <i class="icon-base bx bx-plus me-2"></i> Ajouter un Client
+                </a>
             </div>
         </div>
 
         <div class="card-body p-3">
-
+            <hr>
             <form method="get" id="filterForm" class="mb-4">
                 <div class="d-flex flex-wrap align-items-end col-md-12">
 
                     <div class="form-group col-md-2 px-1">
                         <label for="seqclt" class="form-label">Code client :</label>
-                        <input style="height: 34px;" type="text" name="seqclt" id="seqclt" class="form-control" value="{{ searchParams.seqclt ?? '' }}">
+                        <input style="height: 34px;" type="text" name="seqclt" id="seqclt" class="form-control"
+                               value="{{ searchParams.seqclt ?? '' }}">
                     </div>
 
                     <div class="form-group col-md-2 px-1">
                         <label for="nomclt" class="form-label">Nom client :</label>
-                        <input style="height: 34px;" type="text" name="nomclt" id="nomclt" class="form-control" value="{{ searchParams.nomclt ?? '' }}">
+                        <input style="height: 34px;" type="text" name="nomclt" id="nomclt" class="form-control"
+                               value="{{ searchParams.nomclt ?? '' }}">
                     </div>
 
                     <div class="form-group col-md-2 px-1">
@@ -64,62 +66,64 @@
 
                 </div>
             </form>
+            <hr>
 
-            {% if clients is not empty %}
                 <div class="table-responsive">
                     <table class="table table-hover table-striped table-bordered mb-1">
                         <thead>
-                            <tr>
-                                <th>Numéro</th>
-                                <th>Nom</th>
-                                <th>Réseau</th>
-                                <th>Commission</th>
-                                 <th class="text-center" width="100">Actions</th>
-                            </tr>
+                        <tr>
+                            <th>#</th>
+                            <th>Nom</th>
+                            <th>Réseau</th>
+                            <th>Commission</th>
+                            <th class="text-center" width="100">Actions</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            {% for client in clients %}
-                                <tr>
-                                    <td>{{ client.seqclt }}</td>
-                                    <td>{{ client.nomclt }}</td>
-                                    <td>{{ client.nomreseau }}</td>
-                                    <td>{{ client.commission.nomcomm ?? '' }}</td>
-                                    <td class="text-center">
+                        {% if clients is not empty %}
+                        {% for client in clients %}
+                            <tr>
+                                <td>{{ client.seqclt }}</td>
+                                <td>{{ client.nomclt }}</td>
+                                <td>{{ client.nomreseau }}</td>
+                                <td>{{ client.seqcomm.categorie ?? '' }}</td>
+                                <td class="text-center">
                                     <div class="dropdown">
                                         <button type="button"
                                                 class="btn p-0 dropdown-toggle hide-arrow"
                                                 data-bs-toggle="dropdown"
                                                 aria-expanded="false"
                                                 aria-label="Actions">
-                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                            <i class="bx bx-dots-vertical-rounded"></i>
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-end">
-                                        <li>
-                                            <a class="dropdown-item"
-                                            href="{{ path('app_client_edit', {'numclt': client.numclt}) }}"
-                                            aria-label="Modifier">
-                                            <i class="bx bx-edit-alt me-2"></i>Consulter | Modifier
-                                            </a>
-                                        </li>
-                                        <li>
-                                            {{ include('client/_delete_form.html.twig', {
-                                            client: client,
-                                            btn_class: 'dropdown-item'
-                                            }) }}
-                                        </li>
+                                            <li>
+                                                <a class="dropdown-item"
+                                                   href="{{ path('app_client_edit', {'numclt': client.numclt}) }}"
+                                                   aria-label="Modifier">
+                                                    <i class="bx bx-edit-alt me-2"></i>Consulter | Modifier
+                                                </a>
+                                            </li>
+                                            <li>
+                                                {{ include('client/_delete_form.html.twig', {
+                                                    client: client,
+                                                    btn_class: 'dropdown-item'
+                                                }) }}
+                                            </li>
                                         </ul>
                                     </div>
-                                    </td>
-                                </tr>
-                            {% endfor %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="10" class="text-center p-2 text-center">Aucun client trouvé...</td>
+                            </tr>
+                        {% endif %}
                         </tbody>
                     </table>
                 </div>
-            {% else %}
-                              <tr>
-                <td colspan="10" class="text-center py-4 text-muted">Aucun client trouvé</td>
-              </tr>
-            {% endif %}
+
         </div>
     </div>
 
