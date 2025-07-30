@@ -156,7 +156,7 @@ class ClientType extends AbstractType
                         ->orderBy('t.libtypeclt', 'ASC');
                 },
                 'label' => 'Modalité',
-                'placeholder' => 'Select a client type',
+                'placeholder' => 'Sélectionner type client',
                 'attr' => ['class' => 'form-select']
             ])
             ->add('tel1', TextType::class, [
