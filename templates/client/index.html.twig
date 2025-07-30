@@ -43,12 +43,12 @@
                     </div>
 
                     <div class="form-group col-md-2 px-1">
-                        <label for="grcommission" class="form-label">Gr.commission :</label>
-                        <select name="nomreseau" id="nomreseau" class="form-select" style="height: 34px;">
+                        <label for="categorie" class="form-label">Gr. commission :</label>
+                        <select name="categorie" id="categorie" class="form-select" style="height: 34px;">
                             <option value="">-- Tous --</option>
-                            {% for reseau in reseauOptions %}
-                                <option value="{{ reseau }}" {{ reseau == searchParams.nomreseau ? 'selected' : '' }}>
-                                    {{ reseau }}
+                            {% for commission in commissions %}
+                                <option value="{{ commission.categorie }}" {{ commission.categorie == searchParams.categorie ? 'selected' : '' }}>
+                                    {{ commission.categorie }}
                                 </option>
                             {% endfor %}
                         </select>

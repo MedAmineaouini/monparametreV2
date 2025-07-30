@@ -25,7 +25,7 @@ class ClientController extends AbstractController
         $seqclt = $request->query->get('seqclt');
         $nomclt = $request->query->get('nomclt');
         $nomreseau = $request->query->get('nomreseau');
-        $seqcomm = $request->query->get('seqcomm');
+        $categorie = $request->query->get('categorie');
     
         $qb = $entityManager->getRepository(Client::class)->createQueryBuilder('c');
 
@@ -44,9 +44,10 @@ class ClientController extends AbstractController
                ->setParameter('nomreseau', $nomreseau);
         }
         
-        if ($seqcomm) {
-            $qb->andWhere('c.commission = :seqcomm')
-               ->setParameter('seqcomm', $seqcomm);
+        if ($categorie) {
+            $qb->join('c.seqcomm', 'comm') 
+               ->andWhere('comm.categorie = :categorie')
+               ->setParameter('categorie', $categorie);
         }
     
         $clients = $qb->getQuery()->getResult();
@@ -69,7 +70,7 @@ class ClientController extends AbstractController
                 'seqclt' => $seqclt,
                 'nomclt' => $nomclt,
                 'nomreseau' => $nomreseau,
-                'seqcomm' => $seqcomm
+                'categorie' => $categorie
             ]
         ]);
     }
