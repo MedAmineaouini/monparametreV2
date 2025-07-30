@@ -1,0 +1,606 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vol{% endblock %}
+
+{% block body %}
+    <h1>Vol</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Seqvol</th>
+                <td>{{ vol.seqvol }}</td>
+            </tr>
+            <tr>
+                <th>Nvol</th>
+                <td>{{ vol.nvol }}</td>
+            </tr>
+            <tr>
+                <th>Datevol</th>
+                <td>{{ vol.datevol ? vol.datevol|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Jo</th>
+                <td>{{ vol.jo }}</td>
+            </tr>
+            <tr>
+                <th>Jplus</th>
+                <td>{{ vol.jplus }}</td>
+            </tr>
+            <tr>
+                <th>Villed</th>
+                <td>{{ vol.villed }}</td>
+            </tr>
+            <tr>
+                <th>Heured</th>
+                <td>{{ vol.heured }}</td>
+            </tr>
+            <tr>
+                <th>Villea</th>
+                <td>{{ vol.villea }}</td>
+            </tr>
+            <tr>
+                <th>Heurea</th>
+                <td>{{ vol.heurea }}</td>
+            </tr>
+            <tr>
+                <th>Villev</th>
+                <td>{{ vol.villev }}</td>
+            </tr>
+            <tr>
+                <th>Typevol</th>
+                <td>{{ vol.typevol }}</td>
+            </tr>
+            <tr>
+                <th>Kilos</th>
+                <td>{{ vol.kilos }}</td>
+            </tr>
+            <tr>
+                <th>Codaffret</th>
+                <td>{{ vol.codaffret }}</td>
+            </tr>
+            <tr>
+                <th>Sg</th>
+                <td>{{ vol.sg }}</td>
+            </tr>
+            <tr>
+                <th>Vendu</th>
+                <td>{{ vol.vendu }}</td>
+            </tr>
+            <tr>
+                <th>Reserve</th>
+                <td>{{ vol.reserve }}</td>
+            </tr>
+            <tr>
+                <th>Prixada</th>
+                <td>{{ vol.prixada }}</td>
+            </tr>
+            <tr>
+                <th>Prixzza</th>
+                <td>{{ vol.prixzza }}</td>
+            </tr>
+            <tr>
+                <th>Prixbba</th>
+                <td>{{ vol.prixbba }}</td>
+            </tr>
+            <tr>
+                <th>Taxea</th>
+                <td>{{ vol.taxea }}</td>
+            </tr>
+            <tr>
+                <th>Prixadv</th>
+                <td>{{ vol.prixadv }}</td>
+            </tr>
+            <tr>
+                <th>Prixzzv</th>
+                <td>{{ vol.prixzzv }}</td>
+            </tr>
+            <tr>
+                <th>Prixbbv</th>
+                <td>{{ vol.prixbbv }}</td>
+            </tr>
+            <tr>
+                <th>Prixadv2</th>
+                <td>{{ vol.prixadv2 }}</td>
+            </tr>
+            <tr>
+                <th>Prixzzv2</th>
+                <td>{{ vol.prixzzv2 }}</td>
+            </tr>
+            <tr>
+                <th>Prixbbv2</th>
+                <td>{{ vol.prixbbv2 }}</td>
+            </tr>
+            <tr>
+                <th>Prixadv3</th>
+                <td>{{ vol.prixadv3 }}</td>
+            </tr>
+            <tr>
+                <th>Prixzzv3</th>
+                <td>{{ vol.prixzzv3 }}</td>
+            </tr>
+            <tr>
+                <th>Prixbbv3</th>
+                <td>{{ vol.prixbbv3 }}</td>
+            </tr>
+            <tr>
+                <th>Supp1</th>
+                <td>{{ vol.supp1 }}</td>
+            </tr>
+            <tr>
+                <th>Supp2</th>
+                <td>{{ vol.supp2 }}</td>
+            </tr>
+            <tr>
+                <th>Taxevente</th>
+                <td>{{ vol.taxevente }}</td>
+            </tr>
+            <tr>
+                <th>Cartevente</th>
+                <td>{{ vol.cartevente }}</td>
+            </tr>
+            <tr>
+                <th>Taxesovente</th>
+                <td>{{ vol.taxesovente }}</td>
+            </tr>
+            <tr>
+                <th>Suppvol</th>
+                <td>{{ vol.suppvol }}</td>
+            </tr>
+            <tr>
+                <th>Dateconvo</th>
+                <td>{{ vol.dateconvo ? vol.dateconvo|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Heureconvo</th>
+                <td>{{ vol.heureconvo }}</td>
+            </tr>
+            <tr>
+                <th>Lieuconvo</th>
+                <td>{{ vol.lieuconvo }}</td>
+            </tr>
+            <tr>
+                <th>Comptoir</th>
+                <td>{{ vol.comptoir }}</td>
+            </tr>
+            <tr>
+                <th>Porte</th>
+                <td>{{ vol.porte }}</td>
+            </tr>
+            <tr>
+                <th>Agence</th>
+                <td>{{ vol.agence }}</td>
+            </tr>
+            <tr>
+                <th>Telagence</th>
+                <td>{{ vol.telagence }}</td>
+            </tr>
+            <tr>
+                <th>Formforf</th>
+                <td>{{ vol.formforf }}</td>
+            </tr>
+            <tr>
+                <th>Formsec</th>
+                <td>{{ vol.formsec }}</td>
+            </tr>
+            <tr>
+                <th>Obs</th>
+                <td>{{ vol.obs }}</td>
+            </tr>
+            <tr>
+                <th>Dateconf</th>
+                <td>{{ vol.dateconf ? vol.dateconf|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Datedeconf</th>
+                <td>{{ vol.datedeconf ? vol.datedeconf|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Freesale</th>
+                <td>{{ vol.freesale }}</td>
+            </tr>
+            <tr>
+                <th>Assvol</th>
+                <td>{{ vol.assvol }}</td>
+            </tr>
+            <tr>
+                <th>Ouvert</th>
+                <td>{{ vol.ouvert }}</td>
+            </tr>
+            <tr>
+                <th>Taxea2</th>
+                <td>{{ vol.taxea2 }}</td>
+            </tr>
+            <tr>
+                <th>Autres</th>
+                <td>{{ vol.autres }}</td>
+            </tr>
+            <tr>
+                <th>Coaf</th>
+                <td>{{ vol.coaf }}</td>
+            </tr>
+            <tr>
+                <th>Fictif</th>
+                <td>{{ vol.fictif }}</td>
+            </tr>
+            <tr>
+                <th>Lien</th>
+                <td>{{ vol.lien }}</td>
+            </tr>
+            <tr>
+                <th>Typeavion</th>
+                <td>{{ vol.typeavion }}</td>
+            </tr>
+            <tr>
+                <th>Compagnie</th>
+                <td>{{ vol.compagnie }}</td>
+            </tr>
+            <tr>
+                <th>Stopsale</th>
+                <td>{{ vol.stopsale }}</td>
+            </tr>
+            <tr>
+                <th>Taxesolidarite</th>
+                <td>{{ vol.taxesolidarite }}</td>
+            </tr>
+            <tr>
+                <th>Nomaxe</th>
+                <td>{{ vol.nomaxe }}</td>
+            </tr>
+            <tr>
+                <th>Retro</th>
+                <td>{{ vol.retro }}</td>
+            </tr>
+            <tr>
+                <th>PaxRetro</th>
+                <td>{{ vol.paxRetro }}</td>
+            </tr>
+            <tr>
+                <th>DatRetro</th>
+                <td>{{ vol.datRetro ? vol.datRetro|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Heuredv</th>
+                <td>{{ vol.heuredv }}</td>
+            </tr>
+            <tr>
+                <th>Heureav</th>
+                <td>{{ vol.heureav }}</td>
+            </tr>
+            <tr>
+                <th>Dureevol</th>
+                <td>{{ vol.dureevol }}</td>
+            </tr>
+            <tr>
+                <th>ConvoWeb</th>
+                <td>{{ vol.convoWeb }}</td>
+            </tr>
+            <tr>
+                <th>ObsResa</th>
+                <td>{{ vol.obsResa }}</td>
+            </tr>
+            <tr>
+                <th>PaxEmbarque</th>
+                <td>{{ vol.paxEmbarque }}</td>
+            </tr>
+            <tr>
+                <th>HeureEmbarque</th>
+                <td>{{ vol.heureEmbarque }}</td>
+            </tr>
+            <tr>
+                <th>PrestAbord</th>
+                <td>{{ vol.prestAbord }}</td>
+            </tr>
+            <tr>
+                <th>Stockg</th>
+                <td>{{ vol.stockg }}</td>
+            </tr>
+            <tr>
+                <th>Villedd</th>
+                <td>{{ vol.villedd }}</td>
+            </tr>
+            <tr>
+                <th>Villeaa</th>
+                <td>{{ vol.villeaa }}</td>
+            </tr>
+            <tr>
+                <th>Vendug</th>
+                <td>{{ vol.vendug }}</td>
+            </tr>
+            <tr>
+                <th>InclusSg</th>
+                <td>{{ vol.inclusSg }}</td>
+            </tr>
+            <tr>
+                <th>Cron</th>
+                <td>{{ vol.cron }}</td>
+            </tr>
+            <tr>
+                <th>Soustock</th>
+                <td>{{ vol.soustock }}</td>
+            </tr>
+            <tr>
+                <th>Reserves</th>
+                <td>{{ vol.reserves }}</td>
+            </tr>
+            <tr>
+                <th>Vendus</th>
+                <td>{{ vol.vendus }}</td>
+            </tr>
+            <tr>
+                <th>Engagement</th>
+                <td>{{ vol.engagement }}</td>
+            </tr>
+            <tr>
+                <th>SeqvolGenerique</th>
+                <td>{{ vol.seqvolGenerique }}</td>
+            </tr>
+            <tr>
+                <th>Codaffret1</th>
+                <td>{{ vol.codaffret1 }}</td>
+            </tr>
+            <tr>
+                <th>Destination</th>
+                <td>{{ vol.destination }}</td>
+            </tr>
+            <tr>
+                <th>Nature</th>
+                <td>{{ vol.nature }}</td>
+            </tr>
+            <tr>
+                <th>Nvol2</th>
+                <td>{{ vol.nvol2 }}</td>
+            </tr>
+            <tr>
+                <th>Taxev</th>
+                <td>{{ vol.taxev }}</td>
+            </tr>
+            <tr>
+                <th>Taxesolidaritev</th>
+                <td>{{ vol.taxesolidaritev }}</td>
+            </tr>
+            <tr>
+                <th>Taxesoventev</th>
+                <td>{{ vol.taxesoventev }}</td>
+            </tr>
+            <tr>
+                <th>Totaltaxea</th>
+                <td>{{ vol.totaltaxea }}</td>
+            </tr>
+            <tr>
+                <th>Prixadulte</th>
+                <td>{{ vol.prixadulte }}</td>
+            </tr>
+            <tr>
+                <th>Codaffret2</th>
+                <td>{{ vol.codaffret2 }}</td>
+            </tr>
+            <tr>
+                <th>MaxVolsecAlloue</th>
+                <td>{{ vol.maxVolsecAlloue }}</td>
+            </tr>
+            <tr>
+                <th>VenduVolsec</th>
+                <td>{{ vol.venduVolsec }}</td>
+            </tr>
+            <tr>
+                <th>Nvolvia</th>
+                <td>{{ vol.nvolvia }}</td>
+            </tr>
+            <tr>
+                <th>ObsVia</th>
+                <td>{{ vol.obsVia }}</td>
+            </tr>
+            <tr>
+                <th>Affecter</th>
+                <td>{{ vol.affecter }}</td>
+            </tr>
+            <tr>
+                <th>Freesale1</th>
+                <td>{{ vol.freesale1 }}</td>
+            </tr>
+            <tr>
+                <th>TotMaxVolsec</th>
+                <td>{{ vol.totMaxVolsec }}</td>
+            </tr>
+            <tr>
+                <th>TotFreesale</th>
+                <td>{{ vol.totFreesale }}</td>
+            </tr>
+            <tr>
+                <th>Seqreceptif</th>
+                <td>{{ vol.seqreceptif }}</td>
+            </tr>
+            <tr>
+                <th>RachatImmediat</th>
+                <td>{{ vol.rachatImmediat }}</td>
+            </tr>
+            <tr>
+                <th>Seqvilled</th>
+                <td>{{ vol.seqvilled }}</td>
+            </tr>
+            <tr>
+                <th>Seqvillea</th>
+                <td>{{ vol.seqvillea }}</td>
+            </tr>
+            <tr>
+                <th>Seqvillev</th>
+                <td>{{ vol.seqvillev }}</td>
+            </tr>
+            <tr>
+                <th>Seqaffret1</th>
+                <td>{{ vol.seqaffret1 }}</td>
+            </tr>
+            <tr>
+                <th>Seqaffret2</th>
+                <td>{{ vol.seqaffret2 }}</td>
+            </tr>
+            <tr>
+                <th>Affecters</th>
+                <td>{{ vol.affecters }}</td>
+            </tr>
+            <tr>
+                <th>BoardingPass</th>
+                <td>{{ vol.boardingPass }}</td>
+            </tr>
+            <tr>
+                <th>Bagagesoption</th>
+                <td>{{ vol.bagagesoption }}</td>
+            </tr>
+            <tr>
+                <th>Prixbagagesoption</th>
+                <td>{{ vol.prixbagagesoption }}</td>
+            </tr>
+            <tr>
+                <th>Nbrbagagesoption</th>
+                <td>{{ vol.nbrbagagesoption }}</td>
+            </tr>
+            <tr>
+                <th>Pnr</th>
+                <td>{{ vol.pnr }}</td>
+            </tr>
+            <tr>
+                <th>Etablissement</th>
+                <td>{{ vol.etablissement }}</td>
+            </tr>
+            <tr>
+                <th>NatureVol</th>
+                <td>{{ vol.natureVol }}</td>
+            </tr>
+            <tr>
+                <th>Archiver</th>
+                <td>{{ vol.archiver }}</td>
+            </tr>
+            <tr>
+                <th>Kilocabine</th>
+                <td>{{ vol.kilocabine }}</td>
+            </tr>
+            <tr>
+                <th>PrixYield</th>
+                <td>{{ vol.prixYield }}</td>
+            </tr>
+            <tr>
+                <th>Aerod</th>
+                <td>{{ vol.aerod }}</td>
+            </tr>
+            <tr>
+                <th>Aeroa</th>
+                <td>{{ vol.aeroa }}</td>
+            </tr>
+            <tr>
+                <th>PasAfficherHoraire</th>
+                <td>{{ vol.pasAfficherHoraire }}</td>
+            </tr>
+            <tr>
+                <th>Kilobebe</th>
+                <td>{{ vol.kilobebe }}</td>
+            </tr>
+            <tr>
+                <th>Aerodep</th>
+                <td>{{ vol.aerodep }}</td>
+            </tr>
+            <tr>
+                <th>Aeroarr</th>
+                <td>{{ vol.aeroarr }}</td>
+            </tr>
+            <tr>
+                <th>Specification</th>
+                <td>{{ vol.specification }}</td>
+            </tr>
+            <tr>
+                <th>Bagagesoute</th>
+                <td>{{ vol.bagagesoute }}</td>
+            </tr>
+            <tr>
+                <th>Coafv</th>
+                <td>{{ vol.coafv }}</td>
+            </tr>
+            <tr>
+                <th>Volsec</th>
+                <td>{{ vol.volsec }}</td>
+            </tr>
+            <tr>
+                <th>AllotFreesale</th>
+                <td>{{ vol.allotFreesale }}</td>
+            </tr>
+            <tr>
+                <th>RetroVol</th>
+                <td>{{ vol.retroVol }}</td>
+            </tr>
+            <tr>
+                <th>Prixada2</th>
+                <td>{{ vol.prixada2 }}</td>
+            </tr>
+            <tr>
+                <th>Prixada3</th>
+                <td>{{ vol.prixada3 }}</td>
+            </tr>
+            <tr>
+                <th>Prixzza2</th>
+                <td>{{ vol.prixzza2 }}</td>
+            </tr>
+            <tr>
+                <th>Prixzza3</th>
+                <td>{{ vol.prixzza3 }}</td>
+            </tr>
+            <tr>
+                <th>Prixbba2</th>
+                <td>{{ vol.prixbba2 }}</td>
+            </tr>
+            <tr>
+                <th>Prixbba3</th>
+                <td>{{ vol.prixbba3 }}</td>
+            </tr>
+            <tr>
+                <th>Ville</th>
+                <td>{{ vol.ville }}</td>
+            </tr>
+            <tr>
+                <th>Nomfour</th>
+                <td>{{ vol.nomfour }}</td>
+            </tr>
+            <tr>
+                <th>Semaine1</th>
+                <td>{{ vol.semaine1 }}</td>
+            </tr>
+            <tr>
+                <th>Blocsiege</th>
+                <td>{{ vol.blocsiege }}</td>
+            </tr>
+            <tr>
+                <th>Prixadav</th>
+                <td>{{ vol.prixadav }}</td>
+            </tr>
+            <tr>
+                <th>Prixbbav</th>
+                <td>{{ vol.prixbbav }}</td>
+            </tr>
+            <tr>
+                <th>Prixzzav</th>
+                <td>{{ vol.prixzzav }}</td>
+            </tr>
+            <tr>
+                <th>TaxeB2b</th>
+                <td>{{ vol.taxeB2b }}</td>
+            </tr>
+            <tr>
+                <th>Ferry</th>
+                <td>{{ vol.ferry }}</td>
+            </tr>
+            <tr>
+                <th>SgGarantis</th>
+                <td>{{ vol.sgGarantis }}</td>
+            </tr>
+            <tr>
+                <th>Retrocede</th>
+                <td>{{ vol.retrocede ? vol.retrocede|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_vol_index') }}">back to list</a>
+
+    <a href="{{ path('app_vol_edit', {'seqvol': vol.seqvol}) }}">edit</a>
+
+    {{ include('vol/_delete_form.html.twig') }}
+{% endblock %}

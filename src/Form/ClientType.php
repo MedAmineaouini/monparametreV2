@@ -175,7 +175,7 @@ class ClientType extends AbstractType
             //     'required' => false,
             //     'scale' => 2,
             // ])
-            ->add('comttc', IntegerType::class, [
+            ->add('comttc', CheckboxType::class, [
                 'label' => 'Compte TTC',
                 'required' => false,
             ])
