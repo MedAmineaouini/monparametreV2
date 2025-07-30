@@ -31,16 +31,16 @@
                     </div>
 
                     <div class="form-group col-md-2 px-1">
-                        <label for="nomreseau" class="form-label">Nom réseau :</label>
-                        <select name="nomreseau" id="nomreseau" class="form-select" style="height: 34px;">
-                            <option value="">-- Tous --</option>
-                            {% for reseau in reseauOptions %}
-                                <option value="{{ reseau }}" {{ reseau == searchParams.nomreseau ? 'selected' : '' }}>
-                                    {{ reseau }}
-                                </option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                    <label for="nomreseau" class="form-label">Nom réseau :</label>
+                    <select name="nomreseau" id="nomreseau" class="form-select" style="height: 34px;">
+                        <option value="">-- Tous --</option>
+                        {% for reseau in reseauOptions %}
+                            <option value="{{ reseau.seqreseau }}" {{ reseau.seqreseau == searchParams.nomreseau ? 'selected' : '' }}>
+                                {{ reseau.nomreseau }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
 
                     <div class="form-group col-md-2 px-1">
                         <label for="categorie" class="form-label">Gr. commission :</label>
