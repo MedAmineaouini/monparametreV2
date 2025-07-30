@@ -1,5 +1,5 @@
 <!-- /.box-header -->
-{{ form_start(form, {'attr': {'class': 'form-horizontal', 'style': 'font-size: x-small;'}}) }}
+{{ form_start(form, {'attr': {'class': 'form-horizontal', 'style': 'font-size: small;'}}) }}
 <div class="box-body d-flex gap-5">
 	<div
 		class="col-sm-9 card card-body">
@@ -8,7 +8,7 @@
 		<div class="col-sm-6 d-flex align-items-center justify-content-betwee">
 			<div class="w-50 d-flex align-items-center">
 				{{ form_label(form.seqclt, '(seqclt):', {'label_attr': {'class': 'form-label me-2 mb-0 fw-semibold text-end text-end'}}) }}
-				{{ form_widget(form.seqclt, {'attr': {'class': 'form-control bg-light text-muted'}}) }}
+				{{ form_widget(form.seqclt, {'attr': {'class': 'form-control bg-light-subtle text-muted'}}) }}
 				{{ form_errors(form.seqclt) }}
 			</div>
 
@@ -416,10 +416,10 @@
 		<!-- Reste à payer -->
 		<div class="form-group row align-items-center mb-3">
 			<div class="col-sm-6">
-				<label for="resteg" class="form-label fw-semibold text-end ">Reste à payer global:</label>
+				<label for="resteg" class="form-label fw-semibold text-end">Reste à payer global:</label>
 			</div>
 			<div class="col-sm-6">
-				<input type="text" class="form-control mode text-end fw-bold" name="resteg" id="resteg" maxlength="6" value="0.00" readonly>
+				<input type="text" class="form-control mode text-end fw-bold bg-light-subtle" name="resteg" id="resteg" maxlength="6" value="0.00" readonly>
 			</div>
 		</div>
 
@@ -609,5 +609,6 @@
 	.form-label {
 		width: 105px;
 		min-width: 105px;
+		text-wrap-mode: nowrap;
 	}
 </style>
