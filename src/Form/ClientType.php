@@ -257,7 +257,7 @@ class ClientType extends AbstractType
                 'label' => 'groupeclient',
                 'required' => false,
             ])
-            ->add('litige', TextType::class, [
+            ->add('litige', IntegerType::class, [
                 'label' => 'litige',
                 'required' => false,
             ])
