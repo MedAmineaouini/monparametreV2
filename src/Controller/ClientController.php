@@ -7,7 +7,7 @@ use App\Form\ClientType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Repository\CommissionRepository;
-use App\Repository\SuperReseauRepository;
+use App\Repository\ReseauRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,7 +20,7 @@ class ClientController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager,
         CommissionRepository $commissionRepository,
-        SuperReseauRepository $superReseauRepository
+        ReseauRepository $ReseauRepository
     ): Response {
         $seqclt = $request->query->get('seqclt');
         $nomclt = $request->query->get('nomclt');
@@ -40,9 +40,11 @@ class ClientController extends AbstractController
         }
         
         if ($nomreseau) {
-            $qb->andWhere('c.nomreseau = :nomreseau')
+            $qb->join('c.nomreseau', 'r')
+               ->andWhere('r.seqreseau = :nomreseau')
                ->setParameter('nomreseau', $nomreseau);
         }
+        
         
         if ($categorie) {
             $qb->join('c.seqcomm', 'comm') 
@@ -54,18 +56,12 @@ class ClientController extends AbstractController
 
         $commissions = $commissionRepository->findAll();
 
-        $reseauOptions = $superReseauRepository->createQueryBuilder('r')
-            ->select('r.nomsuperreseau')
-            ->distinct()
-            ->getQuery()
-            ->getArrayResult();
+        $reseauOptions = $ReseauRepository->findAll();
 
-        $reseauList = array_column($reseauOptions, 'nomsuperreseau');
-    
         return $this->render('client/index.html.twig', [
             'clients' => $clients,
             'commissions' => $commissions,
-            'reseauOptions' => $reseauList,
+            'reseauOptions' => $reseauOptions,
             'searchParams' => [
                 'seqclt' => $seqclt,
                 'nomclt' => $nomclt,
