@@ -11,6 +11,8 @@ use App\Entity\Pays;
 use App\Entity\Ville;
 use App\Entity\TypeClt;
 use App\Entity\SuperReseau;
+use App\Entity\Reseau;
+use App\Entity\GroupementClient;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -32,15 +34,18 @@ class ClientType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('seqclt', TextType::class, [
-                'label' => 'Sequence Client',
-                'required' => false,
+        ->add('seqclt', TextType::class, [
+            'label' => 'Code',
+            'required' => false,
+            'label_attr' => [
+                'class' => 'text-end d-block' 
+            ],
+            'attr' => [
+                'readonly' => true,
+                'class' => 'form-control bg-light text-muted'
+            ],
             ])
-            ->add('nomreseau', TextType::class, [
-                'label' => 'Nom Réseau',
-                'required' => false,
-            ])
-            ->add('pointcom', TextType::class, [
+            ->add('pointcom', CheckboxType::class, [
                 'label' => 'pointcom',
                 'required' => false,
             ])
@@ -51,14 +56,23 @@ class ClientType extends AbstractType
             ->add('seqcltpackdb', IntegerType::class, [
                 'label' => 'Sequence Client Pack DB',
                 'required' => false,
+                'label_attr' => [
+                    'class' => 'text-end d-block' 
+                ],
             ])
             ->add('refpackdb', TextType::class, [
                 'label' => 'Référence Pack DB',
                 'required' => false,
+                'label_attr' => [
+                    'class' => 'text-end d-block' 
+                ],
             ])
             ->add('nomclt', TextType::class, [
                 'label' => 'Nom Client',
                 'required' => false,
+                'label_attr' => [
+                    'class' => 'text-end d-block' 
+                ],
             ])
             ->add('adresse', TextType::class, [
                 'label' => 'Adresse',
@@ -101,6 +115,17 @@ class ClientType extends AbstractType
                 'placeholder' => 'Sélectionner Commercial',
                 'attr' => ['class' => 'form-select']
             ])
+            ->add('NOMRESEAU', EntityType::class, [
+                'class' => Reseau::class,
+                'choice_label' => 'nomreseau',
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('v')
+                        ->orderBy('v.nomreseau', 'ASC');
+                },
+                'label' => 'Réseau',
+                'placeholder' => 'Sélectionner Réseau',
+                'attr' => ['class' => 'form-select']
+            ])
             ->add('libtyperegle', EntityType::class, [
                 'class' => Typeregle::class,
                 'choice_label' => 'libtyperegle',
@@ -121,6 +146,17 @@ class ClientType extends AbstractType
                 },
                 'label' => 'Comission',
                 'placeholder' => 'Sélectionner Commission',
+                'attr' => ['class' => 'form-select']
+            ])
+            ->add('refpackdb', EntityType::class, [
+                'class' => TypeClt::class,
+                'choice_label' => 'libtypeclt',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('t')
+                        ->orderBy('t.libtypeclt', 'ASC');
+                },
+                'label' => 'Modalité',
+                'placeholder' => 'Sélectionner type client',
                 'attr' => ['class' => 'form-select']
             ])
             ->add('tel1', TextType::class, [
@@ -175,7 +211,7 @@ class ClientType extends AbstractType
             //     'required' => false,
             //     'scale' => 2,
             // ])
-            ->add('comttc', IntegerType::class, [
+            ->add('comttc', CheckboxType::class, [
                 'label' => 'Compte TTC',
                 'required' => false,
             ])
@@ -183,12 +219,13 @@ class ClientType extends AbstractType
                 'label' => 'Observations',
                 'required' => false,
             ])
-            ->add('libre', IntegerType::class, [
+            ->add('libre', CheckboxType::class, [
                 'label' => 'Libre',
                 'required' => false,
             ])
-            ->add('confirmation', IntegerType::class, [
-                'label' => 'Confirmation',
+
+            ->add('confirmation', CheckboxType::class, [
+                'label' => 'Avec confirmation',
                 'required' => false,
             ])
             // ->add('frais', NumberType::class, [
@@ -209,16 +246,17 @@ class ClientType extends AbstractType
             //     'label' => 'Libellé Type Règle',
             //     'required' => false,
             // ])
-
-            ->add('paiement', IntegerType::class, [
+            ->add('paiement', CheckboxType::class, [
                 'label' => 'Paiement',
                 'required' => false,
             ])
             ->add('datesaisie', DateType::class, [
                 'label' => 'Date de Saisie',
                 'widget' => 'single_text',
+                'html5' => true,
                 'attr' => [
                     'class' => 'form-control',
+                    'readonly' => true, 
                 ],
             ])
             ->add('compta', TextType::class, [
@@ -237,9 +275,16 @@ class ClientType extends AbstractType
             //     'label' => 'typeRegle',
             //     'required' => false,
             // ])
-            ->add('libtypeclt', TextType::class, [
-                'label' => 'Libellé Type Client',
-                'required' => false,
+            ->add('libtypeclt', EntityType::class, [
+                'class' => GroupementClient::class,
+                'choice_label' => 'nomgroupeclient',
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('p')
+                        ->orderBy('p.nomgroupeclient', 'ASC');
+                },
+                'label' => 'Grp.Agence',
+                'placeholder' => 'Sélectionner Groupement ',
+                'attr' => ['class' => 'form-select']
             ])
             // ->add('ccredit', IntegerType::class, [
             //     'label' => 'Crédit',
@@ -249,7 +294,7 @@ class ClientType extends AbstractType
                 'label' => 'Adresse 2',
                 'required' => false,
             ])
-            ->add('refunique', TextType::class, [
+            ->add('refunique', CheckboxType::class, [
                 'label' => 'refunique',
                 'required' => false,
             ])
@@ -257,7 +302,7 @@ class ClientType extends AbstractType
                 'label' => 'groupeclient',
                 'required' => false,
             ])
-            ->add('litige', IntegerType::class, [
+            ->add('litige', CheckboxType::class, [
                 'label' => 'litige',
                 'required' => false,
             ])
@@ -281,11 +326,11 @@ class ClientType extends AbstractType
             //     'label' => 'Délai AT',
             //     'required' => false,
             // ])
-            ->add('carnetvoyage', IntegerType::class, [
-                'label' => 'Carnet Voyage',
+            ->add('carnetvoyage', CheckboxType::class, [
+                'label' => 'Carnetvoyage',
                 'required' => false,
             ])
-            ->add('archiver', IntegerType::class, [
+            ->add('archiver', CheckboxType::class, [
                 'label' => 'Archiver',
                 'required' => false,
             ])
@@ -390,7 +435,8 @@ class ClientType extends AbstractType
                     'class' => 'form-select'
                 ]
             ])
-            ->add('basculeAutoReglement', IntegerType::class, [
+
+            ->add('basculeAutoReglement', CheckboxType::class, [
                 'label' => 'Bascule auto règlement',
                 'required' => false,
             ])
@@ -456,6 +502,12 @@ class ClientType extends AbstractType
                 'label' => 'principal',
                 'required' => false,
             ]);
+            // ->add('principal', CheckboxType::class, [
+            //     'label' => 'Client Principal',
+            //     'required' => false,
+            //     'mapped' => false 
+            // ]);
+            
                         // ->add('superReseau', TextType::class, [
             //     'label' => 'superReseau',
             //     'required' => false,
