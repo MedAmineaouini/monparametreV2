@@ -25,7 +25,7 @@ class ClientController extends AbstractController
         $seqclt = $request->query->get('seqclt');
         $nomclt = $request->query->get('nomclt');
         $nomreseau = $request->query->get('nomreseau');
-        $seqcomm = $request->query->get('seqcomm');
+        $categorie = $request->query->get('categorie');
     
         $qb = $entityManager->getRepository(Client::class)->createQueryBuilder('c');
 
@@ -44,9 +44,10 @@ class ClientController extends AbstractController
                ->setParameter('nomreseau', $nomreseau);
         }
         
-        if ($seqcomm) {
-            $qb->andWhere('c.commission = :seqcomm')
-               ->setParameter('seqcomm', $seqcomm);
+        if ($categorie) {
+            $qb->join('c.seqcomm', 'comm') 
+               ->andWhere('comm.categorie = :categorie')
+               ->setParameter('categorie', $categorie);
         }
     
         $clients = $qb->getQuery()->getResult();
@@ -69,7 +70,7 @@ class ClientController extends AbstractController
                 'seqclt' => $seqclt,
                 'nomclt' => $nomclt,
                 'nomreseau' => $nomreseau,
-                'seqcomm' => $seqcomm
+                'categorie' => $categorie
             ]
         ]);
     }
@@ -77,21 +78,34 @@ class ClientController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $client = new Client();
+    
+        $lastSeq = $entityManager->createQueryBuilder()
+            ->select('MAX(c.seqclt)')
+            ->from(Client::class, 'c')
+            ->getQuery()
+            ->getSingleScalarResult();
+    
+        $nextSeq = $lastSeq ? (int)$lastSeq + 1 : 1;
+    
+        $client->setSeqclt(str_pad($nextSeq, 4, '0', STR_PAD_LEFT));
+    
+
         $form = $this->createForm(ClientType::class, $client);
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($client);
             $entityManager->flush();
-
+    
             return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
         }
-
+    
         return $this->renderForm('client/new.html.twig', [
             'client' => $client,
             'form' => $form,
         ]);
     }
+    
 
     #[Route('/{numclt}', name: 'app_client_show', methods: ['GET'])]
     public function show(Client $client): Response

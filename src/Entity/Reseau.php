@@ -55,12 +55,12 @@ class Reseau
         return $this->seqreseau;
     }
 
-    public function getNomreseau(): string
+    public function getNOMRESEAU(): string
     {
         return $this->nomreseau;
     }
 
-    public function setNomreseau(string $nomreseau): self
+    public function setNOMRESEAU(string $nomreseau): self
     {
         $this->nomreseau = $nomreseau;
         return $this;
