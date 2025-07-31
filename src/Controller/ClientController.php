@@ -91,11 +91,22 @@ class ClientController extends AbstractController
     
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($client);
-            $entityManager->flush();
-    
+            $entityManager->flush(); 
+        
+            if ($client->getClientPrincipal() === null) {
+                $selfAsPrincipal = $entityManager->getRepository(Client::class)->findOneBy([
+                    'seqclt' => $client->getSeqclt()
+                ]);
+        
+                if ($selfAsPrincipal) {
+                    $client->setClientPrincipal($selfAsPrincipal);
+                    $entityManager->flush(); 
+                }
+            }
+        
             return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
         }
-    
+        
         return $this->renderForm('client/new.html.twig', [
             'client' => $client,
             'form' => $form,
@@ -118,8 +129,18 @@ class ClientController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
 
+            if ($client->getClientPrincipal() === null) {
+                $selfAsPrincipal = $entityManager->getRepository(Client::class)->findOneBy([
+                    'seqclt' => $client->getSeqclt()
+                ]);
+        
+                if ($selfAsPrincipal) {
+                    $client->setClientPrincipal($selfAsPrincipal);
+                }
+            }
+        
+            $entityManager->flush();
             return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
         }
 

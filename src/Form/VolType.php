@@ -20,7 +20,16 @@ class VolType extends AbstractType
             ->add('seqvol', TextType::class, [
                 'attr' => ['class' => 'form-control'],
             ])
+            ->add('pnr', TextType::class, [
+                'attr' => ['class' => 'form-control'],
+            ])
             ->add('nvol', TextType::class, [
+                'attr' => ['class' => 'form-control'],
+            ])
+            ->add('allot_freesale', TextType::class, [
+                'attr' => ['class' => 'form-control'],
+            ])
+            ->add('retro', TextType::class, [
                 'attr' => ['class' => 'form-control'],
             ])
             ->add('datevol', DateType::class, [
