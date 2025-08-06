@@ -378,8 +378,8 @@ class Vol
     #[ORM\Column(name: 'kilobebe', type: Types::DECIMAL, precision: 9, scale: 2)]
     private string $kilobebe = '0';
 
-    #[ORM\Column(name: 'aerodep', type: Types::STRING, length: 10)]
-    private string $aerodep = '';
+//    #[ORM\Column(name: 'aerodep', type: Types::STRING, length: 10)]
+//    private string $aerodep = '';
 
     #[ORM\Column(name: 'aeroarr', type: Types::STRING, length: 10)]
     private string $aeroarr = '';
