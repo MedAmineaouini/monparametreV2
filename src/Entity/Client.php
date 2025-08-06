@@ -17,10 +17,9 @@ class Client
     #[ORM\Column(name: 'NUMCLT', type: Types::INTEGER)]
     private ?int $numclt = null;
 
-    #[ORM\Column(name: 'SEQCLT', type: Types::STRING, length: 6, nullable: true,options: ['default' => ''])]
+    #[ORM\Column(name: 'SEQCLT', type: Types::STRING, length: 6, nullable: true,unique: true,options: ['default' => ''])]
     private ?string $seqclt = '';
-    
-    
+
     #[ORM\Column(name: 'SOUSRESEAU', type: Types::STRING, length: 50,nullable: true, options: ['default' => ''])]
     private ?string $sousreseau = '';
     
@@ -251,11 +250,16 @@ class Client
     // #[ORM\Column(name: 'SEQCOMM', type: Types::INTEGER,nullable: true, options: ['default' => 0])]
     // private ?int  $seqcomm = 0;
     
-    #[ORM\Column(name: 'SEQCLIENT_PRINCIPAL', type: Types::INTEGER, nullable: true, options: ['default' => 0])]
-    private ?int $seqclientPrincipal = null;
+    // #[ORM\Column(name: 'SEQCLIENT_PRINCIPAL', type: Types::INTEGER, nullable: true, options: ['default' => 0])]
+    // private ?int $seqclientPrincipal = null;
     
     #[ORM\Column(name: 'Commission', type: Types::INTEGER, nullable: true, options: ['default' => 0])]
     private ?int $commission = null;
+
+
+    #[ORM\ManyToOne(targetEntity: self::class)]
+    #[ORM\JoinColumn(name: 'SEQCLIENT_PRINCIPAL', referencedColumnName: 'SEQCLT', nullable: true, onDelete: 'SET NULL')]
+    private ?Client $clientPrincipal = null;
 
     #[ORM\ManyToOne(targetEntity: Ville::class)]
     #[ORM\JoinColumn(name: 'VILLE', referencedColumnName: 'SEQVILLE', nullable: false)]
@@ -294,6 +298,7 @@ class Client
     {
         $this->subordonnes = new ArrayCollection();
         $this->datesaisie = new \DateTime();
+        $this->clients = new ArrayCollection();
     }
     public function getNumclt(): ?int
     {
@@ -765,6 +770,18 @@ class Client
     public function setPrincipal(?string $principal): self
     {
         $this->principal = $principal?? '';
+        return $this;
+    }
+
+    public function getClientPrincipal(): ?self
+    {
+        return $this->clientPrincipal;
+    }
+
+    public function setClientPrincipal(?self $clientPrincipal): self
+    {
+        $this->clientPrincipal = $clientPrincipal;
+
         return $this;
     }
 
