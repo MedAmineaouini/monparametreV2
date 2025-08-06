@@ -367,7 +367,7 @@ class Vol
     private string $prixYield = '0';
 
     #[ORM\Column(name: 'aerod', type: Types::STRING, length: 6)]
-    private string $aerod = '';
+    private string $aerod = ''; hhh
 
     #[ORM\Column(name: 'aeroa', type: Types::STRING, length: 6)]
     private string $aeroa = '';
