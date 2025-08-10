@@ -2493,23 +2493,15 @@ class Vol
         $this->bagagesoute = $bagagesoute ? 1 : 0;
         return $this;
     }
-
-
-
-    /**
-     * @return string
-     */
-    public function getAllotFreesale(): string
+    public function getAllotFreesale(): bool
     {
-        return $this->allotFreesale;
+        return (bool) $this->allotFreesale;
     }
 
-    /**
-     * @param string $allotFreesale
-     */
-    public function setAllotFreesale(string $allotFreesale): void
+    public function setAllotFreesale(bool $allotFreesale): self
     {
-        $this->allotFreesale = $allotFreesale;
+        $this->allotFreesale = $allotFreesale ? 1 : 0;
+        return $this;
     }
 
     /**

@@ -371,7 +371,10 @@ class VolType extends AbstractType
                 'label' => 'bagagesoute',
                 'required' => false,
             ])
-            ->add('allotFreesale', TextType::class, ['attr' => ['class' => 'form-control']])
+            ->add('allotFreesale', CheckboxType::class, [
+                'label' => 'allotFreesale',
+                'required' => false,
+            ])  
             // ->add('retroVol', TextType::class, ['attr' => ['class' => 'form-control']])
             ->add('blocsiege', TextType::class, ['attr' => ['class' => 'form-control']])
             ->add('ferry', TextType::class, ['attr' => ['class' => 'form-control']])
