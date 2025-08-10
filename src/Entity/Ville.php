@@ -181,4 +181,10 @@ class Ville
         $this->taxe_b2b = $taxe_b2b;
         return $this;
     }
+
+    public function __toString(): string
+{
+    return $this->libville ?? ''; 
+}
+
 }

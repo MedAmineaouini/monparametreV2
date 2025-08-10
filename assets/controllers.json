@@ -1,0 +1,15 @@
+{
+    "controllers": {
+      "aeroport": {
+        "enabled": true,
+        "fetch": "eager",
+        "path": "./controllers/aeroport_controller.js"
+      },
+      "availability": {
+        "enabled": true,
+        "fetch": "eager",
+        "path": "./controllers/availability_controller.js"
+      }
+    },
+    "entrypoints": []
+  }

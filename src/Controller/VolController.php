@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\VilleRepository;
 
 #[Route('/vol')]
 class VolController extends AbstractController
@@ -22,25 +23,64 @@ class VolController extends AbstractController
         ]);
     }
 
+
     #[Route('/new', name: 'app_vol_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, VilleRepository $villeRepository): Response
     {
         $vol = new Vol();
-        $form = $this->createForm(VolType::class, $vol);
+        
+        $lastSeq = $entityManager->createQueryBuilder()
+            ->select('MAX(v.seqvol)')
+            ->from(Vol::class, 'v')
+            ->getQuery()
+            ->getSingleScalarResult();
+        
+        $nextSeq = $lastSeq ? ((int)$lastSeq + 1) : 1;
+        $vol->setSeqvol($nextSeq);
+        $formattedSeqvol = str_pad($nextSeq, 4, '0', STR_PAD_LEFT);
+        
+        $aerodep = $vol->getVilleD() ? $vol->getVilleD()->getAero() : '';
+        $aeroarr = $vol->getVilleA() ? $vol->getVilleA()->getAero() : '';
+        
+        $form = $this->createForm(VolType::class, $vol, [
+            'seqvol_value' => $formattedSeqvol,
+            'aerodep_value' => $aerodep,
+            'aeroarr_value' => $aeroarr,
+        ]);
+        
+        // Calculate initial availability
+        // $dispoValue = ($vol->getOuvert() ?? 0) - ($vol->getReserve() ?? 0) - ($vol->getVendu() ?? 0);
+        // $form->get('dispo')->setData(max(0, $dispoValue));
+        
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
+            // Recalculate availability before persisting
+            // $dispoValue = ($vol->getOuvert() ?? 0) - ($vol->getReserve() ?? 0) - ($vol->getVendu() ?? 0);
+            // $form->get('dispo')->setData(max(0, $dispoValue));
+            
+            // if ($vol->getVilleD()) {
+            //     $vol->setAerodep($vol->getVilleD()->getAero());
+            // }
+            // if ($vol->getVilleA()) {
+            //     $vol->setAeroarr($vol->getVilleA()->getAero());
+            // }
+            
             $entityManager->persist($vol);
             $entityManager->flush();
-
+            
             return $this->redirectToRoute('app_vol_index', [], Response::HTTP_SEE_OTHER);
         }
-
+        
         return $this->renderForm('vol/new.html.twig', [
             'vol' => $vol,
             'form' => $form,
+            'villes' => $villeRepository->findAll(),
         ]);
     }
+    
+
+    
 
     #[Route('/{seqvol}', name: 'app_vol_show', methods: ['GET'])]
     public function show(Vol $vol): Response

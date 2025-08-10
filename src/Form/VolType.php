@@ -15,14 +15,29 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Ville;
+use App\Entity\Affreteur;
+use Doctrine\ORM\EntityRepository;
 
 class VolType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('seqvol', TextType::class, [
-                'attr' => ['class' => 'form-control'],
+        ->add('seqvol', TextType::class, [
+                'label' => 'N° Séq.',
+                'required' => false,
+                'mapped' => false, 
+                'data' => $options['seqvol_value'] ?? '', 
+                'label_attr' => [
+                    'class' => 'text-end d-block'
+                ],
+                'attr' => [
+                    'readonly' => true,
+                    'class' => 'form-control bg-light text-muted'
+                ],
             ])
             ->add('pnr', TextType::class, [
                 'attr' => ['class' => 'form-control'],
@@ -30,12 +45,12 @@ class VolType extends AbstractType
             ->add('nvol', TextType::class, [
                 'attr' => ['class' => 'form-control'],
             ])
-            ->add('allot_freesale', TextType::class, [
-                'attr' => ['class' => 'form-control'],
-            ])
-            ->add('retro', TextType::class, [
-                'attr' => ['class' => 'form-control'],
-            ])
+            // ->add('allot_freesale', TextType::class, [
+            //     'attr' => ['class' => 'form-control'],
+            // ])
+            // ->add('retro', TextType::class, [
+            //     'attr' => ['class' => 'form-control'],
+            // ])
             ->add('datevol', DateType::class, [
                 'label' => 'Date de vol',
                 'widget' => 'single_text',
@@ -58,17 +73,115 @@ class VolType extends AbstractType
             // ])
             ->add('jo', TextType::class, ['attr' => ['class' => 'form-control']])
             ->add('jplus', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('villed', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('heured', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('villea', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('heurea', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('villev', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('typevol', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('kilos', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('codaffret', TextType::class, ['attr' => ['class' => 'form-control']])
+            ->add('heured', TimeType::class, [
+                'label' => 'Heure de départ',
+                'widget' => 'single_text',    
+                'input' => 'string',          
+                'html5' => true,
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control form-control-sm',
+                ],
+            ])
+            ->add('villeA', EntityType::class, [
+                'class' => Ville::class,
+                'choice_label' => 'libville',
+                'choice_attr' => function(Ville $ville) {
+                    return ['data-aero' => $ville->getAero()];
+                },
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('v')
+                        ->orderBy('v.libville', 'ASC');
+                },
+                'label' => 'Ville d\'arrivée',
+                'placeholder' => 'Sélectionner une ville',
+                'attr' => ['class' => 'form-select'],
+                'required' => true,
+            ])
+            ->add('heurea', TimeType::class, [
+                'label' => 'Heure d\'arrivée',
+                'widget' => 'single_text',
+                'input' => 'string',
+                'html5' => true,
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control form-control-sm',
+                ],
+            ])
+
+            // ->add('aerodep', TextType::class, [
+            //     'attr' => [
+            //         'readonly' => true,
+            //         'class' => 'form-control form-control-sm',
+            //     ],
+            // ])
+            // ->add('aeroarr', TextType::class, [
+            //     'attr' => [
+            //         'readonly' => true,
+            //         'class' => 'form-control form-control-sm',
+            //     ],
+            // ])
+            ->add('villeD', EntityType::class, [
+                'class' => Ville::class,
+                'choice_label' => 'libville',
+                'choice_attr' => function(Ville $ville) {
+                    return ['data-aero' => $ville->getAero()];
+                },
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('v')
+                        ->orderBy('v.libville', 'ASC');
+                },
+                'label' => 'Ville de départ',
+                'placeholder' => 'Sélectionner une ville',
+                'attr' => ['class' => 'form-select'],
+                'required' => true,
+            ])  
+            ->add('codaffret', EntityType::class, [
+                'class' => Affreteur::class,
+                'choice_label' => 'codaffret',
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('v')
+                        ->orderBy('v.codaffret', 'ASC');
+                },
+                'label' => 'Code Affreteur',
+                'placeholder' => 'Sélectionner une code',
+                'attr' => ['class' => 'form-select'],
+                'required' => true,
+            ])
+            ->add('villeV', EntityType::class, [
+                'class' => Ville::class,
+                'choice_label' => 'libville',
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('v')
+                        ->orderBy('v.libville', 'ASC');
+                },
+                'label' => 'Ville de vol',
+                'placeholder' => 'Sélectionner une ville',
+                'attr' => ['class' => 'form-select'],
+                'required' => true,
+            ])
+            ->add('typevol', ChoiceType::class, [
+                'choices' => [
+                    'Aller' => 1,
+                    'Retour' => 2,
+                ],
+                'expanded' => true,
+                'multiple' => false,
+                'label' => 'Type de vol',
+                'required' => true,
+                'attr' => ['class' => 'form-check'],
+                'data' => 1, 
+            ])
+            
+   
             ->add('sg', TextType::class, ['attr' => ['class' => 'form-control']])
             ->add('vendu', TextType::class, ['attr' => ['class' => 'form-control']])
             ->add('reserve', TextType::class, ['attr' => ['class' => 'form-control']])
+            // ->add('dispo', IntegerType::class, [
+            //     'mapped' => false,
+            //     'required' => false,
+            //     'attr' => ['readonly' => true, 'class' => 'form-control'],
+            // ])
             ->add('prixada', TextType::class, ['attr' => ['class' => 'form-control']])
             ->add('prixzza', TextType::class, ['attr' => ['class' => 'form-control']])
             ->add('prixbba', TextType::class, ['attr' => ['class' => 'form-control']])
@@ -126,15 +239,19 @@ class VolType extends AbstractType
 
             // ->add('taxesolidarite', NumberType::class, ['attr' => ['class' => 'form-control']])
             // ->add('nomaxe', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('retro', TextType::class, ['attr' => ['class' => 'form-control']])
+            // ->add('retro', TextType::class, ['attr' => ['class' => 'form-control']])
             // ->add('paxRetro', NumberType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('datRetro', DateType::class, [
-            //     'widget' => 'single_text',
-            //     'html5' => true,
-            //     'attr' => ['class' => 'form-control']
-            // ])
-            ->add('heuredv', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('heureav', TextType::class, ['attr' => ['class' => 'form-control']])
+            ->add('datRetro', DateType::class, [
+                'widget' => 'single_text',
+                'html5' => true,
+                'input' => 'datetime', 
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control',
+                ]
+            ])            
+            // ->add('heuredv', TextType::class, ['attr' => ['class' => 'form-control']])
+            // ->add('heureav', TextType::class, ['attr' => ['class' => 'form-control']])
             // ->add('dureevol', TextType::class, ['attr' => ['class' => 'form-control']])
 
             // ->add('obsResa', TextareaType::class, ['attr' => ['class' => 'form-control']])
@@ -164,8 +281,7 @@ class VolType extends AbstractType
             // ->add('totaltaxea', NumberType::class, ['attr' => ['class' => 'form-control']])
             // ->add('prixadulte', NumberType::class, ['attr' => ['class' => 'form-control']])
             // ->add('codaffret2', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('maxVolsecAlloue', NumberType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('venduVolsec', NumberType::class, ['attr' => ['class' => 'form-control']])
+            // ->add('maxVolsecAlloue', NumberType::class, ['attr' => ['class' => 'form-control']])
             // ->add('nvolvia', TextType::class, ['attr' => ['class' => 'form-control']])
             // ->add('obsVia', TextareaType::class, ['attr' => ['class' => 'form-control']])
 
@@ -187,25 +303,35 @@ class VolType extends AbstractType
             // ->add('etablissement', TextType::class, ['attr' => ['class' => 'form-control']])
             // ->add('natureVol', TextType::class, ['attr' => ['class' => 'form-control']])
 
-            ->add('kilocabine', NumberType::class, ['attr' => ['class' => 'form-control']])
+          
             ->add('prixYield', NumberType::class, ['attr' => ['class' => 'form-control']])
             // ->add('aerod', TextType::class, ['attr' => ['class' => 'form-control']])
             // ->add('aeroa', TextType::class, ['attr' => ['class' => 'form-control']])
-
-            ->add('kilobebe', NumberType::class, ['attr' => ['class' => 'form-control']])
+            ->add('kilocabine', NumberType::class, [
+                'label' => 'Cabine (kg)', 
+                'attr' => ['class' => 'form-control']
+            ])
+            ->add('kilos', TextType::class, [
+                'label' => 'Adulte (kg)',
+                'attr' => ['class' => 'form-control']
+            ])
+            ->add('kilobebe', NumberType::class, [
+                'label' => 'Bébé (kg)',
+                'attr' => ['class' => 'form-control']
+            ])
+            
             // ->add('aerodep', TextType::class, ['attr' => ['class' => 'form-control']])
             // ->add('aeroarr', TextType::class, ['attr' => ['class' => 'form-control']])
             ->add('specification', ChoiceType::class, [
                 'choices' => [
-                    'Pas de spécification' => 'none',
-                    'Dernière Minute' => 'last_minute',
-                    'Bon Plan' => 'bon_plan',
+                    'Pas de spécification' => 0,
+                    'Dernière Minute' => 1,
+                    'Bon Plan' => 2,
                 ],
                 'expanded' => true,
                 'multiple' => false,
                 'label' => false,
-            ])
-            ->add('bagagesoute', NumberType::class, ['attr' => ['class' => 'form-control']])
+            ])            
             // ->add('coafv', TextType::class, ['attr' => ['class' => 'form-control']])
 
             //->add('prixada2', NumberType::class, ['attr' => ['class' => 'form-control']])
@@ -226,14 +352,25 @@ class VolType extends AbstractType
             ->add('stopsale', TextType::class, ['attr' => ['class' => 'form-control']])
             //->add('convoWeb', TextType::class, ['attr' => ['class' => 'form-control']])
             //->add('inclusSg', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('affecter', TextType::class, ['attr' => ['class' => 'form-control']])
+            // ->add('affecter', TextType::class, ['attr' => ['class' => 'form-control']])
             //->add('freesale1', TextType::class, ['attr' => ['class' => 'form-control']])
             //->add('rachatImmediat', TextType::class, ['attr' => ['class' => 'form-control']])
             //->add('affecters', TextType::class, ['attr' => ['class' => 'form-control']])
             //->add('boardingPass', TextType::class, ['attr' => ['class' => 'form-control']])
             //->add('archiver', TextType::class, ['attr' => ['class' => 'form-control']])
             //->add('pasAfficherHoraire', TextType::class, ['attr' => ['class' => 'form-control']])
-            //->add('volsec', TextType::class, ['attr' => ['class' => 'form-control']])
+            ->add('volsec', CheckboxType::class, [
+                'label' => 'Autorisé Vente Vol Sec Internet',
+                'required' => false,
+            ])  
+            ->add('venduVolsec', CheckboxType::class, [
+                'label' => 'venduVolsec',
+                'required' => false,
+            ])  
+            ->add('bagagesoute', CheckboxType::class, [
+                'label' => 'bagagesoute',
+                'required' => false,
+            ])
             ->add('allotFreesale', TextType::class, ['attr' => ['class' => 'form-control']])
             // ->add('retroVol', TextType::class, ['attr' => ['class' => 'form-control']])
             ->add('blocsiege', TextType::class, ['attr' => ['class' => 'form-control']])
@@ -255,6 +392,9 @@ class VolType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Vol::class,
+            'seqvol_value' => null,
+            'aerodep_value' => null,
+            'aeroarr_value' => null,
         ]);
     }
 }

@@ -27,20 +27,40 @@ class Vol
     #[ORM\Column(name: 'JPLUS', type: Types::STRING, length: 2)]
     private string $jplus = '';
 
-    #[ORM\Column(name: 'VILLED', type: Types::STRING, length: 3)]
-    private string $villed = '';
+    // #[ORM\Column(name: 'VILLED', type: Types::STRING, length: 3)]
+    // private string $villed = '';
 
-    #[ORM\Column(name: 'HEURED', type: Types::STRING, length: 4)]
+    #[ORM\Column(name: 'HEURED', type: Types::STRING, length: 8)]
     private string $heured = '';
 
-    #[ORM\Column(name: 'VILLEA', type: Types::STRING, length: 3)]
-    private string $villea = '';
+    // #[ORM\Column(name: 'VILLEA', type: Types::STRING, length: 3)]
+    // private string $villea = '';
 
-    #[ORM\Column(name: 'HEUREA', type: Types::STRING, length: 4)]
+    #[ORM\Column(name: 'HEUREA', type: Types::STRING, length: 8)]
     private string $heurea = '';
 
-    #[ORM\Column(name: 'VILLEV', type: Types::STRING, length: 3)]
-    private string $villev = '';
+    // #[ORM\Column(name: 'VILLEV', type: Types::STRING, length: 3)]
+    // private string $villev = '';
+
+    // Ville de départ
+    #[ORM\ManyToOne(targetEntity: Ville::class)]
+    #[ORM\JoinColumn(name: 'VILLE_D', referencedColumnName: 'SEQVILLE', nullable: false)]
+    private ?Ville $villeD = null;
+
+    // Ville d'arrivée
+    #[ORM\ManyToOne(targetEntity: Ville::class)]
+    #[ORM\JoinColumn(name: 'VILLE_A', referencedColumnName: 'SEQVILLE', nullable: false)]
+    private ?Ville $villeA = null;
+
+    // Ville de vol (peut-être autre type de ville)
+    #[ORM\ManyToOne(targetEntity: Ville::class)]
+    #[ORM\JoinColumn(name: 'VILLE_V', referencedColumnName: 'SEQVILLE', nullable: false)]
+    private ?Ville $villeV = null;
+
+    #[ORM\ManyToOne(targetEntity: Affreteur::class)]
+    #[ORM\JoinColumn(name: 'CODAFFRET', referencedColumnName: 'SEQAFFRET')]
+    private ?Affreteur $codaffret = null;
+
 
     #[ORM\Column(name: 'TYPEVOL', type: Types::INTEGER)]
     private int $typevol = 0;
@@ -48,8 +68,7 @@ class Vol
     #[ORM\Column(name: 'KILOS', type: Types::INTEGER)]
     private int $kilos = 0;
 
-    #[ORM\Column(name: 'CODAFFRET', type: Types::STRING, length: 3)]
-    private string $codaffret = '';
+
 
     #[ORM\Column(name: 'SG', type: Types::INTEGER)]
     private int $sg = 0;
@@ -367,7 +386,7 @@ class Vol
     private string $prixYield = '0';
 
     #[ORM\Column(name: 'aerod', type: Types::STRING, length: 6)]
-    private string $aerod = ''; hhh
+    private string $aerod = '';
 
     #[ORM\Column(name: 'aeroa', type: Types::STRING, length: 6)]
     private string $aeroa = '';
@@ -378,8 +397,8 @@ class Vol
     #[ORM\Column(name: 'kilobebe', type: Types::DECIMAL, precision: 9, scale: 2)]
     private string $kilobebe = '0';
 
-//    #[ORM\Column(name: 'aerodep', type: Types::STRING, length: 10)]
-//    private string $aerodep = '';
+   #[ORM\Column(name: 'aerodep', type: Types::STRING, length: 10)]
+   private string $aerodep = '';
 
     #[ORM\Column(name: 'aeroarr', type: Types::STRING, length: 10)]
     private string $aeroarr = '';
@@ -450,15 +469,18 @@ class Vol
     #[ORM\Column(name: 'SG_GARANTIS', type: Types::INTEGER)]
     private int $sgGarantis = 0;
 
-    #[ORM\Column(name: "RETROCEDE", type: "datetime_immutable")]
-    private ?\DateTimeImmutable $retrocede = null; // Notez le ? pour nullable
+    #[ORM\Column(name: "RETROCEDE", type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    private ?\DateTimeImmutable $retrocede = null;
 
-    // Getters and Setters for all properties
-    // ... (omitted for brevity but should be included in your actual entity)
 
     public function getSeqvol(): ?int
     {
         return $this->seqvol;
+    }
+    public function setSeqvol(int $seqvol): self
+    {
+        $this->seqvol = $seqvol;
+        return $this;
     }
 
     public function getNvol(): string
@@ -520,21 +542,21 @@ class Vol
         $this->jplus = $jplus;
     }
 
-    /**
-     * @return string
-     */
-    public function getVilled(): string
-    {
-        return $this->villed;
-    }
+    // /**
+    //  * @return string
+    //  */
+    // public function getVilled(): string
+    // {
+    //     return $this->villed;
+    // }
 
-    /**
-     * @param string $villed
-     */
-    public function setVilled(string $villed): void
-    {
-        $this->villed = $villed;
-    }
+    // /**
+    //  * @param string $villed
+    //  */
+    // public function setVilled(string $villed): void
+    // {
+    //     $this->villed = $villed;
+    // }
 
     /**
      * @return string
@@ -552,21 +574,21 @@ class Vol
         $this->heured = $heured;
     }
 
-    /**
-     * @return string
-     */
-    public function getVillea(): string
-    {
-        return $this->villea;
-    }
+    // /**
+    //  * @return string
+    //  */
+    // public function getVillea(): string
+    // {
+    //     return $this->villea;
+    // }
 
-    /**
-     * @param string $villea
-     */
-    public function setVillea(string $villea): void
-    {
-        $this->villea = $villea;
-    }
+    // /**
+    //  * @param string $villea
+    //  */
+    // public function setVillea(string $villea): void
+    // {
+    //     $this->villea = $villea;
+    // }
 
     /**
      * @return string
@@ -584,21 +606,21 @@ class Vol
         $this->heurea = $heurea;
     }
 
-    /**
-     * @return string
-     */
-    public function getVillev(): string
-    {
-        return $this->villev;
-    }
+    // /**
+    //  * @return string
+    //  */
+    // public function getVillev(): string
+    // {
+    //     return $this->villev;
+    // }
 
-    /**
-     * @param string $villev
-     */
-    public function setVillev(string $villev): void
-    {
-        $this->villev = $villev;
-    }
+    // /**
+    //  * @param string $villev
+    //  */
+    // public function setVillev(string $villev): void
+    // {
+    //     $this->villev = $villev;
+    // }
 
     /**
      * @return int
@@ -632,20 +654,15 @@ class Vol
         $this->kilos = $kilos;
     }
 
-    /**
-     * @return string
-     */
-    public function getCodaffret(): string
+    public function getCodaffret(): ?Affreteur
     {
         return $this->codaffret;
     }
 
-    /**
-     * @param string $codaffret
-     */
-    public function setCodaffret(string $codaffret): void
+    public function setCodaffret(?Affreteur $codaffret): self
     {
         $this->codaffret = $codaffret;
+        return $this;
     }
 
     /**
@@ -1929,22 +1946,6 @@ class Vol
     }
 
     /**
-     * @return int
-     */
-    public function getVenduVolsec(): int
-    {
-        return $this->venduVolsec;
-    }
-
-    /**
-     * @param int $venduVolsec
-     */
-    public function setVenduVolsec(int $venduVolsec): void
-    {
-        $this->venduVolsec = $venduVolsec;
-    }
-
-    /**
      * @return string
      */
     public function getNvolvia(): string
@@ -2440,21 +2441,6 @@ class Vol
         $this->specification = $specification;
     }
 
-    /**
-     * @return string
-     */
-    public function getBagagesoute(): string
-    {
-        return $this->bagagesoute;
-    }
-
-    /**
-     * @param string $bagagesoute
-     */
-    public function setBagagesoute(string $bagagesoute): void
-    {
-        $this->bagagesoute = $bagagesoute;
-    }
 
     /**
      * @return int
@@ -2472,21 +2458,43 @@ class Vol
         $this->coafv = $coafv;
     }
 
-    /**
-     * @return int
-     */
-    public function getVolsec(): int
+    public function getVolsec(): bool
     {
-        return $this->volsec;
+        return (bool) $this->volsec;
     }
 
-    /**
-     * @param int $volsec
-     */
-    public function setVolsec(int $volsec): void
+
+    public function setVolsec(bool $venduVolsec): self
     {
-        $this->volsec = $volsec;
+        $this->venduVolsec = $venduVolsec ? 1 : 0;
+        return $this;
     }
+
+    public function getVenduVolsec(): bool
+    {
+        return (bool) $this->venduVolsec;
+    }
+
+
+    public function setVenduVolsec(bool $venduVolsec): self
+    {
+        $this->venduVolsec = $venduVolsec ? 1 : 0;
+        return $this;
+    }
+
+    public function getBagagesoute(): bool
+    {
+        return (bool) $this->bagagesoute;
+    }
+
+
+    public function setBagagesoute(bool $bagagesoute): self
+    {
+        $this->bagagesoute = $bagagesoute ? 1 : 0;
+        return $this;
+    }
+
+
 
     /**
      * @return string
@@ -2791,6 +2799,39 @@ class Vol
     {
         $this->retrocede = $retrocede;
     }
+    public function getVilleD(): ?Ville
+    {
+        return $this->villeD;
+    }
+
+    public function setVilleD(?Ville $villeD): self
+    {
+        $this->villeD = $villeD;
+        return $this;
+    }
+
+    public function getVilleA(): ?Ville
+    {
+        return $this->villeA;
+    }
+
+    public function setVilleA(?Ville $villeA): self
+    {
+        $this->villeA = $villeA;
+        return $this;
+    }
+    public function getVilleV(): ?Ville
+    {
+        return $this->villeV;
+    }
+
+    public function setVilleV(?Ville $villeV): self
+    {
+        $this->villeV = $villeV;
+        return $this;
+    }
+
+
 
     // Continue with all other getters and setters...
     // Each property should have a getter and setter method
