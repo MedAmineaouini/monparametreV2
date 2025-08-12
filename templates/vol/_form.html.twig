@@ -85,6 +85,7 @@
 		cursor: pointer;
 	}
 </style>
+
 {{ form_start(form) }}
 
 <div class="row w-100 d-flex justify-content-between">
@@ -280,20 +281,20 @@
 			{{ form_label(form.vendu, 'Vendu', {'label_attr': {'class': 'form-label'}}) }}
 			{{ form_widget(form.vendu, {
 				'attr': {
-					'class': 'form-control',
-					'data-action': 'change->availability#calculateAvailability',
-					'data-availability-vendu-value': form.vendu.vars.value|default(0)
+					'class': 'form-control calc-field',
+					 'id': 'vendu-field',
+					 'data-calc': 'vendu'
 				}
 			}) }}
 			{{ form_errors(form.vendu) }}
 		</div>
 		<div class="col-md-12">
-			{{ form_label(form.reserve, 'Réservé', {'label_attr': {'class': 'form-label'}}) }}
+			{{ form_label(form.reserve, 'Réservé', {'label_attr': {'class': 'form-label '}}) }}
 			{{ form_widget(form.reserve, {
 				'attr': {
-					'class': 'form-control',
-					'data-action': 'change->availability#calculateAvailability',
-					'data-availability-reserve-value': form.reserve.vars.value|default(0)
+					'class': 'form-control calc-field',
+					'id': 'reserve-field',
+					'data-calc': 'reserve'
 				}
 			}) }}
 			{{ form_errors(form.reserve) }}
@@ -303,16 +304,19 @@
 			{{ form_widget(form.freesale, {'attr': {'class': 'form-control'}}) }}
 			{{ form_errors(form.freesale) }}
 		</div>
-		{# <div class="col-md-12">
+		<div class="col-md-12">
 			{{ form_label(form.dispo, 'Dispo.', {'label_attr': {'class': 'form-label'}}) }}
 			{{ form_widget(form.dispo, {
 				'attr': {
 					'class': 'form-control',
-					'readonly': true
+					'readonly': true,
+					 'id': 'dispo-field',
+					  'class': 'form-control',
+       				  'data-calc': 'dispo',
 				}
 			}) }}
 			{{ form_errors(form.dispo) }}
-		</div> #}
+		</div>
 		<div class="col-md-12">
 			{{ form_label(form.blocsiege, 'Blocsiege', {'label_attr': {'class': 'form-label'}}) }}
 			{{ form_widget(form.blocsiege, {'attr': {'class': 'form-control'}}) }}
@@ -946,8 +950,6 @@
 	</div>
 
 </div>
-
-
 {{ form_end(form) }}
 <script>
 $(document).ready(function() {
@@ -976,5 +978,20 @@ $(document).ready(function() {
     setupVilleSelect('.ville-select', 'aeroarr', '/vol/get-aeroport/');
     setupVilleSelect('.ville-select-depart', 'aerodep', '/vol/get-aeroport/');
 });
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    function calculateDispo() {
+        const vendu = parseInt($('[data-calc="vendu"]').val()) || 0;
+        const reserve = parseInt($('[data-calc="reserve"]').val()) || 0;
+        const dispo = Math.max(0, vendu - reserve);
+        
+        console.log("Values:", { vendu, reserve, dispo });
+        $('[data-calc="dispo"]').val(dispo);
+    }
 
+    $('[data-calc="vendu"], [data-calc="reserve"]').on('input', calculateDispo);
+    calculateDispo(); // Initial calculation
+});
 </script>

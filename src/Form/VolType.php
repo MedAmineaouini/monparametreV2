@@ -183,11 +183,11 @@ class VolType extends AbstractType
             ->add('sg', TextType::class, ['attr' => ['class' => 'form-control']])
             ->add('vendu', TextType::class, ['attr' => ['class' => 'form-control']])
             ->add('reserve', TextType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('dispo', IntegerType::class, [
-            //     'mapped' => false,
-            //     'required' => false,
-            //     'attr' => ['readonly' => true, 'class' => 'form-control'],
-            // ])
+            ->add('dispo', IntegerType::class, [
+                'mapped' => false,
+                'required' => false,
+                'attr' => ['readonly' => true, 'class' => 'form-control'],
+            ])
             ->add('prixada', TextType::class, ['attr' => ['class' => 'form-control']])
             ->add('prixzza', TextType::class, ['attr' => ['class' => 'form-control']])
             ->add('prixbba', TextType::class, ['attr' => ['class' => 'form-control']])
