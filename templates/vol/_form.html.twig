@@ -99,28 +99,26 @@
 						<span class="text-success fw-bold">[Départ]</span>
 
 						<div class="mb-1">
-							<div data-controller="aeroport" data-aeroport-type-value="departure">
+							<div class="mb-1">
 								{{ form_label(form.villeD, 'Ville', {'label_attr': {'class': 'form-label mb-0'}}) }}
 								{{ form_widget(form.villeD, {
-											'attr': {
-												'class': 'form-select form-select-sm',
-												'data-aeroport-target': 'select',
-												'data-action': 'change->aeroport#updateAeroport'
-											}
-										}) }}
-								{{ form_errors(form.villeD) }}
+									'attr': {
+										'class': 'form-select form-select-sm ville-select-depart',
+										'id': 'villeD',
+										'data-aero-target': 'aerodep'
+									}
+								}) }}
 
-								{# {{ form_label(form.aerodep, 'Aéroport', {'label_attr': {'class': 'form-label mb-0'}}) }}
+								{{ form_label(form.aerodep, 'Aéroport Départ', {'label_attr': {'class': 'form-label mb-0'}}) }}
 								{{ form_widget(form.aerodep, {
-																'attr': {
-																	'class': 'form-control form-control-sm',
-																	'data-aeroport-target': 'input',
-																	'readonly': true
-																}
-															}) }}
-								{{ form_errors(form.aerodep) }} #}
-
+									'attr': {
+										'class': 'form-control form-control-sm aerodep',
+										'id': 'aerodep',
+										'readonly': true
+									}
+								}) }}
 							</div>
+
 						</div>
 
 
@@ -143,26 +141,24 @@
 						<span class="fw-bold">[Arrivée]</span>
 
 						<div class="mb-1">
-							<div data-controller="aeroport" data-aeroport-type-value="arrival">
+							 <div class="mb-1">
 								{{ form_label(form.villeA, 'Ville', {'label_attr': {'class': 'form-label mb-0'}}) }}
 								{{ form_widget(form.villeA, {
-                        'attr': {
-                            'class': 'form-select form-select-sm',
-                            'data-aeroport-target': 'select',
-                            'data-action': 'change->aeroport#updateAeroport'
-                        }
-                    }) }}
-								{# {{ form_errors(form.villeA) }}
-
-								{{ form_label(form.aeroarr, 'Aéroport', {'label_attr': {'class': 'form-label mb-0'}}) }}
+									'attr': {
+										'class': 'form-select form-select-sm ville-select',
+										'id': 'villeA',
+										'data-aero-target': 'aeroarr'
+									}
+								}) }}
+								
+								{{ form_label(form.aeroarr, 'Aéroport Arrivée', {'label_attr': {'class': 'form-label mb-0'}}) }}
 								{{ form_widget(form.aeroarr, {
-                        'attr': {
-                            'class': 'form-control form-control-sm',
-                            'data-aeroport-target': 'input',
-                            'readonly': true
-                        }
-                    }) }}
-								{{ form_errors(form.aeroarr) }} #}
+									'attr': {
+										'class': 'form-control form-control-sm aeroarr',
+										'id': 'aeroarr',
+										'readonly': true
+									}
+								}) }}
 							</div>
 						</div>
 
@@ -953,4 +949,32 @@
 
 
 {{ form_end(form) }}
+<script>
+$(document).ready(function() {
+    function setupVilleSelect(selector, inputClass, urlPrefix) {
+        $(selector).on('change', function() {
+            const villeId = $(this).val();
+            if (!villeId) {
+                $('.' + inputClass).val('');
+                return;
+            }
+            $.ajax({
+                url: urlPrefix + villeId,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    $('.' + inputClass).val(data.aeroport || '');
+                },
+                error: function() {
+                    $('.' + inputClass).val('');
+                }
+            });
+        });
+        $(selector).trigger('change');
+    }
 
+    setupVilleSelect('.ville-select', 'aeroarr', '/vol/get-aeroport/');
+    setupVilleSelect('.ville-select-depart', 'aerodep', '/vol/get-aeroport/');
+});
+
+</script>

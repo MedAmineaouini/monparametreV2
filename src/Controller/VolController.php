@@ -11,6 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\VilleRepository;
+use App\Entity\Ville;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\SerializerInterface;
 
 #[Route('/vol')]
 class VolController extends AbstractController
@@ -171,6 +174,14 @@ class VolController extends AbstractController
         }
     
         return $this->redirectToRoute('app_vol_index');
+    }
+
+    #[Route('/get-aeroport/{ville}', name: 'get_aeroport', methods: ['GET'])]
+    public function getAeroport(Ville $ville): JsonResponse
+    {
+        return $this->json([
+            'aeroport' => $ville->getAero()
+        ]);
     }
     
 }

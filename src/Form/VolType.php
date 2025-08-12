@@ -98,6 +98,15 @@ class VolType extends AbstractType
                 'attr' => ['class' => 'form-select'],
                 'required' => true,
             ])
+            
+            ->add('aeroarr', TextType::class, [
+                'label' => 'Aéroport d\'arrivée',
+                'attr' => [
+                    'class' => 'form-control aero-input',
+                    'readonly' => true
+                ],
+                'mapped' => false 
+            ])
             ->add('heurea', TimeType::class, [
                 'label' => 'Heure d\'arrivée',
                 'widget' => 'single_text',
@@ -109,18 +118,6 @@ class VolType extends AbstractType
                 ],
             ])
 
-            // ->add('aerodep', TextType::class, [
-            //     'attr' => [
-            //         'readonly' => true,
-            //         'class' => 'form-control form-control-sm',
-            //     ],
-            // ])
-            // ->add('aeroarr', TextType::class, [
-            //     'attr' => [
-            //         'readonly' => true,
-            //         'class' => 'form-control form-control-sm',
-            //     ],
-            // ])
             ->add('villeD', EntityType::class, [
                 'class' => Ville::class,
                 'choice_label' => 'libville',
@@ -135,7 +132,16 @@ class VolType extends AbstractType
                 'placeholder' => 'Sélectionner une ville',
                 'attr' => ['class' => 'form-select'],
                 'required' => true,
-            ])  
+            ])
+            
+            ->add('aerodep', TextType::class, [
+                'label' => 'Aéroport de départ',
+                'attr' => [
+                    'class' => 'form-control aero-input',
+                    'readonly' => true
+                ],
+                'mapped' => false 
+            ]) 
             ->add('codaffret', EntityType::class, [
                 'class' => Affreteur::class,
                 'choice_label' => 'codaffret',
