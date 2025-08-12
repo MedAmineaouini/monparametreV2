@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Affreteur;
 use App\Entity\Vol;
 use App\Form\VolType;
 use App\Repository\VolRepository;
@@ -11,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\VilleRepository;
+use App\Repository\AffreteurRepository;
 use App\Entity\Ville;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -181,6 +183,22 @@ class VolController extends AbstractController
     {
         return $this->json([
             'aeroport' => $ville->getAero()
+        ]);
+    }
+
+    #[Route('/get-affret/{id}', name: 'vol_get_affret', methods: ['GET'])]
+    public function getAffret($id, AffreteurRepository $affreteurRepository): JsonResponse
+    {
+        $affreteur = $affreteurRepository->find($id);
+        
+        if (!$affreteur) {
+            return $this->json([
+                'libaffret' => ''
+            ]);
+        }
+    
+        return $this->json([
+            'libaffret' => $affreteur->getLibaffret()
         ]);
     }
     

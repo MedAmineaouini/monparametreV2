@@ -154,6 +154,15 @@ class VolType extends AbstractType
                 'attr' => ['class' => 'form-select'],
                 'required' => true,
             ])
+
+            ->add('libaffret', TextType::class, [
+                'label' => 'Affreteur',
+                'attr' => [
+                    'class' => 'form-control',
+                    'readonly' => true
+                ],
+                'mapped' => false 
+            ])
             ->add('villeV', EntityType::class, [
                 'class' => Ville::class,
                 'choice_label' => 'libville',

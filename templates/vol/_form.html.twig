@@ -142,7 +142,7 @@
 						<span class="fw-bold">[Arrivée]</span>
 
 						<div class="mb-1">
-							 <div class="mb-1">
+							<div class="mb-1">
 								{{ form_label(form.villeA, 'Ville', {'label_attr': {'class': 'form-label mb-0'}}) }}
 								{{ form_widget(form.villeA, {
 									'attr': {
@@ -151,7 +151,7 @@
 										'data-aero-target': 'aeroarr'
 									}
 								}) }}
-								
+
 								{{ form_label(form.aeroarr, 'Aéroport Arrivée', {'label_attr': {'class': 'form-label mb-0'}}) }}
 								{{ form_widget(form.aeroarr, {
 									'attr': {
@@ -262,89 +262,66 @@
 		</div>
 		{# Section Capacités et réservations #}
 
-		<div class="row w-100 gap-2" style="margin-left:2px">
-			<div class="col-sm-3 card card-body mb-4">
-				<h5 class="mb-3">Quta Avion</h5>
+				<div class="row w-100 gap-2" style="margin-left:2px">
+					<div class="col-sm-3 card card-body mb-4">
+						<h5 class="mb-3">Quta Avion</h5>
 
+						<div class="col-md-12">
+					{{ form_label(form.ouvert, 'Offre Total', {'label_attr': {'class': 'form-label'}}) }}
+					{{ form_widget(form.ouvert, {
+						'attr': {
+							'class': 'form-control',
+							'data-action': 'change->availability#calculateAvailability',
+							'data-availability-ouvert-value': form.ouvert.vars.value|default(0)
+						}
+					}) }}
+					{{ form_errors(form.ouvert) }}
+				</div>
 				<div class="col-md-12">
-			{{ form_label(form.ouvert, 'Offre Total', {'label_attr': {'class': 'form-label'}}) }}
-			{{ form_widget(form.ouvert, {
-				'attr': {
-					'class': 'form-control',
-					'data-action': 'change->availability#calculateAvailability',
-					'data-availability-ouvert-value': form.ouvert.vars.value|default(0)
-				}
-			}) }}
-			{{ form_errors(form.ouvert) }}
-		</div>
-		<div class="col-md-12">
-			{{ form_label(form.vendu, 'Vendu', {'label_attr': {'class': 'form-label'}}) }}
-			{{ form_widget(form.vendu, {
-				'attr': {
-					'class': 'form-control calc-field',
-					 'id': 'vendu-field',
-					 'data-calc': 'vendu'
-				}
-			}) }}
-			{{ form_errors(form.vendu) }}
-		</div>
-		<div class="col-md-12">
-			{{ form_label(form.reserve, 'Réservé', {'label_attr': {'class': 'form-label '}}) }}
-			{{ form_widget(form.reserve, {
-				'attr': {
-					'class': 'form-control calc-field',
-					'id': 'reserve-field',
-					'data-calc': 'reserve'
-				}
-			}) }}
-			{{ form_errors(form.reserve) }}
-		</div>
-		<div class="col-md-12">
-			{{ form_label(form.freesale, 'Free Sale', {'label_attr': {'class': 'form-label'}}) }}
-			{{ form_widget(form.freesale, {'attr': {'class': 'form-control'}}) }}
-			{{ form_errors(form.freesale) }}
-		</div>
-		<div class="col-md-12">
-			{{ form_label(form.dispo, 'Dispo.', {'label_attr': {'class': 'form-label'}}) }}
-			{{ form_widget(form.dispo, {
-				'attr': {
-					'class': 'form-control',
-					'readonly': true,
-					 'id': 'dispo-field',
-					  'class': 'form-control',
-       				  'data-calc': 'dispo',
-				}
-			}) }}
-			{{ form_errors(form.dispo) }}
-		</div>
-		<div class="col-md-12">
-			{{ form_label(form.blocsiege, 'Blocsiege', {'label_attr': {'class': 'form-label'}}) }}
-			{{ form_widget(form.blocsiege, {'attr': {'class': 'form-control'}}) }}
-			{{ form_errors(form.blocsiege) }}
-		</div>
-
-				{# <div class="col-md-2">
-																																	{{ form_label(form.soustock, 'Sous-stock', {'label_attr': {'class': 'form-label'}}) }}
-																																	{{ form_widget(form.soustock, {'attr': {'class': 'form-control'}}) }}
-																																	{{ form_errors(form.soustock) }}
-																																</div>
-																																<div class="col-md-2">
-																																	{{ form_label(form.engagement, 'Engagement', {'label_attr': {'class': 'form-label'}}) }}
-																																	{{ form_widget(form.engagement, {'attr': {'class': 'form-control'}}) }}
-																																	{{ form_errors(form.engagement) }}
-																																</div> #}
-				{# <div class="row g-3 mt-2">
-																																<div class="col-md-3">
-																																	{{ form_label(form.codaffret, 'Code affrètement', {'label_attr': {'class': 'form-label'}}) }}
-																																	{{ form_widget(form.codaffret, {'attr': {'class': 'form-control'}}) }}
-																																	{{ form_errors(form.codaffret) }}
-																																</div>
-																																<div class="col-md-3">
-																																	{{ form_label(form.codaffret1, 'Code affrètement 1', {'label_attr': {'class': 'form-label'}}) }}
-																																	{{ form_widget(form.codaffret1, {'attr': {'class': 'form-control'}}) }}
-																																	{{ form_errors(form.codaffret1) }}
-																																</div>
-																															</div> #}
+					{{ form_label(form.vendu, 'Vendu', {'label_attr': {'class': 'form-label'}}) }}
+					{{ form_widget(form.vendu, {
+						'attr': {
+							'class': 'form-control calc-field',
+							'id': 'vendu-field',
+							'data-calc': 'vendu'
+						}
+					}) }}
+					{{ form_errors(form.vendu) }}
+				</div>
+				<div class="col-md-12">
+					{{ form_label(form.reserve, 'Réservé', {'label_attr': {'class': 'form-label '}}) }}
+					{{ form_widget(form.reserve, {
+						'attr': {
+							'class': 'form-control calc-field',
+							'id': 'reserve-field',
+							'data-calc': 'reserve'
+						}
+					}) }}
+					{{ form_errors(form.reserve) }}
+				</div>
+				<div class="col-md-12">
+					{{ form_label(form.freesale, 'Free Sale', {'label_attr': {'class': 'form-label'}}) }}
+					{{ form_widget(form.freesale, {'attr': {'class': 'form-control'}}) }}
+					{{ form_errors(form.freesale) }}
+				</div>
+				<div class="col-md-12">
+					{{ form_label(form.dispo, 'Dispo.', {'label_attr': {'class': 'form-label'}}) }}
+					{{ form_widget(form.dispo, {
+						'attr': {
+							'class': 'form-control',
+							'readonly': true,
+							'id': 'dispo-field',
+							'class': 'form-control',
+							'data-calc': 'dispo',
+						}
+					}) }}
+					{{ form_errors(form.dispo) }}
+				</div>
+				<div class="col-md-12">
+					{{ form_label(form.blocsiege, 'Blocsiege', {'label_attr': {'class': 'form-label'}}) }}
+					{{ form_widget(form.blocsiege, {'attr': {'class': 'form-control'}}) }}
+					{{ form_errors(form.blocsiege) }}
+				</div>
 			</div>
 			{# Section Bagages #}
 			<div class="col-sm-5 card card-body mb-4">
@@ -772,20 +749,25 @@
 	<div class="col-md-12 card card-body  shadow-sm" style="background-color:rgb(178, 214, 179); border-radius: 8px;height: fit-content;">
 
 			<div class="col-md-12">
-
-				{{ form_label(form.codaffret, 'Affréteur', {'label_attr': {'class': 'form-label mb-0'}}) }}
-								{{ form_widget(form.codaffret, {
-											'attr': {
-												'class': 'form-select form-select-sm bg-white'
-											}
-										}) }}
-								{{ form_errors(form.codaffret) }}
-			</div>
-
-			{# <div class="col-md-2 d-flex align-items-center"> {{ form_widget(form.affecter, {'attr': {'class': 'form-control me-2'}}) }}
-					{{ form_label(form.affecter, 'Affecter', {'label_attr': {'class': 'form-label mb-0'}}) }}
-					{{ form_errors(form.affecter) }}
-			</div> #}
+    {{ form_label(form.codaffret, 'Affréteur', {'label_attr': {'class': 'form-label mb-0'}}) }}
+    {{ form_widget(form.codaffret, {
+        'attr': {
+            'class': 'form-select form-select-sm affret-select bg-white',
+            'id': 'codaffret',
+            'data-lib-target': 'libaffret'
+        }
+    }) }}
+    
+    {{ form_label(form.libaffret, 'Nom Affréteur', {'label_attr': {'class': 'form-label mb-0'}}) }}
+    {{ form_widget(form.libaffret, {
+        'attr': {
+            'class': 'form-control form-control-sm libaffret ',
+            'id': 'libaffret',
+            'readonly': true
+        }
+    }) }}
+</div>
+			
 
 			<div class="col-md-12">
 				{{ form_label(form.nomfour, 'Fournisseur', {'label_attr': {'class': 'form-label fw-bold '}}) }}
@@ -951,7 +933,7 @@
 
 </div>
 {{ form_end(form) }}
-<script>
+   <script>
 $(document).ready(function() {
     function setupVilleSelect(selector, inputClass, urlPrefix) {
         $(selector).on('change', function() {
@@ -974,24 +956,47 @@ $(document).ready(function() {
         });
         $(selector).trigger('change');
     }
+    function setupAffretSelect() {
+        $('.affret-select').on('change', function() {
+            const affretId = $(this).val();
+            const libaffretField = $('.libaffret');
+            
+            if (!affretId) {
+                libaffretField.val('');
+                return;
+            }
+            
+            libaffretField.val('Chargement...');
+            
+            $.ajax({
+                url: '/vol/get-affret/' + affretId,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    libaffretField.val(data.libaffret || 'Non trouvé');
+                },
+                error: function() {
+                    libaffretField.val('Erreur de chargement');
+                    console.error("Erreur lors du chargement de l'affréteur");
+                }
+            });
+        }).trigger('change');
+    }
 
-    setupVilleSelect('.ville-select', 'aeroarr', '/vol/get-aeroport/');
-    setupVilleSelect('.ville-select-depart', 'aerodep', '/vol/get-aeroport/');
-});
-</script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function() {
+
     function calculateDispo() {
         const vendu = parseInt($('[data-calc="vendu"]').val()) || 0;
         const reserve = parseInt($('[data-calc="reserve"]').val()) || 0;
         const dispo = Math.max(0, vendu - reserve);
         
-        console.log("Values:", { vendu, reserve, dispo });
         $('[data-calc="dispo"]').val(dispo);
     }
-
+    setupVilleSelect('.ville-select', 'aeroarr', '/vol/get-aeroport/');
+    setupVilleSelect('.ville-select-depart', 'aerodep', '/vol/get-aeroport/');
+    setupAffretSelect(); 
+    
     $('[data-calc="vendu"], [data-calc="reserve"]').on('input', calculateDispo);
-    calculateDispo(); // Initial calculation
+    calculateDispo();
 });
 </script>
+
