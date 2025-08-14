@@ -151,19 +151,19 @@
 
 							<div class="col-md-3">
 								{{ form_label(form.nvol, 'N° du vol', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
-								{{ form_widget(form.nvol, {'attr': {'class': 'form-control'}}) }}
+								{{ form_widget(form.nvol, {'attr': {'class': 'form-control  bg-white'}}) }}
                                 {{ form_errors(form.nvol) }}
 							</div>
 
 							<div class="col-md-3">
 								{{ form_label(form.datevol, 'Date vol', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
-								{{ form_widget(form.datevol, {'attr': {'class': 'form-control'}}) }}
+								{{ form_widget(form.datevol, {'attr': {'class': 'form-control  bg-white'}}) }}
                                 {{ form_errors(form.datevol) }}
 							</div>
 
 							<div class="col-md-3">
 								{{ form_label(form.jo, 'JO', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
-								{{ form_widget(form.jo, {'attr': {'class': 'form-control'}}) }}
+								{{ form_widget(form.jo, {'attr': {'class': 'form-control  bg-white'}}) }}
                                 {{ form_errors(form.jo) }}
 							</div>
 						</div>
@@ -171,25 +171,25 @@
 						<div class="row">
 							<div class="col-md-3">
 								{{ form_label(form.jplus, 'J.Plus', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
-								{{ form_widget(form.jplus, {'attr': {'class': 'form-control'}}) }}
+								{{ form_widget(form.jplus, {'attr': {'class': 'form-control bg-white'}}) }}
                                 {{ form_errors(form.jplus) }}
 							</div>
 
 							<div class="col-md-3">
 								{{ form_label(form.pnr, 'PNR', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
-								{{ form_widget(form.pnr, {'attr': {'class': 'form-control'}}) }}
+								{{ form_widget(form.pnr, {'attr': {'class': 'form-control bg-white'}}) }}
                                 {{ form_errors(form.pnr) }}
 							</div>
 
 							<div class="col-md-3">
 								{{ form_label(form.datRetro, 'Délai rétro en jours', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
-								{{ form_widget(form.datRetro, {'attr': {'class': 'form-control'}}) }}
+								{{ form_widget(form.datRetro, {'attr': {'class': 'form-control bg-white'}}) }}
                                 {{ form_errors(form.datRetro) }}
 							</div>
 
 							<div class="col-md-3">
 								{{ form_label(form.destination, 'Destination', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
-								{{ form_widget(form.destination, {'attr': {'class': 'form-control'}}) }}
+								{{ form_widget(form.destination, {'attr': {'class': 'form-control bg-white'}}) }}
                                 {{ form_errors(form.destination) }}
 							</div>
 						</div>
@@ -243,7 +243,7 @@
 										{{ form_label(form.aerodep, 'Aéroport Départ', {'label_attr': {'class': 'form-label mb-0'}}) }}
 										{{ form_widget(form.aerodep, {
 											'attr': {
-												'class': 'form-control form-control-sm aerodep',
+												'class': 'form-control bg-white form-control-sm aerodep',
 												'id': 'aerodep',
 												'readonly': true
 											}
@@ -255,7 +255,7 @@
 										{{ form_label(form.heured, 'Heure de départ', {'label_attr': {'class': 'form-label mb-0'}}) }}
 										{{ form_widget(form.heured, {
 											'attr': {
-												'class': 'form-control form-control-sm',
+												'class': 'form-control bg-white form-control-sm',
 												'data-aeroport-target': 'timeInput'
 											}
 										}) }}
@@ -283,7 +283,7 @@
 											{{ form_label(form.aeroarr, 'Aéroport Arrivée', {'label_attr': {'class': 'form-label mb-0'}}) }}
 											{{ form_widget(form.aeroarr, {
 												'attr': {
-													'class': 'form-control form-control-sm aeroarr',
+													'class': 'form-control bg-white form-control-sm aeroarr',
 													'id': 'aeroarr',
 													'readonly': true
 												}
@@ -296,7 +296,7 @@
 										{{ form_label(form.heurea, 'Heure d\'arrivée', {'label_attr': {'class': 'form-label mb-0'}}) }}
 										{{ form_widget(form.heurea, {
 											'attr': {
-												'class': 'form-control form-control-sm',
+												'class': 'form-control bg-white form-control-sm',
 												'data-aeroport-target': 'timeInput'
 											}
 										}) }}
@@ -313,7 +313,7 @@
 										{{ form_label(form.villeV, 'Ville', {'label_attr': {'class': 'form-label mb-0'}}) }}
 										{{ form_widget(form.villeV, {
 											'attr': {
-												'class': 'form-control form-control-sm'
+												'class': 'form-control bg-white form-control-sm'
 											}
 										}) }}
 										{{ form_errors(form.villeV) }}
@@ -360,7 +360,7 @@
 								{{ form_label(form.libaffret, 'Nom Affréteur', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
 								{{ form_widget(form.libaffret, {
 									'attr': {
-										'class': 'form-control form-control-sm libaffret bg-white',
+										'class': 'form-control bg-white form-control-sm libaffret bg-white',
 										'id': 'libaffret',
 										'readonly': true
 									}
@@ -370,20 +370,20 @@
 						
 							<div class="col-md-3">
 								{{ form_label(form.nomfour, 'Fournisseur', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
-								{{ form_widget(form.nomfour, {'attr': {'class': 'form-control', 'style': 'background-color: white;'}}) }}
+								{{ form_widget(form.nomfour, {'attr': {'class': 'form-control bg-white', 'style': 'background-color: white;'}}) }}
 								{{ form_errors(form.nomfour) }}
 							</div>
 
 							<div class="col-md-3">
 								{{ form_label(form.ferry, 'Vol Ferry', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
-								{{ form_widget(form.ferry, {'attr': {'class': 'form-control bg-white', 'style': 'background-color: white;'}}) }}
+								{{ form_widget(form.ferry, {'attr': {'class': 'form-control bg-white bg-white', 'style': 'background-color: white;'}}) }}
 								{{ form_errors(form.ferry) }}
 							</div>
 						</div>
 
 						<div class="col-md-3">
 							{{ form_label(form.fictif, 'Vol Fictif', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
-							{{ form_widget(form.fictif, {'attr': {'class': 'form-control', 'style': 'background-color: white;'}}) }}
+							{{ form_widget(form.fictif, {'attr': {'class': 'form-control bg-white', 'style': 'background-color: white;'}}) }}
 							{{ form_errors(form.fictif) }}
 						</div>
 					</div>
@@ -400,7 +400,7 @@
 							{{ form_label(form.ouvert, 'Offre Total', {'label_attr': {'class': 'form-label'}}) }}
 							{{ form_widget(form.ouvert, {
 								'attr': {
-									'class': 'form-control',
+									'class': 'form-control bg-white',
 									'data-action': 'change->availability#calculateAvailability',
 									'data-availability-ouvert-value': form.ouvert.vars.value|default(0)
 								}
@@ -411,7 +411,7 @@
 							{{ form_label(form.vendu, 'Vendu', {'label_attr': {'class': 'form-label'}}) }}
 							{{ form_widget(form.vendu, {
 								'attr': {
-									'class': 'form-control calc-field',
+									'class': 'form-control bg-white calc-field',
 									'id': 'vendu-field',
 									'data-calc': 'vendu'
 								}
@@ -422,7 +422,7 @@
 							{{ form_label(form.reserve, 'Réservé', {'label_attr': {'class': 'form-label '}}) }}
 							{{ form_widget(form.reserve, {
 								'attr': {
-									'class': 'form-control calc-field',
+									'class': 'form-control bg-white calc-field',
 									'id': 'reserve-field',
 									'data-calc': 'reserve'
 								}
@@ -431,7 +431,7 @@
 						</div>
 						<div class="col-md-12">
 							{{ form_label(form.freesale, 'Free Sale', {'label_attr': {'class': 'form-label'}}) }}
-							{{ form_widget(form.freesale, {'attr': {'class': 'form-control'}}) }}
+							{{ form_widget(form.freesale, {'attr': {'class': 'form-control bg-white'}}) }}
 							{{ form_errors(form.freesale) }}
 						</div>
 						<div class="col-md-12">
@@ -439,7 +439,7 @@
 							{{ form_label(form.dispo, 'Dispo.', {'label_attr': {'class': 'form-label'}}) }}
 							{{ form_widget(form.dispo, {
 								'attr': {
-									'class': 'form-control bg-light',
+									'class': 'form-control bg-white bg-light',
 									'readonly': true,
 									'id': 'dispo-field',
 									'data-calc': 'dispo'
@@ -449,7 +449,7 @@
 						</div>
 						<div class="col-md-12">
 							{{ form_label(form.blocsiege, 'Blocsiege', {'label_attr': {'class': 'form-label'}}) }}
-							{{ form_widget(form.blocsiege, {'attr': {'class': 'form-control'}}) }}
+							{{ form_widget(form.blocsiege, {'attr': {'class': 'form-control bg-white'}}) }}
 							{{ form_errors(form.blocsiege) }}
 						</div>
 					</div>
@@ -481,7 +481,7 @@
 						</div>
 						<div class="col-md-4 align-items-center mt-5">
 							{{ form_label(form.datedeconf, 'Date de confirmation', {'label_attr': {'class': 'form-label'}}) }}
-							{{ form_widget(form.datedeconf, {'attr': {'class': 'form-control'}}) }}
+							{{ form_widget(form.datedeconf, {'attr': {'class': 'form-control bg-white'}}) }}
 							{{ form_errors(form.datedeconf) }}
 						</div>
 
@@ -605,17 +605,17 @@
 				<div class="row mb-3">
 					<div class="col-md-3">
 						{{ form_label(form.dateconvo, 'Date de convocation') }}
-						{{ form_widget(form.dateconvo) }}
+						{{ form_widget(form.dateconvo, {'attr': {'class': 'form-control bg-white'}}) }}
                          {{ form_errors(form.dateconvo) }}
 					</div>
 					<div class="col-md-2">
 						{{ form_label(form.heureconvo, 'Heure') }}
-						{{ form_widget(form.heureconvo) }}
+						{{ form_widget(form.heureconvo, {'attr': {'class': 'form-control bg-white'}}) }}
                          {{ form_errors(form.heureconvo) }}
 					</div>
 					<div class="col-md-3">
 						{{ form_label(form.comptoir, 'Comptoir & zone') }}
-						{{ form_widget(form.comptoir) }}
+						{{ form_widget(form.comptoir, {'attr': {'class': 'form-control bg-white'}}) }}
                          {{ form_errors(form.comptoir) }}
 					</div>
 				</div>
@@ -623,12 +623,12 @@
 				<div class="row mb-3">
 					<div class="col-md-3">
 						{{ form_label(form.lieuconvo, 'Aéroport & Lieu') }}
-						{{ form_widget(form.lieuconvo) }}
+						{{ form_widget(form.lieuconvo, {'attr': {'class': 'form-control bg-white'}}) }}
                          {{ form_errors(form.lieuconvo) }}
 					</div>
 					<div class="col-md-2">
 						{{ form_label(form.porte, 'Porte') }}
-						{{ form_widget(form.porte) }}
+						{{ form_widget(form.porte, {'attr': {'class': 'form-control bg-white'}}) }}
                          {{ form_errors(form.porte) }}
 					</div>
 				</div>
@@ -637,17 +637,17 @@
 					<div class="col-md-6">
 						<div class="mb-3">
 							{{ form_label(form.agence, 'Agence (confirmation vol)') }}
-							{{ form_widget(form.agence) }}
+							{{ form_widget(form.agence, {'attr': {'class': 'form-control bg-white'}}) }}
                              {{ form_errors(form.agence) }}
 						</div>
 						<div class="mb-3">
 							{{ form_label(form.formforf, 'Formalités forfait') }}
-							{{ form_widget(form.formforf) }}
+							{{ form_widget(form.formforf, {'attr': {'class': 'form-control bg-white'}}) }}
                             {{ form_errors(form.formforf) }}
 						</div>
 						<div class="mb-3">
 							{{ form_label(form.formsec, 'Formalités vol sec') }}
-							{{ form_widget(form.formsec) }}
+							{{ form_widget(form.formsec, {'attr': {'class': 'form-control bg-white'}}) }}
                             {{ form_errors(form.formsec) }}
 						</div>
 					</div>
@@ -656,12 +656,12 @@
 						<label class="text-white fw-bold mb-2">Spécification</label>
 						<div class="border p-3 bg-white text-dark rounded">
 							{% for child in form.specification %}
-								<div class="form-check mb-2">
-									{{ form_widget(child) }}
-									{{ form_label(child) }}
+                                <div class="form-check mb-2">
+                                    {{ form_widget(child) }}
+                                    {{ form_label(child, null, {'label_attr': {'class': 'form-check-label'}}) }}
                                     {{ form_errors(child) }}
-								</div>
-							{% endfor %}
+                                </div>
+                            {% endfor %}
 						</div>
 					</div>
 				</div>
