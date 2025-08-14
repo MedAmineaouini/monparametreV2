@@ -32,11 +32,12 @@ class VolType extends AbstractType
                 'mapped' => false, 
                 'data' => $options['seqvol_value'] ?? '', 
                 'label_attr' => [
-                    'class' => 'text-end d-block'
+                    'class' => ''
                 ],
                 'attr' => [
                     'readonly' => true,
-                    'class' => 'form-control bg-light text-muted'
+                    'class' => 'form-control bg-light text-muted',
+                    'style' => 'background-color: #e0e0e0; color: #6c757d;',
                 ],
             ])
             ->add('pnr', TextType::class, [
@@ -96,7 +97,7 @@ class VolType extends AbstractType
                 'label' => 'Ville d\'arrivée',
                 'placeholder' => 'Sélectionner une ville',
                 'attr' => ['class' => 'form-select'],
-                'required' => true,
+                'required' => false,
             ])
             
             ->add('aeroarr', TextType::class, [
@@ -131,7 +132,7 @@ class VolType extends AbstractType
                 'label' => 'Ville de départ',
                 'placeholder' => 'Sélectionner une ville',
                 'attr' => ['class' => 'form-select'],
-                'required' => true,
+                'required' => false,
             ])
             
             ->add('aerodep', TextType::class, [
@@ -152,7 +153,7 @@ class VolType extends AbstractType
                 'label' => 'Code Affreteur',
                 'placeholder' => 'Sélectionner une code',
                 'attr' => ['class' => 'form-select'],
-                'required' => true,
+                'required' => false,
             ])
 
             ->add('libaffret', TextType::class, [
@@ -173,7 +174,7 @@ class VolType extends AbstractType
                 'label' => 'Ville de vol',
                 'placeholder' => 'Sélectionner une ville',
                 'attr' => ['class' => 'form-select'],
-                'required' => true,
+                'required' => false,
             ])
             ->add('typevol', ChoiceType::class, [
                 'choices' => [
@@ -183,7 +184,7 @@ class VolType extends AbstractType
                 'expanded' => true,
                 'multiple' => false,
                 'label' => 'Type de vol',
-                'required' => true,
+                'required' => false,
                 'attr' => ['class' => 'form-check'],
                 'data' => 1, 
             ])
@@ -219,18 +220,32 @@ class VolType extends AbstractType
             ->add('suppvol', TextType::class, ['attr' => ['class' => 'form-control']])
             ->add('dateconvo', DateType::class, [
                 'widget' => 'single_text',
+                'required' => false,
                 'html5' => true,
-                'attr' => ['class' => 'form-control']
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+                'empty_data' => null,
             ])
             ->add('heureconvo', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('lieuconvo', TextType::class, ['attr' => ['class' => 'form-control']])
+            ->add('lieuconvo', TextType::class, [
+                'required' => false,      
+                'empty_data' => null,       
+                'attr' => ['class' => 'form-control'],
+            ])
             ->add('comptoir', TextType::class, ['attr' => ['class' => 'form-control']])
             ->add('porte', TextType::class, ['attr' => ['class' => 'form-control']])
             ->add('agence', TextType::class, ['attr' => ['class' => 'form-control']])
             // ->add('telagence', TextType::class, ['attr' => ['class' => 'form-control']])
             ->add('formforf', TextType::class, ['attr' => ['class' => 'form-control']])
             ->add('formsec', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('obs', TextareaType::class, ['attr' => ['class' => 'form-control']])
+            ->add('obs', TextareaType::class, [
+                'attr' => [
+                    'class' => 'form-control',
+                    'rows' => 4,
+                    'placeholder' => 'Saisir une observation...'
+                ]
+            ])
             ->add('dateconf', DateType::class, [
                 'widget' => 'single_text',
                 'html5' => true,
@@ -323,15 +338,15 @@ class VolType extends AbstractType
             // ->add('aerod', TextType::class, ['attr' => ['class' => 'form-control']])
             // ->add('aeroa', TextType::class, ['attr' => ['class' => 'form-control']])
             ->add('kilocabine', NumberType::class, [
-                'label' => 'Cabine (kg)', 
+                'label' => 'Kilos baggage cabine', 
                 'attr' => ['class' => 'form-control']
             ])
             ->add('kilos', TextType::class, [
-                'label' => 'Adulte (kg)',
+                'label' => 'Kilos baggage adulte',
                 'attr' => ['class' => 'form-control']
             ])
             ->add('kilobebe', NumberType::class, [
-                'label' => 'Bébé (kg)',
+                'label' => 'Kilos baggage bébé',
                 'attr' => ['class' => 'form-control']
             ])
             
@@ -363,8 +378,11 @@ class VolType extends AbstractType
             ->add('prixbbav', NumberType::class, ['attr' => ['class' => 'form-control']])
             ->add('prixzzav', NumberType::class, ['attr' => ['class' => 'form-control']])
             //->add('taxeB2b', NumberType::class, ['attr' => ['class' => 'form-control']])
-
-            ->add('stopsale', TextType::class, ['attr' => ['class' => 'form-control']])
+            ->add('stopsale', CheckboxType::class, [
+                'label' => 'stopsale',
+                'required' => false,
+            ])  
+            
             //->add('convoWeb', TextType::class, ['attr' => ['class' => 'form-control']])
             //->add('inclusSg', TextType::class, ['attr' => ['class' => 'form-control']])
             // ->add('affecter', TextType::class, ['attr' => ['class' => 'form-control']])
@@ -392,11 +410,24 @@ class VolType extends AbstractType
             ])  
             // ->add('retroVol', TextType::class, ['attr' => ['class' => 'form-control']])
             ->add('blocsiege', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('ferry', TextType::class, ['attr' => ['class' => 'form-control']])
+            // ->add('ferry', TextType::class, ['attr' => ['class' => 'form-control']])
+            ->add('ferry', IntegerType::class, [
+                'required' => false,
+                'empty_data' => null,
+                'attr' => [
+                    'min' => 0, 
+                ],
+            ])
             // ->add('sgGarantis', TextType::class, ['attr' => ['class' => 'form-control']])
             ->add('freesale', TextType::class, ['attr' => ['class' => 'form-control']])
             ->add('ouvert', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('fictif', TextType::class, ['attr' => ['class' => 'form-control']]);
+            ->add('fictif', IntegerType::class, [
+                'required' => false,
+                'empty_data' => 0,
+                'attr' => [
+                    'min' => 0,     
+                ],
+            ]);
 
         ;
 
@@ -410,6 +441,8 @@ class VolType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Vol::class,
+            'csrf_protection' => true,
+            'allow_extra_fields' => true,
             'seqvol_value' => null,
             'aerodep_value' => null,
             'aeroarr_value' => null,

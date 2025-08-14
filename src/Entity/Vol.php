@@ -15,46 +15,39 @@ class Vol
     #[ORM\Column(name: 'SEQVOL', type: Types::INTEGER)]
     private ?int $seqvol = null;
 
-    #[ORM\Column(name: 'NVOL', type: Types::STRING, length: 8)]
-    private string $nvol = '';
+    #[ORM\Column(name: 'NVOL', type: Types::STRING, length: 8, nullable: true)]
+    private ?string $nvol = null;
 
-    #[ORM\Column(name: "DATEVOL", type: "datetime_immutable")]
-    private ?\DateTimeImmutable $datevol = null; // Notez le ? pour nullable
 
-    #[ORM\Column(name: 'JO', type: Types::INTEGER)]
-    private int $jo = 0;
 
-    #[ORM\Column(name: 'JPLUS', type: Types::STRING, length: 2)]
-    private string $jplus = '';
+    #[ORM\Column(name: "DATEVOL", type: "datetime_immutable", nullable: true)]
+    private ?\DateTimeImmutable $datevol = null;
 
-    // #[ORM\Column(name: 'VILLED', type: Types::STRING, length: 3)]
-    // private string $villed = '';
+    #[ORM\Column(name: 'JO', type: Types::INTEGER, nullable: true)]
+    private ?int $jo = null;
 
-    #[ORM\Column(name: 'HEURED', type: Types::STRING, length: 8)]
-    private string $heured = '';
 
-    // #[ORM\Column(name: 'VILLEA', type: Types::STRING, length: 3)]
-    // private string $villea = '';
+    #[ORM\Column(name: 'JPLUS', type: Types::STRING, length: 2, nullable: true)]
+    private ?string $jplus = '';
 
-    #[ORM\Column(name: 'HEUREA', type: Types::STRING, length: 8)]
-    private string $heurea = '';
+    #[ORM\Column(name: 'HEURED', type: Types::STRING, length: 8, nullable: true)]
+    private ?string $heured = '';
 
-    // #[ORM\Column(name: 'VILLEV', type: Types::STRING, length: 3)]
-    // private string $villev = '';
+    #[ORM\Column(name: 'HEUREA', type: Types::STRING, length: 8, nullable: true)]
+    private ?string $heurea = '';
 
-    // Ville de départ
     #[ORM\ManyToOne(targetEntity: Ville::class)]
-    #[ORM\JoinColumn(name: 'VILLE_D', referencedColumnName: 'SEQVILLE', nullable: false)]
+    #[ORM\JoinColumn(name: 'VILLED', referencedColumnName: 'SEQVILLE', nullable: false)]
     private ?Ville $villeD = null;
 
-    // Ville d'arrivée
+
     #[ORM\ManyToOne(targetEntity: Ville::class)]
-    #[ORM\JoinColumn(name: 'VILLE_A', referencedColumnName: 'SEQVILLE', nullable: false)]
+    #[ORM\JoinColumn(name: 'VILLEA', referencedColumnName: 'SEQVILLE', nullable: false)]
     private ?Ville $villeA = null;
 
-    // Ville de vol (peut-être autre type de ville)
+
     #[ORM\ManyToOne(targetEntity: Ville::class)]
-    #[ORM\JoinColumn(name: 'VILLE_V', referencedColumnName: 'SEQVILLE', nullable: false)]
+    #[ORM\JoinColumn(name: 'VILLEV', referencedColumnName: 'SEQVILLE', nullable: false)]
     private ?Ville $villeV = null;
 
     #[ORM\ManyToOne(targetEntity: Affreteur::class)]
@@ -62,412 +55,412 @@ class Vol
     private ?Affreteur $codaffret = null;
 
 
-    #[ORM\Column(name: 'TYPEVOL', type: Types::INTEGER)]
-    private int $typevol = 0;
+    #[ORM\Column(name: 'TYPEVOL', type: Types::INTEGER, nullable: true)]
+    private ?int $typevol = 0;
 
-    #[ORM\Column(name: 'KILOS', type: Types::INTEGER)]
-    private int $kilos = 0;
+    #[ORM\Column(name: 'KILOS', type: Types::INTEGER, nullable: true)]
+    private ?int $kilos = 0;
 
 
 
-    #[ORM\Column(name: 'SG', type: Types::INTEGER)]
-    private int $sg = 0;
+    #[ORM\Column(name: 'SG', type: Types::INTEGER, nullable: true)]
+    private ?int $sg = 0;
 
-    #[ORM\Column(name: 'VENDU', type: Types::INTEGER)]
-    private int $vendu = 0;
+    #[ORM\Column(name: 'VENDU', type: Types::INTEGER, nullable: true)]
+    private ?int $vendu = 0;
 
-    #[ORM\Column(name: 'RESERVE', type: Types::INTEGER)]
-    private int $reserve = 0;
+    #[ORM\Column(name: 'RESERVE', type: Types::INTEGER, nullable: true)]
+    private ?int $reserve = 0;
 
-    #[ORM\Column(name: 'PRIXADA', type: Types::DECIMAL, precision: 7, scale: 2)]
-    private string $prixada = '0';
+    #[ORM\Column(name: 'PRIXADA', type: Types::DECIMAL, precision: 7, scale: 2, nullable: true)]
+    private ?string $prixada = null;
 
-    #[ORM\Column(name: 'PRIXZZA', type: Types::DECIMAL, precision: 7, scale: 2)]
-    private string $prixzza = '0';
+    #[ORM\Column(name: 'PRIXZZA', type: Types::DECIMAL, precision: 7, scale: 2, nullable: true)]
+    private ?string $prixzza = '0';
 
-    #[ORM\Column(name: 'PRIXBBA', type: Types::DECIMAL, precision: 7, scale: 2)]
-    private string $prixbba = '0';
+    #[ORM\Column(name: 'PRIXBBA', type: Types::DECIMAL, precision: 7, scale: 2, nullable: true)]
+    private ?string $prixbba = '0';
 
-    #[ORM\Column(name: 'TAXEA', type: Types::DECIMAL, precision: 7, scale: 2)]
-    private string $taxea = '0';
+    #[ORM\Column(name: 'TAXEA', type: Types::DECIMAL, precision: 7, scale: 2, nullable: true)]
+    private ?string $taxea = '0';
 
-    #[ORM\Column(name: 'PRIXADV', type: Types::DECIMAL, precision: 7, scale: 2)]
-    private string $prixadv = '0';
+    #[ORM\Column(name: 'PRIXADV', type: Types::DECIMAL, precision: 7, scale: 2, nullable: true)]
+    private ?string $prixadv = '0';
 
-    #[ORM\Column(name: 'PRIXZZV', type: Types::DECIMAL, precision: 7, scale: 2)]
-    private string $prixzzv = '0';
+    #[ORM\Column(name: 'PRIXZZV', type: Types::DECIMAL, precision: 7, scale: 2, nullable: true)]
+    private ?string $prixzzv = '0';
 
-    #[ORM\Column(name: 'PRIXBBV', type: Types::DECIMAL, precision: 7, scale: 2)]
-    private string $prixbbv = '0';
+    #[ORM\Column(name: 'PRIXBBV', type: Types::DECIMAL, precision: 7, scale: 2, nullable: true)]
+    private ?string $prixbbv = '0';
 
-    #[ORM\Column(name: 'PRIXADV2', type: Types::DECIMAL, precision: 7, scale: 2)]
-    private string $prixadv2 = '0';
+    #[ORM\Column(name: 'PRIXADV2', type: Types::DECIMAL, precision: 7, scale: 2, nullable: true)]
+    private ?string $prixadv2 = '0';
 
     #[ORM\Column(name: 'PRIXZZV2', type: Types::DECIMAL, precision: 7, scale: 2)]
-    private string $prixzzv2 = '0';
+    private ?string $prixzzv2 = '0';
 
     #[ORM\Column(name: 'PRIXBBV2', type: Types::DECIMAL, precision: 7, scale: 2)]
-    private string $prixbbv2 = '0';
+    private ?string $prixbbv2 = '0';
 
     #[ORM\Column(name: 'PRIXADV3', type: Types::DECIMAL, precision: 7, scale: 2)]
-    private string $prixadv3 = '0';
+    private ?string $prixadv3 = '0';
 
     #[ORM\Column(name: 'PRIXZZV3', type: Types::DECIMAL, precision: 7, scale: 2)]
-    private string $prixzzv3 = '0';
+    private ?string $prixzzv3 = '0';
 
     #[ORM\Column(name: 'PRIXBBV3', type: Types::DECIMAL, precision: 7, scale: 2)]
-    private string $prixbbv3 = '0';
+    private ?string $prixbbv3 = '0';
 
     #[ORM\Column(name: 'SUPP1', type: Types::DECIMAL, precision: 7, scale: 2)]
-    private string $supp1 = '0';
+    private ?string $supp1 = '0';
 
     #[ORM\Column(name: 'SUPP2', type: Types::DECIMAL, precision: 7, scale: 2)]
-    private string $supp2 = '0';
+    private ?string $supp2 = '0';
 
     #[ORM\Column(name: 'TAXEVENTE', type: Types::DECIMAL, precision: 7, scale: 2)]
-    private string $taxevente = '0';
+    private ?string $taxevente = '0';
 
     #[ORM\Column(name: 'CARTEVENTE', type: Types::DECIMAL, precision: 7, scale: 2)]
-    private string $cartevente = '0';
+    private ?string $cartevente = '0';
 
     #[ORM\Column(name: 'TAXESOVENTE', type: Types::DECIMAL, precision: 7, scale: 2)]
-    private string $taxesovente = '0';
+    private ?string $taxesovente = '0';
 
     #[ORM\Column(name: 'SUPPVOL', type: Types::DECIMAL, precision: 7, scale: 2)]
-    private string $suppvol = '0';
+    private ?string $suppvol = '0';
 
-    #[ORM\Column(name: 'DATECONVO', type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(name: 'DATECONVO',type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $dateconvo = null;
 
-    #[ORM\Column(name: 'HEURECONVO', type: Types::STRING, length: 4)]
-    private string $heureconvo = '';
+    #[ORM\Column(type: 'string', length: 10, nullable: true)]
+    private ?string $heureconvo = null;
 
-    #[ORM\Column(name: 'LIEUCONVO', type: Types::STRING, length: 30)]
-    private string $lieuconvo = '';
+    #[ORM\Column(name: 'LIEUCONVO', type: Types::STRING, length: 30, nullable: true)]
+    private ?string $lieuconvo = '';
 
-    #[ORM\Column(name: 'COMPTOIR', type: Types::STRING, length: 50)]
-    private string $comptoir = '';
+    #[ORM\Column(name: 'COMPTOIR', type: Types::STRING, length: 50, nullable: true)]
+    private ?string $comptoir = '';
 
-    #[ORM\Column(name: 'PORTE', type: Types::STRING, length: 50)]
-    private string $porte = '';
+    #[ORM\Column(name: 'PORTE', type: Types::STRING, length: 50, nullable: true)]
+    private ?string $porte = '';
 
-    #[ORM\Column(name: 'AGENCE', type: Types::STRING, length: 30)]
-    private string $agence = '';
+    #[ORM\Column(name: 'AGENCE', type: Types::STRING, length: 30, nullable: true)]
+    private ?string $agence = '';
 
-    #[ORM\Column(name: 'TELAGENCE', type: Types::STRING, length: 20)]
-    private string $telagence = '';
+    #[ORM\Column(name: 'TELAGENCE', type: Types::STRING, length: 20, nullable: true)]
+    private ?string $telagence = '';
 
-    #[ORM\Column(name: 'FORMFORF', type: Types::STRING, length: 30)]
-    private string $formforf = '';
+    #[ORM\Column(name: 'FORMFORF', type: Types::STRING, length: 30, nullable: true)]
+    private ?string $formforf = '';
 
-    #[ORM\Column(name: 'FORMSEC', type: Types::STRING, length: 30)]
-    private string $formsec = '';
+    #[ORM\Column(name: 'FORMSEC', type: Types::STRING, length: 30, nullable: true)]
+    private ?string $formsec = '';
 
-    #[ORM\Column(name: 'OBS', type: Types::TEXT)]
-    private string $obs = '';
+    #[ORM\Column(name: 'OBS', type: Types::TEXT, nullable: true)]
+    private ?string $obs = '';
 
-    #[ORM\Column(name: 'DATECONF', type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(name: 'DATECONF', type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $dateconf = null;
 
-    #[ORM\Column(name: 'DATEDECONF', type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(name: 'DATEDECONF', type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $datedeconf = null;
 
-    #[ORM\Column(name: 'FREESALE', type: Types::INTEGER)]
-    private int $freesale = 0;
+    #[ORM\Column(name: 'FREESALE', type: Types::INTEGER, nullable: true)]
+    private ?int $freesale = 0;
 
     #[ORM\Column(name: 'ASSVOL', type: Types::DECIMAL, precision: 7, scale: 2)]
-    private string $assvol = '0';
+    private ?string $assvol = '0';
 
     #[ORM\Column(name: 'OUVERT', type: Types::INTEGER)]
-    private int $ouvert = 0;
+    private ?int $ouvert = 0;
 
     #[ORM\Column(name: 'TAXEA2', type: Types::DECIMAL, precision: 7, scale: 2)]
-    private string $taxea2 = '0';
+    private ?string $taxea2 = '0';
 
-    #[ORM\Column(name: 'AUTRES', type: Types::STRING, length: 35)]
-    private string $autres = '';
+    #[ORM\Column(name: 'AUTRES', type: Types::STRING, length: 35, nullable: true)]
+    private ?string $autres = '';
 
     #[ORM\Column(name: 'COAF', type: Types::INTEGER)]
-    private int $coaf = 0;
+    private ?int $coaf = 0;
 
-    #[ORM\Column(name: 'FICTIF', type: Types::INTEGER)]
-    private int $fictif = 0;
+    #[ORM\Column(name: 'FICTIF', type: Types::INTEGER, nullable: true)]
+    private ?int $fictif = null;
 
     #[ORM\Column(name: 'LIEN', type: Types::INTEGER)]
-    private int $lien = 0;
+    private ?int $lien = 0;
 
-    #[ORM\Column(name: 'TYPEAVION', type: Types::STRING, length: 20)]
-    private string $typeavion = '';
+    #[ORM\Column(name: 'TYPEAVION', type: Types::STRING, length: 20, nullable: true)]
+    private ?string $typeavion = '';
 
-    #[ORM\Column(name: 'COMPAGNIE', type: Types::STRING, length: 20)]
-    private string $compagnie = '';
+    #[ORM\Column(name: 'COMPAGNIE', type: Types::STRING, length: 20, nullable: true)]
+    private ?string $compagnie = '';
 
     #[ORM\Column(name: 'STOPSALE', type: Types::INTEGER)]
-    private int $stopsale = 0;
+    private ?int $stopsale = 0;
 
     #[ORM\Column(name: 'TAXESOLIDARITE', type: Types::DECIMAL, precision: 5, scale: 2)]
-    private string $taxesolidarite = '0';
+    private ?string $taxesolidarite = '0';
 
-    #[ORM\Column(name: 'NOMAXE', type: Types::STRING, length: 10)]
-    private string $nomaxe = '';
+    #[ORM\Column(name: 'NOMAXE', type: Types::STRING, length: 10, nullable: true)]
+    private ?string $nomaxe = '';
 
     #[ORM\Column(name: 'RETRO', type: Types::INTEGER)]
-    private int $retro = 0;
+    private ?int $retro = 0;
 
     #[ORM\Column(name: 'PAX_RETRO', type: Types::INTEGER)]
-    private int $paxRetro = 0;
+    private ?int $paxRetro = 0;
 
-    #[ORM\Column(name: 'DAT_RETRO', type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(name: 'DAT_RETRO', type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $datRetro = null;
 
-    #[ORM\Column(name: 'HEUREDV', type: Types::STRING, length: 4)]
-    private string $heuredv = '';
+    #[ORM\Column(name: 'HEUREDV', type: Types::STRING, length: 4, nullable: true)]
+    private ?string $heuredv = '';
 
-    #[ORM\Column(name: 'HEUREAV', type: Types::STRING, length: 4)]
-    private string $heureav = '';
+    #[ORM\Column(name: 'HEUREAV', type: Types::STRING, length: 4, nullable: true)]
+    private ?string $heureav = '';
 
-    #[ORM\Column(name: 'DUREEVOL', type: Types::STRING, length: 4)]
-    private string $dureevol = '';
+    #[ORM\Column(name: 'DUREEVOL', type: Types::STRING, length: 4, nullable: true)]
+    private ?string $dureevol = '';
 
     #[ORM\Column(name: 'CONVO_WEB', type: Types::INTEGER)]
-    private int $convoWeb = 1;
+    private ?int $convoWeb = 1;
 
-    #[ORM\Column(name: 'OBS_RESA', type: Types::TEXT)]
-    private string $obsResa = '';
+    #[ORM\Column(name: 'OBS_RESA', type: Types::TEXT, nullable: true)]
+    private ?string $obsResa = '';
 
     #[ORM\Column(name: 'pax_embarque', type: Types::INTEGER)]
-    private int $paxEmbarque = 0;
+    private ?int $paxEmbarque = 0;
 
-    #[ORM\Column(name: 'heure_embarque', type: Types::STRING, length: 4)]
-    private string $heureEmbarque = '';
+    #[ORM\Column(name: 'heure_embarque', type: Types::STRING, length: 4, nullable: true)]
+    private ?string $heureEmbarque = '';
 
     #[ORM\Column(name: 'PREST_ABORD', type: Types::INTEGER)]
-    private int $prestAbord = 0;
+    private ?int $prestAbord = 0;
 
     #[ORM\Column(name: 'STOCKG', type: Types::INTEGER)]
-    private int $stockg = 0;
+    private ?int $stockg = 0;
 
-    #[ORM\Column(name: 'VILLEDD', type: Types::STRING, length: 3)]
-    private string $villedd = '';
+    #[ORM\Column(name: 'VILLEDD', type: Types::STRING, length: 3, nullable: true)]
+    private ?string $villedd = '';
 
-    #[ORM\Column(name: 'VILLEAA', type: Types::STRING, length: 3)]
-    private string $villeaa = '';
+    #[ORM\Column(name: 'VILLEAA', type: Types::STRING, length: 3, nullable: true)]
+    private ?string $villeaa = '';
 
     #[ORM\Column(name: 'VENDUG', type: Types::INTEGER)]
-    private int $vendug = 0;
+    private ?int $vendug = 0;
 
-    #[ORM\Column(name: 'INCLUS_SG', type: Types::STRING, length: 10)]
-    private string $inclusSg = '';
+    #[ORM\Column(name: 'INCLUS_SG', type: Types::STRING, length: 10, nullable: true)]
+    private ?string $inclusSg = '';
 
     #[ORM\Column(name: 'CRON', type: Types::INTEGER)]
-    private int $cron = 0;
+    private ?int $cron = 0;
 
     #[ORM\Column(name: 'SOUSTOCK', type: Types::INTEGER)]
-    private int $soustock = 0;
+    private ?int $soustock = 0;
 
     #[ORM\Column(name: 'RESERVES', type: Types::INTEGER)]
-    private int $reserves = 0;
+    private ?int $reserves = 0;
 
     #[ORM\Column(name: 'VENDUS', type: Types::INTEGER)]
-    private int $vendus = 0;
+    private ?int $vendus = 0;
 
     #[ORM\Column(name: 'ENGAGEMENT', type: Types::INTEGER)]
-    private int $engagement = 0;
+    private ?int $engagement = 0;
 
     #[ORM\Column(name: 'SEQVOL_GENERIQUE', type: Types::INTEGER)]
-    private int $seqvolGenerique = 0;
+    private ?int $seqvolGenerique = 0;
 
-    #[ORM\Column(name: 'CODAFFRET1', type: Types::STRING, length: 3)]
-    private string $codaffret1 = '';
+    #[ORM\Column(name: 'CODAFFRET1', type: Types::STRING, length: 3, nullable: true)]
+    private ?string $codaffret1 = '';
 
     #[ORM\Column(name: 'DESTINATION', type: Types::STRING, length: 30)]
-    private string $destination = '';
+    private ?string $destination = '';
 
     #[ORM\Column(name: 'NATURE', type: Types::INTEGER)]
-    private int $nature = 2;
+    private ?int $nature = 2;
 
-    #[ORM\Column(name: 'NVOL2', type: Types::STRING, length: 8)]
-    private string $nvol2 = '';
+    #[ORM\Column(name: 'NVOL2', type: Types::STRING, length: 8, nullable: true)]
+    private ?string $nvol2 = '';
 
     #[ORM\Column(name: 'TAXEV', type: Types::DECIMAL, precision: 7, scale: 2)]
-    private string $taxev = '0';
+    private ?string $taxev = '0';
 
     #[ORM\Column(name: 'TAXESOLIDARITEV', type: Types::DECIMAL, precision: 5, scale: 2)]
-    private string $taxesolidaritev = '0';
+    private ?string $taxesolidaritev = '0';
 
     #[ORM\Column(name: 'TAXESOVENTEV', type: Types::DECIMAL, precision: 7, scale: 2)]
-    private string $taxesoventev = '0';
+    private ?string $taxesoventev = '0';
 
     #[ORM\Column(name: 'TOTALTAXEA', type: Types::DECIMAL, precision: 7, scale: 2)]
-    private string $totaltaxea = '0';
+    private ?string $totaltaxea = '0';
 
     #[ORM\Column(name: 'PRIXADULTE', type: Types::DECIMAL, precision: 7, scale: 2)]
-    private string $prixadulte = '0';
+    private ?string $prixadulte = '0';
 
-    #[ORM\Column(name: 'CODAFFRET2', type: Types::STRING, length: 3)]
-    private string $codaffret2 = '';
+    #[ORM\Column(name: 'CODAFFRET2', type: Types::STRING, length: 3, nullable: true)]
+    private ?string $codaffret2 = '';
 
     #[ORM\Column(name: 'MAX_VOLSEC_ALLOUE', type: Types::INTEGER)]
-    private int $maxVolsecAlloue = 0;
+    private ?int $maxVolsecAlloue = 0;
 
     #[ORM\Column(name: 'VENDU_VOLSEC', type: Types::INTEGER)]
-    private int $venduVolsec = 0;
+    private ?int $venduVolsec = 0;
 
-    #[ORM\Column(name: 'NVOLVIA', type: Types::STRING, length: 8)]
-    private string $nvolvia = '';
+    #[ORM\Column(name: 'NVOLVIA', type: Types::STRING, length: 8, nullable: true)]
+    private ?string $nvolvia = '';
 
-    #[ORM\Column(name: 'OBS_VIA', type: Types::STRING, length: 80)]
-    private string $obsVia = '';
+    #[ORM\Column(name: 'OBS_VIA', type: Types::STRING, length: 80, nullable: true)]
+    private ?string $obsVia = '';
 
     #[ORM\Column(name: 'AFFECTER', type: Types::INTEGER)]
-    private int $affecter = 0;
+    private ?int $affecter = 0;
 
     #[ORM\Column(name: 'FREESALE1', type: Types::INTEGER)]
-    private int $freesale1 = 0;
+    private ?int $freesale1 = 0;
 
     #[ORM\Column(name: 'TOT_MAX_VOLSEC', type: Types::INTEGER)]
-    private int $totMaxVolsec = 0;
+    private ?int $totMaxVolsec = 0;
 
     #[ORM\Column(name: 'TOT_FREESALE', type: Types::INTEGER)]
-    private int $totFreesale = 0;
+    private ?int $totFreesale = 0;
 
     #[ORM\Column(name: 'SEQRECEPTIF', type: Types::INTEGER)]
-    private int $seqreceptif = 0;
+    private ?int $seqreceptif = 0;
 
     #[ORM\Column(name: 'RACHAT_IMMEDIAT', type: Types::INTEGER)]
-    private int $rachatImmediat = 0;
+    private ?int $rachatImmediat = 0;
 
     #[ORM\Column(name: 'SEQVILLED', type: Types::INTEGER)]
-    private int $seqvilled = 0;
+    private ?int $seqvilled = 0;
 
     #[ORM\Column(name: 'SEQVILLEA', type: Types::INTEGER)]
-    private int $seqvillea = 0;
+    private ?int $seqvillea = 0;
 
     #[ORM\Column(name: 'SEQVILLEV', type: Types::INTEGER)]
-    private int $seqvillev = 0;
+    private ?int $seqvillev = 0;
 
     #[ORM\Column(name: 'SEQAFFRET1', type: Types::INTEGER)]
-    private int $seqaffret1 = 0;
+    private ?int $seqaffret1 = 0;
 
     #[ORM\Column(name: 'SEQAFFRET2', type: Types::INTEGER)]
-    private int $seqaffret2 = 0;
+    private ?int $seqaffret2 = 0;
 
     #[ORM\Column(name: 'AFFECTERS', type: Types::INTEGER)]
-    private int $affecters = 0;
+    private ?int $affecters = 0;
 
     #[ORM\Column(name: 'BOARDING_PASS', type: Types::INTEGER)]
-    private int $boardingPass = 0;
+    private ?int $boardingPass = 0;
 
     #[ORM\Column(name: 'BAGAGESOPTION', type: Types::INTEGER)]
-    private int $bagagesoption = 0;
+    private ?int $bagagesoption = 0;
 
     #[ORM\Column(name: 'PRIXBAGAGESOPTION', type: Types::DECIMAL, precision: 9, scale: 2)]
-    private string $prixbagagesoption = '0';
+    private ?string $prixbagagesoption = '0';
 
     #[ORM\Column(name: 'NBRBAGAGESOPTION', type: Types::INTEGER)]
-    private int $nbrbagagesoption = 0;
+    private ?int $nbrbagagesoption = 0;
 
     #[ORM\Column(name: 'PNR', type: Types::STRING, length: 10)]
-    private string $pnr = '';
+    private ?string $pnr = '';
 
     #[ORM\Column(name: 'ETABLISSEMENT', type: Types::INTEGER)]
-    private int $etablissement = 0;
+    private ?int $etablissement = 0;
 
     #[ORM\Column(name: 'NATURE_VOL', type: Types::INTEGER)]
-    private int $natureVol = 0;
+    private ?int $natureVol = 0;
 
     #[ORM\Column(name: 'ARCHIVER', type: Types::INTEGER)]
-    private int $archiver = 0;
+    private ?int $archiver = 0;
 
     #[ORM\Column(name: 'KILOCABINE', type: Types::INTEGER)]
-    private int $kilocabine = 0;
+    private ?int $kilocabine = 0;
 
     #[ORM\Column(name: 'PRIX_YIELD', type: Types::DECIMAL, precision: 9, scale: 2)]
-    private string $prixYield = '0';
+    private ?string $prixYield = '0';
 
-    #[ORM\Column(name: 'aerod', type: Types::STRING, length: 6)]
-    private string $aerod = '';
+    #[ORM\Column(name: 'aerod', type: Types::STRING, length: 6, nullable: true)]
+    private ?string $aerod = '';
 
-    #[ORM\Column(name: 'aeroa', type: Types::STRING, length: 6)]
-    private string $aeroa = '';
+    #[ORM\Column(name: 'aeroa', type: Types::STRING, length: 6, nullable: true)]
+    private ?string $aeroa = '';
 
     #[ORM\Column(name: 'pas_afficher_horaire', type: Types::INTEGER)]
-    private int $pasAfficherHoraire = 0;
+    private ?int $pasAfficherHoraire = 0;
 
     #[ORM\Column(name: 'kilobebe', type: Types::DECIMAL, precision: 9, scale: 2)]
-    private string $kilobebe = '0';
+    private ?string $kilobebe = '0';
 
-   #[ORM\Column(name: 'aerodep', type: Types::STRING, length: 10)]
-   private string $aerodep = '';
+    #[ORM\Column(name: 'aerodep', type: Types::STRING, length: 10, nullable: true)]
+    private ?string $aerodep = '';
 
-    #[ORM\Column(name: 'aeroarr', type: Types::STRING, length: 10)]
-    private string $aeroarr = '';
+    #[ORM\Column(name: 'aeroarr', type: Types::STRING, length: 10, nullable: true)]
+    private ?string $aeroarr = '';
 
     #[ORM\Column(name: 'specification', type: Types::INTEGER)]
-    private int $specification = 0;
+    private ?int $specification = 0;
 
     #[ORM\Column(name: 'bagagesoute', type: Types::DECIMAL, precision: 5, scale: 0)]
-    private string $bagagesoute = '0';
+    private ?string $bagagesoute = '0';
 
     #[ORM\Column(name: 'coafv', type: Types::INTEGER)]
-    private int $coafv = 0;
+    private ?int $coafv = 0;
 
     #[ORM\Column(name: 'volsec', type: Types::INTEGER)]
-    private int $volsec = 0;
+    private ?int $volsec = 0;
 
     #[ORM\Column(name: 'allot_freesale', type: Types::DECIMAL, precision: 5, scale: 0)]
-    private string $allotFreesale = '0';
+    private ?string $allotFreesale = '0';
 
     #[ORM\Column(name: 'retro_vol', type: Types::DECIMAL, precision: 18, scale: 0)]
-    private string $retroVol = '0';
+    private ?string $retroVol = '0';
 
     #[ORM\Column(name: 'prixada2', type: Types::DECIMAL, precision: 9, scale: 2)]
-    private string $prixada2 = '0';
+    private ?string $prixada2 = '0';
 
     #[ORM\Column(name: 'prixada3', type: Types::DECIMAL, precision: 9, scale: 2)]
-    private string $prixada3 = '0';
+    private ?string $prixada3 = '0';
 
     #[ORM\Column(name: 'prixzza2', type: Types::DECIMAL, precision: 9, scale: 2)]
-    private string $prixzza2 = '0';
+    private ?string $prixzza2 = '0';
 
     #[ORM\Column(name: 'prixzza3', type: Types::DECIMAL, precision: 9, scale: 2)]
-    private string $prixzza3 = '0';
+    private ?string $prixzza3 = '0';
 
     #[ORM\Column(name: 'prixbba2', type: Types::DECIMAL, precision: 9, scale: 2)]
-    private string $prixbba2 = '0';
+    private ?string $prixbba2 = '0';
 
     #[ORM\Column(name: 'prixbba3', type: Types::DECIMAL, precision: 9, scale: 2)]
-    private string $prixbba3 = '0';
+    private ?string $prixbba3 = '0';
 
-    #[ORM\Column(name: 'VIlle', type: Types::STRING, length: 20)]
-    private string $ville = '';
+    #[ORM\Column(name: 'VIlle', type: Types::STRING, length: 20, nullable: true)]
+    private ?string $ville = '';
 
     #[ORM\Column(name: 'Nomfour', type: Types::STRING, length: 30)]
-    private string $nomfour = '';
+    private ?string $nomfour = '';
 
     #[ORM\Column(name: 'semaine1', type: Types::INTEGER)]
-    private int $semaine1 = 0;
+    private ?int $semaine1 = 0;
 
     #[ORM\Column(name: 'blocsiege', type: Types::INTEGER)]
-    private int $blocsiege = 0;
+    private ?int $blocsiege = 0;
 
     #[ORM\Column(name: 'prixadav', type: Types::DECIMAL, precision: 9, scale: 2)]
-    private string $prixadav = '0';
+    private ?string $prixadav = '0';
 
     #[ORM\Column(name: 'prixbbav', type: Types::DECIMAL, precision: 9, scale: 2)]
-    private string $prixbbav = '0';
+    private ?string $prixbbav = '0';
 
     #[ORM\Column(name: 'prixzzav', type: Types::DECIMAL, precision: 9, scale: 2)]
-    private string $prixzzav = '0';
+    private ?string $prixzzav = '0';
 
     #[ORM\Column(name: 'TAXE_B2B', type: Types::DECIMAL, precision: 9, scale: 2)]
-    private string $taxeB2b = '0';
+    private ?string $taxeB2b = '0';
 
-    #[ORM\Column(name: 'FERRY', type: Types::INTEGER)]
-    private int $ferry = 0;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private ?int $ferry = null;
 
     #[ORM\Column(name: 'SG_GARANTIS', type: Types::INTEGER)]
-    private int $sgGarantis = 0;
+    private ?int $sgGarantis = 0;
 
     #[ORM\Column(name: "RETROCEDE", type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $retrocede = null;
@@ -1033,34 +1026,29 @@ class Vol
         $this->dateconvo = $dateconvo;
     }
 
-    /**
-     * @return string
-     */
-    public function getHeureconvo(): string
+    public function getHeureconvo(): ?string
     {
         return $this->heureconvo;
     }
 
-    /**
-     * @param string $heureconvo
-     */
-    public function setHeureconvo(string $heureconvo): void
+    public function setHeureconvo(?string $heureconvo): self
     {
         $this->heureconvo = $heureconvo;
+        return $this;
     }
 
     /**
-     * @return string
+     * @return ?string
      */
-    public function getLieuconvo(): string
+    public function getLieuconvo(): ?string
     {
         return $this->lieuconvo;
     }
 
     /**
-     * @param string $lieuconvo
+     * @param ?string $lieuconvo
      */
-    public function setLieuconvo(string $lieuconvo): void
+    public function setLieuconvo(?string $lieuconvo): void
     {
         $this->lieuconvo = $lieuconvo;
     }
@@ -1068,7 +1056,7 @@ class Vol
     /**
      * @return string
      */
-    public function getComptoir(): string
+    public function getComptoir(): ?string
     {
         return $this->comptoir;
     }
@@ -1076,7 +1064,7 @@ class Vol
     /**
      * @param string $comptoir
      */
-    public function setComptoir(string $comptoir): void
+    public function setComptoir(?string $comptoir): void
     {
         $this->comptoir = $comptoir;
     }
@@ -1084,7 +1072,7 @@ class Vol
     /**
      * @return string
      */
-    public function getPorte(): string
+    public function getPorte(): ?string
     {
         return $this->porte;
     }
@@ -1092,7 +1080,7 @@ class Vol
     /**
      * @param string $porte
      */
-    public function setPorte(string $porte): void
+    public function setPorte(?string $porte): void
     {
         $this->porte = $porte;
     }
@@ -1100,7 +1088,7 @@ class Vol
     /**
      * @return string
      */
-    public function getAgence(): string
+    public function getAgence(): ?string
     {
         return $this->agence;
     }
@@ -1108,7 +1096,7 @@ class Vol
     /**
      * @param string $agence
      */
-    public function setAgence(string $agence): void
+    public function setAgence(?string $agence): void
     {
         $this->agence = $agence;
     }
@@ -1116,7 +1104,7 @@ class Vol
     /**
      * @return string
      */
-    public function getTelagence(): string
+    public function getTelagence(): ?string
     {
         return $this->telagence;
     }
@@ -1124,7 +1112,7 @@ class Vol
     /**
      * @param string $telagence
      */
-    public function setTelagence(string $telagence): void
+    public function setTelagence(?string $telagence): void
     {
         $this->telagence = $telagence;
     }
@@ -1132,7 +1120,7 @@ class Vol
     /**
      * @return string
      */
-    public function getFormforf(): string
+    public function getFormforf(): ?string
     {
         return $this->formforf;
     }
@@ -1140,7 +1128,7 @@ class Vol
     /**
      * @param string $formforf
      */
-    public function setFormforf(string $formforf): void
+    public function setFormforf(?string $formforf): void
     {
         $this->formforf = $formforf;
     }
@@ -1148,7 +1136,7 @@ class Vol
     /**
      * @return string
      */
-    public function getFormsec(): string
+    public function getFormsec(): ?string
     {
         return $this->formsec;
     }
@@ -1156,7 +1144,7 @@ class Vol
     /**
      * @param string $formsec
      */
-    public function setFormsec(string $formsec): void
+    public function setFormsec(?string $formsec): void
     {
         $this->formsec = $formsec;
     }
@@ -1164,7 +1152,7 @@ class Vol
     /**
      * @return string
      */
-    public function getObs(): string
+    public function getObs(): ?string
     {
         return $this->obs;
     }
@@ -1172,7 +1160,7 @@ class Vol
     /**
      * @param string $obs
      */
-    public function setObs(string $obs): void
+    public function setObs(?string $obs): void
     {
         $this->obs = $obs;
     }
@@ -1369,21 +1357,6 @@ class Vol
         $this->compagnie = $compagnie;
     }
 
-    /**
-     * @return int
-     */
-    public function getStopsale(): int
-    {
-        return $this->stopsale;
-    }
-
-    /**
-     * @param int $stopsale
-     */
-    public function setStopsale(int $stopsale): void
-    {
-        $this->stopsale = $stopsale;
-    }
 
     /**
      * @return string
@@ -2504,6 +2477,19 @@ class Vol
         return $this;
     }
 
+
+    public function getStopsale(): bool
+    {
+        return (bool) $this->stopsale;
+    }
+
+    public function setStopsale(bool $stopsale): self
+    {
+        $this->stopsale = $stopsale ? 1 : 0;
+        return $this;
+    }
+
+
     /**
      * @return string
      */
@@ -2744,20 +2730,15 @@ class Vol
         $this->taxeB2b = $taxeB2b;
     }
 
-    /**
-     * @return int
-     */
-    public function getFerry(): int
+    public function getFerry(): ?int
     {
         return $this->ferry;
     }
 
-    /**
-     * @param int $ferry
-     */
-    public function setFerry(int $ferry): void
+    public function setFerry(?int $ferry): self
     {
         $this->ferry = $ferry;
+        return $this;
     }
 
     /**

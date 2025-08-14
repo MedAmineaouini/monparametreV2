@@ -250,16 +250,16 @@ class Client
     // #[ORM\Column(name: 'SEQCOMM', type: Types::INTEGER,nullable: true, options: ['default' => 0])]
     // private ?int  $seqcomm = 0;
     
-    // #[ORM\Column(name: 'SEQCLIENT_PRINCIPAL', type: Types::INTEGER, nullable: true, options: ['default' => 0])]
-    // private ?int $seqclientPrincipal = null;
+    #[ORM\Column(name: 'SEQCLIENT_PRINCIPAL', type: Types::INTEGER, nullable: true, options: ['default' => 0])]
+    private ?int $seqclientPrincipal = null;
     
     #[ORM\Column(name: 'Commission', type: Types::INTEGER, nullable: true, options: ['default' => 0])]
     private ?int $commission = null;
 
 
-    #[ORM\ManyToOne(targetEntity: self::class)]
-    #[ORM\JoinColumn(name: 'SEQCLIENT_PRINCIPAL', referencedColumnName: 'SEQCLT', nullable: true, onDelete: 'SET NULL')]
-    private ?Client $clientPrincipal = null;
+    // #[ORM\ManyToOne(targetEntity: self::class)]
+    // #[ORM\JoinColumn(name: 'SEQCLIENT_PRINCIPAL', referencedColumnName: 'SEQCLT', nullable: true, onDelete: 'SET NULL')]
+    // private ?Client $clientPrincipal = null;
 
     #[ORM\ManyToOne(targetEntity: Ville::class)]
     #[ORM\JoinColumn(name: 'VILLE', referencedColumnName: 'SEQVILLE', nullable: false)]

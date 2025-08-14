@@ -45,12 +45,12 @@ class ClientType extends AbstractType
                 'class' => 'form-control bg-light text-muted'
             ],
             ])
-            ->add('clientPrincipal', EntityType::class, [
-                'class' => Client::class,
-                'choice_label' => 'seqclt',
-                'placeholder' => 'Choisir un responsable',
-                'required' => false,
-            ])
+            // ->add('clientPrincipal', EntityType::class, [
+            //     'class' => Client::class,
+            //     'choice_label' => 'seqclt',
+            //     'placeholder' => 'Choisir un responsable',
+            //     'required' => false,
+            // ])
             ->add('pointcom', CheckboxType::class, [
                 'label' => 'pointcom',
                 'required' => false,

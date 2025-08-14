@@ -17,10 +17,8 @@ use App\Entity\Ville;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
 
-
 #[Route('/vol')]
-
-class VolController extends AbstractController
+class VolOldController extends AbstractController
 {
     #[Route('/', name: 'app_vol_index', methods: ['GET'])]
     public function index(VolRepository $volRepository): Response
@@ -30,83 +28,61 @@ class VolController extends AbstractController
         ]);
     }
 
+
     #[Route('/new', name: 'app_vol_new', methods: ['GET', 'POST'])]
-public function new(Request $request, EntityManagerInterface $entityManager, VilleRepository $villeRepository): Response
-{
-    $vol = new Vol();
-    
-    // Générez seqvol comme avant
-    $lastSeq = $entityManager->createQueryBuilder()
-        ->select('MAX(v.seqvol)')
-        ->from(Vol::class, 'v')
-        ->getQuery()
-        ->getSingleScalarResult();
-    
-    $nextSeq = $lastSeq ? ((int) $lastSeq + 1) : 1;
-    $vol->setSeqvol($nextSeq);
-
-    $form = $this->createForm(VolType::class, $vol);
-    
-    $form->handleRequest($request);
-    
-    if ($form->isSubmitted()) {
-        if ($form->isValid()) {
-            try {
-                $entityManager->persist($vol);
-                $entityManager->flush();
-
-                if ($request->isXmlHttpRequest()) {
-                    return $this->json([
-                        'success' => true,
-                        'message' => 'Vol créé avec succès',
-                        'volId' => $vol->getSeqvol()
-                    ]);
-                }
-
-                return $this->redirectToRoute('app_vol_index');
-                
-            } catch (\Exception $e) {
-                if ($request->isXmlHttpRequest()) {
-                    return $this->json([
-                        'success' => false,
-                        'message' => 'Erreur lors de la création du vol',
-                        'error' => $e->getMessage()
-                    ], Response::HTTP_INTERNAL_SERVER_ERROR);
-                }
-                $this->addFlash('error', 'Erreur lors de la création du vol');
-            }
-        } else {
-            $errors = [];
-            foreach ($form->getErrors(true) as $error) {
-                $errors[$error->getOrigin()->getName()] = $error->getMessage();
-            }
-
-            if ($request->isXmlHttpRequest()) {
-                return $this->json([
-                    'success' => false,
-                    'message' => 'Validation failed',
-                    'errors' => $errors
-                ], Response::HTTP_UNPROCESSABLE_ENTITY);
-            }
-        }
-    }
-
-    return $this->render('vol/new.html.twig', [
-        'vol' => $vol,
-        'form' => $form->createView(),
-        'villes' => $villeRepository->findAll(),
-    ]);
-}
-    
-    private function getFormErrors($form)
+    public function new(Request $request, EntityManagerInterface $entityManager, VilleRepository $villeRepository): Response
     {
-        $errors = [];
-        foreach ($form->getErrors(true) as $error) {
-            $errors[$error->getOrigin()->getName()] = $error->getMessage();
+        $vol = new Vol();
+
+        $lastSeq = $entityManager->createQueryBuilder()
+            ->select('MAX(v.seqvol)')
+            ->from(Vol::class, 'v')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        $nextSeq = $lastSeq ? ((int) $lastSeq + 1) : 1;
+        $vol->setSeqvol($nextSeq);
+        $formattedSeqvol = str_pad($nextSeq, 4, '0', STR_PAD_LEFT);
+
+        $aerodep = $vol->getVilleD() ? $vol->getVilleD()->getAero() : '';
+        $aeroarr = $vol->getVilleA() ? $vol->getVilleA()->getAero() : '';
+
+        $form = $this->createForm(VolType::class, $vol, [
+            'seqvol_value' => $formattedSeqvol,
+            'aerodep_value' => $aerodep,
+            'aeroarr_value' => $aeroarr,
+        ]);
+
+        // $dispoValue = ($vol->getOuvert() ?? 0) - ($vol->getReserve() ?? 0) - ($vol->getVendu() ?? 0);
+        // $form->get('dispo')->setData(max(0, $dispoValue));
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // $dispoValue = ($vol->getOuvert() ?? 0) - ($vol->getReserve() ?? 0) - ($vol->getVendu() ?? 0);
+            // $form->get('dispo')->setData(max(0, $dispoValue));
+
+            // if ($vol->getVilleD()) {
+            //     $vol->setAerodep($vol->getVilleD()->getAero());
+            // }
+            // if ($vol->getVilleA()) {
+            //     $vol->setAeroarr($vol->getVilleA()->getAero());
+            // }
+
+            $entityManager->persist($vol);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_vol_index', [], Response::HTTP_SEE_OTHER);
         }
-        return $errors;
+
+        return $this->renderForm('vol/new.html.twig', [
+            'vol' => $vol,
+            'form' => $form,
+            'villes' => $villeRepository->findAll(),
+        ]);
     }
-    
+
+
 
 
     #[Route('/{seqvol}', name: 'app_vol_show', methods: ['GET'])]

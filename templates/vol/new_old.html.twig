@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RFT | Vol
+{% endblock %}
+
+{% block body %}
+	<div class="row">
+
+		<div class="col-md-12">
+			<div class="nav-align-top">
+				<ul class="nav nav-pills flex-column flex-sm-row mb-6 gap-sm-0 gap-2">
+					<li class="nav-item">
+						<a class="nav-link active" href="javascript:void(0);">
+							<i class="icon-base bx bx-user icon-sm me-1_5"></i>
+							Vols</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="pages-profile-teams.html">
+							<i class="icon-base bx bx-group icon-sm me-1_5"></i>
+							Liste des Vols</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="pages-profile-projects.html">
+							<i class="icon-base bx bx-grid-alt icon-sm me-1_5"></i>
+							Free sale</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="pages-profile-connections.html">
+							<i class="icon-base bx bx-link icon-sm me-1_5"></i>
+							Suivi Modification</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="card shadow rounded-3 border-0">
+		<div class="card-header text-white d-flex justify-content-between align-items-center">
+			<h5 class="mb-0">
+				<i class="fa fa-plane"></i>
+				Vol | Nouveau Vol
+			</h5>
+		</div>
+		<hr>
+		<div class="card-body">
+			{{ include('vol/_form.html.twig') }}
+		</div>
+	</div>
+{% endblock %}
+
+
+{# <a href="{{ path('app_vol_index') }}">back to list</a> #}
+

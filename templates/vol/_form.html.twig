@@ -1,27 +1,60 @@
 <style>
-
-	.form-field {
-		display: flex;
-		align-items: center;
-		margin-bottom: 12px;
-		width: 100%;
+	/* Style général pour les cartes */
+	.card {
+		border-radius: 8px;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		background-color: #fff;
+		padding: 20px;
+		margin-bottom: 20px;
 	}
 
+	/* Style pour les sections de vol */
+	.flight-section {
+		border: 1px solid #dee2e6;
+		border-radius: 6px;
+		padding: 15px;
+		height: 100%;
+	}
 
+	/* Style pour les labels */
 	.form-label {
-		min-width: 180px;
-		margin-right: 15px;
-		text-align: left;
-		white-space: nowrap;
+		font-weight: 500;
+		margin-bottom: 5px;
+		color: #495057;
 	}
 
+	/* Style pour les inputs */
+	.form-control,
+	.form-select {
+		border-radius: 4px;
+		padding: 8px 12px;
+		border: 1px solid #ced4da;
+		margin-bottom: 15px;
+	}
 
-	.form-input {
-		flex: 1;
+	/* Style pour les titres de section */
+	.section-title {
+		font-weight: 600;
+		margin-bottom: 15px;
+		display: block;
 	}
-	.form-control {
-		background-color: white !important;
+
+	/* Style pour les checkboxes */
+	.form-check {
+		margin-bottom: 10px;
 	}
+
+	/* Style spécifique pour les sections départ/arrivée/via */
+	.departure-section {
+		border-left: 4px solid #28a745;
+		padding-left: 10px;
+	}
+
+	.arrival-section {
+		border-left: 4px solid #007bff;
+		padding-left: 10px;
+	}
+
 	.engaged-seat {
 		background-color: #0000cc;
 		color: white;
@@ -29,7 +62,7 @@
 	}
 
 	.engaged-seat input {
-		background-color: yellow;
+		background-color: white;
 		font-weight: bold;
 	}
 
@@ -84,857 +117,740 @@
 		padding: 3px 8px;
 		cursor: pointer;
 	}
+
+	/* Responsive adjustments */
+	@media(max-width: 768px) {
+		.col-md-3 {
+			margin-bottom: 20px;
+		}
+	}
 </style>
 
-{{ form_start(form) }}
-
-<div class="row w-100 d-flex justify-content-between">
-	<div class=" col-sm-9">
-
-		<div class="col-md-12 card card-body  mb-4">
-			<div
-				class="row mb-3">
-				<!-- Départ -->
-				<div class="col-md-4">
-					<div class="border p-2">
-						<span class="text-success fw-bold">[Départ]</span>
-
-						<div class="mb-1">
-							<div class="mb-1">
-								{{ form_label(form.villeD, 'Ville', {'label_attr': {'class': 'form-label mb-0'}}) }}
-								{{ form_widget(form.villeD, {
-									'attr': {
-										'class': 'form-select form-select-sm ville-select-depart',
-										'id': 'villeD',
-										'data-aero-target': 'aerodep'
-									}
-								}) }}
-
-								{{ form_label(form.aerodep, 'Aéroport Départ', {'label_attr': {'class': 'form-label mb-0'}}) }}
-								{{ form_widget(form.aerodep, {
-									'attr': {
-										'class': 'form-control form-control-sm aerodep',
-										'id': 'aerodep',
-										'readonly': true
-									}
-								}) }}
+{% block body %}
+<div class="">
+    {{ form_start(form, {
+    'attr': {
+        'id': 'vol-form',
+        'data-ajax-url': path('app_vol_new')
+    }
+}) }}
+	<!-- Tab content -->
+	<div class="tab-content" id="volTabsContent">
+		<!-- General Tab -->
+		<div class="tab-pane fade show active" id="general" role="tabpanel">
+			<div class="row">
+				<!-- Colonne principale (gauche) -->
+				<div class="col-md-12">
+					<div class="card">
+						<div class="row">
+							<div class="col-md-3">
+								{{ form_label(form.seqvol, 'N° Séq.', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+								{{ form_widget(form.seqvol, {'attr': {'class': 'form-control bg-light'}}) }}
+                                {{ form_errors(form.seqvol) }}
 							</div>
 
+							<div class="col-md-3">
+								{{ form_label(form.nvol, 'N° du vol', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+								{{ form_widget(form.nvol, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.nvol) }}
+							</div>
+
+							<div class="col-md-3">
+								{{ form_label(form.datevol, 'Date vol', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+								{{ form_widget(form.datevol, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.datevol) }}
+							</div>
+
+							<div class="col-md-3">
+								{{ form_label(form.jo, 'JO', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+								{{ form_widget(form.jo, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.jo) }}
+							</div>
 						</div>
 
+						<div class="row">
+							<div class="col-md-3">
+								{{ form_label(form.jplus, 'J.Plus', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+								{{ form_widget(form.jplus, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.jplus) }}
+							</div>
 
-						<div class="mb-1">
-							{{ form_label(form.heured, 'Heure de départ', {'label_attr': {'class': 'form-label mb-0'}}) }}
-							{{ form_widget(form.heured, {
-                    'attr': {
-                        'class': 'form-control form-control-sm',
-                        'data-aeroport-target': 'timeInput'
-                    }
-                }) }}
-							{{ form_errors(form.heured) }}
+							<div class="col-md-3">
+								{{ form_label(form.pnr, 'PNR', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+								{{ form_widget(form.pnr, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.pnr) }}
+							</div>
+
+							<div class="col-md-3">
+								{{ form_label(form.datRetro, 'Délai rétro en jours', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+								{{ form_widget(form.datRetro, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.datRetro) }}
+							</div>
+
+							<div class="col-md-3">
+								{{ form_label(form.destination, 'Destination', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+								{{ form_widget(form.destination, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(form.destination) }}
+							</div>
+						</div>
+
+						<div class="row align-items-center">
+							<!-- Type de vol -->
+							<div class="col-md-6 d-flex align-items-center">
+								{{ form_label(form.typevol, 'Type de vol', {'label_attr': {'class': 'form-label fw-semibold me-2 mb-0'}}) }}
+								<div class="d-flex align-items-center">
+									{% for child in form.typevol %}
+										<div class="form-check form-check-inline mb-0 me-2">
+											{{ form_widget(child, {'attr': {'class': 'form-check-input'}}) }}
+											{{ form_label(child, null, {'label_attr': {'class': 'form-check-label mb-0'}}) }}
+                                            {{ form_errors(child) }}
+										</div>
+									{% endfor %}
+								</div>
+							</div>
+
+							<!-- Allotement free sale -->
+							<div class="col-md-6 d-flex align-items-center">
+								<div class="form-check form-switch mb-0">
+									{{ form_widget(form.allotFreesale, {'attr': {'class': 'form-check-input me-2'}}) }}
+									{{ form_label(form.allotFreesale, 'Allotement free sale', {'label_attr': {'class': 'form-check-label mb-0'}}) }}
+                                    {{ form_errors(form.allotFreesale) }}
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
+				<div class="col-md-12">
+					<!-- Section détails du vol -->
+					<div class="card">
+						<div class="row">
+							<!-- Départ -->
+							<div class="col-md-4">
+								<div class="flight-section departure-section">
+									<span class="section-title text-success fw-bold">[Départ]</span>
 
-				<!-- Arrivée -->
-				<div class="col-md-4">
-					<div class="border p-2">
-						<span class="fw-bold">[Arrivée]</span>
+									<div class="mb-1">
+										{{ form_label(form.villeD, 'Ville', {'label_attr': {'class': 'form-label mb-0'}}) }}
+										{{ form_widget(form.villeD, {
+											'attr': {
+												'class': 'form-select form-select-sm ville-select-depart',
+												'id': 'villeD',
+												'data-aero-target': 'aerodep'
+											}
+										}) }}
+                                        {{ form_errors(form.villeD) }}
 
-						<div class="mb-1">
-							<div class="mb-1">
-								{{ form_label(form.villeA, 'Ville', {'label_attr': {'class': 'form-label mb-0'}}) }}
-								{{ form_widget(form.villeA, {
-									'attr': {
-										'class': 'form-select form-select-sm ville-select',
-										'id': 'villeA',
-										'data-aero-target': 'aeroarr'
-									}
-								}) }}
+										{{ form_label(form.aerodep, 'Aéroport Départ', {'label_attr': {'class': 'form-label mb-0'}}) }}
+										{{ form_widget(form.aerodep, {
+											'attr': {
+												'class': 'form-control form-control-sm aerodep',
+												'id': 'aerodep',
+												'readonly': true
+											}
+										}) }}
+                                        {{ form_errors(form.aerodep) }}
+									</div>
 
-								{{ form_label(form.aeroarr, 'Aéroport Arrivée', {'label_attr': {'class': 'form-label mb-0'}}) }}
-								{{ form_widget(form.aeroarr, {
-									'attr': {
-										'class': 'form-control form-control-sm aeroarr',
-										'id': 'aeroarr',
-										'readonly': true
-									}
-								}) }}
+									<div class="mb-1">
+										{{ form_label(form.heured, 'Heure de départ', {'label_attr': {'class': 'form-label mb-0'}}) }}
+										{{ form_widget(form.heured, {
+											'attr': {
+												'class': 'form-control form-control-sm',
+												'data-aeroport-target': 'timeInput'
+											}
+										}) }}
+										{{ form_errors(form.heured) }}
+									</div>
+								</div>
+							</div>
+
+							<!-- Arrivée -->
+							<div class="col-md-4">
+								<div class="flight-section arrival-section">
+									<span class="section-title fw-bold">[Arrivée]</span>
+									<div class="mb-1">
+										<div class="mb-1">
+											{{ form_label(form.villeA, 'Ville', {'label_attr': {'class': 'form-label mb-0'}}) }}
+											{{ form_widget(form.villeA, {
+												'attr': {
+													'class': 'form-select form-select-sm ville-select',
+													'id': 'villeA',
+													'data-aero-target': 'aeroarr'
+												}
+											}) }}
+                                            {{ form_errors(form.villeA) }}
+
+											{{ form_label(form.aeroarr, 'Aéroport Arrivée', {'label_attr': {'class': 'form-label mb-0'}}) }}
+											{{ form_widget(form.aeroarr, {
+												'attr': {
+													'class': 'form-control form-control-sm aeroarr',
+													'id': 'aeroarr',
+													'readonly': true
+												}
+											}) }}
+                                            {{ form_errors(form.aeroarr) }}
+										</div>
+									</div>
+
+									<div class="mb-1">
+										{{ form_label(form.heurea, 'Heure d\'arrivée', {'label_attr': {'class': 'form-label mb-0'}}) }}
+										{{ form_widget(form.heurea, {
+											'attr': {
+												'class': 'form-control form-control-sm',
+												'data-aeroport-target': 'timeInput'
+											}
+										}) }}
+										{{ form_errors(form.heurea) }}
+									</div>
+								</div>
+							</div>
+							
+							<!-- Via -->
+							<div class="col-md-4">
+								<div class="flight-section via-section">
+									<span class="section-title text-warning fw-bold">[Via]</span>
+									<div class="mb-1">
+										{{ form_label(form.villeV, 'Ville', {'label_attr': {'class': 'form-label mb-0'}}) }}
+										{{ form_widget(form.villeV, {
+											'attr': {
+												'class': 'form-control form-control-sm'
+											}
+										}) }}
+										{{ form_errors(form.villeV) }}
+									</div>
+								</div>
 							</div>
 						</div>
-
-						<div class="mb-1">
-							{{ form_label(form.heurea, 'Heure d\'arrivée', {'label_attr': {'class': 'form-label mb-0'}}) }}
-						{{ form_widget(form.heurea, {
-							'attr': {
-								'class': 'form-control form-control-sm',
-								'data-aeroport-target': 'timeInput'
-							}
-						}) }}
-						{{ form_errors(form.heurea) }}
-            </div>
-        </div>
-    </div>
-
-    <!-- Via -->
-    <div class="col-md-4">
-        <div class="border p-2">
-            <span class="text-warning fw-bold">[Via]</span>
-            
-            <div class="mb-1">
-                {{ form_label(form.villeV, 'Ville', {'label_attr': {'class': 'form-label mb-0'}}) }}
-                {{ form_widget(form.villeV, {
-                    'attr': {
-                        'class': 'form-control form-control-sm'
-                    }
-                }) }}
-                {{ form_errors(form.villeV) }}
-            </div>
-			
-        </div>
-		<div class="col-md-12 mt-5">
-
-			
-						<div id="">
-                        {{ form_widget(form.volsec, {
-                            'attr': {
-                                'class': 'form-check-input',
-                                'role': 'switch'
-                            }
-                        }) }}
-                        {{ form_label(form.volsec, null, {
-                            'label_attr': {'class': 'form-check-label fw-semibold'},
-                            'label': 'Autorisé Vente Vol Sec Internet'
-                        }) }}</div>
-
-						<div id="">
-                        {{ form_widget(form.bagagesoute, {
-                            'attr': {
-                                'class': 'form-check-input',
-                                'role': 'switch'
-                            }
-                        }) }}
-                        {{ form_label(form.bagagesoute, null, {
-                            'label_attr': {'class': 'form-check-label fw-semibold'},
-                            'label': '1 seul bag en soute / Passager'
-                        }) }}</div>
-
-					  
-					
+						
+						<!-- Options -->
+						<div class="row mt-4">
+							<div class="col-md-12">
+								<div class="form-check form-switch">
+									{{ form_widget(form.volsec, {'attr': {'class': 'form-check-input'}}) }}
+									{{ form_label(form.volsec, 'Autorisé Vente Vol Sec Internet', {'label_attr': {'class': 'form-check-label'}}) }}
+                                    {{ form_errors(form.volsec) }}
+								</div>
+								<div class="form-check form-switch">
+									{{ form_widget(form.bagagesoute, {'attr': {'class': 'form-check-input'}}) }}
+									{{ form_label(form.bagagesoute, '1 seul bag en soute / Passager', {'label_attr': {'class': 'form-check-label'}}) }}
+                                    {{ form_errors(form.bagagesoute) }}
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
-    </div>
-</div>
-
-
-			<!-- Options -->
-			<div class="row mb-3">
-				<!-- Kilos bagages -->
-				<div class="col-md-12">
-					<div class="row">
-						<div class="col-4">
-							{{ form_label(form.kilos) }}
-							{{ form_widget(form.kilos) }}
-							{{ form_errors(form.kilos) }}
-						</div>
-						<div class="col-4">
-							{{ form_label(form.kilobebe) }}
-							{{ form_widget(form.kilobebe) }}
-							{{ form_errors(form.kilobebe) }}
-						</div>
-						<div class="col-4">
-							{{ form_label(form.kilocabine) }}
-							{{ form_widget(form.kilocabine) }}
-							{{ form_errors(form.kilocabine) }}
-						</div>
 				
-
-					</div>
-				</div>
-			</div>
-
-			<!-- Impression sans horaires -->
-			{# <div class="form-check">
-				<input class="form-check-input" type="checkbox" id="noHour">
-				<label class="form-check-label" for="noHour">
-					Impression des billets et confirmation sans horaires
-				</label>
-			</div> #}
-		</div>
-		{# Section Capacités et réservations #}
-
-				<div class="row w-100 gap-2" style="margin-left:2px">
-					<div class="col-sm-3 card card-body mb-4">
-						<h5 class="mb-3">Quta Avion</h5>
-
-						<div class="col-md-12">
-					{{ form_label(form.ouvert, 'Offre Total', {'label_attr': {'class': 'form-label'}}) }}
-					{{ form_widget(form.ouvert, {
-						'attr': {
-							'class': 'form-control',
-							'data-action': 'change->availability#calculateAvailability',
-							'data-availability-ouvert-value': form.ouvert.vars.value|default(0)
-						}
-					}) }}
-					{{ form_errors(form.ouvert) }}
-				</div>
+				<!-- Colonne secondaire (droite) -->
 				<div class="col-md-12">
-					{{ form_label(form.vendu, 'Vendu', {'label_attr': {'class': 'form-label'}}) }}
-					{{ form_widget(form.vendu, {
-						'attr': {
-							'class': 'form-control calc-field',
-							'id': 'vendu-field',
-							'data-calc': 'vendu'
-						}
-					}) }}
-					{{ form_errors(form.vendu) }}
-				</div>
-				<div class="col-md-12">
-					{{ form_label(form.reserve, 'Réservé', {'label_attr': {'class': 'form-label '}}) }}
-					{{ form_widget(form.reserve, {
-						'attr': {
-							'class': 'form-control calc-field',
-							'id': 'reserve-field',
-							'data-calc': 'reserve'
-						}
-					}) }}
-					{{ form_errors(form.reserve) }}
-				</div>
-				<div class="col-md-12">
-					{{ form_label(form.freesale, 'Free Sale', {'label_attr': {'class': 'form-label'}}) }}
-					{{ form_widget(form.freesale, {'attr': {'class': 'form-control'}}) }}
-					{{ form_errors(form.freesale) }}
-				</div>
-				<div class="col-md-12">
-					{{ form_label(form.dispo, 'Dispo.', {'label_attr': {'class': 'form-label'}}) }}
-					{{ form_widget(form.dispo, {
-						'attr': {
-							'class': 'form-control',
-							'readonly': true,
-							'id': 'dispo-field',
-							'class': 'form-control',
-							'data-calc': 'dispo',
-						}
-					}) }}
-					{{ form_errors(form.dispo) }}
-				</div>
-				<div class="col-md-12">
-					{{ form_label(form.blocsiege, 'Blocsiege', {'label_attr': {'class': 'form-label'}}) }}
-					{{ form_widget(form.blocsiege, {'attr': {'class': 'form-control'}}) }}
-					{{ form_errors(form.blocsiege) }}
-				</div>
-			</div>
-			{# Section Bagages #}
-			<div class="col-sm-5 card card-body mb-4">
-				<table class="table table-bordered text-center align-middle shadow-sm" style="background-color: #e6f0fa; border-radius: 8px; overflow: hidden;">
-    <thead class="table-primary">
-        <tr>
-            <th colspan="6" class="text-center fs-5 fw-bold">Tarification</th>
-        </tr>
-        <tr>
-            <th>Tarification</th>
-            <th>Adulte</th>
-            <th>Enfant</th>
-            <th>Bébé</th>
-            <th>Taxe</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th class="fw-bold">Achat forfait</th>
-            <td>{{ form_widget(form.prixada, {'attr': {'class': 'form-control', 'style': 'background-color: white;'}}) }}</td>
-            <td>{{ form_widget(form.prixzza, {'attr': {'class': 'form-control', 'style': 'background-color: white;'}}) }}</td>
-            <td>{{ form_widget(form.prixbba, {'attr': {'class': 'form-control', 'style': 'background-color: white;'}}) }}</td>
-            <td>{{ form_widget(form.taxea, {'attr': {'class': 'form-control', 'style': 'background-color: white;'}}) }}</td>
-        </tr>
-        <tr>
-            <th class="fw-bold">Achat Vol sec</th>
-            <td>{{ form_widget(form.prixadav, {'attr': {'class': 'form-control', 'style': 'background-color: white;'}}) }}</td>
-            <td>{{ form_widget(form.prixzzav, {'attr': {'class': 'form-control', 'style': 'background-color: white;'}}) }}</td>
-            <td>{{ form_widget(form.prixbbav, {'attr': {'class': 'form-control', 'style': 'background-color: white;'}}) }}</td>
-            <td></td>
-        </tr>
-        <tr>
-            <th rowspan="3" class="align-middle fw-bold">Prix Vente</th>
-            <td>{{ form_widget(form.prixadv, {'attr': {'class': 'form-control', 'style': 'background-color: white;'}}) }}</td>
-            <td>{{ form_widget(form.prixzzv, {'attr': {'class': 'form-control', 'style': 'background-color: white;'}}) }}</td>
-            <td>{{ form_widget(form.prixbbv, {'attr': {'class': 'form-control', 'style': 'background-color: white;'}}) }}</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>{{ form_widget(form.prixadv2, {'attr': {'class': 'form-control', 'style': 'background-color: white;'}}) }}</td>
-            <td>{{ form_widget(form.prixzzv2, {'attr': {'class': 'form-control', 'style': 'background-color: white;'}}) }}</td>
-            <td>{{ form_widget(form.prixbbv2, {'attr': {'class': 'form-control', 'style': 'background-color: white;'}}) }}</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>{{ form_widget(form.prixadv3, {'attr': {'class': 'form-control', 'style': 'background-color: white;'}}) }}</td>
-            <td>{{ form_widget(form.prixzzv3, {'attr': {'class': 'form-control', 'style': 'background-color: white;'}}) }}</td>
-            <td>{{ form_widget(form.prixbbv3, {'attr': {'class': 'form-control', 'style': 'background-color: white;'}}) }}</td>
-            <td></td>
-        </tr>
-    </tbody>
-</table>
-
-
-			</div>
-			{# Section Bagages #}
-			<div class="col-sm-3 card card-body mb-4">
-				<table class="table table-bordered align-middle text-start shadow-sm" style="background-color: #e6f0fa; border-radius: 8px; overflow: hidden;">
-    <thead class="table-primary">
-        <tr>
-            <th colspan="2" class="text-center fs-5 fw-bold">Taxes & Suppléments</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        <tr>
-            <th class="fw-bold">Taxe aéroport</th>
-            <td>
-                {{ form_widget(form.taxevente, {'attr': {'class': 'form-control', 'placeholder': 'taxevente', 'style': 'background-color: white;'}}) }}
-            </td>
-        </tr>
-        <tr>
-            <th class="fw-bold">Carte touristique</th>
-            <td>
-                {{ form_widget(form.cartevente, {'attr': {'class': 'form-control', 'placeholder': 'cartevente', 'style': 'background-color: white;'}}) }}
-            </td>
-        </tr>
-        <tr>
-            <th class="fw-bold">Taxe de sortie</th>
-            <td>
-                {{ form_widget(form.taxesovente, {'attr': {'class': 'form-control', 'placeholder': 'taxesovente', 'style': 'background-color: white;'}}) }}
-            </td>
-        </tr>
-        <tr>
-            <th class="fw-bold">Supp. 15 jours</th>
-            <td>
-                {{ form_widget(form.suppvol, {'attr': {'class': 'form-control', 'placeholder': 'suppvol', 'style': 'background-color: white;'}}) }}
-            </td>
-        </tr>
-        <tr>
-            <th class="fw-bold">Supplém. AS</th>
-            <td>
-                {{ form_widget(form.supp1, {'attr': {'class': 'form-control', 'placeholder': 'supp1', 'style': 'background-color: white;'}}) }}
-            </td>
-        </tr>
-        <tr>
-            <th class="fw-bold">Supplém. AR</th>
-            <td>
-                {{ form_widget(form.supp2, {'attr': {'class': 'form-control', 'placeholder': 'supp2', 'style': 'background-color: white;'}}) }}
-            </td>
-        </tr>
-    </tbody>
-</table>
-
-
-			</div>
-
-
-		</div>
-
-
-		{# Section Capacités et réservations #}
-		<div class="col-md-12 card card-body mb-4">
-			<div
-				class="row g-3">
-				<!-- Bloc Siège engagé -->
-				<div class="col-md-12 row w-100">
-					<div class="col-md-3 engaged-seat">
-						{{ form_label(form.sg, "Siège(s) engagé(s)", {'label_attr': {'class': 'label-bold text-warning'}}) }}
-						{{ form_widget(form.sg, {'attr': {'class': 'form-control form-control-sm'}}) }}
-						{{ form_errors(form.sg) }}
-						<div class="red-text mt-2">Vol avec engagement</div>
-					</div>
-
-					<!-- STOP SALE -->
-					<div class="col-md-9 row align-items-center justify-content-center">
-						<div class="col-md-5">
-							<div class="row align-items-center">
-								<div class="col-auto">
-									{{ form_label(form.stopsale, "STOP SALE", {
-								'label_attr': {'class': 'form-label mb-0'}
-							}) }}
-								</div>
-								<div class="col">
-									{{ form_widget(form.stopsale, {
-								'attr': {'class': 'form-control form-control-sm'}
-							}) }}
-								</div>
-								{{ form_errors(form.stopsale) }}
+					<!-- Section affréteur -->
+					<div class="col-md-12 card card-body shadow-sm" style="background-color:rgb(178, 214, 179); border-radius: 8px;height: fit-content;">
+						<div class="row">
+							<div class="col-md-3">
+								{{ form_label(form.codaffret, 'Affréteur', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+								{{ form_widget(form.codaffret, {
+									'attr': {
+										'class': 'form-select form-select-sm affret-select bg-white',
+										'id': 'codaffret',
+										'data-lib-target': 'libaffret'
+									}
+								}) }} 
+                                {{ form_errors(form.codaffret) }}
+							</div>
+							<div class="col-md-3">
+								{{ form_label(form.libaffret, 'Nom Affréteur', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+								{{ form_widget(form.libaffret, {
+									'attr': {
+										'class': 'form-control form-control-sm libaffret bg-white',
+										'id': 'libaffret',
+										'readonly': true
+									}
+								}) }}
+                                {{ form_errors(form.libaffret) }}
+							</div>
+						
+							<div class="col-md-3">
+								{{ form_label(form.nomfour, 'Fournisseur', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+								{{ form_widget(form.nomfour, {'attr': {'class': 'form-control', 'style': 'background-color: white;'}}) }}
+								{{ form_errors(form.nomfour) }}
 							</div>
 
-							<div class="row align-items-center">
-								<div class="col-auto">
-									{{ form_label(form.datedeconf, "datedeconf", {
-									'label_attr': {'class': 'form-label mb-0'}
-								}) }}
-								</div>
-								<div class="col">
-									{{ form_widget(form.datedeconf, {
-									'attr': {'class': 'form-control form-control-sm'}
-								}) }}
-								</div>
-								{{ form_errors(form.datedeconf) }}
+							<div class="col-md-3">
+								{{ form_label(form.ferry, 'Vol Ferry', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+								{{ form_widget(form.ferry, {'attr': {'class': 'form-control bg-white', 'style': 'background-color: white;'}}) }}
+								{{ form_errors(form.ferry) }}
 							</div>
 						</div>
-						<div class="form-check mt-2 col-md-6">
-							{{ form_widget(form.venduVolsec, {
+
+						<div class="col-md-3">
+							{{ form_label(form.fictif, 'Vol Fictif', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+							{{ form_widget(form.fictif, {'attr': {'class': 'form-control', 'style': 'background-color: white;'}}) }}
+							{{ form_errors(form.fictif) }}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+			
+		<!-- Capacities Tab -->
+		<div class="tab-pane fade" id="capacities" role="tabpanel">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="col-md-12 card card-body shadow-sm" style=" border-radius: 8px;height: fit-content;">                   
+						<div class="col-md-12">
+							{{ form_label(form.ouvert, 'Offre Total', {'label_attr': {'class': 'form-label'}}) }}
+							{{ form_widget(form.ouvert, {
 								'attr': {
-									'class': 'form-check-input',
-									'role': 'switch'
+									'class': 'form-control',
+									'data-action': 'change->availability#calculateAvailability',
+									'data-availability-ouvert-value': form.ouvert.vars.value|default(0)
 								}
 							}) }}
-							{{ form_label(form.venduVolsec, null, {
-								'label_attr': {'class': 'form-check-label fw-semibold'},
-								'label': 'Autorisé uniquement 7 jours Vente Vol Sec Pour Internet'
+							{{ form_errors(form.ouvert) }}
+						</div>
+						<div class="col-md-12">
+							{{ form_label(form.vendu, 'Vendu', {'label_attr': {'class': 'form-label'}}) }}
+							{{ form_widget(form.vendu, {
+								'attr': {
+									'class': 'form-control calc-field',
+									'id': 'vendu-field',
+									'data-calc': 'vendu'
+								}
 							}) }}
+							{{ form_errors(form.vendu) }}
+						</div>
+						<div class="col-md-12">
+							{{ form_label(form.reserve, 'Réservé', {'label_attr': {'class': 'form-label '}}) }}
+							{{ form_widget(form.reserve, {
+								'attr': {
+									'class': 'form-control calc-field',
+									'id': 'reserve-field',
+									'data-calc': 'reserve'
+								}
+							}) }}
+							{{ form_errors(form.reserve) }}
+						</div>
+						<div class="col-md-12">
+							{{ form_label(form.freesale, 'Free Sale', {'label_attr': {'class': 'form-label'}}) }}
+							{{ form_widget(form.freesale, {'attr': {'class': 'form-control'}}) }}
+							{{ form_errors(form.freesale) }}
+						</div>
+						<div class="col-md-12">
+							{{ form_label(form.dispo, 'Dispo.', {'label_attr': {'class': 'form-label'}}) }}
+							{{ form_label(form.dispo, 'Dispo.', {'label_attr': {'class': 'form-label'}}) }}
+							{{ form_widget(form.dispo, {
+								'attr': {
+									'class': 'form-control bg-light',
+									'readonly': true,
+									'id': 'dispo-field',
+									'data-calc': 'dispo'
+								}
+							}) }}
+							{{ form_errors(form.dispo) }}
+						</div>
+						<div class="col-md-12">
+							{{ form_label(form.blocsiege, 'Blocsiege', {'label_attr': {'class': 'form-label'}}) }}
+							{{ form_widget(form.blocsiege, {'attr': {'class': 'form-control'}}) }}
+							{{ form_errors(form.blocsiege) }}
 						</div>
 					</div>
-
-
 				</div>
-
-				<!-- OBS -->
-				<div class="col-md-12">
-					{{ form_label(form.obs, "Obs", {'label_attr': {'class': 'form-label'}}) }}
-					{{ form_widget(form.obs, {'attr': {'class': 'form-control', 'placeholder': 'obs'}}) }}
-					{{ form_errors(form.obs) }}
-				</div>
-
-				<!-- Suppléments et Date de Conf -->
-				{# <div class="col-md-3">
-								            <label class="form-label label-bold text-warning">Suppléments</label>
-								            {{ form_widget(form.supp1, {'attr': {'class': 'form-control form-control-sm highlight-yellow'}}) }}
-								            {{ form_errors(form.supp1) }}
-								        </div> #}
-
-
-			</div>
-		</div>
-
-
-		{# Section Convocation #}
-		{# <div class="col-md-12 card card-body mb-4">
-									<h5 class="mb-3">Convocation</h5>
-							
-									<div class="row g-3">
-										<div class="col-md-3">
-											{{ form_label(form.dateconvo, 'Date convocation', {'label_attr': {'class': 'form-label'}}) }}
-											{{ form_widget(form.dateconvo, {'attr': {'class': 'form-control'}}) }}
-											{{ form_errors(form.dateconvo) }}
-										</div>
-										<div class="col-md-3">
-											{{ form_label(form.heureconvo, 'Heure', {'label_attr': {'class': 'form-label'}}) }}
-											{{ form_widget(form.heureconvo, {'attr': {'class': 'form-control'}}) }}
-											{{ form_errors(form.heureconvo) }}
-										</div>
-										<div class="col-md-3">
-											{{ form_label(form.lieuconvo, 'Aéroport & Lieu', {'label_attr': {'class': 'form-label'}}) }}
-											{{ form_widget(form.lieuconvo, {'attr': {'class': 'form-control'}}) }}
-											{{ form_errors(form.lieuconvo) }}
-										</div>
-										<div class="col-md-3">
-											{{ form_label(form.comptoir, 'Comptoir & Zone', {'label_attr': {'class': 'form-label'}}) }}
-											{{ form_widget(form.comptoir, {'attr': {'class': 'form-control'}}) }}
-											{{ form_errors(form.comptoir) }}
-										</div>
-									</div>
-							
-									<div class="row g-3 mt-2">
-										<div class="col-md-3">
-											{{ form_label(form.porte, 'Porte', {'label_attr': {'class': 'form-label'}}) }}
-											{{ form_widget(form.porte, {'attr': {'class': 'form-control'}}) }}
-											{{ form_errors(form.porte) }}
-										</div>
-										<div class="col-md-3">
-											{{ form_label(form.agence, 'Agence(confirmation Vol)', {'label_attr': {'class': 'form-label'}}) }}
-											{{ form_widget(form.agence, {'attr': {'class': 'form-control'}}) }}
-											{{ form_errors(form.agence) }}
-										</div>
-										<div class="col-md-3">
-											{{ form_label(form.formforf, 'Formalités forfait', {'label_attr': {'class': 'form-label'}}) }}
-											{{ form_widget(form.formforf, {'attr': {'class': 'form-control'}}) }}
-											{{ form_errors(form.formforf) }}
-										</div>
-										<div class="col-md-3">
-											{{ form_label(form.formsec, 'Formalités vol sec', {'label_attr': {'class': 'form-label'}}) }}
-											{{ form_widget(form.formsec, {'attr': {'class': 'form-control'}}) }}
-											{{ form_errors(form.formsec) }}
-										</div>
-										<div class="row justify-content-end">
-											<div class="col-md-3">
-												<label class="text-white fw-bold">Spécification</label>
-												<div class="border p-2 bg-white text-dark rounded">
-													{{ form_widget(form.specification) }}
-												</div>
-											</div>
-										</div>
-									</div>
-								</div> #}
-
-		<div
-			class="col-md-12 card card-body mb-4" style="background-color: #99ccff; color: white; border: 2px solid yellow;">
-
-			<!-- Ligne 1 -->
-			<div class="row mb-3">
-				<div class="col-md-3">
-					{{ form_label(form.dateconvo, 'Date de convocation', {'label_attr': {'class': 'text-white'}}) }}
-					{{ form_widget(form.dateconvo, {'attr': {'class': 'form-control'}}) }}
-				</div>
-				<div class="col-md-2">
-					{{ form_label(form.heureconvo, 'Heure', {'label_attr': {'class': 'text-white'}}) }}
-					{{ form_widget(form.heureconvo, {'attr': {'class': 'form-control'}}) }}
-				</div>
-				<div class="col-md-3">
-					{{ form_label(form.comptoir, 'Comptoir & zone', {'label_attr': {'class': 'text-white'}}) }}
-					{{ form_widget(form.comptoir, {'attr': {'class': 'form-control'}}) }}
-				</div>
-			</div>
-
-			<!-- Ligne 2 -->
-			<div class="row mb-3">
-				<div class="col-md-3">
-					{{ form_label(form.lieuconvo, 'Aéroport & Lieu', {'label_attr': {'class': 'text-white'}}) }}
-					{{ form_widget(form.lieuconvo, {'attr': {'class': 'form-control'}}) }}
-				</div>
-				<div class="col-md-2">
-					{{ form_label(form.porte, 'Porte', {'label_attr': {'class': 'text-white'}}) }}
-					{{ form_widget(form.porte, {'attr': {'class': 'form-control'}}) }}
-				</div>
-			</div>
-
-			<!-- Ligne 3 : deux colonnes -->
-			<div
-				class="row">
-				<!-- Colonne gauche -->
-				<div class="col-md-6">
-					<div class="mb-3">
-						{{ form_label(form.agence, 'Agence (confirmation vol)', {'label_attr': {'class': 'text-white'}}) }}
-						{{ form_widget(form.agence, {'attr': {'class': 'form-control'}}) }}
-					</div>
-					<div class="mb-3">
-						{{ form_label(form.formforf, 'Formalités forfait', {'label_attr': {'class': 'text-white'}}) }}
-						{{ form_widget(form.formforf, {'attr': {'class': 'form-control'}}) }}
-					</div>
-					<div class="mb-3">
-						{{ form_label(form.formsec, 'Formalités vol sec', {'label_attr': {'class': 'text-white'}}) }}
-						{{ form_widget(form.formsec, {'attr': {'class': 'form-control'}}) }}
-					</div>
-				</div>
-
-				<!-- Colonne droite -->
-				<div class="col-md-4 offset-md-1">
-					<label class="text-white fw-bold mb-2">Spécification</label>
-					<div class="border p-3 bg-white text-dark rounded">
-						{% for child in form.specification %}
-							<div class="form-check mb-2">
-								{{ form_widget(child, {'attr': {'class': 'form-check-input'}}) }}
-								{{ form_label(child, null, {'label_attr': {'class': 'form-check-label'}}) }}
-							</div>
-						{% endfor %}
-					</div>
-
-
-				</div>
-			</div>
-		</div>
-
-
-		{# Section Bagages #}
-		<div class="col-md-12 card card-body mb-4">
-			<h5 class="mb-3">Bagages</h5>
-
-			<div class="row g-3">
-				<div class="col-md-4">
-					{{ form_label(form.bagagesoption, 'Bagages option', {'label_attr': {'class': 'form-label me-2'}}) }}
-					{{ form_widget(form.bagagesoption, {'attr': {'class': 'form-control'}}) }}
-					{{ form_errors(form.bagagesoption) }}
-				</div>
-				<div class="col-md-4">
-					{{ form_label(form.prixbagagesoption, 'Prix bagages', {'label_attr': {'class': 'form-label'}}) }}
-					{{ form_widget(form.prixbagagesoption, {'attr': {'class': 'form-control'}}) }}
-					{{ form_errors(form.prixbagagesoption) }}
-				</div>
-				<div class="col-md-4">
-					{{ form_label(form.nbrbagagesoption, 'Nb bagages', {'label_attr': {'class': 'form-label'}}) }}
-					{{ form_widget(form.nbrbagagesoption, {'attr': {'class': 'form-control'}}) }}
-					{{ form_errors(form.nbrbagagesoption) }}
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-	<div class="col-sm-3 row">
-	<div class="col-md-12 card card-body shadow-sm" style="background-color: #f8f9fa; border-radius: 8px;height: fit-content;">
-    {# Section Informations de base du vol #}
-		<div class="col-md-12">
-			{{ form_label(form.seqvol, 'N° Séq.', {'label_attr': {'class': 'form-label fw-bold'}}) }}
-			{{ form_widget(form.seqvol, {'attr': {'class': 'form-control bg-light-subtle text-muted'}}) }}
-			{{ form_errors(form.seqvol) }}
-		</div>
-        <div class="col-md-12">
-            {{ form_label(form.nvol, 'N° du vol', {'label_attr': {'class': 'form-label fw-bold  '}}) }}
-            {{ form_widget(form.nvol, {'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.nvol) }}
-        </div>
- 
-        <div class="col-md-12">
-            {{ form_label(form.datevol, 'Date vol', {'label_attr': {'class': 'form-label fw-bold  '}}) }}
-            {{ form_widget(form.datevol, {'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.datevol) }}
-        </div>
-
-        <div class="col-md-12">
-            {{ form_label(form.jo, 'JO', {'label_attr': {'class': 'form-label fw-bold  '}}) }}
-            {{ form_widget(form.jo, {'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.jo) }}
-        </div>
-
-        <div class="col-md-12">
-            {{ form_label(form.jplus, 'J.Plus', {'label_attr': {'class': 'form-label fw-bold  '}}) }}
-            {{ form_widget(form.jplus, {'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.jplus) }}
-        </div>
-
-        <div class="col-md-12">
-            {{ form_label(form.pnr, 'PNR', {'label_attr': {'class': 'form-label fw-bold  '}}) }}
-            {{ form_widget(form.pnr, {'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.pnr) }}
-        </div>
-
-        <div class="col-md-12">
-				{{ form_label(form.datRetro, 'Délai rétro en jours', {'label_attr': {'class': 'form-label fw-bold'}}) }}
-				{{ form_widget(form.datRetro, {'attr': {'class': 'form-control'}}) }}
-				{{ form_errors(form.datRetro) }}
-        </div>
-
-		<div class="col-md-12">
-			{{ form_label(form.typevol, 'Type de vol', {'label_attr': {'class': 'form-label fw-bold'}}) }}
-			
-			<div>
-				{% for child in form.typevol %}
-					<div class="form-check form-check-inline">
-						{{ form_widget(child, {'attr': {'class': 'form-check-input'}}) }}
-						{{ form_label(child, null, {'label_attr': {'class': 'form-check-label'}}) }}
-					</div>
-				{% endfor %}
-			</div>
-
-			{{ form_errors(form.typevol) }}
-		</div>
-
-        <div class="col-md-12">
-            {{ form_label(form.destination, 'Destination', {'label_attr': {'class': 'form-label fw-bold  '}}) }}
-            {{ form_widget(form.destination, {'attr': {'class': 'form-control'}}) }}
-            {{ form_errors(form.destination) }}
-        </div>
-		<div class="col-md-12 pb-4 pt-4">
-                        {{ form_widget(form.allotFreesale, {
-                            'attr': {
-                                'class': 'form-check-input',
-                                'role': 'switch'
-                            }
-                        }) }}
-                        {{ form_label(form.allotFreesale, 'Allotement free sale', {
-                            'label_attr': {'class': 'form-check-label fw-semibold'},
-                            'label': 'Autorisé Vente Vol Sec Internet'
-                        }) }}
-						{{ form_errors(form.allotFreesale) }}
-        </div>
- 
-	</div>
-
-	{# Section Capacités et réservations #}
-	<div class="col-md-12 card card-body  shadow-sm" style="background-color:rgb(178, 214, 179); border-radius: 8px;height: fit-content;">
-
-			<div class="col-md-12">
-    {{ form_label(form.codaffret, 'Affréteur', {'label_attr': {'class': 'form-label mb-0'}}) }}
-    {{ form_widget(form.codaffret, {
-        'attr': {
-            'class': 'form-select form-select-sm affret-select bg-white',
-            'id': 'codaffret',
-            'data-lib-target': 'libaffret'
-        }
-    }) }}
-    
-    {{ form_label(form.libaffret, 'Nom Affréteur', {'label_attr': {'class': 'form-label mb-0'}}) }}
-    {{ form_widget(form.libaffret, {
-        'attr': {
-            'class': 'form-control form-control-sm libaffret ',
-            'id': 'libaffret',
-            'readonly': true
-        }
-    }) }}
-</div>
-			
-
-			<div class="col-md-12">
-				{{ form_label(form.nomfour, 'Fournisseur', {'label_attr': {'class': 'form-label fw-bold '}}) }}
-				{{ form_widget(form.nomfour, {'attr': {'class': 'form-control', 'style': 'background-color: white;'}}) }}
-				{{ form_errors(form.nomfour) }}
-			</div>
-
-			<div class="col-md-12">
-				{{ form_label(form.ferry, 'Vol Ferry', {'label_attr': {'class': 'form-label fw-bold '}}) }}
-				{{ form_widget(form.ferry, {'attr': {'class': 'form-control', 'style': 'background-color: white;'}}) }}
-				{{ form_errors(form.ferry) }}
-			</div>
-
-			<div class="col-md-12">
-				{{ form_label(form.fictif, 'Vol Fictif', {'label_attr': {'class': 'form-label fw-bold '}}) }}
-				{{ form_widget(form.fictif, {'attr': {'class': 'form-control', 'style': 'background-color: white;'}}) }}
-				{{ form_errors(form.fictif) }}
-			</div>
-
-	</div>
-		<!-- Checkbox section -->
-		{# <div class="card mb-3 ">
-								<div class="card-body p-3">
-									<div class="row">
-										{% for field, label in {
-					                    nvol2: 'N Vol',
-					                    confirmation: 'Ville Départ',
-					                    paiement: 'Heure départ',
-										confirmation: 'Ville Arrivé', 
-					                    paiement: 'Heure Arrivé',
-					                    refunique: 'Nb Kilos',
-					                    litige: 'Ville Via',
-					                    carnetvoyage: 'Affreteur',
-					                    pointcom: 'Offre total',
-					                    convoWeb: 'Eléments convocation',
-										refunique: 'Tarification',
-					                    jplus: 'J.plus',
-					                    carnetvoyage: 'Taxes',
-					                    typevol: 'Type de vol',
-					                    destination: 'Destination',
-										convoWeb: 'Vol Sec Autorisé Internet',
-										refunique: 'Obs',
-					                    jplus: 'Allotement Free Sale',
-					                    carnetvoyage: 'Aéroports',
-					                    typevol: 'Aéroports(Dép/Arr)',
-										retro: 'Rétro(délai)',
-					                } %}
-											<div class="col-md-12 d-flex align-items-center mb-2">
-												{{ form_widget(attribute(form, field), {'attr': {'class': 'form-check-input mode'}}) }}
-												<label class="form-check-label ms-2">{{ label }}</label>
-											</div>
-										{% endfor %}
-									</div>
+				
+				<div class="col-md-8">
+					<div class="col-md-12 card card-body shadow-sm" style="border-radius: 8px;height: fit-content;">
+						<div class="col-md-12 engaged-seat">
+							{{ form_label(form.sg, "Siège(s) engagé(s)") }}
+							{{ form_widget(form.sg) }}
+                            {{ form_errors(form.sg) }}
+							<div class="red-text mt-2">Vol avec engagement</div>
+						</div>
+						<div class="col-md-12 mt-5">
+							<div class="col-md-12 d-flex align-items-center mt-5">
+								<div class="form-check form-switch mb-0">
+									{{ form_widget(form.stopsale, {'attr': {'class': 'form-check-input me-2'}}) }}
+									{{ form_label(form.stopsale, 'Allotement free sale', {'label_attr': {'class': 'form-check-label mb-0'}}) }}
+                                    {{ form_errors(form.stopsale) }}
 								</div>
-								</div> #}
+							</div>
+							<div class="col-md-12 d-flex align-items-center mt-5">
+								<div class="form-check form-switch mb-0">
+									{{ form_widget(form.venduVolsec, {'attr': {'class': 'form-check-input me-2'}}) }}
+									{{ form_label(form.venduVolsec, 'Autorisé uniquement 7 jours Vente Vol Sec Pour Internet') }}
+                                    {{ form_errors(form.venduVolsec) }}
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4 align-items-center mt-5">
+							{{ form_label(form.datedeconf, 'Date de confirmation', {'label_attr': {'class': 'form-label'}}) }}
+							{{ form_widget(form.datedeconf, {'attr': {'class': 'form-control'}}) }}
+							{{ form_errors(form.datedeconf) }}
+						</div>
 
-		<div class="col-sm-12 p-3 card card-body mb-4 rounded-3 border-0 shadow-sm" style="height: fit-content;">
-			<div class="row">
-				<h5 class="mb-3">Modification en série</h5>
-				<div>
-					<div class="col-md-12 d-flex align-items-center mb-2">
-						<input type="checkbox" class="form-check-input" id="nvol2">
-						<label class="form-check-label ms-2" for="nvol2">N Vol</label>
-					</div>
-
-					<div class="col-md-12 d-flex align-items-center mb-2">
-						<input type="checkbox" class="form-check-input" id="confirmation">
-						<label class="form-check-label ms-2" for="confirmation">Ville Départ</label>
-					</div>
-
-					<div class="col-md-12 d-flex align-items-center mb-2">
-						<input type="checkbox" class="form-check-input" id="paiement">
-						<label class="form-check-label ms-2" for="paiement">Heure départ</label>
-					</div>
-
-					<div class="col-md-12 d-flex align-items-center mb-2">
-						<input type="checkbox" class="form-check-input" id="refunique">
-						<label class="form-check-label ms-2" for="refunique">Tarification</label>
-					</div>
-
-					<div class="col-md-12 d-flex align-items-center mb-2">
-						<input type="checkbox" class="form-check-input" id="jplus">
-						<label class="form-check-label ms-2" for="jplus">J.plus</label>
-					</div>
-
-					<div class="col-md-12 d-flex align-items-center mb-2">
-						<input type="checkbox" class="form-check-input" id="carnetvoyage">
-						<label class="form-check-label ms-2" for="carnetvoyage">Taxes</label>
-					</div>
-
-					<div class="col-md-12 d-flex align-items-center mb-2">
-						<input type="checkbox" class="form-check-input" id="typevol">
-						<label class="form-check-label ms-2" for="typevol">Type de vol</label>
-					</div>
-
-					<div class="col-md-12 d-flex align-items-center mb-2">
-						<input type="checkbox" class="form-check-input" id="destination">
-						<label class="form-check-label ms-2" for="destination">Destination</label>
-					</div>
-
-					<div class="col-md-12 d-flex align-items-center mb-2">
-						<input type="checkbox" class="form-check-input" id="convoWeb">
-						<label class="form-check-label ms-2" for="convoWeb">Vol Sec Autorisé Internet</label>
-					</div>
-
-					<div class="col-md-12 d-flex align-items-center mb-2">
-						<input type="checkbox" class="form-check-input" id="retro">
-						<label class="form-check-label ms-2" for="retro">Rétro(délai)</label>
+						<div class="row mt-3">
+							<div class="col-md-12">
+								{{ form_label(form.obs, "Observations") }}
+								{{ form_widget(form.obs) }}
+                                {{ form_errors(form.obs) }}
+							</div>
+						</div>
 					</div>
 				</div>
-
-			</div>
-
-		</div>
-		<div
-			class="col-sm-12 p-3 card card-body">
-			<!-- Ligne 1 : YIELD -->
-			<div class="section-yield">
-				{{ form_label(form.prixYield, 'YIELD', {'label_attr': {'class': 'form-label fw-bold '}}) }}
-				{{ form_widget(form.prixYield, {'attr': {'class': 'form-control', 'style': 'background-color: white;'}}) }}
-				{{ form_errors(form.prixYield) }}
-			</div>
-
-			<!-- Ligne 2 : VOL EN ALLOT FREESALE -->
-			<div class="section-freesale">
-				VOL EN ALLOT FREESALE
-			</div>
-
-			<!-- Ligne 3 : STOP SALE -->
-			<div class="section-stop-sale">
-				<button>STOP SALE</button>
 			</div>
 		</div>
+		
+		<!-- Pricing Tab -->
+		<div class="tab-pane fade" id="pricing" role="tabpanel">
+			<div class="col-md-12 card card-body shadow-sm" style="border-radius: 8px;height: fit-content;"> 
+				<div class="row">    
+					<div class="col-md-8">
+						<!-- Pricing table -->
+						<table class="table table-bordered text-center align-middle shadow-sm mb-4">
+							<thead class="table-primary">
+								<tr>
+									<th colspan="6" class="text-center fs-5 fw-bold">Tarification</th>
+								</tr>
+								<tr>
+									<th>Tarification</th>
+									<th>Adulte</th>
+									<th>Enfant</th>
+									<th>Bébé</th>
+									<th>Taxe</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th class="align-middle fw-bold text-center">Achat forfait</th>
+									<td>{{ form_widget(form.prixada) }}</td>
+									<td>{{ form_widget(form.prixzza) }}</td>
+									<td>{{ form_widget(form.prixbba) }}</td>
+									<td>{{ form_widget(form.taxea) }}</td>
+								</tr>
+								<tr>
+									<th class="align-middle fw-bold text-center">Achat Vol sec</th>
+									<td>{{ form_widget(form.prixadav) }}</td>
+									<td>{{ form_widget(form.prixzzav) }}</td>
+									<td>{{ form_widget(form.prixbbav) }}</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th rowspan="3" class="align-middle fw-bold text-center">Prix Vente</th>
+									<td>{{ form_widget(form.prixadv) }}</td>
+									<td>{{ form_widget(form.prixzzv) }}</td>
+									<td>{{ form_widget(form.prixbbv) }}</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>{{ form_widget(form.prixadv2) }}</td>
+									<td>{{ form_widget(form.prixzzv2) }}</td>
+									<td>{{ form_widget(form.prixbbv2) }}</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>{{ form_widget(form.prixadv3) }}</td>
+									<td>{{ form_widget(form.prixzzv3) }}</td>
+									<td>{{ form_widget(form.prixbbv3) }}</td>
+									<td></td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="col-md-6">
+							{{ form_label(form.prixYield, 'YIELD') }}
+							{{ form_widget(form.prixYield) }}
+                            {{ form_errors(form.prixYield) }}
+						</div>
+					</div>
+					
+					<div class="col-md-4">
+						<!-- Taxes table -->
+						<table class="table table-bordered align-middle text-start shadow-sm">
+							<thead class="table-primary">
+								<tr>
+									<th colspan="2" class="text-center fs-5 fw-bold">Taxes & Suppléments</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th class="align-middle fw-bold text-center">Taxe aéroport</th>
+									<td>{{ form_widget(form.taxevente) }}</td>
+								</tr>
+								<tr>
+									<th class="align-middle fw-bold text-center">Carte touristique</th>
+									<td>{{ form_widget(form.cartevente) }}</td>
+								</tr>
+								<tr>
+									<th class="align-middle fw-bold text-center">Taxe de sortie</th>
+									<td>{{ form_widget(form.taxesovente) }}</td>
+								</tr>
+								<tr>
+									<th class="align-middle fw-bold text-center">Supp. 15 jours</th>
+									<td>{{ form_widget(form.suppvol) }}</td>
+								</tr>
+								<tr>
+									<th class="align-middle fw-bold text-center">Supplém. AS</th>
+									<td>{{ form_widget(form.supp1) }}</td>
+								</tr>
+								<tr>
+									<th class="align-middle fw-bold text-center">Supplém. AR</th>
+									<td>{{ form_widget(form.supp2) }}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Convocation Tab -->
+		<div class="tab-pane fade" id="convocation" role="tabpanel">
+			<div class="col-md-12 card mb-4" style="background-color: #99ccff; color: white; border: 2px solid yellow;">
+				<div class="row mb-3">
+					<div class="col-md-3">
+						{{ form_label(form.dateconvo, 'Date de convocation') }}
+						{{ form_widget(form.dateconvo) }}
+                         {{ form_errors(form.dateconvo) }}
+					</div>
+					<div class="col-md-2">
+						{{ form_label(form.heureconvo, 'Heure') }}
+						{{ form_widget(form.heureconvo) }}
+                         {{ form_errors(form.heureconvo) }}
+					</div>
+					<div class="col-md-3">
+						{{ form_label(form.comptoir, 'Comptoir & zone') }}
+						{{ form_widget(form.comptoir) }}
+                         {{ form_errors(form.comptoir) }}
+					</div>
+				</div>
+				
+				<div class="row mb-3">
+					<div class="col-md-3">
+						{{ form_label(form.lieuconvo, 'Aéroport & Lieu') }}
+						{{ form_widget(form.lieuconvo) }}
+                         {{ form_errors(form.lieuconvo) }}
+					</div>
+					<div class="col-md-2">
+						{{ form_label(form.porte, 'Porte') }}
+						{{ form_widget(form.porte) }}
+                         {{ form_errors(form.porte) }}
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-md-6">
+						<div class="mb-3">
+							{{ form_label(form.agence, 'Agence (confirmation vol)') }}
+							{{ form_widget(form.agence) }}
+                             {{ form_errors(form.agence) }}
+						</div>
+						<div class="mb-3">
+							{{ form_label(form.formforf, 'Formalités forfait') }}
+							{{ form_widget(form.formforf) }}
+                            {{ form_errors(form.formforf) }}
+						</div>
+						<div class="mb-3">
+							{{ form_label(form.formsec, 'Formalités vol sec') }}
+							{{ form_widget(form.formsec) }}
+                            {{ form_errors(form.formsec) }}
+						</div>
+					</div>
+					
+					<div class="col-md-3 offset-md-1">
+						<label class="text-white fw-bold mb-2">Spécification</label>
+						<div class="border p-3 bg-white text-dark rounded">
+							{% for child in form.specification %}
+								<div class="form-check mb-2">
+									{{ form_widget(child) }}
+									{{ form_label(child) }}
+                                    {{ form_errors(child) }}
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-12 pe-0">
+				<div class="col-md-12 card mb-4">
+					<div class="col-md-12 d-flex align-items-center">
+						{{ form_label(form.dateconf, 'Le prix de vente Internet sont à modifiables dans le programme vol internet', {
+							'label_attr': {
+								'class': 'form-label mb-0 me-2',
+								'style': 'white-space: nowrap; width: 60%;color: red; margin-left: 15px;'
+							}
+						}) }}
+						{{ form_widget(form.dateconf) }}
+                        {{ form_errors(form.dateconf) }}
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Baggage Tab -->
+		<div class="tab-pane fade" id="baggage" role="tabpanel">
+			<div class="col-md-12 card card-body shadow-sm">
+				<div class="row g-3">
+					<div class="col-md-4">
+						{{ form_label(form.bagagesoption, 'Bagages option') }}
+						{{ form_widget(form.bagagesoption) }}
+                        {{ form_errors(form.bagagesoption) }}
+
+					</div>
+					<div class="col-md-4">
+						{{ form_label(form.prixbagagesoption, 'Prix bagages') }}
+						{{ form_widget(form.prixbagagesoption) }}
+                        {{ form_errors(form.prixbagagesoption) }}
+					</div>
+					<div class="col-md-4">
+						{{ form_label(form.nbrbagagesoption, 'Nb bagages') }}
+						{{ form_widget(form.nbrbagagesoption) }}
+                        {{ form_errors(form.nbrbagagesoption) }}
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div class="col-md-12">
+						<div class="row">
+							<div class="col-4">
+								{{ form_label(form.kilos) }}
+								{{ form_widget(form.kilos) }}
+							</div>
+							<div class="col-4">
+								{{ form_label(form.kilobebe) }}
+								{{ form_widget(form.kilobebe) }}
+							</div>
+							<div class="col-4">
+								{{ form_label(form.kilocabine) }}
+								{{ form_widget(form.kilocabine) }}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		{# <!-- Options Tab -->
+		<div class="tab-pane fade" id="options" role="tabpanel">
+			<div class="col-md-12 card card-body shadow-sm">
+				<div class="row">
+					<h5>Modification en série</h5>
+					<div>
+						<div class="col-md-12 d-flex align-items-center mb-2">
+							<input type="checkbox" class="form-check-input" id="nvol2">
+							<label class="form-check-label ms-2" for="nvol2">N Vol</label>
+						</div>
+						<div class="col-md-12 d-flex align-items-center mb-2">
+							<input type="checkbox" class="form-check-input" id="confirmation">
+							<label class="form-check-label ms-2" for="confirmation">Ville Départ</label>
+						</div>
+						<div class="col-md-12 d-flex align-items-center mb-2">
+							<input type="checkbox" class="form-check-input" id="paiement">
+							<label class="form-check-label ms-2" for="paiement">Heure départ</label>
+						</div>
+						<div class="col-md-12 d-flex align-items-center mb-2">
+							<input type="checkbox" class="form-check-input" id="refunique">
+							<label class="form-check-label ms-2" for="refunique">Tarification</label>
+						</div>
+						<div class="col-md-12 d-flex align-items-center mb-2">
+							<input type="checkbox" class="form-check-input" id="jplus">
+							<label class="form-check-label ms-2" for="jplus">J.plus</label>
+						</div>
+						<div class="col-md-12 d-flex align-items-center mb-2">
+							<input type="checkbox" class="form-check-input" id="carnetvoyage">
+							<label class="form-check-label ms-2" for="carnetvoyage">Taxes</label>
+						</div>
+						<div class="col-md-12 d-flex align-items-center mb-2">
+							<input type="checkbox" class="form-check-input" id="typevol">
+							<label class="form-check-label ms-2" for="typevol">Type de vol</label>
+						</div>
+						<div class="col-md-12 d-flex align-items-center mb-2">
+							<input type="checkbox" class="form-check-input" id="destination">
+							<label class="form-check-label ms-2" for="destination">Destination</label>
+						</div>
+						<div class="col-md-12 d-flex align-items-center mb-2">
+							<input type="checkbox" class="form-check-input" id="convoWeb">
+							<label class="form-check-label ms-2" for="convoWeb">Vol Sec Autorisé Internet</label>
+						</div>
+						<div class="col-md-12 d-flex align-items-center mb-2">
+							<input type="checkbox" class="form-check-input" id="retro">
+							<label class="form-check-label ms-2" for="retro">Rétro(délai)</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-sm-12 p-3 card">
+				<div class="section-freesale">
+					VOL EN ALLOT FREESALE
+				</div>
+				<div class="section-stop-sale mt-3">
+					<button>STOP SALE</button>
+				</div>
+			</div>
+		</div> #}
 	</div>
-
-	{# Section dateconf #}
-	<div class="col-md-12 pe-0">
-	<div class="col-md-12 card card-body mb-4">
-		<div class="col-md-12 d-flex align-items-center">
-			{{ form_label(form.dateconf, ' Le prix de vente Internet sont à modifiables dans le programme vol internet', {
-        		'label_attr': {
-            'class': 'form-label mb-0 me-2',
-            'style': 'white-space: nowrap; width: 60%;color: red; margin-left: 15px;'
-				}
-			}) }}
-
-			{{ form_widget(form.dateconf, {'attr': {'class': 'form-control'}}) }}
-			{{ form_errors(form.dateconf) }}
-		</div></div>
-
-
-	</div>
-
-
+	
+	<!-- Navigation buttons -->
 	<div class="form-group row justify-content-between mt-5 mb-5">
 		<div class="col-auto">
-			<a href="{{ path('app_vol_index') }}" class="btn btn-secondary">Annuler</a>
+			<button type="button" class="btn btn-secondary" id="prevBtn" style="display: none;">Précédent</button>
 		</div>
 		<div class="col-auto">
-			<button type="submit" class="btn btn-primary">Enregistrer</button>
+			<button type="button" class="btn btn-primary" id="nextBtn">Suivant</button>
+			<button type="submit" class="btn btn-success" id="submitBtn" style="display: none;">Enregistrer</button>
 		</div>
 	</div>
-
+	{{ form_end(form) }}
 </div>
-{{ form_end(form) }}
-   <script>
+
+
+{% endblock %}
+
+<script>
 $(document).ready(function() {
+    let currentTab = 0;
+    const tabs = $('.tab-pane');
+    const tabButtons = $('#volTabs .nav-link');
+    const nextBtn = $('#nextBtn');
+    const prevBtn = $('#prevBtn');
+    const submitBtn = $('#submitBtn');
+    const form = $('#vol-form');
+
+    function showTab(index) {
+        tabs.removeClass('show active').eq(index).addClass('show active');
+        tabButtons.removeClass('active').eq(index).addClass('active');
+        
+        if (index === 0) {
+            prevBtn.hide();
+        } else {
+            prevBtn.show();
+        }
+        
+        if (index === tabs.length - 1) {
+            nextBtn.hide();
+            submitBtn.show();
+        } else {
+            nextBtn.show();
+            submitBtn.hide();
+        }
+        
+        currentTab = index;
+    }
+
+    // nextBtn.click(function() {
+    //     saveFormData();
+    // });
+    nextBtn.click(function() {
+    if (currentTab < tabs.length - 1) {
+        showTab(currentTab + 1);
+    }
+    });
+
+    prevBtn.click(function() {
+        if (currentTab > 0) {
+            showTab(currentTab - 1);
+        }
+    });
+
+    submitBtn.click(function() {
+        form.submit();
+    }); 
     function setupVilleSelect(selector, inputClass, urlPrefix) {
         $(selector).on('change', function() {
             const villeId = $(this).val();
@@ -993,10 +909,47 @@ $(document).ready(function() {
     }
     setupVilleSelect('.ville-select', 'aeroarr', '/vol/get-aeroport/');
     setupVilleSelect('.ville-select-depart', 'aerodep', '/vol/get-aeroport/');
-    setupAffretSelect(); 
+    setupAffretSelect();
     
     $('[data-calc="vendu"], [data-calc="reserve"]').on('input', calculateDispo);
     calculateDispo();
 });
+
+function saveFormData() {
+    const formData = new FormData(document.getElementById('vol-form'));
+    
+    $.ajax({
+        url: $('#vol-form').attr('action'),
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+            if (response.success) {
+                if (currentTab < tabs.length - 1) {
+                    showTab(currentTab + 1);
+                }
+            } else {
+                // Afficher les erreurs
+                if (response.errors) {
+                    // Supprimer les anciennes erreurs
+                    $('.error-message').remove();
+                    
+                    // Afficher les nouvelles erreurs
+                    for (const field in response.errors) {
+                        const errorElement = $(`[name="${field}"]`);
+                        errorElement.after(`<div class="error-message text-danger">${response.errors[field]}</div>`);
+                        errorElement.addClass('is-invalid');
+                    }
+                }
+            }
+        },
+        error: function(xhr) {
+            console.error('Error:', xhr.responseText);
+            alert('Une erreur est survenue: ' + xhr.responseText);
+        }
+    });
+}
 </script>
+
 
