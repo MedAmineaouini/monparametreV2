@@ -20,6 +20,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\Ville;
 use App\Entity\Affreteur;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class VolType extends AbstractType
 {
@@ -27,414 +28,719 @@ class VolType extends AbstractType
     {
         $builder
         ->add('seqvol', TextType::class, [
-                'label' => 'N° Séq.',
-                'required' => false,
-                'mapped' => false, 
-                'data' => $options['seqvol_value'] ?? '', 
-                'label_attr' => [
-                    'class' => ''
-                ],
-                'attr' => [
-                    'readonly' => true,
-                    'class' => 'form-control bg-light text-muted',
-                    'style' => 'background-color: #e0e0e0; color: #6c757d;',
-                ],
-            ])
-            ->add('pnr', TextType::class, [
-                'attr' => ['class' => 'form-control'],
-            ])
-            ->add('nvol', TextType::class, [
-                'attr' => ['class' => 'form-control'],
-            ])
-            // ->add('allot_freesale', TextType::class, [
-            //     'attr' => ['class' => 'form-control'],
-            // ])
-            // ->add('retro', TextType::class, [
-            //     'attr' => ['class' => 'form-control'],
-            // ])
-            ->add('datevol', DateType::class, [
-                'label' => 'Date de vol',
-                'widget' => 'single_text',
-                'html5' => true,
-                'input' => 'datetime_immutable',
-                'attr' => [
-                    'class' => 'form-control',
-                    'max' => (new \DateTimeImmutable('+1 year'))->format('Y-m-d'),
-                ]
-            ])
-            // ->add('retrocede', DateType::class, [
-            //     'label' => 'Date fin chaine',
-            //     'widget' => 'single_text',
-            //     'html5' => true,
-            //     'input' => 'datetime_immutable',
-            //     'attr' => [
-            //         'class' => 'form-control',
-            //         'max' => (new \DateTimeImmutable('+1 year'))->format('Y-m-d'),
-            //     ]
-            // ])
-            ->add('jo', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('jplus', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('heured', TimeType::class, [
-                'label' => 'Heure de départ',
-                'widget' => 'single_text',    
-                'input' => 'string',          
-                'html5' => true,
-                'required' => false,
-                'attr' => [
-                    'class' => 'form-control form-control-sm',
-                ],
-            ])
-            ->add('villeA', EntityType::class, [
-                'class' => Ville::class,
-                'choice_label' => 'libville',
-                'choice_attr' => function(Ville $ville) {
-                    return ['data-aero' => $ville->getAero()];
-                },
-                'query_builder' => function(EntityRepository $er) {
-                    return $er->createQueryBuilder('v')
-                        ->orderBy('v.libville', 'ASC');
-                },
-                'label' => 'Ville d\'arrivée',
-                'placeholder' => 'Sélectionner une ville',
-                'attr' => ['class' => 'form-select'],
-                'required' => false,
-            ])
-            
-            ->add('aeroarr', TextType::class, [
-                'label' => 'Aéroport d\'arrivée',
-                'attr' => [
-                    'class' => 'form-control aero-input',
-                    'readonly' => true
-                ],
-                'mapped' => false 
-            ])
-            ->add('heurea', TimeType::class, [
-                'label' => 'Heure d\'arrivée',
-                'widget' => 'single_text',
-                'input' => 'string',
-                'html5' => true,
-                'required' => false,
-                'attr' => [
-                    'class' => 'form-control form-control-sm',
-                ],
-            ])
-
-            ->add('villeD', EntityType::class, [
-                'class' => Ville::class,
-                'choice_label' => 'libville',
-                'choice_attr' => function(Ville $ville) {
-                    return ['data-aero' => $ville->getAero()];
-                },
-                'query_builder' => function(EntityRepository $er) {
-                    return $er->createQueryBuilder('v')
-                        ->orderBy('v.libville', 'ASC');
-                },
-                'label' => 'Ville de départ',
-                'placeholder' => 'Sélectionner une ville',
-                'attr' => ['class' => 'form-select'],
-                'required' => false,
-            ])
-            
-            ->add('aerodep', TextType::class, [
-                'label' => 'Aéroport de départ',
-                'attr' => [
-                    'class' => 'form-control aero-input',
-                    'readonly' => true
-                ],
-                'mapped' => false 
-            ]) 
-            ->add('codaffret', EntityType::class, [
-                'class' => Affreteur::class,
-                'choice_label' => 'codaffret',
-                'query_builder' => function(EntityRepository $er) {
-                    return $er->createQueryBuilder('v')
-                        ->orderBy('v.codaffret', 'ASC');
-                },
-                'label' => 'Code Affreteur',
-                'placeholder' => 'Sélectionner une code',
-                'attr' => ['class' => 'form-select'],
-                'required' => false,
-            ])
-
-            ->add('libaffret', TextType::class, [
-                'label' => 'Affreteur',
-                'attr' => [
-                    'class' => 'form-control',
-                    'readonly' => true
-                ],
-                'mapped' => false 
-            ])
-            ->add('villeV', EntityType::class, [
-                'class' => Ville::class,
-                'choice_label' => 'libville',
-                'query_builder' => function(EntityRepository $er) {
-                    return $er->createQueryBuilder('v')
-                        ->orderBy('v.libville', 'ASC');
-                },
-                'label' => 'Ville de vol',
-                'placeholder' => 'Sélectionner une ville',
-                'attr' => ['class' => 'form-select'],
-                'required' => false,
-            ])
-            ->add('typevol', ChoiceType::class, [
-                'choices' => [
-                    'Aller' => 1,
-                    'Retour' => 2,
-                ],
-                'expanded' => true,
-                'multiple' => false,
-                'label' => 'Type de vol',
-                'required' => false,
-                'attr' => ['class' => 'form-check'],
-                'data' => 1, 
-            ])
-            
-   
-            ->add('sg', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('vendu', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('reserve', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('dispo', IntegerType::class, [
-                'mapped' => false,
-                'required' => false,
-                'attr' => ['readonly' => true, 'class' => 'form-control'],
-            ])
-            ->add('prixada', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('prixzza', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('prixbba', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('taxea', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('prixadv', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('prixzzv', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('prixbbv', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('prixadv2', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('prixzzv2', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('prixbbv2', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('prixadv3', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('prixzzv3', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('prixbbv3', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('supp1', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('supp2', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('taxevente', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('cartevente', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('taxesovente', TextType::class, ['attr' => ['class' => 'form-control']]);
-        $builder
-            ->add('suppvol', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('dateconvo', DateType::class, [
-                'widget' => 'single_text',
-                'required' => false,
-                'html5' => true,
-                'attr' => [
-                    'class' => 'form-control',
-                ],
-                'empty_data' => null,
-            ])
-            ->add('heureconvo', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('lieuconvo', TextType::class, [
-                'required' => false,      
-                'empty_data' => null,       
-                'attr' => ['class' => 'form-control'],
-            ])
-            ->add('comptoir', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('porte', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('agence', TextType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('telagence', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('formforf', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('formsec', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('obs', TextareaType::class, [
-                'attr' => [
-                    'class' => 'form-control',
-                    'rows' => 4,
-                    'placeholder' => 'Saisir une observation...'
-                ]
-            ])
-            ->add('dateconf', DateType::class, [
-                'widget' => 'single_text',
-                'html5' => true,
-                'attr' => ['class' => 'form-control']
-            ])
-            ->add('datedeconf', DateType::class, [
-                'widget' => 'single_text',
-                'html5' => true,
-                'attr' => ['class' => 'form-control']
-            ])
-
-            // ->add('assvol', TextType::class, ['attr' => ['class' => 'form-control']])
-
-            // ->add('taxea2', NumberType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('autres', TextareaType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('coaf', TextType::class, ['attr' => ['class' => 'form-control']])
-
-            // ->add('lien', TextType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('typeavion', TextType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('compagnie', TextType::class, ['attr' => ['class' => 'form-control']])
-
-            // ->add('taxesolidarite', NumberType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('nomaxe', TextType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('retro', TextType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('paxRetro', NumberType::class, ['attr' => ['class' => 'form-control']])
-            ->add('datRetro', DateType::class, [
-                'widget' => 'single_text',
-                'html5' => true,
-                'input' => 'datetime', 
-                'required' => false,
-                'attr' => [
-                    'class' => 'form-control',
-                ]
-            ])            
-            // ->add('heuredv', TextType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('heureav', TextType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('dureevol', TextType::class, ['attr' => ['class' => 'form-control']])
-
-            // ->add('obsResa', TextareaType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('paxEmbarque', NumberType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('heureEmbarque', TextType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('prestAbord', TextType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('stockg', TextType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('villedd', TextType::class, ['attr' => ['class' => 'form-control']])
-            ;
-        $builder
-            // ->add('villeaa', TextType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('vendug', NumberType::class, ['attr' => ['class' => 'form-control']])
-
-            // ->add('cron', TextType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('soustock', NumberType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('reserves', NumberType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('vendus', NumberType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('engagement', TextType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('seqvolGenerique', TextType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('codaffret1', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('destination', TextType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('nature', TextType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('nvol2', TextType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('taxev', NumberType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('taxesolidaritev', NumberType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('taxesoventev', NumberType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('totaltaxea', NumberType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('prixadulte', NumberType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('codaffret2', TextType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('maxVolsecAlloue', NumberType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('nvolvia', TextType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('obsVia', TextareaType::class, ['attr' => ['class' => 'form-control']])
-
-            // ->add('totMaxVolsec', NumberType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('totFreesale', NumberType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('seqreceptif', TextType::class, ['attr' => ['class' => 'form-control']])
-
-            // ->add('seqvilled', TextType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('seqvillea', TextType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('seqvillev', TextType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('seqaffret1', TextType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('seqaffret2', TextType::class, ['attr' => ['class' => 'form-control']])
-
-            ->add('bagagesoption', TextType::class, ['attr' => ['class' => 'form-control']]);
-        $builder
-            ->add('prixbagagesoption', NumberType::class, ['attr' => ['class' => 'form-control']])
-            ->add('nbrbagagesoption', NumberType::class, ['attr' => ['class' => 'form-control']])
-            ->add('pnr', TextType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('etablissement', TextType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('natureVol', TextType::class, ['attr' => ['class' => 'form-control']])
-
-          
-            ->add('prixYield', NumberType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('aerod', TextType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('aeroa', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('kilocabine', NumberType::class, [
-                'label' => 'Kilos baggage cabine', 
-                'attr' => ['class' => 'form-control']
-            ])
-            ->add('kilos', TextType::class, [
-                'label' => 'Kilos baggage adulte',
-                'attr' => ['class' => 'form-control']
-            ])
-            ->add('kilobebe', NumberType::class, [
-                'label' => 'Kilos baggage bébé',
-                'attr' => ['class' => 'form-control']
-            ])
-            
-            // ->add('aerodep', TextType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('aeroarr', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('specification', ChoiceType::class, [
-                'choices' => [
-                    'Pas de spécification' => 0,
-                    'Dernière Minute' => 1,
-                    'Bon Plan' => 2,
-                ],
-                'expanded' => true,
-                'multiple' => false,
-                'label' => false,
-            ])            
-            // ->add('coafv', TextType::class, ['attr' => ['class' => 'form-control']])
-
-            //->add('prixada2', NumberType::class, ['attr' => ['class' => 'form-control']])
-            //->add('prixada3', NumberType::class, ['attr' => ['class' => 'form-control']])
-            //->add('prixzza2', NumberType::class, ['attr' => ['class' => 'form-control']])
-            //->add('prixzza3', NumberType::class, ['attr' => ['class' => 'form-control']])
-            //->add('prixbba2', NumberType::class, ['attr' => ['class' => 'form-control']])
-            //->add('prixbba3', NumberType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('ville', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('nomfour', TextType::class, ['attr' => ['class' => 'form-control']])
-            //->add('semaine1', TextType::class, ['attr' => ['class' => 'form-control']])
-
-            ->add('prixadav', NumberType::class, ['attr' => ['class' => 'form-control']])
-            ->add('prixbbav', NumberType::class, ['attr' => ['class' => 'form-control']])
-            ->add('prixzzav', NumberType::class, ['attr' => ['class' => 'form-control']])
-            //->add('taxeB2b', NumberType::class, ['attr' => ['class' => 'form-control']])
-            ->add('stopsale', CheckboxType::class, [
-                'label' => 'stopsale',
-                'required' => false,
-            ])  
-            
-            //->add('convoWeb', TextType::class, ['attr' => ['class' => 'form-control']])
-            //->add('inclusSg', TextType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('affecter', TextType::class, ['attr' => ['class' => 'form-control']])
-            //->add('freesale1', TextType::class, ['attr' => ['class' => 'form-control']])
-            //->add('rachatImmediat', TextType::class, ['attr' => ['class' => 'form-control']])
-            //->add('affecters', TextType::class, ['attr' => ['class' => 'form-control']])
-            //->add('boardingPass', TextType::class, ['attr' => ['class' => 'form-control']])
-            //->add('archiver', TextType::class, ['attr' => ['class' => 'form-control']])
-            //->add('pasAfficherHoraire', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('volsec', CheckboxType::class, [
-                'label' => 'Autorisé Vente Vol Sec Internet',
-                'required' => false,
-            ])  
-            ->add('venduVolsec', CheckboxType::class, [
-                'label' => 'venduVolsec',
-                'required' => false,
-            ])  
-            ->add('bagagesoute', CheckboxType::class, [
-                'label' => 'bagagesoute',
-                'required' => false,
-            ])
-            ->add('allotFreesale', CheckboxType::class, [
-                'label' => 'allotFreesale',
-                'required' => false,
-            ])  
-            // ->add('retroVol', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('blocsiege', TextType::class, ['attr' => ['class' => 'form-control']])
-            // ->add('ferry', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('ferry', IntegerType::class, [
-                'required' => false,
-                'empty_data' => null,
-                'attr' => [
-                    'min' => 0, 
-                ],
-            ])
-            // ->add('sgGarantis', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('freesale', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('ouvert', TextType::class, ['attr' => ['class' => 'form-control']])
-            ->add('fictif', IntegerType::class, [
-                'required' => false,
-                'empty_data' => 0,
-                'attr' => [
-                    'min' => 0,     
-                ],
-            ]);
-
-        ;
-
-
-
-
-
+            'label' => 'N° Séq.',
+            'required' => true,
+            'mapped' => false, 
+            'data' => $options['seqvol_value'] ?? '', 
+            'constraints' => [
+                new Assert\NotBlank([
+                    'message' => 'Le numéro de séquence est obligatoire',
+                    'groups' => ['general']
+                ]),
+            ],
+            'attr' => [
+                'readonly' => true,
+                'class' => 'form-control bg-light text-muted',
+                'style' => 'background-color: #e0e0e0; color: #6c757d;',
+            ],
+        ])
+        ->add('pnr', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+        ])
+        ->add('nvol', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => true,
+            'constraints' => [
+                new Assert\NotBlank([
+                    'message' => 'Le numéro de vol est obligatoire',
+                    'groups' => ['general']
+                ]),
+                new Assert\Length([
+                    'min' => 2,
+                    'max' => 10,
+                    'minMessage' => 'Le numéro de vol doit contenir au moins {{ limit }} caractères',
+                    'maxMessage' => 'Le numéro de vol ne peut pas dépasser {{ limit }} caractères',
+                    'groups' => ['general']
+                ])
+            ],
+        ])
+        ->add('datevol', DateType::class, [
+            'label' => 'Date de vol',
+            'widget' => 'single_text',
+            'html5' => true,
+            'input' => 'datetime_immutable',
+            'required' => true,
+            'constraints' => [
+                new Assert\NotBlank([
+                    'message' => 'La date du vol est obligatoire',
+                    'groups' => ['general']
+                ]),
+                new Assert\GreaterThanOrEqual([
+                    'value' => 'today',
+                    'message' => 'La date du vol ne peut pas être dans le passé',
+                    'groups' => ['general']
+                ])
+            ],
+            'attr' => [
+                'class' => 'form-control',
+                'max' => (new \DateTimeImmutable('+1 year'))->format('Y-m-d'),
+            ]
+        ])
+        ->add('jo', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+        ])
+        ->add('jplus', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+        ])
+        ->add('heured', TimeType::class, [
+            'label' => 'Heure de départ',
+            'widget' => 'single_text',    
+            'input' => 'string',          
+            'html5' => true,
+            'required' => true,
+            'constraints' => [
+                new Assert\NotBlank([
+                    'message' => 'L\'heure de départ est obligatoire',
+                    'groups' => ['general']
+                ])
+            ],
+            'attr' => [
+                'class' => 'form-control form-control-sm',
+            ],
+        ])
+        ->add('villeA', EntityType::class, [
+            'class' => Ville::class,
+            'choice_label' => 'libville',
+            'choice_attr' => function(Ville $ville) {
+                return ['data-aero' => $ville->getAero()];
+            },
+            'query_builder' => function(EntityRepository $er) {
+                return $er->createQueryBuilder('v')
+                    ->orderBy('v.libville', 'ASC');
+            },
+            'label' => 'Ville d\'arrivée',
+            'placeholder' => 'Sélectionner une ville',
+            'attr' => ['class' => 'form-select'],
+            'required' => true,
+            'constraints' => [
+                new Assert\NotBlank([
+                    'message' => 'La ville d\'arrivée est obligatoire',
+                    'groups' => ['general']
+                ])
+            ],
+        ])
+        ->add('aeroarr', TextType::class, [
+            'label' => 'Aéroport d\'arrivée',
+            'attr' => [
+                'class' => 'form-control aero-input',
+                'readonly' => true
+            ],
+            'mapped' => false,
+            'required' => true,
+            'constraints' => [
+                new Assert\NotBlank([
+                    'message' => 'L\'aéroport d\'arrivée est obligatoire',
+                    'groups' => ['general']
+                ])
+            ],
+        ])
+        ->add('heurea', TimeType::class, [
+            'label' => 'Heure d\'arrivée',
+            'widget' => 'single_text',
+            'input' => 'string',
+            'html5' => true,
+            'required' => true,
+            'constraints' => [
+                new Assert\NotBlank([
+                    'message' => 'L\'heure d\'arrivée est obligatoire',
+                    'groups' => ['general']
+                ])
+            ],
+            'attr' => [
+                'class' => 'form-control form-control-sm',
+            ],
+        ])
+        ->add('villeD', EntityType::class, [
+            'class' => Ville::class,
+            'choice_label' => 'libville',
+            'choice_attr' => function(Ville $ville) {
+                return ['data-aero' => $ville->getAero()];
+            },
+            'query_builder' => function(EntityRepository $er) {
+                return $er->createQueryBuilder('v')
+                    ->orderBy('v.libville', 'ASC');
+            },
+            'label' => 'Ville de départ',
+            'placeholder' => 'Sélectionner une ville',
+            'attr' => ['class' => 'form-select'],
+            'required' => true,
+            'constraints' => [
+                new Assert\NotBlank([
+                    'message' => 'La ville de départ est obligatoire',
+                    'groups' => ['general']
+                ])
+            ],
+        ])
+        ->add('aerodep', TextType::class, [
+            'label' => 'Aéroport de départ',
+            'attr' => [
+                'class' => 'form-control aero-input',
+                'readonly' => true
+            ],
+            'mapped' => false,
+            'required' => true,
+            'constraints' => [
+                new Assert\NotBlank([
+                    'message' => 'L\'aéroport de départ est obligatoire',
+                    'groups' => ['general']
+                ])
+            ],
+        ]) 
+        ->add('codaffret', EntityType::class, [
+            'class' => Affreteur::class,
+            'choice_label' => 'codaffret',
+            'query_builder' => function(EntityRepository $er) {
+                return $er->createQueryBuilder('v')
+                    ->orderBy('v.codaffret', 'ASC');
+            },
+            'label' => 'Code Affreteur',
+            'placeholder' => 'Sélectionner une code',
+            'attr' => ['class' => 'form-select'],
+            'required' => false,
+        ])
+        ->add('libaffret', TextType::class, [
+            'label' => 'Affreteur',
+            'attr' => [
+                'class' => 'form-control',
+                'readonly' => true
+            ],
+            'mapped' => false,
+            'required' => false,
+        ])
+        ->add('villeV', EntityType::class, [
+            'class' => Ville::class,
+            'choice_label' => 'libville',
+            'query_builder' => function(EntityRepository $er) {
+                return $er->createQueryBuilder('v')
+                    ->orderBy('v.libville', 'ASC');
+            },
+            'label' => 'Ville de vol',
+            'placeholder' => 'Sélectionner une ville',
+            'attr' => ['class' => 'form-select'],
+            'required' => false,
+        ])
+        ->add('typevol', ChoiceType::class, [
+            'choices' => [
+                'Aller' => 1,
+                'Retour' => 2,
+            ],
+            'expanded' => true,
+            'multiple' => false,
+            'label' => 'Type de vol',
+            'required' => true,
+            'constraints' => [
+                new Assert\NotBlank([
+                    'message' => 'Le type de vol est obligatoire',
+                    'groups' => ['general']
+                ])
+            ],
+            'attr' => ['class' => 'form-check'],
+            'data' => 1, 
+        ])
+        ->add('sg', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+        ])
+        ->add('vendu', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => true,
+            'constraints' => [
+                new Assert\NotBlank([
+                    'message' => 'Le nombre de places vendues est obligatoire',
+                    'groups' => ['capacities']
+                ]),
+                new Assert\PositiveOrZero([
+                    'message' => 'Le nombre de places vendues doit être positif ou zéro',
+                    'groups' => ['capacities']
+                ])
+            ],
+        ])
+        ->add('reserve', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => true,
+            'constraints' => [
+                new Assert\NotBlank([
+                    'message' => 'Le nombre de places réservées est obligatoire',
+                    'groups' => ['capacities']
+                ]),
+                new Assert\PositiveOrZero([
+                    'message' => 'Le nombre de places réservées doit être positif ou zéro',
+                    'groups' => ['capacities']
+                ])
+            ],
+        ])
+        ->add('dispo', IntegerType::class, [
+            'mapped' => false,
+            'required' => false,
+            'attr' => ['readonly' => true, 'class' => 'form-control'],
+        ])
+        ->add('ouvert', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => true,
+            'constraints' => [
+                new Assert\NotBlank([
+                    'message' => 'L\'offre totale est obligatoire',
+                    'groups' => ['capacities']
+                ]),
+                new Assert\PositiveOrZero([
+                    'message' => 'L\'offre totale doit être positive ou zéro',
+                    'groups' => ['capacities']
+                ])
+            ],
+        ])
+        ->add('freesale', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+            'constraints' => [
+                new Assert\PositiveOrZero([
+                    'message' => 'Le free sale doit être positif ou zéro',
+                    'groups' => ['capacities']
+                ])
+            ],
+        ])
+        ->add('prixada', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+            'constraints' => [
+                new Assert\PositiveOrZero([
+                    'message' => 'Le prix adulte achat doit être positif ou zéro',
+                    'groups' => ['pricing']
+                ])
+            ],
+        ])
+        ->add('prixzza', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+            'constraints' => [
+                new Assert\PositiveOrZero([
+                    'message' => 'Le prix enfant achat doit être positif ou zéro',
+                    'groups' => ['pricing']
+                ])
+            ],
+        ])
+        ->add('prixbba', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+            'constraints' => [
+                new Assert\PositiveOrZero([
+                    'message' => 'Le prix bébé achat doit être positif ou zéro',
+                    'groups' => ['pricing']
+                ])
+            ],
+        ])
+        ->add('taxea', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+            'constraints' => [
+                new Assert\PositiveOrZero([
+                    'message' => 'La taxe achat doit être positive ou zéro',
+                    'groups' => ['pricing']
+                ])
+            ],
+        ])
+        ->add('prixadv', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+            'constraints' => [
+                new Assert\PositiveOrZero([
+                    'message' => 'Le prix adulte vente doit être positif ou zéro',
+                    'groups' => ['pricing']
+                ])
+            ],
+        ])
+        ->add('prixzzv', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+            'constraints' => [
+                new Assert\PositiveOrZero([
+                    'message' => 'Le prix enfant vente doit être positif ou zéro',
+                    'groups' => ['pricing']
+                ])
+            ],
+        ])
+        ->add('prixbbv', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+            'constraints' => [
+                new Assert\PositiveOrZero([
+                    'message' => 'Le prix bébé vente doit être positif ou zéro',
+                    'groups' => ['pricing']
+                ])
+            ],
+        ])
+        ->add('prixadv2', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+            'constraints' => [
+                new Assert\PositiveOrZero([
+                    'message' => 'Le prix adulte vente 2 doit être positif ou zéro',
+                    'groups' => ['pricing']
+                ])
+            ],
+        ])
+        ->add('prixzzv2', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+            'constraints' => [
+                new Assert\PositiveOrZero([
+                    'message' => 'Le prix enfant vente 2 doit être positif ou zéro',
+                    'groups' => ['pricing']
+                ])
+            ],
+        ])
+        ->add('prixbbv2', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+            'constraints' => [
+                new Assert\PositiveOrZero([
+                    'message' => 'Le prix bébé vente 2 doit être positif ou zéro',
+                    'groups' => ['pricing']
+                ])
+            ],
+        ])
+        ->add('prixadv3', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+            'constraints' => [
+                new Assert\PositiveOrZero([
+                    'message' => 'Le prix adulte vente 3 doit être positif ou zéro',
+                    'groups' => ['pricing']
+                ])
+            ],
+        ])
+        ->add('prixzzv3', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+            'constraints' => [
+                new Assert\PositiveOrZero([
+                    'message' => 'Le prix enfant vente 3 doit être positif ou zéro',
+                    'groups' => ['pricing']
+                ])
+            ],
+        ])
+        ->add('prixbbv3', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+            'constraints' => [
+                new Assert\PositiveOrZero([
+                    'message' => 'Le prix bébé vente 3 doit être positif ou zéro',
+                    'groups' => ['pricing']
+                ])
+            ],
+        ])
+        ->add('supp1', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+            'constraints' => [
+                new Assert\PositiveOrZero([
+                    'message' => 'Le supplément 1 doit être positif ou zéro',
+                    'groups' => ['pricing']
+                ])
+            ],
+        ])
+        ->add('supp2', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+            'constraints' => [
+                new Assert\PositiveOrZero([
+                    'message' => 'Le supplément 2 doit être positif ou zéro',
+                    'groups' => ['pricing']
+                ])
+            ],
+        ])
+        ->add('taxevente', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+            'constraints' => [
+                new Assert\PositiveOrZero([
+                    'message' => 'La taxe vente doit être positive ou zéro',
+                    'groups' => ['pricing']
+                ])
+            ],
+        ])
+        ->add('cartevente', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+            'constraints' => [
+                new Assert\PositiveOrZero([
+                    'message' => 'La carte vente doit être positive ou zéro',
+                    'groups' => ['pricing']
+                ])
+            ],
+        ])
+        ->add('taxesovente', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+            'constraints' => [
+                new Assert\PositiveOrZero([
+                    'message' => 'La taxe de sortie vente doit être positive ou zéro',
+                    'groups' => ['pricing']
+                ])
+            ],
+        ])
+        ->add('suppvol', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+            'constraints' => [
+                new Assert\PositiveOrZero([
+                    'message' => 'Le supplément vol doit être positif ou zéro',
+                    'groups' => ['pricing']
+                ])
+            ],
+        ])
+        ->add('dateconvo', DateType::class, [
+            'widget' => 'single_text',
+            'required' => false,
+            'html5' => true,
+            'attr' => [
+                'class' => 'form-control',
+            ],
+            'empty_data' => null,
+        ])
+        ->add('heureconvo', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+        ])
+        ->add('lieuconvo', TextType::class, [
+            'required' => false,      
+            'empty_data' => null,       
+            'attr' => ['class' => 'form-control'],
+        ])
+        ->add('comptoir', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+        ])
+        ->add('porte', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+        ])
+        ->add('agence', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+        ])
+        ->add('formforf', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+        ])
+        ->add('formsec', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+        ])
+        ->add('obs', TextareaType::class, [
+            'attr' => [
+                'class' => 'form-control',
+                'rows' => 4,
+                'placeholder' => 'Saisir une observation...'
+            ],
+            'required' => false,
+        ])
+        ->add('dateconf', DateType::class, [
+            'widget' => 'single_text',
+            'html5' => true,
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+        ])
+        ->add('datedeconf', DateType::class, [
+            'widget' => 'single_text',
+            'html5' => true,
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+        ])
+        ->add('datRetro', DateType::class, [
+            'widget' => 'single_text',
+            'html5' => true,
+            'input' => 'datetime', 
+            'required' => false,
+            'attr' => [
+                'class' => 'form-control',
+            ]
+        ])            
+        ->add('destination', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => true,
+            'constraints' => [
+                new Assert\NotBlank([
+                    'message' => 'La destination est obligatoire',
+                    'groups' => ['general']
+                ]),
+                new Assert\Length([
+                    'min' => 2,
+                    'max' => 50,
+                    'minMessage' => 'La destination doit contenir au moins {{ limit }} caractères',
+                    'maxMessage' => 'La destination ne peut pas dépasser {{ limit }} caractères',
+                    'groups' => ['general']
+                ])
+            ],
+        ])
+        ->add('bagagesoption', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+        ])
+        ->add('prixbagagesoption', NumberType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+            'constraints' => [
+                new Assert\PositiveOrZero([
+                    'message' => 'Le prix des bagages optionnels doit être positif ou zéro',
+                    'groups' => ['baggage']
+                ])
+            ],
+        ])
+        ->add('nbrbagagesoption', NumberType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+            'constraints' => [
+                new Assert\PositiveOrZero([
+                    'message' => 'Le nombre de bagages optionnels doit être positif ou zéro',
+                    'groups' => ['baggage']
+                ])
+            ],
+        ])
+        ->add('prixYield', NumberType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+            'constraints' => [
+                new Assert\PositiveOrZero([
+                    'message' => 'Le yield doit être positif ou zéro',
+                    'groups' => ['pricing']
+                ])
+            ],
+        ])
+        ->add('kilocabine', NumberType::class, [
+            'label' => 'Kilos baggage cabine', 
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+            'constraints' => [
+                new Assert\PositiveOrZero([
+                    'message' => 'Les kilos cabine doivent être positifs ou zéro',
+                    'groups' => ['baggage']
+                ])
+            ],
+        ])
+        ->add('kilos', TextType::class, [
+            'label' => 'Kilos baggage adulte',
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+        ])
+        ->add('kilobebe', NumberType::class, [
+            'label' => 'Kilos baggage bébé',
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+            'constraints' => [
+                new Assert\PositiveOrZero([
+                    'message' => 'Les kilos bébé doivent être positifs ou zéro',
+                    'groups' => ['baggage']
+                ])
+            ],
+        ])
+        ->add('specification', ChoiceType::class, [
+            'choices' => [
+                'Pas de spécification' => 0,
+                'Dernière Minute' => 1,
+                'Bon Plan' => 2,
+            ],
+            'expanded' => true,
+            'multiple' => false,
+            'label' => false,
+            'required' => false,
+        ])            
+        ->add('nomfour', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+        ])
+        ->add('prixadav', NumberType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+            'constraints' => [
+                new Assert\PositiveOrZero([
+                    'message' => 'Le prix adulte vol sec doit être positif ou zéro',
+                    'groups' => ['pricing']
+                ])
+            ],
+        ])
+        ->add('prixbbav', NumberType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+            'constraints' => [
+                new Assert\PositiveOrZero([
+                    'message' => 'Le prix bébé vol sec doit être positif ou zéro',
+                    'groups' => ['pricing']
+                ])
+            ],
+        ])
+        ->add('prixzzav', NumberType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+            'constraints' => [
+                new Assert\PositiveOrZero([
+                    'message' => 'Le prix enfant vol sec doit être positif ou zéro',
+                    'groups' => ['pricing']
+                ])
+            ],
+        ])
+        ->add('stopsale', CheckboxType::class, [
+            'label' => 'stopsale',
+            'required' => false,
+        ])  
+        ->add('volsec', CheckboxType::class, [
+            'label' => 'Autorisé Vente Vol Sec Internet',
+            'required' => false,
+        ])  
+        ->add('venduVolsec', CheckboxType::class, [
+            'label' => 'venduVolsec',
+            'required' => false,
+        ])  
+        ->add('bagagesoute', CheckboxType::class, [
+            'label' => 'bagagesoute',
+            'required' => false,
+        ])
+        ->add('allotFreesale', CheckboxType::class, [
+            'label' => 'allotFreesale',
+            'required' => false,
+        ])  
+        ->add('blocsiege', TextType::class, [
+            'attr' => ['class' => 'form-control'],
+            'required' => false,
+        ])
+        ->add('ferry', IntegerType::class, [
+            'required' => false,
+            'empty_data' => null,
+            'attr' => [
+                'min' => 0, 
+            ],
+            'constraints' => [
+                new Assert\PositiveOrZero([
+                    'message' => 'Le ferry doit être positif ou zéro',
+                    'groups' => ['general']
+                ])
+            ],
+        ])
+        ->add('fictif', IntegerType::class, [
+            'required' => false,
+            'empty_data' => 0,
+            'attr' => [
+                'min' => 0,     
+            ],
+            'constraints' => [
+                new Assert\PositiveOrZero([
+                    'message' => 'Le fictif doit être positif ou zéro',
+                    'groups' => ['general']
+                ])
+            ],
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -446,6 +752,7 @@ class VolType extends AbstractType
             'seqvol_value' => null,
             'aerodep_value' => null,
             'aeroarr_value' => null,
+            'validation_groups' => ['Default', 'general', 'capacities', 'pricing', 'baggage'],
         ]);
     }
 }

@@ -118,6 +118,52 @@
 		cursor: pointer;
 	}
 
+	.is-invalid {
+    border-color: #dc3545 !important;
+}
+
+.invalid-feedback {
+    display: block;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 0.875em;
+    color: #dc3545;
+}
+
+.form-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-label .required {
+    color: #dc3545;
+    margin-left: 5px;
+}
+
+.is-invalid {
+    border-color: #dc3545 !important;
+}
+
+.invalid-feedback {
+    display: block;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 0.875em;
+    color: #dc3545;
+}
+
+.form-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-label .required {
+    color: #dc3545;
+    margin-left: 5px;
+}
+
 	/* Responsive adjustments */
 	@media(max-width: 768px) {
 		.col-md-3 {
@@ -127,11 +173,10 @@
 </style>
 
 {% block body %}
-<div class="">
-    {{ form_start(form, {
+{{ form_start(form, {
     'attr': {
         'id': 'vol-form',
-        'data-ajax-url': path('app_vol_new')
+        'data-validate-url': path('app_vol_validate_tab')
     }
 }) }}
 	<!-- Tab content -->
@@ -812,6 +857,15 @@ $(document).ready(function() {
     const submitBtn = $('#submitBtn');
     const form = $('#vol-form');
 
+    // Map tabs to their validation groups
+    const tabValidationMap = {
+        0: 'general',        // General tab
+        1: 'capacities',     // Capacities tab
+        2: 'pricing',        // Pricing tab
+        3: 'convocation',    // Convocation tab
+        4: 'baggage'         // Baggage tab
+    };
+
     function showTab(index) {
         tabs.removeClass('show active').eq(index).addClass('show active');
         tabButtons.removeClass('active').eq(index).addClass('active');
@@ -833,13 +887,76 @@ $(document).ready(function() {
         currentTab = index;
     }
 
-    // nextBtn.click(function() {
-    //     saveFormData();
-    // });
-    nextBtn.click(function() {
-    if (currentTab < tabs.length - 1) {
-        showTab(currentTab + 1);
+    // Function to validate a specific tab
+    function validateTab(tabIndex) {
+        const validationGroup = tabValidationMap[tabIndex];
+        if (!validationGroup) return Promise.resolve(true);
+        
+        // Collect all form data
+        const formData = new FormData(form[0]);
+        formData.append('tab', validationGroup);
+        
+        return $.ajax({
+            url: form.data('validate-url') || '{{ path("app_vol_validate_tab") }}',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json'
+        });
     }
+
+    // Function to display validation errors
+    function showValidationErrors(errors) {
+        // Clear previous errors
+        $('.is-invalid').removeClass('is-invalid');
+        $('.invalid-feedback').remove();
+        
+        // Show new errors
+        for (const fieldName in errors) {
+            // Find the field - handle both basic fields and form[field] format
+            let field = $(`[name="${fieldName}"]`);
+            if (field.length === 0) {
+                field = $(`[name="form[${fieldName}]"]`);
+            }
+            
+            if (field.length > 0) {
+                field.addClass('is-invalid');
+                
+                // Create error message
+                const errorDiv = $('<div>')
+                    .addClass('invalid-feedback')
+                    .text(errors[fieldName]);
+                    
+                // Insert after the field
+                field.after(errorDiv);
+                
+                // Scroll to first error
+                if (Object.keys(errors)[0] === fieldName) {
+                    $('html, body').animate({
+                        scrollTop: field.offset().top - 100
+                    }, 500);
+                }
+            }
+        }
+    }
+
+    // Next button click handler with validation
+    nextBtn.click(function() {
+        validateTab(currentTab).then(function(response) {
+            if (response.valid) {
+                // Validation passed, proceed to next tab
+                if (currentTab < tabs.length - 1) {
+                    showTab(currentTab + 1);
+                }
+            } else {
+                // Validation failed, show errors
+                showValidationErrors(response.errors);
+            }
+        }).catch(function(xhr) {
+            console.error('Validation error:', xhr.responseText);
+            alert('Une erreur est survenue lors de la validation.');
+        });
     });
 
     prevBtn.click(function() {
@@ -848,9 +965,40 @@ $(document).ready(function() {
         }
     });
 
-    submitBtn.click(function() {
-        form.submit();
-    }); 
+    // Handle form submission
+    form.on('submit', function(e) {
+        e.preventDefault();
+        
+        // Validate all tabs before final submission
+        let allValid = true;
+        const validationPromises = [];
+        
+        for (let i = 0; i < tabs.length; i++) {
+            validationPromises.push(validateTab(i));
+        }
+        
+        Promise.all(validationPromises).then(function(responses) {
+            responses.forEach(function(response, index) {
+                if (!response.valid) {
+                    allValid = false;
+                    // If this isn't the current tab, switch to it
+                    if (index !== currentTab) {
+                        showTab(index);
+                    }
+                    showValidationErrors(response.errors);
+                }
+            });
+            
+            if (allValid) {
+                // If all valid, submit the form normally
+                form.off('submit').submit();
+            } else {
+                alert('Veuillez corriger les erreurs dans tous les onglets avant de soumettre.');
+            }
+        });
+    });
+
+    // Setup other functionalities
     function setupVilleSelect(selector, inputClass, urlPrefix) {
         $(selector).on('change', function() {
             const villeId = $(this).val();
@@ -869,9 +1017,9 @@ $(document).ready(function() {
                     $('.' + inputClass).val('');
                 }
             });
-        });
-        $(selector).trigger('change');
+        }).trigger('change');
     }
+    
     function setupAffretSelect() {
         $('.affret-select').on('change', function() {
             const affretId = $(this).val();
@@ -899,7 +1047,6 @@ $(document).ready(function() {
         }).trigger('change');
     }
 
-
     function calculateDispo() {
         const vendu = parseInt($('[data-calc="vendu"]').val()) || 0;
         const reserve = parseInt($('[data-calc="reserve"]').val()) || 0;
@@ -907,49 +1054,18 @@ $(document).ready(function() {
         
         $('[data-calc="dispo"]').val(dispo);
     }
+    
+    // Initialize
     setupVilleSelect('.ville-select', 'aeroarr', '/vol/get-aeroport/');
     setupVilleSelect('.ville-select-depart', 'aerodep', '/vol/get-aeroport/');
     setupAffretSelect();
     
     $('[data-calc="vendu"], [data-calc="reserve"]').on('input', calculateDispo);
     calculateDispo();
-});
-
-function saveFormData() {
-    const formData = new FormData(document.getElementById('vol-form'));
     
-    $.ajax({
-        url: $('#vol-form').attr('action'),
-        type: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function(response) {
-            if (response.success) {
-                if (currentTab < tabs.length - 1) {
-                    showTab(currentTab + 1);
-                }
-            } else {
-                // Afficher les erreurs
-                if (response.errors) {
-                    // Supprimer les anciennes erreurs
-                    $('.error-message').remove();
-                    
-                    // Afficher les nouvelles erreurs
-                    for (const field in response.errors) {
-                        const errorElement = $(`[name="${field}"]`);
-                        errorElement.after(`<div class="error-message text-danger">${response.errors[field]}</div>`);
-                        errorElement.addClass('is-invalid');
-                    }
-                }
-            }
-        },
-        error: function(xhr) {
-            console.error('Error:', xhr.responseText);
-            alert('Une erreur est survenue: ' + xhr.responseText);
-        }
-    });
-}
+    // Show first tab initially
+    showTab(0);
+});
 </script>
 
 

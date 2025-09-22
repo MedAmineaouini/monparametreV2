@@ -16,6 +16,7 @@ use App\Repository\AffreteurRepository;
 use App\Entity\Ville;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 
 #[Route('/vol')]
@@ -31,26 +32,25 @@ class VolController extends AbstractController
     }
 
     #[Route('/new', name: 'app_vol_new', methods: ['GET', 'POST'])]
-public function new(Request $request, EntityManagerInterface $entityManager, VilleRepository $villeRepository): Response
-{
-    $vol = new Vol();
-    
-    // Générez seqvol comme avant
-    $lastSeq = $entityManager->createQueryBuilder()
-        ->select('MAX(v.seqvol)')
-        ->from(Vol::class, 'v')
-        ->getQuery()
-        ->getSingleScalarResult();
-    
-    $nextSeq = $lastSeq ? ((int) $lastSeq + 1) : 1;
-    $vol->setSeqvol($nextSeq);
+    public function new(Request $request, EntityManagerInterface $entityManager, VilleRepository $villeRepository, ValidatorInterface $validator): Response
+    {
+        $vol = new Vol();
 
-    $form = $this->createForm(VolType::class, $vol);
-    
-    $form->handleRequest($request);
-    
-    if ($form->isSubmitted()) {
-        if ($form->isValid()) {
+        // Générez seqvol comme avant
+        $lastSeq = $entityManager->createQueryBuilder()
+            ->select('MAX(v.seqvol)')
+            ->from(Vol::class, 'v')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        $nextSeq = $lastSeq ? ((int) $lastSeq + 1) : 1;
+        $vol->setSeqvol($nextSeq);
+
+        $form = $this->createForm(VolType::class, $vol);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $entityManager->persist($vol);
                 $entityManager->flush();
@@ -64,7 +64,7 @@ public function new(Request $request, EntityManagerInterface $entityManager, Vil
                 }
 
                 return $this->redirectToRoute('app_vol_index');
-                
+
             } catch (\Exception $e) {
                 if ($request->isXmlHttpRequest()) {
                     return $this->json([
@@ -75,7 +75,7 @@ public function new(Request $request, EntityManagerInterface $entityManager, Vil
                 }
                 $this->addFlash('error', 'Erreur lors de la création du vol');
             }
-        } else {
+        } elseif ($form->isSubmitted() && !$form->isValid()) {
             $errors = [];
             foreach ($form->getErrors(true) as $error) {
                 $errors[$error->getOrigin()->getName()] = $error->getMessage();
@@ -88,16 +88,16 @@ public function new(Request $request, EntityManagerInterface $entityManager, Vil
                     'errors' => $errors
                 ], Response::HTTP_UNPROCESSABLE_ENTITY);
             }
+
         }
+
+        return $this->render('vol/new.html.twig', [
+            'vol' => $vol,
+            'form' => $form->createView(),
+            'villes' => $villeRepository->findAll(),
+        ]);
     }
 
-    return $this->render('vol/new.html.twig', [
-        'vol' => $vol,
-        'form' => $form->createView(),
-        'villes' => $villeRepository->findAll(),
-    ]);
-}
-    
     private function getFormErrors($form)
     {
         $errors = [];
@@ -106,7 +106,6 @@ public function new(Request $request, EntityManagerInterface $entityManager, Vil
         }
         return $errors;
     }
-    
 
 
     #[Route('/{seqvol}', name: 'app_vol_show', methods: ['GET'])]
@@ -118,7 +117,7 @@ public function new(Request $request, EntityManagerInterface $entityManager, Vil
     }
 
     #[Route('/{seqvol}/edit', name: 'app_vol_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Vol $vol, EntityManagerInterface $entityManager, VilleRepository $villeRepository): Response
+    public function edit(Request $request, Vol $vol, EntityManagerInterface $entityManager, VilleRepository $villeRepository, ValidatorInterface $validator): Response
     {
         $formattedSeqvol = str_pad($vol->getSeqvol(), 4, '0', STR_PAD_LEFT);
         $aerodep = $vol->getVilleD() ? $vol->getVilleD()->getAero() : '';
@@ -130,22 +129,29 @@ public function new(Request $request, EntityManagerInterface $entityManager, Vil
             'aeroarr_value' => $aeroarr,
         ]);
 
-        // $dispoValue = ($vol->getOuvert() ?? 0) - ($vol->getReserve() ?? 0) - ($vol->getVendu() ?? 0);
-        // $form->get('dispo')->setData(max(0, $dispoValue));
-
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            if ($vol->getVilleD()) {
-                $vol->setAerodep($vol->getVilleD()->getAero());
-            }
-            if ($vol->getVilleA()) {
-                $vol->setAeroarr($vol->getVilleA()->getAero());
-            }
+        if ($form->isSubmitted()) {
+            // Validate the form
+            $errors = $validator->validate($vol);
 
-            $entityManager->flush();
+            if ($form->isValid() && count($errors) === 0) {
+                if ($vol->getVilleD()) {
+                    $vol->setAerodep($vol->getVilleD()->getAero());
+                }
+                if ($vol->getVilleA()) {
+                    $vol->setAeroarr($vol->getVilleA()->getAero());
+                }
 
-            return $this->redirectToRoute('app_vol_index', [], Response::HTTP_SEE_OTHER);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('app_vol_index', [], Response::HTTP_SEE_OTHER);
+            } else {
+                // Add form errors to flash messages
+                foreach ($errors as $error) {
+                    $this->addFlash('error', ucfirst($error->getPropertyPath()) . ': ' . $error->getMessage());
+                }
+            }
         }
 
         return $this->renderForm('vol/edit.html.twig', [
@@ -167,11 +173,11 @@ public function new(Request $request, EntityManagerInterface $entityManager, Vil
             }
             return $this->redirectToRoute('app_vol_index');
         }
-    
+
         try {
             $entityManager->remove($vol);
             $entityManager->flush();
-    
+
             if ($request->isXmlHttpRequest()) {
                 return $this->json([
                     'success' => true,
@@ -179,7 +185,7 @@ public function new(Request $request, EntityManagerInterface $entityManager, Vil
                     'redirect' => $this->generateUrl('app_vol_index'),
                 ]);
             }
-    
+
             $this->addFlash('success', 'Le vol a été supprimé avec succès.');
         } catch (\Exception $e) {
             $errorData = [
@@ -191,14 +197,14 @@ public function new(Request $request, EntityManagerInterface $entityManager, Vil
                     'trace' => $e->getTraceAsString(),
                 ] : null,
             ];
-    
+
             if ($request->isXmlHttpRequest()) {
-                return $this->json($errorData, Response::HTTP_INTERNAL_SERVER_ERROR);
+                return $this->json($errorData, Response::HTTP_INTERNAL_SERVER);
             }
-    
+
             $this->addFlash('error', $errorData['message']);
         }
-    
+
         return $this->redirectToRoute('app_vol_index');
     }
 
@@ -214,16 +220,174 @@ public function new(Request $request, EntityManagerInterface $entityManager, Vil
     public function getAffret($id, AffreteurRepository $affreteurRepository): JsonResponse
     {
         $affreteur = $affreteurRepository->find($id);
-        
+
         if (!$affreteur) {
             return $this->json([
                 'libaffret' => ''
             ]);
         }
-    
+
         return $this->json([
             'libaffret' => $affreteur->getLibaffret()
         ]);
     }
-    
+
+    #[Route('/validate-tab', name: 'app_vol_validate_tab', methods: ['POST'])]
+    public function validateTab(Request $request, ValidatorInterface $validator, EntityManagerInterface $entityManager): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+        $tab = $data['tab'] ?? '';
+        $formData = $data['formData'] ?? [];
+
+        // Create a partial validation based on the tab
+        $vol = new Vol();
+
+        // Set properties based on form data
+        foreach ($formData as $key => $value) {
+            // Skip empty values
+            if ($value === '' || $value === null) {
+                continue;
+            }
+
+            $setter = 'set' . ucfirst($key);
+            if (method_exists($vol, $setter)) {
+                // Handle different data types appropriately
+                try {
+                    switch ($key) {
+                        case 'villeD':
+                        case 'villeA':
+                        case 'villeV':
+                            // Handle Ville entities
+                            if ($value) {
+                                $ville = $entityManager->getRepository(Ville::class)->find($value);
+                                if ($ville) {
+                                    $vol->$setter($ville);
+                                }
+                            }
+                            break;
+
+                        case 'codaffret':
+                            // Handle Affreteur entities
+                            if ($value) {
+                                $affreteur = $entityManager->getRepository(Affreteur::class)->find($value);
+                                if ($affreteur) {
+                                    $vol->$setter($affreteur);
+                                }
+                            }
+                            break;
+
+                        case 'datevol':
+                        case 'dateconvo':
+                        case 'dateconf':
+                        case 'datedeconf':
+                        case 'datRetro':
+                            // Handle date fields
+                            if ($value) {
+                                $vol->$setter(new \DateTimeImmutable($value));
+                            }
+                            break;
+
+                        case 'typevol':
+                        case 'ouvert':
+                        case 'vendu':
+                        case 'reserve':
+                        case 'freesale':
+                        case 'sg':
+                        case 'fictif':
+                        case 'ferry':
+                        case 'stopsale':
+                        case 'volsec':
+                        case 'venduVolsec':
+                        case 'bagagesoute':
+                        case 'allotFreesale':
+                        case 'blocsiege':
+                        case 'kilos':
+                        case 'kilocabine':
+                        case 'kilobebe':
+                        case 'bagagesoption':
+                        case 'nbrbagagesoption':
+                            // Handle integer fields
+                            $vol->$setter((int) $value);
+                            break;
+
+                        case 'prixada':
+                        case 'prixzza':
+                        case 'prixbba':
+                        case 'taxea':
+                        case 'prixadv':
+                        case 'prixzzv':
+                        case 'prixbbv':
+                        case 'prixadv2':
+                        case 'prixzzv2':
+                        case 'prixbbv2':
+                        case 'prixadv3':
+                        case 'prixzzv3':
+                        case 'prixbbv3':
+                        case 'supp1':
+                        case 'supp2':
+                        case 'taxevente':
+                        case 'cartevente':
+                        case 'taxesovente':
+                        case 'suppvol':
+                        case 'prixYield':
+                        case 'prixadav':
+                        case 'prixbbav':
+                        case 'prixzzav':
+                            // Handle decimal fields
+                            $vol->$setter((string) $value);
+                            break;
+
+                        default:
+                            // Handle string fields
+                            $vol->$setter($value);
+                            break;
+                    }
+                } catch (\Exception $e) {
+                    // Skip fields that can't be set properly
+                    continue;
+                }
+            }
+        }
+
+        // Define validation groups based on the tab
+        $validationGroups = [];
+        switch ($tab) {
+            case 'general':
+                $validationGroups = ['general'];
+                break;
+            case 'capacities':
+                $validationGroups = ['capacities'];
+                break;
+            case 'pricing':
+                $validationGroups = ['pricing'];
+                break;
+            case 'convocation':
+                $validationGroups = ['convocation'];
+                break;
+            case 'baggage':
+                $validationGroups = ['baggage'];
+                break;
+            default:
+                $validationGroups = ['Default'];
+        }
+
+        // Validate with the specific group
+        $errors = $validator->validate($vol, null, $validationGroups);
+
+        if (count($errors) > 0) {
+            $errorMessages = [];
+            foreach ($errors as $error) {
+                $errorMessages[$error->getPropertyPath()] = $error->getMessage();
+            }
+
+            return $this->json([
+                'valid' => false,
+                'errors' => $errorMessages
+            ]);
+        }
+
+        return $this->json([
+            'valid' => true
+        ]);
+    }
 }

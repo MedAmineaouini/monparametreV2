@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\VolRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: VolRepository::class)]
 #[ORM\Table(name: 'VOL')]
@@ -16,35 +17,48 @@ class Vol
     private ?int $seqvol = null;
 
     #[ORM\Column(name: 'NVOL', type: Types::STRING, length: 8, nullable: true)]
+    #[Assert\NotBlank(message: "Le numéro de vol est obligatoire", groups: ["general"])]
+    #[Assert\Length(
+        min: 2,
+        max: 8,
+        minMessage: "Le numéro de vol doit contenir au moins {{ limit }} caractères",
+        maxMessage: "Le numéro de vol ne peut pas dépasser {{ limit }} caractères",
+        groups: ["general"]
+    )]
     private ?string $nvol = null;
 
-
-
     #[ORM\Column(name: "DATEVOL", type: "datetime_immutable", nullable: true)]
+    #[Assert\NotBlank(message: "La date du vol est obligatoire", groups: ["general"])]
+    #[Assert\GreaterThanOrEqual(
+        value: "today",
+        message: "La date du vol ne peut pas être dans le passé",
+        groups: ["general"]
+    )]
     private ?\DateTimeImmutable $datevol = null;
 
     #[ORM\Column(name: 'JO', type: Types::INTEGER, nullable: true)]
     private ?int $jo = null;
 
-
     #[ORM\Column(name: 'JPLUS', type: Types::STRING, length: 2, nullable: true)]
     private ?string $jplus = '';
 
     #[ORM\Column(name: 'HEURED', type: Types::STRING, length: 8, nullable: true)]
+    #[Assert\NotBlank(message: "L'heure de départ est obligatoire", groups: ["general"])]
     private ?string $heured = '';
 
     #[ORM\Column(name: 'HEUREA', type: Types::STRING, length: 8, nullable: true)]
+    #[Assert\NotBlank(message: "L'heure d'arrivée est obligatoire", groups: ["general"])]
     private ?string $heurea = '';
 
     #[ORM\ManyToOne(targetEntity: Ville::class)]
     #[ORM\JoinColumn(name: 'VILLED', referencedColumnName: 'SEQVILLE', nullable: false)]
+    #[Assert\NotBlank(message: "La ville de départ est obligatoire", groups: ["general"])]
     private ?Ville $villeD = null;
-
 
     #[ORM\ManyToOne(targetEntity: Ville::class)]
     #[ORM\JoinColumn(name: 'VILLEA', referencedColumnName: 'SEQVILLE', nullable: false)]
+    #[Assert\NotBlank(message: "La ville d'arrivée est obligatoire", groups: ["general"])]
     private ?Ville $villeA = null;
-
 
     #[ORM\ManyToOne(targetEntity: Ville::class)]
     #[ORM\JoinColumn(name: 'VILLEV', referencedColumnName: 'SEQVILLE', nullable: false)]
@@ -54,79 +68,102 @@ class Vol
     #[ORM\JoinColumn(name: 'CODAFFRET', referencedColumnName: 'SEQAFFRET')]
     private ?Affreteur $codaffret = null;
 
-
     #[ORM\Column(name: 'TYPEVOL', type: Types::INTEGER, nullable: true)]
+    #[Assert\NotBlank(message: "Le type de vol est obligatoire", groups: ["general"])]
     private ?int $typevol = 0;
 
     #[ORM\Column(name: 'KILOS', type: Types::INTEGER, nullable: true)]
+    #[Assert\PositiveOrZero(message: "Les kilos doivent être positifs ou zéro", groups: ["baggage"])]
     private ?int $kilos = 0;
 
-
-
     #[ORM\Column(name: 'SG', type: Types::INTEGER, nullable: true)]
+    #[Assert\PositiveOrZero(message: "Les sièges engagés doivent être positifs ou zéro", groups: ["capacities"])]
     private ?int $sg = 0;
 
     #[ORM\Column(name: 'VENDU', type: Types::INTEGER, nullable: true)]
+    #[Assert\NotBlank(message: "Le nombre de places vendues est obligatoire", groups: ["capacities"])]
+    #[Assert\PositiveOrZero(message: "Le nombre de places vendues doit être positif ou zéro", groups: ["capacities"])]
     private ?int $vendu = 0;
 
     #[ORM\Column(name: 'RESERVE', type: Types::INTEGER, nullable: true)]
+    #[Assert\NotBlank(message: "Le nombre de places réservées est obligatoire", groups: ["capacities"])]
+    #[Assert\PositiveOrZero(message: "Le nombre de places réservées doit être positif ou zéro", groups: ["capacities"])]
     private ?int $reserve = 0;
 
     #[ORM\Column(name: 'PRIXADA', type: Types::DECIMAL, precision: 7, scale: 2, nullable: true)]
+    #[Assert\PositiveOrZero(message: "Le prix adulte achat doit être positif ou zéro", groups: ["pricing"])]
     private ?string $prixada = null;
 
     #[ORM\Column(name: 'PRIXZZA', type: Types::DECIMAL, precision: 7, scale: 2, nullable: true)]
+    #[Assert\PositiveOrZero(message: "Le prix enfant achat doit être positif ou zéro", groups: ["pricing"])]
     private ?string $prixzza = '0';
 
     #[ORM\Column(name: 'PRIXBBA', type: Types::DECIMAL, precision: 7, scale: 2, nullable: true)]
+    #[Assert\PositiveOrZero(message: "Le prix bébé achat doit être positif ou zéro", groups: ["pricing"])]
     private ?string $prixbba = '0';
 
     #[ORM\Column(name: 'TAXEA', type: Types::DECIMAL, precision: 7, scale: 2, nullable: true)]
+    #[Assert\PositiveOrZero(message: "La taxe achat doit être positive ou zéro", groups: ["pricing"])]
     private ?string $taxea = '0';
 
     #[ORM\Column(name: 'PRIXADV', type: Types::DECIMAL, precision: 7, scale: 2, nullable: true)]
+    #[Assert\PositiveOrZero(message: "Le prix adulte vente doit être positif ou zéro", groups: ["pricing"])]
     private ?string $prixadv = '0';
 
     #[ORM\Column(name: 'PRIXZZV', type: Types::DECIMAL, precision: 7, scale: 2, nullable: true)]
+    #[Assert\PositiveOrZero(message: "Le prix enfant vente doit être positif ou zéro", groups: ["pricing"])]
     private ?string $prixzzv = '0';
 
     #[ORM\Column(name: 'PRIXBBV', type: Types::DECIMAL, precision: 7, scale: 2, nullable: true)]
+    #[Assert\PositiveOrZero(message: "Le prix bébé vente doit être positif ou zéro", groups: ["pricing"])]
     private ?string $prixbbv = '0';
 
     #[ORM\Column(name: 'PRIXADV2', type: Types::DECIMAL, precision: 7, scale: 2, nullable: true)]
+    #[Assert\PositiveOrZero(message: "Le prix adulte vente 2 doit être positif ou zéro", groups: ["pricing"])]
     private ?string $prixadv2 = '0';
 
     #[ORM\Column(name: 'PRIXZZV2', type: Types::DECIMAL, precision: 7, scale: 2)]
+    #[Assert\PositiveOrZero(message: "Le prix enfant vente 2 doit être positif ou zéro", groups: ["pricing"])]
     private ?string $prixzzv2 = '0';
 
     #[ORM\Column(name: 'PRIXBBV2', type: Types::DECIMAL, precision: 7, scale: 2)]
+    #[Assert\PositiveOrZero(message: "Le prix bébé vente 2 doit être positif ou zéro", groups: ["pricing"])]
     private ?string $prixbbv2 = '0';
 
     #[ORM\Column(name: 'PRIXADV3', type: Types::DECIMAL, precision: 7, scale: 2)]
+    #[Assert\PositiveOrZero(message: "Le prix adulte vente 3 doit être positif ou zéro", groups: ["pricing"])]
     private ?string $prixadv3 = '0';
 
     #[ORM\Column(name: 'PRIXZZV3', type: Types::DECIMAL, precision: 7, scale: 2)]
+    #[Assert\PositiveOrZero(message: "Le prix enfant vente 3 doit être positif ou zéro", groups: ["pricing"])]
     private ?string $prixzzv3 = '0';
 
     #[ORM\Column(name: 'PRIXBBV3', type: Types::DECIMAL, precision: 7, scale: 2)]
+    #[Assert\PositiveOrZero(message: "Le prix bébé vente 3 doit être positif ou zéro", groups: ["pricing"])]
     private ?string $prixbbv3 = '0';
 
     #[ORM\Column(name: 'SUPP1', type: Types::DECIMAL, precision: 7, scale: 2)]
+    #[Assert\PositiveOrZero(message: "Le supplément 1 doit être positif ou zéro", groups: ["pricing"])]
     private ?string $supp1 = '0';
 
     #[ORM\Column(name: 'SUPP2', type: Types::DECIMAL, precision: 7, scale: 2)]
+    #[Assert\PositiveOrZero(message: "Le supplément 2 doit être positif ou zéro", groups: ["pricing"])]
     private ?string $supp2 = '0';
 
     #[ORM\Column(name: 'TAXEVENTE', type: Types::DECIMAL, precision: 7, scale: 2)]
+    #[Assert\PositiveOrZero(message: "La taxe vente doit être positive ou zéro", groups: ["pricing"])]
     private ?string $taxevente = '0';
 
     #[ORM\Column(name: 'CARTEVENTE', type: Types::DECIMAL, precision: 7, scale: 2)]
+    #[Assert\PositiveOrZero(message: "La carte vente doit être positive ou zéro", groups: ["pricing"])]
     private ?string $cartevente = '0';
 
     #[ORM\Column(name: 'TAXESOVENTE', type: Types::DECIMAL, precision: 7, scale: 2)]
+    #[Assert\PositiveOrZero(message: "La taxe de sortie vente doit être positive ou zéro", groups: ["pricing"])]
     private ?string $taxesovente = '0';
 
     #[ORM\Column(name: 'SUPPVOL', type: Types::DECIMAL, precision: 7, scale: 2)]
+    #[Assert\PositiveOrZero(message: "Le supplément vol doit être positif ou zéro", groups: ["pricing"])]
     private ?string $suppvol = '0';
 
     #[ORM\Column(name: 'DATECONVO',type: Types::DATETIME_MUTABLE, nullable: true)]
@@ -166,12 +203,15 @@ class Vol
     private ?\DateTimeInterface $datedeconf = null;
 
     #[ORM\Column(name: 'FREESALE', type: Types::INTEGER, nullable: true)]
+    #[Assert\PositiveOrZero(message: "Le free sale doit être positif ou zéro", groups: ["capacities"])]
     private ?int $freesale = 0;
 
     #[ORM\Column(name: 'ASSVOL', type: Types::DECIMAL, precision: 7, scale: 2)]
     private ?string $assvol = '0';
 
     #[ORM\Column(name: 'OUVERT', type: Types::INTEGER)]
+    #[Assert\NotBlank(message: "L'offre totale est obligatoire", groups: ["capacities"])]
+    #[Assert\PositiveOrZero(message: "L'offre totale doit être positive ou zéro", groups: ["capacities"])]
     private ?int $ouvert = 0;
 
     #[ORM\Column(name: 'TAXEA2', type: Types::DECIMAL, precision: 7, scale: 2)]
@@ -184,6 +224,7 @@ class Vol
     private ?int $coaf = 0;
 
     #[ORM\Column(name: 'FICTIF', type: Types::INTEGER, nullable: true)]
+    #[Assert\PositiveOrZero(message: "Le fictif doit être positif ou zéro", groups: ["general"])]
     private ?int $fictif = null;
 
     #[ORM\Column(name: 'LIEN', type: Types::INTEGER)]
@@ -274,6 +315,14 @@ class Vol
     private ?string $codaffret1 = '';
 
     #[ORM\Column(name: 'DESTINATION', type: Types::STRING, length: 30)]
+    #[Assert\NotBlank(message: "La destination est obligatoire", groups: ["general"])]
+    #[Assert\Length(
+        min: 2,
+        max: 30,
+        minMessage: "La destination doit contenir au moins {{ limit }} caractères",
+        maxMessage: "La destination ne peut pas dépasser {{ limit }} caractères",
+        groups: ["general"]
+    )]
     private ?string $destination = '';
 
     #[ORM\Column(name: 'NATURE', type: Types::INTEGER)]
@@ -355,9 +404,11 @@ class Vol
     private ?int $bagagesoption = 0;
 
     #[ORM\Column(name: 'PRIXBAGAGESOPTION', type: Types::DECIMAL, precision: 9, scale: 2)]
+    #[Assert\PositiveOrZero(message: "Le prix des bagages optionnels doit être positif ou zéro", groups: ["baggage"])]
     private ?string $prixbagagesoption = '0';
 
     #[ORM\Column(name: 'NBRBAGAGESOPTION', type: Types::INTEGER)]
+    #[Assert\PositiveOrZero(message: "Le nombre de bagages optionnels doit être positif ou zéro", groups: ["baggage"])]
     private ?int $nbrbagagesoption = 0;
 
     #[ORM\Column(name: 'PNR', type: Types::STRING, length: 10)]
@@ -373,9 +424,11 @@ class Vol
     private ?int $archiver = 0;
 
     #[ORM\Column(name: 'KILOCABINE', type: Types::INTEGER)]
+    #[Assert\PositiveOrZero(message: "Les kilos cabine doivent être positifs ou zéro", groups: ["baggage"])]
     private ?int $kilocabine = 0;
 
     #[ORM\Column(name: 'PRIX_YIELD', type: Types::DECIMAL, precision: 9, scale: 2)]
+    #[Assert\PositiveOrZero(message: "Le yield doit être positif ou zéro", groups: ["pricing"])]
     private ?string $prixYield = '0';
 
     #[ORM\Column(name: 'aerod', type: Types::STRING, length: 6, nullable: true)]
@@ -388,6 +441,7 @@ class Vol
     private ?int $pasAfficherHoraire = 0;
 
     #[ORM\Column(name: 'kilobebe', type: Types::DECIMAL, precision: 9, scale: 2)]
+    #[Assert\PositiveOrZero(message: "Les kilos bébé doivent être positifs ou zéro", groups: ["baggage"])]
     private ?string $kilobebe = '0';
 
     #[ORM\Column(name: 'aerodep', type: Types::STRING, length: 10, nullable: true)]
@@ -445,18 +499,22 @@ class Vol
     private ?int $blocsiege = 0;
 
     #[ORM\Column(name: 'prixadav', type: Types::DECIMAL, precision: 9, scale: 2)]
+    #[Assert\PositiveOrZero(message: "Le prix adulte vol sec doit être positif ou zéro", groups: ["pricing"])]
     private ?string $prixadav = '0';
 
     #[ORM\Column(name: 'prixbbav', type: Types::DECIMAL, precision: 9, scale: 2)]
+    #[Assert\PositiveOrZero(message: "Le prix bébé vol sec doit être positif ou zéro", groups: ["pricing"])]
     private ?string $prixbbav = '0';
 
     #[ORM\Column(name: 'prixzzav', type: Types::DECIMAL, precision: 9, scale: 2)]
+    #[Assert\PositiveOrZero(message: "Le prix enfant vol sec doit être positif ou zéro", groups: ["pricing"])]
     private ?string $prixzzav = '0';
 
     #[ORM\Column(name: 'TAXE_B2B', type: Types::DECIMAL, precision: 9, scale: 2)]
     private ?string $taxeB2b = '0';
 
     #[ORM\Column(type: 'integer', nullable: true)]
+    #[Assert\PositiveOrZero(message: "Le ferry doit être positif ou zéro", groups: ["general"])]
     private ?int $ferry = null;
 
     #[ORM\Column(name: 'SG_GARANTIS', type: Types::INTEGER)]
@@ -464,7 +522,6 @@ class Vol
 
     #[ORM\Column(name: "RETROCEDE", type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $retrocede = null;
-
 
     public function getSeqvol(): ?int
     {
