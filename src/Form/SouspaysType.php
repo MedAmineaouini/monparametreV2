@@ -17,38 +17,40 @@ class SouspaysType extends AbstractType
     {
         $builder
             ->add('libsouspays', TextType::class, [
-                'label' => 'Libellé',
+                'label' => 'Libellé : ',
                 'attr' => [
                     'class' => 'form-control mode',
                     'placeholder' => 'Libellé ...',
                 ],
             ])
-            ->add('tun', NumberType::class, [
-                'label' => 'Tun',
-                'required' => false,
-                'scale' => 2,
-                'html5' => true,
-                'attr' => [
-                    'step' => '0.01', // permet les décimales
-                    'class' => 'form-control',
-                    'placeholder' => 'Ex: 123.45',
-                    ]
-                ])
-            ->add('mir')
-            ->add('nbe')
-            ->add('dje')
-            ->add('toe')
-            ->add('tunvente')
-            ->add('mirvente')
-            ->add('nbevente')
-            ->add('djevente')
-            ->add('toevente')
-//            ->add('ordre')
             ->add('pays', EntityType::class, [
+                'label' => 'Pays : ',
                 'class' => Pays::class,
                 'choice_label' => 'libpays', // <-- Adapté au nom du champ lisible dans ton entité Pays
                 'placeholder' => 'Sélectionner un pays',
             ])
+//            ->add('tun', NumberType::class, [
+//                'label' => 'Tun',
+//                'required' => false,
+//                'scale' => 2,
+//                'html5' => true,
+//                'attr' => [
+//                    'step' => '0.01', // permet les décimales
+//                    'class' => 'form-control',
+//                    'placeholder' => 'Ex: 123.45',
+//                    ]
+//                ])
+//            ->add('mir')
+//            ->add('nbe')
+//            ->add('dje')
+//            ->add('toe')
+//            ->add('tunvente')
+//            ->add('mirvente')
+//            ->add('nbevente')
+//            ->add('djevente')
+//            ->add('toevente')
+//            ->add('ordre')
+
         ;
     }
 

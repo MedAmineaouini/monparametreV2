@@ -26,10 +26,10 @@
                             <th>#</th>
                             <th>Numéro</th>
                             <th>Date</th>
-                            <th>Départ</th>
-                            <th>Arrivée</th>
+{#                            <th>Départ</th>#}
+{#                            <th>Arrivée</th>#}
                             <th>Compagnie</th>
-                            <th>Sièges</th>
+                            <th>Stock Sièges</th>
                             <th>Statut</th>
                             <th>Actions</th>
                         </tr>
@@ -40,19 +40,20 @@
                                 <td>{{ vol.seqvol }}</td>
                                 <td>{{ vol.nvol }}</td>
                                 <td>{{ vol.datevol ? vol.datevol|date('d/m/Y H:i') : '' }}</td>
-                                <td>
-                                    {{ vol.villed }} / 
-                                    <small>{{ vol.heured }}</small>
-                                </td>
-                                <td>
-                                    {{ vol.villea }} /
-                                    <small>{{ vol.heurea }}</small>
-                                </td>
+{#                                <td>#}
+{#                                    {{ vol.villed }} / #}
+{#                                    <small>{{ vol.heured }}</small>#}
+{#                                </td>#}
+{#                                <td>#}
+{#                                    {{ vol.villea }} /#}
+{#                                    <small>{{ vol.heurea }}</small>#}
+{#                                </td>#}
                                 <td>{{ vol.compagnie }}</td>
                                 <td>
                                     <span class="badge bg-primary">{{ vol.sg }}</span> /
-                                    <span class="badge bg-success">{{ vol.vendu }}</span> /
-                                    <span class="badge bg-warning">{{ vol.reserve }}</span>
+                                    <span class="badge bg-info">{{ vol.vendu }}</span> /
+                                    <span class="badge bg-warning">{{ vol.reserve }}</span> =
+                                    <span class="badge bg-success">{{ (vol.sg - vol.vendu - vol.reserve) }}</span>
                                 </td>
                                 <td>
                                     {% if vol.ouvert == 1 %}

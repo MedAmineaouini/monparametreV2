@@ -119,50 +119,50 @@
 	}
 
 	.is-invalid {
-    border-color: #dc3545 !important;
-}
+		border-color: #dc3545 !important;
+	}
 
-.invalid-feedback {
-    display: block;
-    width: 100%;
-    margin-top: 0.25rem;
-    font-size: 0.875em;
-    color: #dc3545;
-}
+	.invalid-feedback {
+		display: block;
+		width: 100%;
+		margin-top: 0.25rem;
+		font-size: 0.875em;
+		color: #dc3545;
+	}
 
-.form-label {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+	.form-label {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
 
-.form-label .required {
-    color: #dc3545;
-    margin-left: 5px;
-}
+	.form-label .required {
+		color: #dc3545;
+		margin-left: 5px;
+	}
 
-.is-invalid {
-    border-color: #dc3545 !important;
-}
+	.is-invalid {
+		border-color: #dc3545 !important;
+	}
 
-.invalid-feedback {
-    display: block;
-    width: 100%;
-    margin-top: 0.25rem;
-    font-size: 0.875em;
-    color: #dc3545;
-}
+	.invalid-feedback {
+		display: block;
+		width: 100%;
+		margin-top: 0.25rem;
+		font-size: 0.875em;
+		color: #dc3545;
+	}
 
-.form-label {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+	.form-label {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
 
-.form-label .required {
-    color: #dc3545;
-    margin-left: 5px;
-}
+	.form-label .required {
+		color: #dc3545;
+		margin-left: 5px;
+	}
 
 	/* Responsive adjustments */
 	@media(max-width: 768px) {
@@ -173,12 +173,12 @@
 </style>
 
 {% block body %}
-{{ form_start(form, {
-    'attr': {
-        'id': 'vol-form',
-        'data-validate-url': path('app_vol_validate_tab')
-    }
-}) }}
+	{{ form_start(form, {
+		'attr': {
+			'id': 'vol-form',
+			'data-validate-url': path('app_vol_validate_tab')
+		}
+	}) }}
 	<!-- Tab content -->
 	<div class="tab-content" id="volTabsContent">
 		<!-- General Tab -->
@@ -191,25 +191,25 @@
 							<div class="col-md-3">
 								{{ form_label(form.seqvol, 'N° Séq.', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
 								{{ form_widget(form.seqvol, {'attr': {'class': 'form-control bg-light'}}) }}
-                                {{ form_errors(form.seqvol) }}
+								{{ form_errors(form.seqvol) }}
 							</div>
 
 							<div class="col-md-3">
 								{{ form_label(form.nvol, 'N° du vol', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
 								{{ form_widget(form.nvol, {'attr': {'class': 'form-control  bg-white'}}) }}
-                                {{ form_errors(form.nvol) }}
+								{{ form_errors(form.nvol) }}
 							</div>
 
 							<div class="col-md-3">
 								{{ form_label(form.datevol, 'Date vol', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
 								{{ form_widget(form.datevol, {'attr': {'class': 'form-control  bg-white'}}) }}
-                                {{ form_errors(form.datevol) }}
+								{{ form_errors(form.datevol) }}
 							</div>
 
 							<div class="col-md-3">
 								{{ form_label(form.jo, 'JO', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
 								{{ form_widget(form.jo, {'attr': {'class': 'form-control  bg-white'}}) }}
-                                {{ form_errors(form.jo) }}
+								{{ form_errors(form.jo) }}
 							</div>
 						</div>
 
@@ -217,25 +217,25 @@
 							<div class="col-md-3">
 								{{ form_label(form.jplus, 'J.Plus', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
 								{{ form_widget(form.jplus, {'attr': {'class': 'form-control bg-white'}}) }}
-                                {{ form_errors(form.jplus) }}
+								{{ form_errors(form.jplus) }}
 							</div>
 
 							<div class="col-md-3">
 								{{ form_label(form.pnr, 'PNR', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
 								{{ form_widget(form.pnr, {'attr': {'class': 'form-control bg-white'}}) }}
-                                {{ form_errors(form.pnr) }}
+								{{ form_errors(form.pnr) }}
 							</div>
 
 							<div class="col-md-3">
 								{{ form_label(form.datRetro, 'Délai rétro en jours', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
 								{{ form_widget(form.datRetro, {'attr': {'class': 'form-control bg-white'}}) }}
-                                {{ form_errors(form.datRetro) }}
+								{{ form_errors(form.datRetro) }}
 							</div>
 
 							<div class="col-md-3">
 								{{ form_label(form.destination, 'Destination', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
 								{{ form_widget(form.destination, {'attr': {'class': 'form-control bg-white'}}) }}
-                                {{ form_errors(form.destination) }}
+								{{ form_errors(form.destination) }}
 							</div>
 						</div>
 
@@ -248,7 +248,7 @@
 										<div class="form-check form-check-inline mb-0 me-2">
 											{{ form_widget(child, {'attr': {'class': 'form-check-input'}}) }}
 											{{ form_label(child, null, {'label_attr': {'class': 'form-check-label mb-0'}}) }}
-                                            {{ form_errors(child) }}
+											{{ form_errors(child) }}
 										</div>
 									{% endfor %}
 								</div>
@@ -259,7 +259,7 @@
 								<div class="form-check form-switch mb-0">
 									{{ form_widget(form.allotFreesale, {'attr': {'class': 'form-check-input me-2'}}) }}
 									{{ form_label(form.allotFreesale, 'Allotement free sale', {'label_attr': {'class': 'form-check-label mb-0'}}) }}
-                                    {{ form_errors(form.allotFreesale) }}
+									{{ form_errors(form.allotFreesale) }}
 								</div>
 							</div>
 						</div>
@@ -283,7 +283,7 @@
 												'data-aero-target': 'aerodep'
 											}
 										}) }}
-                                        {{ form_errors(form.villeD) }}
+										{{ form_errors(form.villeD) }}
 
 										{{ form_label(form.aerodep, 'Aéroport Départ', {'label_attr': {'class': 'form-label mb-0'}}) }}
 										{{ form_widget(form.aerodep, {
@@ -293,7 +293,7 @@
 												'readonly': true
 											}
 										}) }}
-                                        {{ form_errors(form.aerodep) }}
+										{{ form_errors(form.aerodep) }}
 									</div>
 
 									<div class="mb-1">
@@ -323,7 +323,7 @@
 													'data-aero-target': 'aeroarr'
 												}
 											}) }}
-                                            {{ form_errors(form.villeA) }}
+											{{ form_errors(form.villeA) }}
 
 											{{ form_label(form.aeroarr, 'Aéroport Arrivée', {'label_attr': {'class': 'form-label mb-0'}}) }}
 											{{ form_widget(form.aeroarr, {
@@ -333,7 +333,7 @@
 													'readonly': true
 												}
 											}) }}
-                                            {{ form_errors(form.aeroarr) }}
+											{{ form_errors(form.aeroarr) }}
 										</div>
 									</div>
 
@@ -349,7 +349,7 @@
 									</div>
 								</div>
 							</div>
-							
+
 							<!-- Via -->
 							<div class="col-md-4">
 								<div class="flight-section via-section">
@@ -366,25 +366,25 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<!-- Options -->
 						<div class="row mt-4">
 							<div class="col-md-12">
 								<div class="form-check form-switch">
 									{{ form_widget(form.volsec, {'attr': {'class': 'form-check-input'}}) }}
 									{{ form_label(form.volsec, 'Autorisé Vente Vol Sec Internet', {'label_attr': {'class': 'form-check-label'}}) }}
-                                    {{ form_errors(form.volsec) }}
+									{{ form_errors(form.volsec) }}
 								</div>
 								<div class="form-check form-switch">
 									{{ form_widget(form.bagagesoute, {'attr': {'class': 'form-check-input'}}) }}
 									{{ form_label(form.bagagesoute, '1 seul bag en soute / Passager', {'label_attr': {'class': 'form-check-label'}}) }}
-                                    {{ form_errors(form.bagagesoute) }}
+									{{ form_errors(form.bagagesoute) }}
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				
+
 				<!-- Colonne secondaire (droite) -->
 				<div class="col-md-12">
 					<!-- Section affréteur -->
@@ -398,8 +398,8 @@
 										'id': 'codaffret',
 										'data-lib-target': 'libaffret'
 									}
-								}) }} 
-                                {{ form_errors(form.codaffret) }}
+								}) }}
+								{{ form_errors(form.codaffret) }}
 							</div>
 							<div class="col-md-3">
 								{{ form_label(form.libaffret, 'Nom Affréteur', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
@@ -410,9 +410,9 @@
 										'readonly': true
 									}
 								}) }}
-                                {{ form_errors(form.libaffret) }}
+								{{ form_errors(form.libaffret) }}
 							</div>
-						
+
 							<div class="col-md-3">
 								{{ form_label(form.nomfour, 'Fournisseur', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
 								{{ form_widget(form.nomfour, {'attr': {'class': 'form-control bg-white', 'style': 'background-color: white;'}}) }}
@@ -435,12 +435,12 @@
 				</div>
 			</div>
 		</div>
-			
+
 		<!-- Capacities Tab -->
 		<div class="tab-pane fade" id="capacities" role="tabpanel">
 			<div class="row">
 				<div class="col-md-4">
-					<div class="col-md-12 card card-body shadow-sm" style=" border-radius: 8px;height: fit-content;">                   
+					<div class="col-md-12 card card-body shadow-sm" style=" border-radius: 8px;height: fit-content;">
 						<div class="col-md-12">
 							{{ form_label(form.ouvert, 'Offre Total', {'label_attr': {'class': 'form-label'}}) }}
 							{{ form_widget(form.ouvert, {
@@ -499,13 +499,13 @@
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="col-md-8">
 					<div class="col-md-12 card card-body shadow-sm" style="border-radius: 8px;height: fit-content;">
 						<div class="col-md-12 engaged-seat">
 							{{ form_label(form.sg, "Siège(s) engagé(s)") }}
 							{{ form_widget(form.sg) }}
-                            {{ form_errors(form.sg) }}
+							{{ form_errors(form.sg) }}
 							<div class="red-text mt-2">Vol avec engagement</div>
 						</div>
 						<div class="col-md-12 mt-5">
@@ -513,14 +513,14 @@
 								<div class="form-check form-switch mb-0">
 									{{ form_widget(form.stopsale, {'attr': {'class': 'form-check-input me-2'}}) }}
 									{{ form_label(form.stopsale, 'Allotement free sale', {'label_attr': {'class': 'form-check-label mb-0'}}) }}
-                                    {{ form_errors(form.stopsale) }}
+									{{ form_errors(form.stopsale) }}
 								</div>
 							</div>
 							<div class="col-md-12 d-flex align-items-center mt-5">
 								<div class="form-check form-switch mb-0">
 									{{ form_widget(form.venduVolsec, {'attr': {'class': 'form-check-input me-2'}}) }}
 									{{ form_label(form.venduVolsec, 'Autorisé uniquement 7 jours Vente Vol Sec Pour Internet') }}
-                                    {{ form_errors(form.venduVolsec) }}
+									{{ form_errors(form.venduVolsec) }}
 								</div>
 							</div>
 						</div>
@@ -534,116 +534,116 @@
 							<div class="col-md-12">
 								{{ form_label(form.obs, "Observations") }}
 								{{ form_widget(form.obs) }}
-                                {{ form_errors(form.obs) }}
+								{{ form_errors(form.obs) }}
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		
+
 		<!-- Pricing Tab -->
 		<div class="tab-pane fade" id="pricing" role="tabpanel">
-			<div class="col-md-12 card card-body shadow-sm" style="border-radius: 8px;height: fit-content;"> 
-				<div class="row">    
+			<div class="col-md-12 card card-body shadow-sm" style="border-radius: 8px;height: fit-content;">
+				<div class="row">
 					<div class="col-md-8">
 						<!-- Pricing table -->
 						<table class="table table-bordered text-center align-middle shadow-sm mb-4">
 							<thead class="table-primary">
-								<tr>
-									<th colspan="6" class="text-center fs-5 fw-bold">Tarification</th>
-								</tr>
-								<tr>
-									<th>Tarification</th>
-									<th>Adulte</th>
-									<th>Enfant</th>
-									<th>Bébé</th>
-									<th>Taxe</th>
-								</tr>
+							<tr>
+								<th colspan="6" class="text-center fs-5 fw-bold">Tarification</th>
+							</tr>
+							<tr>
+								<th>Tarification</th>
+								<th>Adulte</th>
+								<th>Enfant</th>
+								<th>Bébé</th>
+								<th>Taxe</th>
+							</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<th class="align-middle fw-bold text-center">Achat forfait</th>
-									<td>{{ form_widget(form.prixada) }}</td>
-									<td>{{ form_widget(form.prixzza) }}</td>
-									<td>{{ form_widget(form.prixbba) }}</td>
-									<td>{{ form_widget(form.taxea) }}</td>
-								</tr>
-								<tr>
-									<th class="align-middle fw-bold text-center">Achat Vol sec</th>
-									<td>{{ form_widget(form.prixadav) }}</td>
-									<td>{{ form_widget(form.prixzzav) }}</td>
-									<td>{{ form_widget(form.prixbbav) }}</td>
-									<td></td>
-								</tr>
-								<tr>
-									<th rowspan="3" class="align-middle fw-bold text-center">Prix Vente</th>
-									<td>{{ form_widget(form.prixadv) }}</td>
-									<td>{{ form_widget(form.prixzzv) }}</td>
-									<td>{{ form_widget(form.prixbbv) }}</td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>{{ form_widget(form.prixadv2) }}</td>
-									<td>{{ form_widget(form.prixzzv2) }}</td>
-									<td>{{ form_widget(form.prixbbv2) }}</td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>{{ form_widget(form.prixadv3) }}</td>
-									<td>{{ form_widget(form.prixzzv3) }}</td>
-									<td>{{ form_widget(form.prixbbv3) }}</td>
-									<td></td>
-								</tr>
+							<tr>
+								<th class="align-middle fw-bold text-center">Achat forfait</th>
+								<td>{{ form_widget(form.prixada) }}</td>
+								<td>{{ form_widget(form.prixzza) }}</td>
+								<td>{{ form_widget(form.prixbba) }}</td>
+								<td>{{ form_widget(form.taxea) }}</td>
+							</tr>
+							<tr>
+								<th class="align-middle fw-bold text-center">Achat Vol sec</th>
+								<td>{{ form_widget(form.prixadav) }}</td>
+								<td>{{ form_widget(form.prixzzav) }}</td>
+								<td>{{ form_widget(form.prixbbav) }}</td>
+								<td></td>
+							</tr>
+							<tr>
+								<th rowspan="3" class="align-middle fw-bold text-center">Prix Vente</th>
+								<td>{{ form_widget(form.prixadv) }}</td>
+								<td>{{ form_widget(form.prixzzv) }}</td>
+								<td>{{ form_widget(form.prixbbv) }}</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>{{ form_widget(form.prixadv2) }}</td>
+								<td>{{ form_widget(form.prixzzv2) }}</td>
+								<td>{{ form_widget(form.prixbbv2) }}</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>{{ form_widget(form.prixadv3) }}</td>
+								<td>{{ form_widget(form.prixzzv3) }}</td>
+								<td>{{ form_widget(form.prixbbv3) }}</td>
+								<td></td>
+							</tr>
 							</tbody>
 						</table>
 						<div class="col-md-6">
 							{{ form_label(form.prixYield, 'YIELD') }}
 							{{ form_widget(form.prixYield) }}
-                            {{ form_errors(form.prixYield) }}
+							{{ form_errors(form.prixYield) }}
 						</div>
 					</div>
-					
+
 					<div class="col-md-4">
 						<!-- Taxes table -->
 						<table class="table table-bordered align-middle text-start shadow-sm">
 							<thead class="table-primary">
-								<tr>
-									<th colspan="2" class="text-center fs-5 fw-bold">Taxes & Suppléments</th>
-								</tr>
+							<tr>
+								<th colspan="2" class="text-center fs-5 fw-bold">Taxes & Suppléments</th>
+							</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<th class="align-middle fw-bold text-center">Taxe aéroport</th>
-									<td>{{ form_widget(form.taxevente) }}</td>
-								</tr>
-								<tr>
-									<th class="align-middle fw-bold text-center">Carte touristique</th>
-									<td>{{ form_widget(form.cartevente) }}</td>
-								</tr>
-								<tr>
-									<th class="align-middle fw-bold text-center">Taxe de sortie</th>
-									<td>{{ form_widget(form.taxesovente) }}</td>
-								</tr>
-								<tr>
-									<th class="align-middle fw-bold text-center">Supp. 15 jours</th>
-									<td>{{ form_widget(form.suppvol) }}</td>
-								</tr>
-								<tr>
-									<th class="align-middle fw-bold text-center">Supplém. AS</th>
-									<td>{{ form_widget(form.supp1) }}</td>
-								</tr>
-								<tr>
-									<th class="align-middle fw-bold text-center">Supplém. AR</th>
-									<td>{{ form_widget(form.supp2) }}</td>
-								</tr>
+							<tr>
+								<th class="align-middle fw-bold text-center">Taxe aéroport</th>
+								<td>{{ form_widget(form.taxevente) }}</td>
+							</tr>
+							<tr>
+								<th class="align-middle fw-bold text-center">Carte touristique</th>
+								<td>{{ form_widget(form.cartevente) }}</td>
+							</tr>
+							<tr>
+								<th class="align-middle fw-bold text-center">Taxe de sortie</th>
+								<td>{{ form_widget(form.taxesovente) }}</td>
+							</tr>
+							<tr>
+								<th class="align-middle fw-bold text-center">Supp. 15 jours</th>
+								<td>{{ form_widget(form.suppvol) }}</td>
+							</tr>
+							<tr>
+								<th class="align-middle fw-bold text-center">Supplém. AS</th>
+								<td>{{ form_widget(form.supp1) }}</td>
+							</tr>
+							<tr>
+								<th class="align-middle fw-bold text-center">Supplém. AR</th>
+								<td>{{ form_widget(form.supp2) }}</td>
+							</tr>
 							</tbody>
 						</table>
 					</div>
 				</div>
 			</div>
 		</div>
-		
+
 		<!-- Convocation Tab -->
 		<div class="tab-pane fade" id="convocation" role="tabpanel">
 			<div class="col-md-12 card mb-4" style="background-color: #99ccff; color: white; border: 2px solid yellow;">
@@ -651,67 +651,67 @@
 					<div class="col-md-3">
 						{{ form_label(form.dateconvo, 'Date de convocation') }}
 						{{ form_widget(form.dateconvo, {'attr': {'class': 'form-control bg-white'}}) }}
-                         {{ form_errors(form.dateconvo) }}
+						{{ form_errors(form.dateconvo) }}
 					</div>
 					<div class="col-md-2">
 						{{ form_label(form.heureconvo, 'Heure') }}
 						{{ form_widget(form.heureconvo, {'attr': {'class': 'form-control bg-white'}}) }}
-                         {{ form_errors(form.heureconvo) }}
+						{{ form_errors(form.heureconvo) }}
 					</div>
 					<div class="col-md-3">
 						{{ form_label(form.comptoir, 'Comptoir & zone') }}
 						{{ form_widget(form.comptoir, {'attr': {'class': 'form-control bg-white'}}) }}
-                         {{ form_errors(form.comptoir) }}
+						{{ form_errors(form.comptoir) }}
 					</div>
 				</div>
-				
+
 				<div class="row mb-3">
 					<div class="col-md-3">
 						{{ form_label(form.lieuconvo, 'Aéroport & Lieu') }}
 						{{ form_widget(form.lieuconvo, {'attr': {'class': 'form-control bg-white'}}) }}
-                         {{ form_errors(form.lieuconvo) }}
+						{{ form_errors(form.lieuconvo) }}
 					</div>
 					<div class="col-md-2">
 						{{ form_label(form.porte, 'Porte') }}
 						{{ form_widget(form.porte, {'attr': {'class': 'form-control bg-white'}}) }}
-                         {{ form_errors(form.porte) }}
+						{{ form_errors(form.porte) }}
 					</div>
 				</div>
-				
+
 				<div class="row">
 					<div class="col-md-6">
 						<div class="mb-3">
 							{{ form_label(form.agence, 'Agence (confirmation vol)') }}
 							{{ form_widget(form.agence, {'attr': {'class': 'form-control bg-white'}}) }}
-                             {{ form_errors(form.agence) }}
+							{{ form_errors(form.agence) }}
 						</div>
 						<div class="mb-3">
 							{{ form_label(form.formforf, 'Formalités forfait') }}
 							{{ form_widget(form.formforf, {'attr': {'class': 'form-control bg-white'}}) }}
-                            {{ form_errors(form.formforf) }}
+							{{ form_errors(form.formforf) }}
 						</div>
 						<div class="mb-3">
 							{{ form_label(form.formsec, 'Formalités vol sec') }}
 							{{ form_widget(form.formsec, {'attr': {'class': 'form-control bg-white'}}) }}
-                            {{ form_errors(form.formsec) }}
+							{{ form_errors(form.formsec) }}
 						</div>
 					</div>
-					
+
 					<div class="col-md-3 offset-md-1">
 						<label class="text-white fw-bold mb-2">Spécification</label>
 						<div class="border p-3 bg-white text-dark rounded">
 							{% for child in form.specification %}
-                                <div class="form-check mb-2">
-                                    {{ form_widget(child) }}
-                                    {{ form_label(child, null, {'label_attr': {'class': 'form-check-label'}}) }}
-                                    {{ form_errors(child) }}
-                                </div>
-                            {% endfor %}
+								<div class="form-check mb-2">
+									{{ form_widget(child) }}
+									{{ form_label(child, null, {'label_attr': {'class': 'form-check-label'}}) }}
+									{{ form_errors(child) }}
+								</div>
+							{% endfor %}
 						</div>
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="col-md-12 pe-0">
 				<div class="col-md-12 card mb-4">
 					<div class="col-md-12 d-flex align-items-center">
@@ -722,12 +722,12 @@
 							}
 						}) }}
 						{{ form_widget(form.dateconf) }}
-                        {{ form_errors(form.dateconf) }}
+						{{ form_errors(form.dateconf) }}
 					</div>
 				</div>
 			</div>
 		</div>
-		
+
 		<!-- Baggage Tab -->
 		<div class="tab-pane fade" id="baggage" role="tabpanel">
 			<div class="col-md-12 card card-body shadow-sm">
@@ -735,18 +735,18 @@
 					<div class="col-md-4">
 						{{ form_label(form.bagagesoption, 'Bagages option') }}
 						{{ form_widget(form.bagagesoption) }}
-                        {{ form_errors(form.bagagesoption) }}
+						{{ form_errors(form.bagagesoption) }}
 
 					</div>
 					<div class="col-md-4">
 						{{ form_label(form.prixbagagesoption, 'Prix bagages') }}
 						{{ form_widget(form.prixbagagesoption) }}
-                        {{ form_errors(form.prixbagagesoption) }}
+						{{ form_errors(form.prixbagagesoption) }}
 					</div>
 					<div class="col-md-4">
 						{{ form_label(form.nbrbagagesoption, 'Nb bagages') }}
 						{{ form_widget(form.nbrbagagesoption) }}
-                        {{ form_errors(form.nbrbagagesoption) }}
+						{{ form_errors(form.nbrbagagesoption) }}
 					</div>
 				</div>
 				<div class="row mb-3">
@@ -769,7 +769,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		{# <!-- Options Tab -->
 		<div class="tab-pane fade" id="options" role="tabpanel">
 			<div class="col-md-12 card card-body shadow-sm">
@@ -830,7 +830,7 @@
 			</div>
 		</div> #}
 	</div>
-	
+
 	<!-- Navigation buttons -->
 	<div class="form-group row justify-content-between mt-5 mb-5">
 		<div class="col-auto">
@@ -842,230 +842,229 @@
 		</div>
 	</div>
 	{{ form_end(form) }}
-</div>
+	</div>
 
 
 {% endblock %}
 
 <script>
-$(document).ready(function() {
-    let currentTab = 0;
-    const tabs = $('.tab-pane');
-    const tabButtons = $('#volTabs .nav-link');
-    const nextBtn = $('#nextBtn');
-    const prevBtn = $('#prevBtn');
-    const submitBtn = $('#submitBtn');
-    const form = $('#vol-form');
+	$(document).ready(function() {
+		let currentTab = 0;
+		const tabs = $('.tab-pane');
+		const tabButtons = $('#volTabs .nav-link');
+		const nextBtn = $('#nextBtn');
+		const prevBtn = $('#prevBtn');
+		const submitBtn = $('#submitBtn');
+		const form = $('#vol-form');
 
-    // Map tabs to their validation groups
-    const tabValidationMap = {
-        0: 'general',        // General tab
-        1: 'capacities',     // Capacities tab
-        2: 'pricing',        // Pricing tab
-        3: 'convocation',    // Convocation tab
-        4: 'baggage'         // Baggage tab
-    };
+		// Map tabs to their validation groups
+		const tabValidationMap = {
+			0: 'general',        // General tab
+			1: 'capacities',     // Capacities tab
+			2: 'pricing',        // Pricing tab
+			3: 'convocation',    // Convocation tab
+			4: 'baggage'         // Baggage tab
+		};
 
-    function showTab(index) {
-        tabs.removeClass('show active').eq(index).addClass('show active');
-        tabButtons.removeClass('active').eq(index).addClass('active');
-        
-        if (index === 0) {
-            prevBtn.hide();
-        } else {
-            prevBtn.show();
-        }
-        
-        if (index === tabs.length - 1) {
-            nextBtn.hide();
-            submitBtn.show();
-        } else {
-            nextBtn.show();
-            submitBtn.hide();
-        }
-        
-        currentTab = index;
-    }
+		function showTab(index) {
+			tabs.removeClass('show active').eq(index).addClass('show active');
+			tabButtons.removeClass('active').eq(index).addClass('active');
 
-    // Function to validate a specific tab
-    function validateTab(tabIndex) {
-        const validationGroup = tabValidationMap[tabIndex];
-        if (!validationGroup) return Promise.resolve(true);
-        
-        // Collect all form data
-        const formData = new FormData(form[0]);
-        formData.append('tab', validationGroup);
-        
-        return $.ajax({
-            url: form.data('validate-url') || '{{ path("app_vol_validate_tab") }}',
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            dataType: 'json'
-        });
-    }
+			if (index === 0) {
+				prevBtn.hide();
+			} else {
+				prevBtn.show();
+			}
 
-    // Function to display validation errors
-    function showValidationErrors(errors) {
-        // Clear previous errors
-        $('.is-invalid').removeClass('is-invalid');
-        $('.invalid-feedback').remove();
-        
-        // Show new errors
-        for (const fieldName in errors) {
-            // Find the field - handle both basic fields and form[field] format
-            let field = $(`[name="${fieldName}"]`);
-            if (field.length === 0) {
-                field = $(`[name="form[${fieldName}]"]`);
-            }
-            
-            if (field.length > 0) {
-                field.addClass('is-invalid');
-                
-                // Create error message
-                const errorDiv = $('<div>')
-                    .addClass('invalid-feedback')
-                    .text(errors[fieldName]);
-                    
-                // Insert after the field
-                field.after(errorDiv);
-                
-                // Scroll to first error
-                if (Object.keys(errors)[0] === fieldName) {
-                    $('html, body').animate({
-                        scrollTop: field.offset().top - 100
-                    }, 500);
-                }
-            }
-        }
-    }
+			if (index === tabs.length - 1) {
+				nextBtn.hide();
+				submitBtn.show();
+			} else {
+				nextBtn.show();
+				submitBtn.hide();
+			}
 
-    // Next button click handler with validation
-    nextBtn.click(function() {
-        validateTab(currentTab).then(function(response) {
-            if (response.valid) {
-                // Validation passed, proceed to next tab
-                if (currentTab < tabs.length - 1) {
-                    showTab(currentTab + 1);
-                }
-            } else {
-                // Validation failed, show errors
-                showValidationErrors(response.errors);
-            }
-        }).catch(function(xhr) {
-            console.error('Validation error:', xhr.responseText);
-            alert('Une erreur est survenue lors de la validation.');
-        });
-    });
+			currentTab = index;
+		}
 
-    prevBtn.click(function() {
-        if (currentTab > 0) {
-            showTab(currentTab - 1);
-        }
-    });
+		// Function to validate a specific tab
+		function validateTab(tabIndex) {
+			const validationGroup = tabValidationMap[tabIndex];
+			if (!validationGroup) return Promise.resolve(true);
 
-    // Handle form submission
-    form.on('submit', function(e) {
-        e.preventDefault();
-        
-        // Validate all tabs before final submission
-        let allValid = true;
-        const validationPromises = [];
-        
-        for (let i = 0; i < tabs.length; i++) {
-            validationPromises.push(validateTab(i));
-        }
-        
-        Promise.all(validationPromises).then(function(responses) {
-            responses.forEach(function(response, index) {
-                if (!response.valid) {
-                    allValid = false;
-                    // If this isn't the current tab, switch to it
-                    if (index !== currentTab) {
-                        showTab(index);
-                    }
-                    showValidationErrors(response.errors);
-                }
-            });
-            
-            if (allValid) {
-                // If all valid, submit the form normally
-                form.off('submit').submit();
-            } else {
-                alert('Veuillez corriger les erreurs dans tous les onglets avant de soumettre.');
-            }
-        });
-    });
+			// Collect all form data
+			const formData = new FormData(form[0]);
+			formData.append('tab', validationGroup);
 
-    // Setup other functionalities
-    function setupVilleSelect(selector, inputClass, urlPrefix) {
-        $(selector).on('change', function() {
-            const villeId = $(this).val();
-            if (!villeId) {
-                $('.' + inputClass).val('');
-                return;
-            }
-            $.ajax({
-                url: urlPrefix + villeId,
-                type: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    $('.' + inputClass).val(data.aeroport || '');
-                },
-                error: function() {
-                    $('.' + inputClass).val('');
-                }
-            });
-        }).trigger('change');
-    }
-    
-    function setupAffretSelect() {
-        $('.affret-select').on('change', function() {
-            const affretId = $(this).val();
-            const libaffretField = $('.libaffret');
-            
-            if (!affretId) {
-                libaffretField.val('');
-                return;
-            }
-            
-            libaffretField.val('Chargement...');
-            
-            $.ajax({
-                url: '/vol/get-affret/' + affretId,
-                type: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    libaffretField.val(data.libaffret || 'Non trouvé');
-                },
-                error: function() {
-                    libaffretField.val('Erreur de chargement');
-                    console.error("Erreur lors du chargement de l'affréteur");
-                }
-            });
-        }).trigger('change');
-    }
+			return $.ajax({
+				url: form.data('validate-url') || '{{ path("app_vol_validate_tab") }}',
+				type: 'POST',
+				data: formData,
+				processData: false,
+				contentType: false,
+				dataType: 'json'
+			});
+		}
 
-    function calculateDispo() {
-        const vendu = parseInt($('[data-calc="vendu"]').val()) || 0;
-        const reserve = parseInt($('[data-calc="reserve"]').val()) || 0;
-        const dispo = Math.max(0, vendu - reserve);
-        
-        $('[data-calc="dispo"]').val(dispo);
-    }
-    
-    // Initialize
-    setupVilleSelect('.ville-select', 'aeroarr', '/vol/get-aeroport/');
-    setupVilleSelect('.ville-select-depart', 'aerodep', '/vol/get-aeroport/');
-    setupAffretSelect();
-    
-    $('[data-calc="vendu"], [data-calc="reserve"]').on('input', calculateDispo);
-    calculateDispo();
-    
-    // Show first tab initially
-    showTab(0);
-});
+		// Function to display validation errors
+		function showValidationErrors(errors) {
+			// Clear previous errors
+			$('.is-invalid').removeClass('is-invalid');
+			$('.invalid-feedback').remove();
+
+			// Show new errors
+			for (const fieldName in errors) {
+				// Find the field - handle both basic fields and form[field] format
+				let field = $(`[name="${fieldName}"]`);
+				if (field.length === 0) {
+					field = $(`[name="form[${fieldName}]"]`);
+				}
+
+				if (field.length > 0) {
+					field.addClass('is-invalid');
+
+					// Create error message
+					const errorDiv = $('<div>')
+							.addClass('invalid-feedback')
+							.text(errors[fieldName]);
+
+					// Insert after the field
+					field.after(errorDiv);
+
+					// Scroll to first error
+					if (Object.keys(errors)[0] === fieldName) {
+						$('html, body').animate({
+							scrollTop: field.offset().top - 100
+						}, 500);
+					}
+				}
+			}
+		}
+
+		// Next button click handler with validation
+		nextBtn.click(function() {
+			validateTab(currentTab).then(function(response) {
+				if (response.valid) {
+					// Validation passed, proceed to next tab
+					if (currentTab < tabs.length - 1) {
+						showTab(currentTab + 1);
+					}
+				} else {
+					// Validation failed, show errors
+					showValidationErrors(response.errors);
+				}
+			}).catch(function(xhr) {
+				console.error('Validation error:', xhr.responseText);
+				alert('Une erreur est survenue lors de la validation.');
+			});
+		});
+
+		prevBtn.click(function() {
+			if (currentTab > 0) {
+				showTab(currentTab - 1);
+			}
+		});
+
+		// Handle form submission
+		form.on('submit', function(e) {
+			e.preventDefault();
+
+			// Validate all tabs before final submission
+			let allValid = true;
+			const validationPromises = [];
+
+			for (let i = 0; i < tabs.length; i++) {
+				validationPromises.push(validateTab(i));
+			}
+
+			Promise.all(validationPromises).then(function(responses) {
+				responses.forEach(function(response, index) {
+					if (!response.valid) {
+						allValid = false;
+						// If this isn't the current tab, switch to it
+						if (index !== currentTab) {
+							showTab(index);
+						}
+						showValidationErrors(response.errors);
+					}
+				});
+
+				if (allValid) {
+					// If all valid, submit the form normally
+					form.off('submit').submit();
+				} else {
+					alert('Veuillez corriger les erreurs dans tous les onglets avant de soumettre.');
+				}
+			});
+		});
+
+		// Setup other functionalities
+		function setupVilleSelect(selector, inputClass, urlPrefix) {
+			$(selector).on('change', function() {
+				const villeId = $(this).val();
+				if (!villeId) {
+					$('.' + inputClass).val('');
+					return;
+				}
+				$.ajax({
+					url: urlPrefix + villeId,
+					type: 'GET',
+					dataType: 'json',
+					success: function(data) {
+						$('.' + inputClass).val(data.aeroport || '');
+					},
+					error: function() {
+						$('.' + inputClass).val('');
+					}
+				});
+			}).trigger('change');
+		}
+
+		function setupAffretSelect() {
+			$('.affret-select').on('change', function() {
+				const affretId = $(this).val();
+				const libaffretField = $('.libaffret');
+
+				if (!affretId) {
+					libaffretField.val('');
+					return;
+				}
+
+				libaffretField.val('Chargement...');
+
+				$.ajax({
+					url: '/vol/get-affret/' + affretId,
+					type: 'GET',
+					dataType: 'json',
+					success: function(data) {
+						libaffretField.val(data.libaffret || 'Non trouvé');
+					},
+					error: function() {
+						libaffretField.val('Erreur de chargement');
+						console.error("Erreur lors du chargement de l'affréteur");
+					}
+				});
+			}).trigger('change');
+		}
+
+		function calculateDispo() {
+			const vendu = parseInt($('[data-calc="vendu"]').val()) || 0;
+			const reserve = parseInt($('[data-calc="reserve"]').val()) || 0;
+			const dispo = Math.max(0, vendu - reserve);
+
+			$('[data-calc="dispo"]').val(dispo);
+		}
+
+		// Initialize
+		setupVilleSelect('.ville-select', 'aeroarr', '/vol/get-aeroport/');
+		setupVilleSelect('.ville-select-depart', 'aerodep', '/vol/get-aeroport/');
+		setupAffretSelect();
+
+		$('[data-calc="vendu"], [data-calc="reserve"]').on('input', calculateDispo);
+		calculateDispo();
+
+		// Show first tab initially
+		showTab(0);
+	});
 </script>
-
 

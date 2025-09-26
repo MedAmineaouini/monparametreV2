@@ -5,128 +5,128 @@
 
 {% block body %}
     <div class="flex-grow-1 container-p-y container-fluid">
-    <div class="card">
-        <div class="card-header text-white d-block d-sm-flex justify-content-between align-items-center">
-            <h5 class="mb-0 ">📋 Liste des Clients</h5>
-            <div class="d-flex  col-md-2">
-                <a href="{{ path('app_client_new') }}" class="btn btn-success w-100">
-                    <i class="icon-base bx bx-plus me-2"></i> Ajouter un Client
-                </a>
-            </div>
-        </div>
-
-        <div class="card-body p-3">
-            <hr>
-            <form method="get" id="filterForm" class="mb-4">
-                <div class="d-flex flex-wrap align-items-end col-md-12">
-
-                    <div class="form-group col-md-2 px-1">
-                        <label for="seqclt" class="form-label">Code client :</label>
-                        <input style="height: 34px;" type="text" name="seqclt" id="seqclt" class="form-control"
-                               value="{{ searchParams.seqclt ?? '' }}">
-                    </div>
-
-                    <div class="form-group col-md-2 px-1">
-                        <label for="nomclt" class="form-label">Nom client :</label>
-                        <input style="height: 34px;" type="text" name="nomclt" id="nomclt" class="form-control"
-                               value="{{ searchParams.nomclt ?? '' }}">
-                    </div>
-
-                    <div class="form-group col-md-2 px-1">
-                    <label for="nomreseau" class="form-label">Nom réseau :</label>
-                    <select name="nomreseau" id="nomreseau" class="form-select" style="height: 34px;">
-                        <option value="">-- Tous --</option>
-                        {% for reseau in reseauOptions %}
-                            <option value="{{ reseau.seqreseau }}" {{ reseau.seqreseau == searchParams.nomreseau ? 'selected' : '' }}>
-                                {{ reseau.nomreseau }}
-                            </option>
-                        {% endfor %}
-                    </select>
+        <div class="card">
+            <div class="card-header text-white d-block d-sm-flex justify-content-between align-items-center">
+                <h5 class="mb-0 ">📋 Liste des Clients</h5>
+                <div class="d-flex  col-md-2">
+                    <a href="{{ path('app_client_new') }}" class="btn btn-success w-100">
+                        <i class="icon-base bx bx-plus me-2"></i> Ajouter un Client
+                    </a>
                 </div>
+            </div>
 
-                    <div class="form-group col-md-2 px-1">
-                        <label for="categorie" class="form-label">Gr. commission :</label>
-                        <select name="categorie" id="categorie" class="form-select" style="height: 34px;">
+            <div class="card-body p-3">
+                <hr>
+                <form method="get" id="filterForm" class="mb-4">
+                    <div class="d-flex flex-wrap align-items-end col-md-12">
+
+                        <div class="form-group col-md-2 px-1">
+                            <label for="seqclt" class="form-label">Code client :</label>
+                            <input style="height: 34px;" type="text" name="seqclt" id="seqclt" class="form-control"
+                                   value="{{ searchParams.seqclt ?? '' }}">
+                        </div>
+
+                        <div class="form-group col-md-2 px-1">
+                            <label for="nomclt" class="form-label">Nom client :</label>
+                            <input style="height: 34px;" type="text" name="nomclt" id="nomclt" class="form-control"
+                                   value="{{ searchParams.nomclt ?? '' }}">
+                        </div>
+
+                        <div class="form-group col-md-2 px-1">
+                        <label for="nomreseau" class="form-label">Nom réseau :</label>
+                        <select name="nomreseau" id="nomreseau" class="form-select" style="height: 34px;">
                             <option value="">-- Tous --</option>
-                            {% for commission in commissions %}
-                                <option value="{{ commission.categorie }}" {{ commission.categorie == searchParams.categorie ? 'selected' : '' }}>
-                                    {{ commission.categorie }}
+                            {% for reseau in reseauOptions %}
+                                <option value="{{ reseau.seqreseau }}" {{ reseau.seqreseau == searchParams.nomreseau ? 'selected' : '' }}>
+                                    {{ reseau.nomreseau }}
                                 </option>
                             {% endfor %}
                         </select>
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <div class="d-flex gap-2">
-                            <button type="submit" class="btn btn-primary w-50">Filtrer</button>
-                            <a href="{{ path('app_client_index') }}" class="btn btn-secondary w-50">Réinitialiser</a>
+                        <div class="form-group col-md-2 px-1">
+                            <label for="categorie" class="form-label">Gr. commission :</label>
+                            <select name="categorie" id="categorie" class="form-select" style="height: 34px;">
+                                <option value="">-- Tous --</option>
+                                {% for commission in commissions %}
+                                    <option value="{{ commission.categorie }}" {{ commission.categorie == searchParams.categorie ? 'selected' : '' }}>
+                                        {{ commission.categorie }}
+                                    </option>
+                                {% endfor %}
+                            </select>
                         </div>
+
+                        <div class="form-group col-md-4">
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-primary w-50">Filtrer</button>
+                                <a href="{{ path('app_client_index') }}" class="btn btn-secondary w-50">Réinitialiser</a>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </form>
+                <hr>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped table-bordered mb-1">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nom</th>
+                                <th>Réseau</th>
+                                <th>Commission</th>
+                                <th class="text-center" width="100">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% if clients is not empty %}
+                            {% for client in clients %}
+                                <tr>
+                                    <td>{{ client.seqclt }}</td>
+                                    <td>{{ client.nomclt }}</td>
+                                    <td>{{ client.nomreseau }}</td>
+                                    <td>{{ client.seqcomm.categorie ?? '' }}</td>
+                                    <td class="text-center">
+                                        <div class="dropdown">
+                                            <button type="button"
+                                                    class="btn p-0 dropdown-toggle hide-arrow"
+                                                    data-bs-toggle="dropdown"
+                                                    aria-expanded="false"
+                                                    aria-label="Actions">
+                                                <i class="bx bx-dots-vertical-rounded"></i>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-end">
+                                                <li>
+                                                    <a class="dropdown-item"
+                                                       href="{{ path('app_client_edit', {'numclt': client.numclt}) }}"
+                                                       aria-label="Modifier">
+                                                        <i class="bx bx-edit-alt me-2"></i>Consulter | Modifier
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    {{ include('client/_delete_form.html.twig', {
+                                                        client: client,
+                                                        btn_class: 'dropdown-item'
+                                                    }) }}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="10" class="text-center p-2 text-center">Aucun client trouvé...</td>
+                                </tr>
+                            {% endif %}
+                            </tbody>
+                        </table>
                     </div>
 
-
-                </div>
-            </form>
-            <hr>
-
-                <div class="table-responsive">
-                    <table class="table table-hover table-striped table-bordered mb-1">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nom</th>
-                            <th>Réseau</th>
-                            <th>Commission</th>
-                            <th class="text-center" width="100">Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% if clients is not empty %}
-                        {% for client in clients %}
-                            <tr>
-                                <td>{{ client.seqclt }}</td>
-                                <td>{{ client.nomclt }}</td>
-                                <td>{{ client.nomreseau }}</td>
-                                <td>{{ client.seqcomm.categorie ?? '' }}</td>
-                                <td class="text-center">
-                                    <div class="dropdown">
-                                        <button type="button"
-                                                class="btn p-0 dropdown-toggle hide-arrow"
-                                                data-bs-toggle="dropdown"
-                                                aria-expanded="false"
-                                                aria-label="Actions">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li>
-                                                <a class="dropdown-item"
-                                                   href="{{ path('app_client_edit', {'numclt': client.numclt}) }}"
-                                                   aria-label="Modifier">
-                                                    <i class="bx bx-edit-alt me-2"></i>Consulter | Modifier
-                                                </a>
-                                            </li>
-                                            <li>
-                                                {{ include('client/_delete_form.html.twig', {
-                                                    client: client,
-                                                    btn_class: 'dropdown-item'
-                                                }) }}
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        {% else %}
-                            <tr>
-                                <td colspan="10" class="text-center p-2 text-center">Aucun client trouvé...</td>
-                            </tr>
-                        {% endif %}
-                        </tbody>
-                    </table>
-                </div>
-
+            </div>
         </div>
     </div>
-
     <script>
         const form = document.getElementById('filterForm');
         const inputs = form.querySelectorAll('input[type="text"], select');

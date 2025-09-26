@@ -15,35 +15,39 @@ class PaysType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-
             ->add('CODEPAYS', null, [
-                'label' => 'Code pays'
+                'label' => 'Code ISO :',
+                'attr' => ['style' => 'text-transform: uppercase;'],
             ])
-            ->add('LIBPAYS', null, ['label' => 'Libellé'])
+            ->add('LIBPAYS', null, [
+                'label' => 'Libellé :',
+                'attr' => ['style' => 'text-transform: uppercase;'],
+            ])
             ->add('PLACE', ChoiceType::class, [
-                'label' => 'Lieu',
+                'label' => 'Régime :',
                 'choices' => [
                     'CEE' => 'CEE',
                     'HORS CEE' => 'HORS CEE',
                     'FRANCE' => 'FRANCE',
                 ],
                 'attr' => [
-                    'class' => 'form-control mode',
+                    'class' => 'form-control',
                 ],
-                'data' => 'HORS CEE', // valeur sélectionnée par défaut
+                'data' => '', // valeur sélectionnée par défaut
                 'placeholder' => false,
             ])
             ->add('CODE_IATA', TextType::class, [
-                'label' => 'Code IATA',
+                'label' => 'Code ISO :',
+                'required' => false,
                 'attr' => [
-                    'class' => 'form-control mode',
+                    'class' => 'form-control',
                     'style' => 'text-transform: uppercase;',
                     'placeholder' => 'Code iata...',
                 ],
             ])
             ->add('NATURE', ChoiceType::class, [
-                'label' => 'Nature',
-                'choices'  => [
+                'label' => 'Nature :',
+                'choices' => [
                     'Moyen courrier' => 1,
                     'Long courrier' => 2,
                 ],
@@ -57,18 +61,18 @@ class PaysType extends AbstractType
                 'multiple' => false, // false = select simple
             ])
 //            ->add('CONTINENT', null, ['label' => 'Continent'])
-            ->add('FORMALITE', TextareaType::class, [  
-                'label' => 'Formalité',
-                'required' => false, 
+            ->add('FORMALITE', TextareaType::class, [
+                'label' => 'Formalité : ',
+                'required' => false,
                 'attr' => [
-                    'rows' => 5, 
+                    'rows' => 5,
                 ],
             ])
-            ->add('OBSERVATION', TextareaType::class, [  
-                'label' => 'Observation',
-                'required' => false, 
+            ->add('OBSERVATION', TextareaType::class, [
+                'label' => 'Observation : ',
+                'required' => false,
                 'attr' => [
-                    'rows' => 5, 
+                    'rows' => 5,
                 ],
             ]);
 

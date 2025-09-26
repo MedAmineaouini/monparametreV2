@@ -24,35 +24,18 @@
             <thead class="">
               <tr>
                 <th>#</th>
-                <th>Libellé</th>
-                <th>TUN</th>
-                <th>MIR</th>
-                <th>NBE</th>
-                <th>DJE</th>
-                <th>TOE</th>
-                <th>TUN Vente</th>
-                <th>MIR Vente</th>
-                <th>NBE Vente</th>
-                <th>DJE Vente</th>
-                <th>TOE Vente</th>
+                <th>Pays</th>
+                <th>Région</th>
                 <th class="text-center">Actions</th>
               </tr>
             </thead>
             <tbody>
+
               {% for souspay in souspays %}
                 <tr>
                   <td>{{ souspay.seqsouspays }}</td>
-                  <td>{{ souspay.libsouspays }}</td>
-                  <td>{{ souspay.tun }}</td>
-                  <td>{{ souspay.mir }}</td>
-                  <td>{{ souspay.nbe }}</td>
-                  <td>{{ souspay.dje }}</td>
-                  <td>{{ souspay.toe }}</td>
-                  <td>{{ souspay.tunvente }}</td>
-                  <td>{{ souspay.mirvente }}</td>
-                  <td>{{ souspay.nbevente }}</td>
-                  <td>{{ souspay.djevente }}</td>
-                  <td>{{ souspay.toevente }}</td>
+                  <td style="text-transform: uppercase">{{ souspay.pays ? souspay.pays.LIBPAYS : '' }}</td>
+                  <td  style="text-transform: uppercase">{{ souspay.libsouspays }}</td>
                   <td class="text-center">
                     <div class="dropdown">
                       <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">

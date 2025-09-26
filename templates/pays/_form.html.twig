@@ -9,14 +9,12 @@
 
         <div class="col-md-12">
             {{ form_label(form.LIBPAYS, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
-            <strong class="text-danger">*</strong>
             {{ form_widget(form.LIBPAYS, {'attr': {'class': 'form-control', 'maxlength': 30, 'placeholder': 'Libellé', 'required': 'required'}}) }}
         </div>
 
         <div class="col-md-12">
             {{ form_label(form.CODE_IATA, null, {'label_attr': {'class': 'form-label fw-semibold'}}) }}
-            <strong class="text-danger">*</strong>
-            {{ form_widget(form.CODE_IATA, {'attr': {'class': 'form-control', 'maxlength': 30, 'required': 'required'}}) }}
+            {{ form_widget(form.CODE_IATA, {'attr': {'class': 'form-control', 'maxlength': 30, }}) }}
         </div>
     </div>
 

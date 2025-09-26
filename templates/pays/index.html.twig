@@ -37,8 +37,8 @@
                     {% for pay in pays %}
                         <tr>
                             <td class="text-center">{{ pay.IDPAYS }}</td>
-                            <td>{{ pay.CODEPAYS }}</td>
-                            <td>{{ pay.LIBPAYS }}</td>
+                            <td style="text-transform: uppercase;"> {{ pay.CODEPAYS }}</td>
+                            <td style="text-transform: uppercase;">{{ pay.LIBPAYS }}</td>
                             <td>{{ pay.PLACE }}</td>
                             <td class="text-center">
                                 <span class="badge bg-{{ pay.NATURE == 1 ? 'info' : 'primary' }}">

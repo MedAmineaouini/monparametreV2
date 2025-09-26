@@ -40,7 +40,7 @@ class Vol
     private ?int $jo = null;
 
     #[ORM\Column(name: 'JPLUS', type: Types::STRING, length: 2, nullable: true)]
-    private ?string $jplus = '';
+    private ?string $jplus = null;
 
     #[ORM\Column(name: 'HEURED', type: Types::STRING, length: 8, nullable: true)]
     #[Assert\NotBlank(message: "L'heure de départ est obligatoire", groups: ["general"])]
@@ -61,7 +61,7 @@ class Vol
     private ?Ville $villeA = null;
 
     #[ORM\ManyToOne(targetEntity: Ville::class)]
-    #[ORM\JoinColumn(name: 'VILLEV', referencedColumnName: 'SEQVILLE', nullable: false)]
+    #[ORM\JoinColumn(name: 'VILLEV', referencedColumnName: 'SEQVILLE', nullable: true)]
     private ?Ville $villeV = null;
 
     #[ORM\ManyToOne(targetEntity: Affreteur::class)]
@@ -223,9 +223,9 @@ class Vol
     #[ORM\Column(name: 'COAF', type: Types::INTEGER)]
     private ?int $coaf = 0;
 
-    #[ORM\Column(name: 'FICTIF', type: Types::INTEGER, nullable: true)]
-    #[Assert\PositiveOrZero(message: "Le fictif doit être positif ou zéro", groups: ["general"])]
-    private ?int $fictif = null;
+    #[ORM\Column(name: 'FICTIF', type: Types::BOOLEAN, nullable: true)]
+    private ?bool $fictif = null;
+
 
     #[ORM\Column(name: 'LIEN', type: Types::INTEGER)]
     private ?int $lien = 0;
@@ -324,7 +324,6 @@ class Vol
         groups: ["general"]
     )]
     private ?string $destination = '';
-
     #[ORM\Column(name: 'NATURE', type: Types::INTEGER)]
     private ?int $nature = 2;
 
@@ -411,8 +410,8 @@ class Vol
     #[Assert\PositiveOrZero(message: "Le nombre de bagages optionnels doit être positif ou zéro", groups: ["baggage"])]
     private ?int $nbrbagagesoption = 0;
 
-    #[ORM\Column(name: 'PNR', type: Types::STRING, length: 10)]
-    private ?string $pnr = '';
+    #[ORM\Column(name: 'PNR', type: Types::STRING, length: 10, nullable: true)]
+    private ?string $pnr = null;
 
     #[ORM\Column(name: 'ETABLISSEMENT', type: Types::INTEGER)]
     private ?int $etablissement = 0;
@@ -489,8 +488,8 @@ class Vol
     #[ORM\Column(name: 'VIlle', type: Types::STRING, length: 20, nullable: true)]
     private ?string $ville = '';
 
-    #[ORM\Column(name: 'Nomfour', type: Types::STRING, length: 30)]
-    private ?string $nomfour = '';
+    #[ORM\Column(name: 'Nomfour', type: Types::STRING, length: 30, nullable: true)]
+    private ?string $nomfour = null;
 
     #[ORM\Column(name: 'semaine1', type: Types::INTEGER)]
     private ?int $semaine1 = 0;
@@ -513,15 +512,299 @@ class Vol
     #[ORM\Column(name: 'TAXE_B2B', type: Types::DECIMAL, precision: 9, scale: 2)]
     private ?string $taxeB2b = '0';
 
-    #[ORM\Column(type: 'integer', nullable: true)]
-    #[Assert\PositiveOrZero(message: "Le ferry doit être positif ou zéro", groups: ["general"])]
-    private ?int $ferry = null;
-
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private ?bool $ferry = null;
     #[ORM\Column(name: 'SG_GARANTIS', type: Types::INTEGER)]
     private ?int $sgGarantis = 0;
 
     #[ORM\Column(name: "RETROCEDE", type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $retrocede = null;
+    public function __construct(
+        ?int $seqvol = null,
+        ?string $nvol = null,
+        ?\DateTimeImmutable $datevol = null,
+        ?int $jo = null,
+        ?string $jplus = '',
+        ?string $heured = '',
+        ?string $heurea = '',
+        ?Ville $villeD = null,
+        ?Ville $villeA = null,
+        ?Ville $villeV = null,
+        ?Affreteur $codaffret = null,
+        ?int $typevol = 0,
+        ?int $kilos = 0,
+        ?int $sg = 0,
+        ?int $vendu = 0,
+        ?int $reserve = 0,
+        ?string $prixada = null,
+        ?string $prixzza = '0',
+        ?string $prixbba = '0',
+        ?string $taxea = '0',
+        ?string $prixadv = '0',
+        ?string $prixzzv = '0',
+        ?string $prixbbv = '0',
+        ?string $prixadv2 = '0',
+        ?string $prixzzv2 = '0',
+        ?string $prixbbv2 = '0',
+        ?string $prixadv3 = '0',
+        ?string $prixzzv3 = '0',
+        ?string $prixbbv3 = '0',
+        ?string $supp1 = '0',
+        ?string $supp2 = '0',
+        ?string $taxevente = '0',
+        ?string $cartevente = '0',
+        ?string $taxesovente = '0',
+        ?string $suppvol = '0',
+        ?\DateTimeInterface $dateconvo = null,
+        ?string $heureconvo = null,
+        ?string $lieuconvo = '',
+        ?string $comptoir = '',
+        ?string $porte = '',
+        ?string $agence = '',
+        ?string $telagence = '',
+        ?string $formforf = '',
+        ?string $formsec = '',
+        ?string $obs = '',
+        ?\DateTimeInterface $dateconf = null,
+        ?\DateTimeInterface $datedeconf = null,
+        ?int $freesale = 0,
+        ?string $assvol = '0',
+        ?int $ouvert = 0,
+        ?string $taxea2 = '0',
+        ?string $autres = '',
+        ?int $coaf = 0,
+        ?int $fictif = null,
+        ?int $lien = 0,
+        ?string $typeavion = '',
+        ?string $compagnie = '',
+        ?int $stopsale = 0,
+        ?string $taxesolidarite = '0',
+        ?string $nomaxe = '',
+        ?int $retro = 0,
+        ?int $paxRetro = 0,
+        ?\DateTimeInterface $datRetro = null,
+        ?string $heuredv = '',
+        ?string $heureav = '',
+        ?string $dureevol = '',
+        ?int $convoWeb = 1,
+        ?string $obsResa = '',
+        ?int $paxEmbarque = 0,
+        ?string $heureEmbarque = '',
+        ?int $prestAbord = 0,
+        ?int $stockg = 0,
+        ?string $villedd = '',
+        ?string $villeaa = '',
+        ?int $vendug = 0,
+        ?string $inclusSg = '',
+        ?int $cron = 0,
+        ?int $soustock = 0,
+        ?int $reserves = 0,
+        ?int $vendus = 0,
+        ?int $engagement = 0,
+        ?int $seqvolGenerique = 0,
+        ?string $codaffret1 = '',
+        ?string $destination = '',
+        ?int $nature = 2,
+        ?string $nvol2 = '',
+        ?string $taxev = '0',
+        ?string $taxesolidaritev = '0',
+        ?string $taxesoventev = '0',
+        ?string $totaltaxea = '0',
+        ?string $prixadulte = '0',
+        ?string $codaffret2 = '',
+        ?int $maxVolsecAlloue = 0,
+        ?int $venduVolsec = 0,
+        ?string $nvolvia = '',
+        ?string $obsVia = '',
+        ?int $affecter = 0,
+        ?int $freesale1 = 0,
+        ?int $totMaxVolsec = 0,
+        ?int $totFreesale = 0,
+        ?int $seqreceptif = 0,
+        ?int $rachatImmediat = 0,
+        ?int $seqvilled = 0,
+        ?int $seqvillea = 0,
+        ?int $seqvillev = 0,
+        ?int $seqaffret1 = 0,
+        ?int $seqaffret2 = 0,
+        ?int $affecters = 0,
+        ?int $boardingPass = 0,
+        ?int $bagagesoption = 0,
+        ?string $prixbagagesoption = '0',
+        ?int $nbrbagagesoption = 0,
+        ?string $pnr = null,
+        ?int $etablissement = 0,
+        ?int $natureVol = 0,
+        ?int $archiver = 0,
+        ?int $kilocabine = 0,
+        ?string $prixYield = '0',
+        ?string $aerod = '',
+        ?string $aeroa = '',
+        ?int $pasAfficherHoraire = 0,
+        ?string $kilobebe = '0',
+        ?string $aerodep = '',
+        ?string $aeroarr = '',
+        ?int $specification = 0,
+        ?string $bagagesoute = '0',
+        ?int $coafv = 0,
+        ?int $volsec = 0,
+        ?string $allotFreesale = '0',
+        ?string $retroVol = '0',
+        ?string $prixada2 = '0',
+        ?string $prixada3 = '0',
+        ?string $prixzza2 = '0',
+        ?string $prixzza3 = '0',
+        ?string $prixbba2 = '0',
+        ?string $prixbba3 = '0',
+        ?string $ville = '',
+        ?string $nomfour = '',
+        ?int $semaine1 = 0,
+        ?int $blocsiege = 0,
+        ?string $prixadav = '0',
+    ) {
+        $this->seqvol = $seqvol;
+        $this->nvol = $nvol;
+        $this->datevol = $datevol;
+        $this->jo = $jo;
+        $this->jplus = $jplus;
+        $this->heured = $heured;
+        $this->heurea = $heurea;
+        $this->villeD = $villeD;
+        $this->villeA = $villeA;
+        $this->villeV = $villeV;
+        $this->codaffret = $codaffret;
+        $this->typevol = $typevol;
+        $this->kilos = $kilos;
+        $this->sg = $sg;
+        $this->vendu = $vendu;
+        $this->reserve = $reserve;
+        $this->prixada = $prixada;
+        $this->prixzza = $prixzza;
+        $this->prixbba = $prixbba;
+        $this->taxea = $taxea;
+        $this->prixadv = $prixadv;
+        $this->prixzzv = $prixzzv;
+        $this->prixbbv = $prixbbv;
+        $this->prixadv2 = $prixadv2;
+        $this->prixzzv2 = $prixzzv2;
+        $this->prixbbv2 = $prixbbv2;
+        $this->prixadv3 = $prixadv3;
+        $this->prixzzv3 = $prixzzv3;
+        $this->prixbbv3 = $prixbbv3;
+        $this->supp1 = $supp1;
+        $this->supp2 = $supp2;
+        $this->taxevente = $taxevente;
+        $this->cartevente = $cartevente;
+        $this->taxesovente = $taxesovente;
+        $this->suppvol = $suppvol;
+        $this->dateconvo = $dateconvo;
+        $this->heureconvo = $heureconvo;
+        $this->lieuconvo = $lieuconvo;
+        $this->comptoir = $comptoir;
+        $this->porte = $porte;
+        $this->agence = $agence;
+        $this->telagence = $telagence;
+        $this->formforf = $formforf;
+        $this->formsec = $formsec;
+        $this->obs = $obs;
+        $this->dateconf = $dateconf;
+        $this->datedeconf = $datedeconf;
+        $this->freesale = $freesale;
+        $this->assvol = $assvol;
+        $this->ouvert = $ouvert;
+        $this->taxea2 = $taxea2;
+        $this->autres = $autres;
+        $this->coaf = $coaf;
+        $this->fictif = $fictif;
+        $this->lien = $lien;
+        $this->typeavion = $typeavion;
+        $this->compagnie = $compagnie;
+        $this->stopsale = $stopsale;
+        $this->taxesolidarite = $taxesolidarite;
+        $this->nomaxe = $nomaxe;
+        $this->retro = $retro;
+        $this->paxRetro = $paxRetro;
+        $this->datRetro = $datRetro;
+        $this->heuredv = $heuredv;
+        $this->heureav = $heureav;
+        $this->dureevol = $dureevol;
+        $this->convoWeb = $convoWeb;
+        $this->obsResa = $obsResa;
+        $this->paxEmbarque = $paxEmbarque;
+        $this->heureEmbarque = $heureEmbarque;
+        $this->prestAbord = $prestAbord;
+        $this->stockg = $stockg;
+        $this->villedd = $villedd;
+        $this->villeaa = $villeaa;
+        $this->vendug = $vendug;
+        $this->inclusSg = $inclusSg;
+        $this->cron = $cron;
+        $this->soustock = $soustock;
+        $this->reserves = $reserves;
+        $this->vendus = $vendus;
+        $this->engagement = $engagement;
+        $this->seqvolGenerique = $seqvolGenerique;
+        $this->codaffret1 = $codaffret1;
+        $this->destination = $destination;
+        $this->nature = $nature;
+        $this->nvol2 = $nvol2;
+        $this->taxev = $taxev;
+        $this->taxesolidaritev = $taxesolidaritev;
+        $this->taxesoventev = $taxesoventev;
+        $this->totaltaxea = $totaltaxea;
+        $this->prixadulte = $prixadulte;
+        $this->codaffret2 = $codaffret2;
+        $this->maxVolsecAlloue = $maxVolsecAlloue;
+        $this->venduVolsec = $venduVolsec;
+        $this->nvolvia = $nvolvia;
+        $this->obsVia = $obsVia;
+        $this->affecter = $affecter;
+        $this->freesale1 = $freesale1;
+        $this->totMaxVolsec = $totMaxVolsec;
+        $this->totFreesale = $totFreesale;
+        $this->seqreceptif = $seqreceptif;
+        $this->rachatImmediat = $rachatImmediat;
+        $this->seqvilled = $seqvilled;
+        $this->seqvillea = $seqvillea;
+        $this->seqvillev = $seqvillev;
+        $this->seqaffret1 = $seqaffret1;
+        $this->seqaffret2 = $seqaffret2;
+        $this->affecters = $affecters;
+        $this->boardingPass = $boardingPass;
+        $this->bagagesoption = $bagagesoption;
+        $this->prixbagagesoption = $prixbagagesoption;
+        $this->nbrbagagesoption = $nbrbagagesoption;
+        $this->pnr = $pnr;
+        $this->etablissement = $etablissement;
+        $this->natureVol = $natureVol;
+        $this->archiver = $archiver;
+        $this->kilocabine = $kilocabine;
+        $this->prixYield = $prixYield;
+        $this->aerod = $aerod;
+        $this->aeroa = $aeroa;
+        $this->pasAfficherHoraire = $pasAfficherHoraire;
+        $this->kilobebe = $kilobebe;
+        $this->aerodep = $aerodep;
+        $this->aeroarr = $aeroarr;
+        $this->specification = $specification;
+        $this->bagagesoute = $bagagesoute;
+        $this->coafv = $coafv;
+        $this->volsec = $volsec;
+        $this->allotFreesale = $allotFreesale;
+        $this->retroVol = $retroVol;
+        $this->prixada2 = $prixada2;
+        $this->prixada3 = $prixada3;
+        $this->prixzza2 = $prixzza2;
+        $this->prixzza3 = $prixzza3;
+        $this->prixbba2 = $prixbba2;
+        $this->prixbba3 = $prixbba3;
+        $this->ville = $ville;
+        $this->nomfour = $nomfour;
+        $this->semaine1 = $semaine1;
+        $this->blocsiege = $blocsiege;
+        $this->prixadav = $prixadav;
+    }
+
 
     public function getSeqvol(): ?int
     {
@@ -587,10 +870,11 @@ class Vol
     /**
      * @param string $jplus
      */
-    public function setJplus(string $jplus): void
+    public function setJplus(?string $jplus): void
     {
         $this->jplus = $jplus;
     }
+
 
     // /**
     //  * @return string
@@ -2266,19 +2550,16 @@ class Vol
     /**
      * @return string
      */
-    public function getPnr(): string
+    public function getPnr(): ?string
     {
         return $this->pnr;
     }
 
-    /**
-     * @param string $pnr
-     */
-    public function setPnr(string $pnr): void
+    public function setPnr(?string $pnr): self
     {
         $this->pnr = $pnr;
+        return $this;
     }
-
     /**
      * @return int
      */
@@ -2686,11 +2967,10 @@ class Vol
     /**
      * @param string $nomfour
      */
-    public function setNomfour(string $nomfour): void
+    public function setNomfour(?string $nomfour): void
     {
         $this->nomfour = $nomfour;
     }
-
     /**
      * @return int
      */

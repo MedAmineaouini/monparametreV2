@@ -3,11 +3,16 @@
 {% block title %}Edit Curiste{% endblock %}
 
 {% block body %}
-    <h1>Edit Curiste</h1>
+<div class="card shadow rounded-3 border-0">
+    <div class="card-header text-white d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">📋 Curiste | Modifier Curiste </h5>
+        <hr>
+    </div>
+    <div class="card-body">
+    {{ include('curiste/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+    </div>
+</div>
+{#    <a href="{{ path('app_curiste_index') }}">back to list</a>#}
 
-    {{ include('curiste/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_curiste_index') }}">back to list</a>
-
-    {{ include('curiste/_delete_form.html.twig') }}
+{#    {{ include('curiste/_delete_form.html.twig') }}#}
 {% endblock %}
