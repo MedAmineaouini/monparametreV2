@@ -106,104 +106,97 @@ class VolController extends AbstractController
             ->getQuery()
             ->getSingleScalarResult();
 
-        $nextSeq = $lastSeq ? ((int) $lastSeq + 1) : 1;
+        $nextSeq = $lastSeq ? ((int)$lastSeq + 1) : 1;
         $vol->setSeqvol($nextSeq);
 
-        // Définir des valeurs par défaut pour éviter les erreurs de validation
+        // Valeurs par défaut minimales
         $vol->setVendu(0);
         $vol->setReserve(0);
         $vol->setOuvert(0);
         $vol->setTypevol(1); // Aller par défaut
 
-        $form = $this->createForm(VolType::class, $vol);
+        // IMPORTANT : alimenter l'unmapped "seqvol" du form (NotBlank groupe 'general')
+        $form = $this->createForm(VolType::class, $vol, [
+            'seqvol_value' => (string)$nextSeq,
+        ]);
 
         $form->handleRequest($request);
 
-        // DEBUG: Vérifier ce qui se passe quand le formulaire est soumis
-        if ($form->isSubmitted()) {
-            error_log("=== FORMULAIRE SOUMIS ===");
-            error_log("Est valide: " . ($form->isValid() ? 'OUI' : 'NON'));
-
-            // Afficher les erreurs de validation
-            $errors = [];
-            foreach ($form->getErrors(true) as $error) {
-                $errorMsg = "Champ: " . $error->getOrigin()->getName() . " - Erreur: " . $error->getMessage();
-                $errors[] = $errorMsg;
-                error_log($errorMsg);
-            }
-
-            error_log("Données vol:");
-            error_log("Seqvol: " . $vol->getSeqvol());
-            error_log("Nvol: " . $vol->getNvol());
-            error_log("Datevol: " . ($vol->getDatevol() ? $vol->getDatevol()->format('Y-m-d') : 'NULL'));
-            error_log("VilleD: " . ($vol->getVilleD() ? $vol->getVilleD()->getId() : 'NULL'));
-            error_log("VilleA: " . ($vol->getVilleA() ? $vol->getVilleA()->getId() : 'NULL'));
-            error_log("Heured: " . $vol->getHeured());
-            error_log("Heurea: " . $vol->getHeurea());
-            error_log("Typevol: " . $vol->getTypevol());
-
-            // Si le formulaire n'est pas valide, afficher les erreurs et arrêter pour debug
-            if (!$form->isValid()) {
-                // Pour le debug, afficher les erreurs et s'arrêter
-                echo "<pre>";
-                echo "FORMULAIRE INVALIDE - ERREURS:\n";
-                print_r($errors);
-                echo "\nDONNÉES VOL:\n";
-                var_dump([
-                    'seqvol' => $vol->getSeqvol(),
-                    'nvol' => $vol->getNvol(),
-                    'datevol' => $vol->getDatevol(),
-                    'villeD' => $vol->getVilleD() ? $vol->getVilleD()->getId() : null,
-                    'villeA' => $vol->getVilleA() ? $vol->getVilleA()->getId() : null,
-                    'heured' => $vol->getHeured(),
-                    'heurea' => $vol->getHeurea(),
-                    'typevol' => $vol->getTypevol(),
-                ]);
-                echo "</pre>";
-                die(); // Arrêter pour voir les erreurs
-            }
-        }
-
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                // Définir les aéroports basés sur les villes sélectionnées
-                if ($villeD = $vol->getVilleD()) {
-                    $vol->setAerodep($villeD->getAero());
-                }
-                if ($villeA = $vol->getVilleA()) {
-                    $vol->setAeroarr($villeA->getAero());
+                // -----------------------------
+                // Normalisations serveur (fallbacks)
+                // -----------------------------
+
+                // 1) VILLEV obligatoire en base => fallback si non choisi
+                if (!$vol->getVilleV()) {
+                    if ($vol->getVilleD()) {
+                        // Par défaut : même ville que le départ
+                        $vol->setVilleV($vol->getVilleD());
+                    } else {
+                        // Sinon on tente "Sans Via", sinon première ville
+                        $villeSansVia = $villeRepository->findOneBy(['libville' => 'Sans Via']);
+                        if (!$villeSansVia) {
+                            $villeSansVia = $villeRepository->findOneBy([]); // première ville trouvée
+                        }
+                        if ($villeSansVia) {
+                            $vol->setVilleV($villeSansVia);
+                        }
+                    }
                 }
 
-                // Définir la date de création
+                // 2) Renseigner les aéroports d'après les villes (les champs du form sont unmapped)
+                if ($vol->getVilleD()) {
+                    $vol->setAerodep($vol->getVilleD()->getAero());
+                }
+                if ($vol->getVilleA()) {
+                    $vol->setAeroarr($vol->getVilleA()->getAero());
+                }
+
+                // 3) Valeurs numériques par défaut si vides
+                if ($vol->getTaxevente() === null) {
+                    $vol->setTaxevente(150.00);
+                }
+                if ($vol->getFreesale() === null) {
+                    $vol->setFreesale(0);
+                }
+                if ($vol->getSg() === null) {
+                    $vol->setSg('0');
+                }
+
+                // Date de création
                 $vol->setDateCreation(new \DateTime());
 
-                error_log("Tentative de persistance...");
+                // Persistance
                 $entityManager->persist($vol);
                 $entityManager->flush();
-                error_log("Vol enregistré avec succès! ID: " . $vol->getSeqvol());
 
-                $this->addFlash('success', 'Vol créé avec succès!');
+                // Flash "success" -> ton layout l’affiche en toast SweetAlert2 (auto 5s)
+                $this->addFlash('success', 'Vol créé avec succès !');
+
                 return $this->redirectToRoute('app_vol_index');
 
-            } catch (\Exception $e) {
-                error_log("ERREUR lors de l'enregistrement: " . $e->getMessage());
-                $this->addFlash('error', 'Erreur lors de la création du vol: ' . $e->getMessage());
+            } catch (\Throwable $e) {
+                // Flash "error" -> toast rouge
+                $this->addFlash('error', 'Erreur lors de la création du vol : ' . $e->getMessage());
             }
         } elseif ($form->isSubmitted()) {
-            // Afficher les erreurs de validation
+            // Remonter proprement les erreurs de validation côté serveur
             $errors = [];
             foreach ($form->getErrors(true) as $error) {
-                $errors[] = $error->getMessage();
+                $errors[] = sprintf('Champ "%s" : %s', $error->getOrigin()->getName(), $error->getMessage());
             }
-            $this->addFlash('error', 'Erreurs de validation: ' . implode(', ', $errors));
+            $this->addFlash('error', 'Erreurs de validation : ' . implode(' | ', $errors));
         }
 
         return $this->render('vol/new.html.twig', [
-            'vol' => $vol,
-            'form' => $form->createView(),
+            'vol'    => $vol,
+            'form'   => $form->createView(),
             'villes' => $villeRepository->findAll(),
         ]);
     }
+
+
     private function getFormErrors($form)
     {
         $errors = [];
