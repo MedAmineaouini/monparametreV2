@@ -6,6 +6,7 @@ use App\Entity\Ville;
 use App\Form\VilleType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -179,5 +180,57 @@ class VilleController extends AbstractController
         ]);
     }
 
+    #[Route('/villes-by-pays/{paysId}', name: 'api_villes_by_pays', methods: ['GET'])]
+    public function getVillesByPays(int $paysId, VilleRepository $villeRepository): JsonResponse
+    {
+        try {
+            // Version simplifiée qui fonctionne avec votre repository actuel
+            $allVilles = $villeRepository->findAllOrderedByName();
 
+            $villesDepart = [];
+            $villesArrivee = [];
+
+            foreach ($allVilles as $ville) {
+                $villeData = [
+                    'id' => $ville->getSeqville(),
+                    'libelle' => $ville->getLibville(),
+                    'aero' => $ville->getAero()
+                ];
+
+                $villePaysId = $ville->getPays() ? $ville->getPays()->getIdpays() : null;
+
+                // Ville de départ : pays différent ou pas de pays
+                if (!$villePaysId || $villePaysId != $paysId) {
+                    $villesDepart[] = $villeData;
+                }
+
+                // Ville d'arrivée : même pays
+                if ($villePaysId && $villePaysId == $paysId) {
+                    $villesArrivee[] = $villeData;
+                }
+            }
+
+            $data = [
+                'villesDepart' => $villesDepart,
+                'villesArrivee' => $villesArrivee
+            ];
+
+            return $this->json($data);
+
+        } catch (\Exception $e) {
+            return $this->json([
+                'error' => 'Erreur lors de la récupération des villes: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+    private function formatVillesForResponse(array $villes): array
+    {
+        return array_map(function(Ville $ville) {
+            return [
+                'id' => $ville->getSeqville(),
+                'libelle' => $ville->getLibville(),
+                'aero' => $ville->getAero()
+            ];
+        }, $villes);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Pays;
 use App\Entity\Vol;
 use App\Entity\Ville;
 use App\Entity\Affreteur;
@@ -46,6 +47,11 @@ class VolType extends AbstractType
                 'attr' => ['class' => 'form-control'],
                 'required' => false,
             ])
+            ->add('retro_vol', TextType::class, [
+                'label' => 'Jours en retro',
+                'attr' => ['class' => 'form-control'],
+                'required' => false,
+            ])
             ->add('nvol', TextType::class, [
                 'attr' => ['class' => 'form-control'],
                 'required' => true,
@@ -60,7 +66,7 @@ class VolType extends AbstractType
                 ],
             ])
             ->add('datevol', DateType::class, [
-                'label' => 'Date de vol',
+                'label' => 'Date de vol du ',
                 'widget' => 'single_text',
                 'html5' => true,
                 'input' => 'datetime_immutable',
@@ -74,7 +80,18 @@ class VolType extends AbstractType
                     'max' => (new \DateTimeImmutable('+1 year'))->format('Y-m-d'),
                 ]
             ])
-            ->add('jo', TextType::class, [
+            ->add('datevolau', DateType::class, [
+                'label'    => 'Date de vol au',
+                'widget'   => 'single_text',        // input type="date"
+                'html5'    => true,
+                'required' => false,
+                // IMPORTANT : fait renvoyer un \DateTimeImmutable au setter
+                'input'    => 'datetime_immutable',
+                // optionnels mais pratiques :
+                'empty_data'      => null,
+                'invalid_message' => 'Date invalide (format attendu : YYYY-MM-DD).',
+            ])
+            ->add('jo', IntegerType::class, [
                 'attr' => ['class' => 'form-control'],
                 'required' => false,
             ])
@@ -146,7 +163,7 @@ class VolType extends AbstractType
                 'label' => 'Code Affreteur',
                 'placeholder' => '',
                 'attr' => ['class' => 'form-select'],
-                'required' => false,
+                'required' => true,
             ])
             ->add('libaffret', TextType::class, [
                 'label' => 'Affreteur',
@@ -173,8 +190,8 @@ class VolType extends AbstractType
                 'attr' => ['class' => 'form-check'],
                 'data' => 1,
             ])
-            ->add('sg', TextType::class, ['attr' => ['class' => 'form-control'],'required' => false])
-            ->add('vendu', TextType::class, [
+            ->add('sg', IntegerType::class, ['attr' => ['class' => 'form-control'],'required' => false])
+            ->add('vendu', IntegerType::class, [
                 'attr' => ['class' => 'form-control'],
                 'required' => true,
                 'constraints' => [
@@ -182,7 +199,7 @@ class VolType extends AbstractType
                     new Assert\PositiveOrZero(['message' => 'Le nombre de places vendues doit être positif ou zéro','groups' => ['capacities']])
                 ],
             ])
-            ->add('reserve', TextType::class, [
+            ->add('reserve', IntegerType::class, [
                 'attr' => ['class' => 'form-control'],
                 'required' => true,
                 'constraints' => [
@@ -193,7 +210,7 @@ class VolType extends AbstractType
             ->add('dispo', IntegerType::class, [
                 'mapped' => false,'required' => false,'attr' => ['readonly' => true, 'class' => 'form-control'],
             ])
-            ->add('ouvert', TextType::class, [
+            ->add('ouvert', IntegerType::class, [
                 'attr' => ['class' => 'form-control'],
                 'required' => true,
                 'constraints' => [
@@ -201,68 +218,68 @@ class VolType extends AbstractType
                     new Assert\PositiveOrZero(['message' => 'L\'offre totale doit être positive ou zéro','groups' => ['capacities']])
                 ],
             ])
-            ->add('freesale', TextType::class, [
+            ->add('freesale', IntegerType::class, [
                 'attr' => ['class' => 'form-control'],
                 'required' => false,
                 'constraints' => [new Assert\PositiveOrZero(['message' => 'Le free sale doit être positif ou zéro','groups' => ['capacities']])],
             ])
-            ->add('prixada', TextType::class, [
+            ->add('prixada', IntegerType::class, [
                 'attr' => ['class' => 'form-control'],'required' => false,
                 'constraints' => [new Assert\PositiveOrZero(['message' => 'Le prix adulte achat doit être positif ou zéro','groups' => ['pricing']])]
             ])
-            ->add('prixzza', TextType::class, [
+            ->add('prixzza', IntegerType::class, [
                 'attr' => ['class' => 'form-control'],'required' => false,
                 'constraints' => [new Assert\PositiveOrZero(['message' => 'Le prix enfant achat doit être positif ou zéro','groups' => ['pricing']])]
             ])
-            ->add('prixbba', TextType::class, [
+            ->add('prixbba', IntegerType::class, [
                 'attr' => ['class' => 'form-control'],'required' => false,
                 'constraints' => [new Assert\PositiveOrZero(['message' => 'Le prix bébé achat doit être positif ou zéro','groups' => ['pricing']])]
             ])
-            ->add('taxea', TextType::class, [
+            ->add('taxea', IntegerType::class, [
                 'attr' => ['class' => 'form-control'],'required' => false,
                 'constraints' => [new Assert\PositiveOrZero(['message' => 'La taxe achat doit être positive ou zéro','groups' => ['pricing']])]
             ])
-            ->add('prixadv', TextType::class, [
+            ->add('prixadv', IntegerType::class, [
                 'attr' => ['class' => 'form-control'],'required' => false,
                 'constraints' => [new Assert\PositiveOrZero(['message' => 'Le prix adulte vente doit être positif ou zéro','groups' => ['pricing']])]
             ])
-            ->add('prixzzv', TextType::class, [
+            ->add('prixzzv', IntegerType::class, [
                 'attr' => ['class' => 'form-control'],'required' => false,
                 'constraints' => [new Assert\PositiveOrZero(['message' => 'Le prix enfant vente doit être positif ou zéro','groups' => ['pricing']])]
             ])
-            ->add('prixbbv', TextType::class, [
+            ->add('prixbbv', IntegerType::class, [
                 'attr' => ['class' => 'form-control'],'required' => false,
                 'constraints' => [new Assert\PositiveOrZero(['message' => 'Le prix bébé vente doit être positif ou zéro','groups' => ['pricing']])]
             ])
-            ->add('prixadv2', TextType::class, [
+            ->add('prixadv2', IntegerType::class, [
                 'attr' => ['class' => 'form-control'],'required' => false,
                 'constraints' => [new Assert\PositiveOrZero(['message' => 'Le prix adulte vente 2 doit être positif ou zéro','groups' => ['pricing']])]
             ])
-            ->add('prixzzv2', TextType::class, [
+            ->add('prixzzv2', IntegerType::class, [
                 'attr' => ['class' => 'form-control'],'required' => false,
                 'constraints' => [new Assert\PositiveOrZero(['message' => 'Le prix enfant vente 2 doit être positif ou zéro','groups' => ['pricing']])]
             ])
-            ->add('prixbbv2', TextType::class, [
+            ->add('prixbbv2', IntegerType::class, [
                 'attr' => ['class' => 'form-control'],'required' => false,
                 'constraints' => [new Assert\PositiveOrZero(['message' => 'Le prix bébé vente 2 doit être positif ou zéro','groups' => ['pricing']])]
             ])
-            ->add('prixadv3', TextType::class, [
+            ->add('prixadv3', IntegerType::class, [
                 'attr' => ['class' => 'form-control'],'required' => false,
                 'constraints' => [new Assert\PositiveOrZero(['message' => 'Le prix adulte vente 3 doit être positif ou zéro','groups' => ['pricing']])]
             ])
-            ->add('prixzzv3', TextType::class, [
+            ->add('prixzzv3', IntegerType::class, [
                 'attr' => ['class' => 'form-control'],'required' => false,
                 'constraints' => [new Assert\PositiveOrZero(['message' => 'Le prix enfant vente 3 doit être positif ou zéro','groups' => ['pricing']])]
             ])
-            ->add('prixbbv3', TextType::class, [
+            ->add('prixbbv3', IntegerType::class, [
                 'attr' => ['class' => 'form-control'],'required' => false,
                 'constraints' => [new Assert\PositiveOrZero(['message' => 'Le prix bébé vente 3 doit être positif ou zéro','groups' => ['pricing']])]
             ])
-            ->add('supp1', TextType::class, [
+            ->add('supp1', IntegerType::class, [
                 'attr' => ['class' => 'form-control'],'required' => false,
                 'constraints' => [new Assert\PositiveOrZero(['message' => 'Le supplément 1 doit être positif ou zéro','groups' => ['pricing']])]
             ])
-            ->add('supp2', TextType::class, [
+            ->add('supp2', IntegerType::class, [
                 'attr' => ['class' => 'form-control'],'required' => false,
                 'constraints' => [new Assert\PositiveOrZero(['message' => 'Le supplément 2 doit être positif ou zéro','groups' => ['pricing']])]
             ])
@@ -274,15 +291,15 @@ class VolType extends AbstractType
                 // PAS de 'data' ici : on met la valeur par défaut via un event plus bas
                 'constraints' => [new Assert\PositiveOrZero(['message' => 'La taxe vente doit être positive ou zéro','groups' => ['pricing']])]
             ])
-            ->add('cartevente', TextType::class, [
+            ->add('cartevente', IntegerType::class, [
                 'attr' => ['class' => 'form-control'],'required' => false,
                 'constraints' => [new Assert\PositiveOrZero(['message' => 'La carte vente doit être positive ou zéro','groups' => ['pricing']])]
             ])
-            ->add('taxesovente', TextType::class, [
+            ->add('taxesovente', IntegerType::class, [
                 'attr' => ['class' => 'form-control'],'required' => false,
                 'constraints' => [new Assert\PositiveOrZero(['message' => 'La taxe de sortie vente doit être positive ou zéro','groups' => ['pricing']])]
             ])
-            ->add('suppvol', TextType::class, [
+            ->add('suppvol', IntegerType::class, [
                 'attr' => ['class' => 'form-control'],'required' => false,
                 'constraints' => [new Assert\PositiveOrZero(['message' => 'Le supplément vol doit être positif ou zéro','groups' => ['pricing']])]
             ])
@@ -297,39 +314,64 @@ class VolType extends AbstractType
             ->add('formforf', TextType::class, ['attr' => ['class' => 'form-control'],'required' => false])
             ->add('formsec', TextType::class, ['attr' => ['class' => 'form-control'],'required' => false])
             ->add('obs', TextareaType::class, [
-                'attr' => ['class' => 'form-control','rows' => 4,'placeholder' => 'Saisir une observation...'],
+                'attr' => ['class' => 'form-control','rows' => 5,'placeholder' => 'Saisir une observation...'],
                 'required' => false,
             ])
-            ->add('dateconf', DateType::class, [
-                'widget' => 'single_text','html5' => true,'attr' => ['class' => 'form-control'],'required' => false,
-            ])
-            ->add('datedeconf', DateType::class, [
-                'widget' => 'single_text','html5' => true,'attr' => ['class' => 'form-control'],'required' => false,
-            ])
+//            ->add('dateconf', DateType::class, [
+//                'widget' => 'single_text','html5' => true,'attr' => ['class' => 'form-control'],'required' => false,
+//            ])
+//            ->add('datedeconf', DateType::class, [
+//                'widget' => 'single_text','html5' => true,'attr' => ['class' => 'form-control'],'required' => false,
+//            ])
             ->add('datRetro', DateType::class, [
-                'widget' => 'single_text','html5' => true,'input' => 'datetime','required' => false,'attr' => ['class' => 'form-control']
+                'widget' => 'single_text',
+                'html5' => true,
+                'input' => 'datetime',
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control bg-light text-muted',
+                    'readonly' => true
+                ]
             ])
-            ->add('destination', TextType::class, [
-                'attr' => ['class' => 'form-control'],'required' => true,
+//            ->add('destination', TextType::class, [
+//                'attr' => ['class' => 'form-control'],'required' => true,
+//                'constraints' => [
+//                    new Assert\NotBlank(['message' => 'La destination est obligatoire','groups' => ['general']]),
+//                    new Assert\Length([
+//                        'min' => 2,'max' => 50,
+//                        'minMessage' => 'La destination doit contenir au moins {{ limit }} caractères',
+//                        'maxMessage' => 'La destination ne peut pas dépasser {{ limit }} caractères',
+//                        'groups' => ['general']
+//                    ])
+//                ],
+//            ])
+            ->add('IDPAYS', EntityType::class, [
+                'class' => Pays::class,
+                'choice_label' => function(Pays $pays) {
+                    return strtoupper($pays->getLibpays() ?? '');
+                },
+                'label' => 'Destination',
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'placeholder' => 'Sélectionnez une destination',
+                'required' => true,
                 'constraints' => [
-                    new Assert\NotBlank(['message' => 'La destination est obligatoire','groups' => ['general']]),
-                    new Assert\Length([
-                        'min' => 2,'max' => 50,
-                        'minMessage' => 'La destination doit contenir au moins {{ limit }} caractères',
-                        'maxMessage' => 'La destination ne peut pas dépasser {{ limit }} caractères',
+                    new Assert\NotBlank([
+                        'message' => 'La destination est obligatoire',
                         'groups' => ['general']
                     ])
                 ],
             ])
-            ->add('bagagesoption', TextType::class, ['attr' => ['class' => 'form-control'],'required' => false])
-            ->add('prixbagagesoption', NumberType::class, [
-                'attr' => ['class' => 'form-control'],'required' => false,
-                'constraints' => [new Assert\PositiveOrZero(['message' => 'Le prix des bagages optionnels doit être positif ou zéro','groups' => ['baggage']])]
-            ])
-            ->add('nbrbagagesoption', NumberType::class, [
-                'attr' => ['class' => 'form-control'],'required' => false,
-                'constraints' => [new Assert\PositiveOrZero(['message' => 'Le nombre de bagages optionnels doit être positif ou zéro','groups' => ['baggage']])]
-            ])
+//            ->add('bagagesoption', IntegerType::class, ['attr' => ['class' => 'form-control'],'required' => false])
+//            ->add('prixbagagesoption', NumberType::class, [
+//                'attr' => ['class' => 'form-control'],'required' => false,
+//                'constraints' => [new Assert\PositiveOrZero(['message' => 'Le prix des bagages optionnels doit être positif ou zéro','groups' => ['baggage']])]
+//            ])
+//            ->add('nbrbagagesoption', NumberType::class, [
+//                'attr' => ['class' => 'form-control'],'required' => false,
+//                'constraints' => [new Assert\PositiveOrZero(['message' => 'Le nombre de bagages optionnels doit être positif ou zéro','groups' => ['baggage']])]
+//            ])
             ->add('prixYield', NumberType::class, [
                 'attr' => ['class' => 'form-control'],'required' => false,
                 'constraints' => [new Assert\PositiveOrZero(['message' => 'Le yield doit être positif ou zéro','groups' => ['pricing']])]
@@ -339,7 +381,7 @@ class VolType extends AbstractType
                 'attr' => ['class' => 'form-control'],'required' => false,
                 'constraints' => [new Assert\PositiveOrZero(['message' => 'Les kilos cabine doivent être positifs ou zéro','groups' => ['baggage']])]
             ])
-            ->add('kilos', TextType::class, ['label' => 'Kilos baggage adulte','attr' => ['class' => 'form-control'],'required' => false])
+            ->add('kilos', IntegerType::class, ['label' => 'Kilos baggage adulte','attr' => ['class' => 'form-control'],'required' => false])
             ->add('kilobebe', NumberType::class, [
                 'label' => 'Kilos baggage bébé',
                 'attr' => ['class' => 'form-control'],'required' => false,
@@ -366,7 +408,7 @@ class VolType extends AbstractType
             ->add('venduVolsec', CheckboxType::class, ['label' => 'venduVolsec','required' => false])
             ->add('bagagesoute', CheckboxType::class, ['label' => 'bagagesoute','required' => false])
             ->add('allotFreesale', CheckboxType::class, ['label' => 'allotFreesale','required' => false])
-            ->add('blocsiege', TextType::class, ['attr' => ['class' => 'form-control'],'required' => false])
+//            ->add('blocsiege', IntegerType.form-group-legend .form-control, .form-group-legend .form-select::class, ['attr' => ['class' => 'form-control'],'required' => false])
             ->add('ferry', CheckboxType::class, [
                 'required' => false,'label' => 'Vol Ferry','attr' => ['class' => 'form-check-input'],
             ])

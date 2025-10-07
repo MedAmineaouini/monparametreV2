@@ -36,6 +36,9 @@ class Vol
     )]
     private ?\DateTimeImmutable $datevol = null;
 
+    #[ORM\Column(name: "DATEVOLAU", type: "datetime_immutable", nullable: true)]
+    private ?\DateTimeImmutable $datevolau = null;
+
     #[ORM\Column(name: 'JO', type: Types::INTEGER, nullable: true)]
     private ?int $jo = null;
 
@@ -314,16 +317,16 @@ class Vol
     #[ORM\Column(name: 'CODAFFRET1', type: Types::STRING, length: 3, nullable: true)]
     private ?string $codaffret1 = '';
 
-    #[ORM\Column(name: 'DESTINATION', type: Types::STRING, length: 30)]
-    #[Assert\NotBlank(message: "La destination est obligatoire", groups: ["general"])]
-    #[Assert\Length(
-        min: 2,
-        max: 30,
-        minMessage: "La destination doit contenir au moins {{ limit }} caractères",
-        maxMessage: "La destination ne peut pas dépasser {{ limit }} caractères",
-        groups: ["general"]
-    )]
-    private ?string $destination = '';
+//    #[ORM\Column(name: 'DESTINATION', type: Types::STRING, length: 30)]
+//    #[Assert\NotBlank(message: "La destination est obligatoire", groups: ["general"])]
+//    #[Assert\Length(
+//        min: 2,
+//        max: 30,
+//        minMessage: "La destination doit contenir au moins {{ limit }} caractères",
+//        maxMessage: "La destination ne peut pas dépasser {{ limit }} caractères",
+//        groups: ["general"]
+//    )]
+//    private ?string $destination = '';
     #[ORM\Column(name: 'NATURE', type: Types::INTEGER)]
     private ?int $nature = 2;
 
@@ -519,6 +522,10 @@ class Vol
 
     #[ORM\Column(name: "RETROCEDE", type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $retrocede = null;
+
+    #[ORM\ManyToOne(targetEntity: Pays::class)]
+    #[ORM\JoinColumn(name: 'IDPAYS', referencedColumnName: 'IDPAYS')]
+    private ?Pays $IDPAYS = null;
     public function __construct(
         ?int $seqvol = null,
         ?string $nvol = null,
@@ -2775,12 +2782,11 @@ class Vol
     }
 
 
-    public function setVolsec(bool $venduVolsec): self
+    public function setVolsec(bool $volsec): self
     {
-        $this->venduVolsec = $venduVolsec ? 1 : 0;
+        $this->volsec = $volsec ? 1 : 0;
         return $this;
     }
-
     public function getVenduVolsec(): bool
     {
         return (bool) $this->venduVolsec;
@@ -3145,4 +3151,23 @@ class Vol
 
     // Continue with all other getters and setters...
     // Each property should have a getter and setter method
+
+    public function getIDPAYS(): ?Pays
+    {
+        return $this->IDPAYS;
+    }
+
+    public function setIDPAYS(?Pays $IDPAYS): static
+    {
+        $this->IDPAYS = $IDPAYS;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTimeImmutable|null
+     */
+    public function getDatevolau(): ?\DateTimeInterface { return $this->datevolau; }
+    public function setDatevolau(?\DateTimeInterface $d): self { $this->datevolau = $d; return $this; }
+
 }

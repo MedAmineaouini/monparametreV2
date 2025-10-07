@@ -1,26 +1,57 @@
 <style>
-    /* ====== Cartes / sections ====== */
+    /* ===== VARIABLES ET CONFIGURATION GÉNÉRALE ===== */
+    :root {
+        --primary-color: #007bff;
+        --success-color: #28a745;
+        --danger-color: #dc3545;
+        --border-radius: 8px;
+        --box-shadow: 0 2px 4px rgba(0,0,0,.1);
+        --transition: all .3s ease;
+    }
+
+    /* ===== COMPOSANTS RÉUTILISABLES ===== */
     .card {
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0,0,0,.1);
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
         background-color: #fff;
         padding: 5px;
         margin-bottom: 8px;
     }
+
     .flight-section {
         border: 1px solid #dee2e6;
         border-radius: 6px;
         padding: 15px;
         height: 100%;
     }
-    .departure-section { border-left: 4px solid #28a745; padding-left: 10px; }
-    .arrival-section   { border-left: 4px solid #007bff; padding-left: 10px; }
 
-    /* ====== Titres / labels / inputs ====== */
-    .section-title { font-weight: 600; margin-bottom: 15px; display: block; }
-    .form-check { margin-bottom: 10px; }
+    .departure-section {
+        border-left: 4px solid var(--success-color);
+        padding-left: 10px;
+    }
 
-    /* Style générique des labels (hors floating) */
+    .arrival-section {
+        border-left: 4px solid var(--primary-color);
+        padding-left: 10px;
+    }
+
+    .via-section {
+        border-left: 4px solid #ffc107;
+        padding-left: 10px;
+    }
+
+    /* ===== TYPOGRAPHIE ET FORMULAIRES ===== */
+    .section-title {
+        font-weight: 600;
+        margin-bottom: 15px;
+        display: block;
+    }
+
+    .form-check {
+        margin-bottom: 10px;
+    }
+
+    /* Labels génériques */
     :not(.form-group-legend) > .form-label {
         font-weight: 500;
         margin-bottom: 5px;
@@ -29,9 +60,13 @@
         justify-content: space-between;
         align-items: center;
     }
-    .form-label .required { color: #dc3545; margin-left: 5px; }
 
-    /* Inputs génériques */
+    .form-label .required {
+        color: var(--danger-color);
+        margin-left: 5px;
+    }
+
+    /* Champs de formulaire */
     .form-control, .form-select {
         border-radius: 4px;
         padding: 8px 12px;
@@ -39,512 +74,1000 @@
         margin-bottom: 2px;
     }
 
-    /* ====== Stepper ====== */
-    .step-progress{display:flex;justify-content:space-between;margin-bottom:30px;position:relative;}
-    .step-progress::before{content:'';position:absolute;top:20px;left:0;right:0;height:3px;background-color:#e9ecef;z-index:1;}
-    .step-progress-bar{position:absolute;top:20px;left:0;height:3px;background-color:#007bff;transition:all .3s ease;z-index:2;}
-    .step{display:flex;flex-direction:column;align-items:center;position:relative;z-index:3;flex:1;}
-    .step-circle{width:40px;height:40px;border-radius:50%;background-color:#e9ecef;color:#6c757d;display:flex;align-items:center;justify-content:center;font-weight:bold;margin-bottom:10px;border:3px solid #e9ecef;transition:all .3s ease;}
-    .step.active .step-circle{background-color:#007bff;color:#fff;border-color:#007bff;}
-    .step.completed .step-circle{background-color:#28a745;color:#fff;border-color:#28a745;}
-    .step-label{font-size:.9rem;font-weight:500;text-align:center;color:#6c757d;}
-    .step.active .step-label{color:#007bff;font-weight:bold;}
-    .step.completed .step-label{color:#28a745;}
-    .step-content{display:none;animation:fadeIn .5s ease-in;}
-    .step-content.active{display:block;}
-    .step-card{border-left:4px solid #007bff;}
-    .step-card h3{
-        color:#007bff;margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid #dee2e6;background:#f8f9fa;border-radius:8px 8px 0 0;
-    }
-    @keyframes fadeIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
-    @media(max-width:768px){
-        .col-md-3{margin-bottom:20px;}
-        .step-progress{flex-direction:column;align-items:flex-start;}
-        .step{flex-direction:row;margin-bottom:15px;width:100%;}
-        .step-circle{margin-bottom:0;margin-right:15px;}
-        .step-progress::before,.step-progress-bar{display:none;}
+    /* ===== COMPOSANT STEPPER ===== */
+    .step-progress {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+        position: relative;
     }
 
-    /* ====== Floating labels ====== */
-    .form-group-legend{position:relative;margin-bottom:1rem;}
+    .step-progress::before {
+        content: '';
+        position: absolute;
+        top: 20px;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background-color: #e9ecef;
+        z-index: 1;
+    }
+
+    .step-progress-bar {
+        position: absolute;
+        top: 20px;
+        left: 0;
+        height: 3px;
+        background-color: var(--primary-color);
+        transition: var(--transition);
+        z-index: 2;
+    }
+
+    .step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        z-index: 3;
+        flex: 1;
+    }
+
+    .step-circle {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #e9ecef;
+        color: #6c757d;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        margin-bottom: 10px;
+        border: 3px solid #e9ecef;
+        transition: var(--transition);
+    }
+
+    .step.active .step-circle {
+        background-color: var(--primary-color);
+        color: #fff;
+        border-color: var(--primary-color);
+    }
+
+    .step.completed .step-circle {
+        background-color: var(--success-color);
+        color: #fff;
+        border-color: var(--success-color);
+    }
+
+    .step-label {
+        font-size: .9rem;
+        font-weight: 500;
+        text-align: center;
+        color: #6c757d;
+    }
+
+    .step.active .step-label {
+        color: var(--primary-color);
+        font-weight: bold;
+    }
+
+    .step.completed .step-label {
+        color: var(--success-color);
+    }
+
+    .step-content {
+        display: none;
+        animation: fadeIn .5s ease-in;
+    }
+
+    .step-content.active {
+        display: block;
+    }
+
+    .step-card {
+        border-left: 4px solid var(--primary-color);
+    }
+
+    .step-card h3 {
+        color: var(--primary-color);
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #dee2e6;
+        background: #f8f9fa;
+        border-radius: 8px 8px 0 0;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== LABELS FLOTTANTS ===== */
+    .form-group-legend {
+        position: relative;
+        margin-bottom: 1rem;
+    }
+
     .form-group-legend .form-control,
-    .form-group-legend .form-select{
-        font-size:.85rem;
-        padding:.9rem .5rem .4rem .5rem; /* espace haut pour le label */
-        border:1px solid #d0d7de;
-        border-radius:6px;
-        background:#fff;
+    .form-group-legend .form-select {
+        font-size: .85rem;
+        padding: .3rem .4rem;
+        border: 1px solid #d0d7de;
+        border-radius: 6px;
+        background: #fff;
     }
-    .form-group-legend .form-label{
-        position:absolute; top:-.6rem; left:.6rem;
-        font-size:.75rem; font-weight:600;
-        background:#fff; /* masque la bordure sous le label */
-        padding:0 .25rem;
-        color:#555; pointer-events:none; margin-bottom:0;
+
+    .form-group-legend .form-label {
+        position: absolute;
+        top: -.6rem;
+        left: .6rem;
+        font-size: .75rem;
+        font-weight: 600;
+        background: #fff;
+        padding: 0 .25rem;
+        color: #555;
+        pointer-events: none;
+        margin-bottom: 0;
     }
+
     .form-group-legend .form-control:focus,
-    .form-group-legend .form-select:focus{
-        border-color:#009cc2; box-shadow:0 0 0 .15rem rgba(0,156,194,.25);
+    .form-group-legend .form-select:focus {
+        border-color: #009cc2;
+        box-shadow: 0 0 0 .15rem rgba(0,156,194,.25);
     }
-    /* Erreurs dans floating */
-    .form-group-legend .invalid-feedback{display:block;margin-top:.25rem;}
-    .form-group-legend .is-invalid{border-color:#dc3545 !important;}
 
-    /* ====== Sections spécifiques ====== */
-    .engaged-seat{background-color:#0000cc;color:#fff;padding:10px;}
-    .engaged-seat input{background-color:#fff;font-weight:bold;}
-    .red-text{color:red;font-weight:bold;font-size:1.1rem;}
-
-    /* Convocation look moderne */
-    .convocation-card{
-        /*background:linear-gradient(180deg,#eaf3ff 0%,#f6faff 100%);*/
-        border:1px solid #cfe3ff;border-radius:12px;padding:16px;
+    /* États de validation */
+    .form-group-legend .invalid-feedback {
+        display: block;
+        margin-top: .25rem;
     }
-    .convocation-subtitle{color:#0d6efd;}
-    .convocation-card .form-group-legend .form-label{background:#FFFFFF;} /* coupe la bordure avec le fond bleuté */
 
-    /* Bandeau info + field */
-    .info-inline{background:#fff7f7;border:1px dashed #f4b5b5;border-radius:10px;}
-    .info-inline__text{color:#d90429;font-weight:600;flex:1 1 auto;min-width:260px;}
-    .info-inline__field{flex:0 0 350px;} /* largeur accrue */
-    @media (max-width:576px){ .info-inline__field{flex:1 1 100%;} }
-    .info-inline .form-group-legend .form-label{background:#fff;} /* bandeau blanc */
+    .form-group-legend .is-invalid {
+        border-color: var(--danger-color) !important;
+    }
 
-    /* Petites tailles pour labels check */
-    label.form-check-label.mb-0.required, label.form-check-label{font-size:13px;}
+    /* ===== SECTIONS SPÉCIFIQUES ===== */
+    .engaged-seat {
+        background-color: #0000cc;
+        color: #fff;
+        padding: 10px;
+    }
+
+    .engaged-seat input {
+        background-color: #fff;
+        font-weight: bold;
+    }
+
+    .red-text {
+        color: var(--danger-color);
+        font-weight: bold;
+        font-size: 1.1rem;
+    }
+
+    /* Carte de convocation */
+    .convocation-card {
+        border: 1px solid #cfe3ff;
+        border-radius: 12px;
+        padding: 16px;
+    }
+
+    .convocation-subtitle {
+        color: var(--primary-color);
+    }
+
+    .convocation-card .form-group-legend .form-label {
+        background: #FFFFFF;
+    }
+
+    /* Bandeau d'information */
+    .info-inline {
+        background: #fff7f7;
+        border: 1px dashed #f4b5b5;
+        border-radius: 10px;
+    }
+
+    .info-inline__text {
+        color: #d90429;
+        font-weight: 600;
+        flex: 1 1 auto;
+        min-width: 260px;
+    }
+
+    .info-inline__field {
+        flex: 0 0 350px;
+    }
+
+    .info-inline .form-group-legend .form-label {
+        background: #fff;
+    }
+
+    /* Labels de checkbox */
+    label.form-check-label.mb-0.required,
+    label.form-check-label {
+        font-size: 13px;
+    }
+
+    /* ===== UTILITAIRES ===== */
+    .vertical-text {
+        writing-mode: vertical-lr;
+        transform: rotate(180deg);
+        display: inline-block;
+        white-space: nowrap;
+    }
+
+    .table th {
+        font-weight: 600;
+    }
+
+    .form-control-sm {
+        min-height: 32px;
+        padding: 0.25rem 0.5rem;
+    }
+
+    .bg-light {
+        background-color: #f8f9fa !important;
+    }
+
+    .border-dark {
+        border-color: #dee2e6 !important;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+        .col-md-3 {
+            margin-bottom: 20px;
+        }
+
+        .step-progress {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .step {
+            flex-direction: row;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        .step-circle {
+            margin-bottom: 0;
+            margin-right: 15px;
+        }
+
+        .step-progress::before,
+        .step-progress-bar {
+            display: none;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .info-inline__field {
+            flex: 1 1 100%;
+        }
+    }
 </style>
 
 {% block body %}
     {{ form_start(form, {
-        'attr': {'id':'vol-form','data-validate-url': path('app_vol_validate_tab')}
+        'attr': {
+            'id':'vol-form',
+            'data-validate-url': path('app_vol_validate_tab')
+        }
     }) }}
 
-    <!-- Steps -->
+    <!-- Stepper de navigation -->
     <div class="step-progress mb-5">
         <div class="step-progress-bar" style="width:0%;"></div>
-        <div class="step active" data-step="0"><div class="step-circle">1</div><div class="step-label">Informations Générales</div></div>
-        <div class="step" data-step="1"><div class="step-circle">2</div><div class="step-label">Capacités</div></div>
-        <div class="step" data-step="2"><div class="step-circle">3</div><div class="step-label">Tarification</div></div>
-        <div class="step" data-step="3"><div class="step-circle">4</div><div class="step-label">Convocation</div></div>
-        <div class="step" data-step="4"><div class="step-circle">5</div><div class="step-label">Bagages</div></div>
-    </div>
-
-    <!-- Step 1 -->
-    <div class="step-content active" data-step="0">
-        <div class="card step-card">
-            <h3><i class="fas fa-info-circle"></i> Informations Générales</h3>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group-legend">
-                                    {{ form_widget(form.seqvol, {'attr': {'class':'form-control'}}) }}
-                                    {{ form_label(form.seqvol, 'N° Séq.', {'label_attr': {'class':'form-label'}}) }}
-                                    {{ form_errors(form.seqvol) }}
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group-legend">
-                                    {{ form_widget(form.nvol, {'attr': {'class':'form-control'}}) }}
-                                    {{ form_label(form.nvol, 'N° du vol', {'label_attr': {'class':'form-label'}}) }}
-                                    {{ form_errors(form.nvol) }}
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group-legend">
-                                    {{ form_widget(form.datevol, {'attr': {'class':'form-control bg-white'}}) }}
-                                    {{ form_label(form.datevol, 'Date vol', {'label_attr': {'class':'form-label'}}) }}
-                                    {{ form_errors(form.datevol) }}
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group-legend">
-                                    {{ form_widget(form.jo, {'attr': {'class':'form-control bg-white','readonly':'readonly'}}) }}
-                                    {{ form_label(form.jo, 'JO', {'label_attr': {'class':'form-label'}}) }}
-                                    {{ form_errors(form.jo) }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group-legend">
-                                    {{ form_widget(form.jplus, {'attr': {'class':'form-control bg-white'}}) }}
-                                    {{ form_label(form.jplus, 'J.Plus', {'label_attr': {'class':'form-label'}}) }}
-                                    {{ form_errors(form.jplus) }}
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group-legend">
-                                    {{ form_widget(form.pnr, {'attr': {'class':'form-control bg-white','placeholder':'Saisir le PNR'}}) }}
-                                    {{ form_label(form.pnr, 'PNR', {'label_attr': {'class':'form-label'}}) }}
-                                    {{ form_errors(form.pnr) }}
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group-legend">
-                                    {{ form_widget(form.datRetro, {'attr': {'class':'form-control bg-white'}}) }}
-                                    {{ form_label(form.datRetro, 'Délai rétro en jours', {'label_attr': {'class':'form-label'}}) }}
-                                    {{ form_errors(form.datRetro) }}
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group-legend">
-                                    {{ form_widget(form.destination, {'attr': {'class':'form-control bg-white'}}) }}
-                                    {{ form_label(form.destination, 'Destination', {'label_attr': {'class':'form-label'}}) }}
-                                    {{ form_errors(form.destination) }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row align-items-center">
-                            <div class="col-md-6 d-flex align-items-center">
-                                {{ form_label(form.typevol, 'Type de vol', {'label_attr': {'class':'form-label fw-semibold me-2 mb-0'}}) }}
-                                <div class="d-flex align-items-center">
-                                    {% for child in form.typevol %}
-                                        <div class="form-check form-check-inline mb-0 me-2">
-                                            {{ form_widget(child, {'attr': {'class':'form-check-input'}}) }}
-                                            {{ form_label(child, null, {'label_attr': {'class':'form-check-label mb-0'}}) }}
-                                            {{ form_errors(child) }}
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                            <div class="col-md-6 d-flex align-items-center">
-                                <div class="form-check form-switch mb-0">
-                                    {{ form_widget(form.allotFreesale, {'attr': {'class':'form-check-input me-2'}}) }}
-                                    {{ form_label(form.allotFreesale, 'Allotement free sale', {'label_attr': {'class':'form-check-label mb-0'}}) }}
-                                    {{ form_errors(form.allotFreesale) }}
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <!-- Détails du vol -->
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="row">
-                            <!-- Départ -->
-                            <div class="col-md-4">
-                                <div class="flight-section departure-section">
-                                    <span class="section-title text-success fw-bold">[Départ]</span>
-                                    <div class="mb-1">
-                                        <div class="form-group-legend">
-                                            {{ form_widget(form.villeD, {'attr': {
-                                                'class':'form-select form-select-sm ville-select-depart','id':'villeD','data-aero-target':'aerodep'
-                                            }}) }}
-                                            {{ form_label(form.villeD, 'Ville', {'label_attr': {'class':'form-label'}}) }}
-                                            {{ form_errors(form.villeD) }}
-                                        </div>
-                                        <div class="form-group-legend">
-                                            {{ form_widget(form.aerodep, {'attr': {
-                                                'class':'form-control bg-white form-control-sm aerodep','id':'aerodep','readonly':true
-                                            }}) }}
-                                            {{ form_label(form.aerodep, 'Aéroport Départ', {'label_attr': {'class':'form-label'}}) }}
-                                            {{ form_errors(form.aerodep) }}
-                                        </div>
-                                    </div>
-                                    <div class="mb-1">
-                                        <div class="form-group-legend">
-                                            {{ form_widget(form.heured, {'attr': {
-                                                'class':'form-control bg-white form-control-sm','data-aeroport-target':'timeInput'
-                                            }}) }}
-                                            {{ form_label(form.heured, 'Heure de départ', {'label_attr': {'class':'form-label'}}) }}
-                                            {{ form_errors(form.heured) }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Arrivée -->
-                            <div class="col-md-4">
-                                <div class="flight-section arrival-section">
-                                    <span class="section-title fw-bold">[Arrivée]</span>
-                                    <div class="mb-1">
-                                        <div class="form-group-legend">
-                                            {{ form_widget(form.villeA, {'attr': {
-                                                'class':'form-select form-select-sm ville-select','id':'villeA','data-aero-target':'aeroarr'
-                                            }}) }}
-                                            {{ form_label(form.villeA, 'Ville', {'label_attr': {'class':'form-label'}}) }}
-                                            {{ form_errors(form.villeA) }}
-                                        </div>
-                                        <div class="form-group-legend">
-                                            {{ form_widget(form.aeroarr, {'attr': {
-                                                'class':'form-control bg-white form-control-sm aeroarr','id':'aeroarr','readonly':true
-                                            }}) }}
-                                            {{ form_label(form.aeroarr, 'Aéroport Arrivée', {'label_attr': {'class':'form-label'}}) }}
-                                            {{ form_errors(form.aeroarr) }}
-                                        </div>
-                                    </div>
-                                    <div class="mb-1">
-                                        <div class="form-group-legend">
-                                            {{ form_widget(form.heurea, {'attr': {
-                                                'class':'form-control bg-white form-control-sm','data-aeroport-target':'timeInput'
-                                            }}) }}
-                                            {{ form_label(form.heurea, "Heure d'arrivée", {'label_attr': {'class':'form-label'}}) }}
-                                            {{ form_errors(form.heurea) }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Via -->
-                            <div class="col-md-4">
-                                <div class="flight-section via-section">
-                                    <span class="section-title text-warning fw-bold">[Via]</span>
-                                    <div class="mb-1">
-                                        <div class="form-group-legend">
-                                            {{ form_widget(form.villeV, {'attr': {'class':'form-select form-select-sm'}}) }}
-                                            {{ form_label(form.villeV, 'Ville Via', {'label_attr': {'class':'form-label'}}) }}
-                                            {{ form_errors(form.villeV) }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Options -->
-                        <div class="row mt-4">
-                            <div class="col-md-12">
-                                <div class="form-check form-switch">
-                                    {{ form_widget(form.volsec, {'attr': {'class':'form-check-input'}}) }}
-                                    {{ form_label(form.volsec, 'Autorisé Vente Vol Sec Internet', {'label_attr': {'class':'form-check-label'}}) }}
-                                    {{ form_errors(form.volsec) }}
-                                </div>
-                                <div class="form-check form-switch">
-                                    {{ form_widget(form.bagagesoute, {'attr': {'class':'form-check-input'}}) }}
-                                    {{ form_label(form.bagagesoute, '1 seul bag en soute / Passager', {'label_attr': {'class':'form-check-label'}}) }}
-                                    {{ form_errors(form.bagagesoute) }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Affréteur -->
-                <div class="col-md-12">
-                    <div class="card shadow-sm border-0 mb-3" style="border-radius: 12px;">
-                        <div class="card-header py-2" style="background:#f8f9fa;border-radius:12px 12px 0 0;">
-                            <h6 class="mb-2 fw-bold text-dark" style="color:#007bff;">
-                                <i class="fa fa-plane me-2"></i> Section Affréteur
-                            </h6>
-                        </div>
-                        <div class="card-body mt-2">
-                            <div class="row g-3 align-items-end">
-                                <div class="col-md-1">
-                                    <div class="form-group-legend">
-                                        {{ form_widget(form.codaffret, {'attr': {
-                                            'class':'form-select form-select-sm affret-select bg-white','id':'codaffret','data-lib-target':'libaffret'
-                                        }}) }}
-                                        {{ form_label(form.codaffret, 'Affréteur', {'label_attr': {'class':'form-label'}}) }}
-                                        {{ form_errors(form.codaffret) }}
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group-legend">
-                                        {{ form_widget(form.libaffret, {'attr': {
-                                            'class':'form-control form-control-sm bg-white libaffret','id':'libaffret','readonly':true
-                                        }}) }}
-                                        {{ form_label(form.libaffret, 'Nom Affréteur', {'label_attr': {'class':'form-label'}}) }}
-                                        {{ form_errors(form.libaffret) }}
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group-legend">
-                                        {{ form_widget(form.nomfour, {'attr': {'class':'form-control form-control-sm bg-white'}}) }}
-                                        {{ form_label(form.nomfour, 'Fournisseur', {'label_attr': {'class':'form-label'}}) }}
-                                        {{ form_errors(form.nomfour) }}
-                                    </div>
-                                </div>
-                                <div class="col-md-2 d-flex align-items-center mt-2">
-                                    <div class="form-check form-switch mb-4">
-                                        {{ form_widget(form.ferry, {'attr': {'class':'form-check-input me-2'}}) }}
-                                        {{ form_label(form.ferry, 'Vol Ferry', {'label_attr': {'class':'form-check-label'}}) }}
-                                        {{ form_errors(form.ferry) }}
-                                    </div>
-                                </div>
-                                <div class="col-md-2 d-flex align-items-center mt-2">
-                                    <div class="form-check form-switch mb-4">
-                                        {{ form_widget(form.fictif, {'attr': {'class':'form-check-input me-2'}}) }}
-                                        {{ form_label(form.fictif, 'Vol Fictif', {'label_attr': {'class':'form-check-label'}}) }}
-                                        {{ form_errors(form.fictif) }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div> <!-- row -->
+        <div class="step active" data-step="0">
+            <div class="step-circle">1</div>
+            <div class="step-label">Informations Générales</div>
+        </div>
+        <div class="step" data-step="1">
+            <div class="step-circle">2</div>
+            <div class="step-label">Capacités</div>
+        </div>
+        <div class="step" data-step="2">
+            <div class="step-circle">3</div>
+            <div class="step-label">Tarification</div>
+        </div>
+        <div class="step" data-step="3">
+            <div class="step-circle">4</div>
+            <div class="step-label">Convocation</div>
+        </div>
+        <div class="step" data-step="4">
+            <div class="step-circle">5</div>
+            <div class="step-label">Bagages</div>
         </div>
     </div>
 
-    <!-- Step 2 -->
-    <div class="step-content" data-step="1">
+    <!-- Étape 1: Informations Générales -->
+    <div class="step-content active" data-step="0">
         <div class="card step-card">
-            <h3><i class="fas fa-chart-bar"></i> Capacités</h3>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="col-md-12 card card-body shadow-sm" style="border-radius:8px;height:fit-content;">
-                        <div class="col-md-12">
+            <h4 style="color: #007bff"><i class="fas fa-info-circle"></i> Informations Générales</h4>
+
+            <!-- Informations de base du vol -->
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="row">
+                        <div class="col-md-3">
                             <div class="form-group-legend">
-                                {{ form_widget(form.ouvert, {'attr': {
-                                    'class':'form-control bg-white','data-action':'change->availability#calculateAvailability',
-                                    'data-availability-ouvert-value': form.ouvert.vars.value|default(0)
+                                {{ form_widget(form.seqvol, {'attr': {'class':'form-control'}}) }}
+                                {{ form_label(form.seqvol, 'N° Séq:', {'label_attr': {'class':'form-label'}}) }}
+                                {{ form_errors(form.seqvol) }}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group-legend">
+                                {{ form_widget(form.nvol, {'attr': {'class':'form-control'}}) }}
+                                {{ form_label(form.nvol, 'N° du vol:', {'label_attr': {'class':'form-label'}}) }}
+                                {{ form_errors(form.nvol) }}
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group-legend">
+                                {{ form_widget(form.datevol, {'attr': {
+                                    'class': 'form-control bg-white date-start',
+                                    'min': 'now'|date('Y-m-d'),
+                                    'value': 'now'|date('Y-m-d')
                                 }}) }}
-                                {{ form_label(form.ouvert, 'Offre Total', {'label_attr': {'class':'form-label'}}) }}
-                                {{ form_errors(form.ouvert) }}
+                                {{ form_label(form.datevol, 'Date vol :', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_errors(form.datevol) }}
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-2">
                             <div class="form-group-legend">
-                                {{ form_widget(form.vendu, {'attr': {'class':'form-control bg-white calc-field','id':'vendu-field','data-calc':'vendu'}}) }}
-                                {{ form_label(form.vendu, 'Vendu', {'label_attr': {'class':'form-label'}}) }}
-                                {{ form_errors(form.vendu) }}
+                                {{ form_widget(form.jo, {'attr': {
+                                    'class': 'form-control bg-white day-of-week',
+                                    'readonly': 'readonly'
+                                }}) }}
+                                {{ form_label(form.jo, 'JO (Jour):', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_errors(form.jo) }}
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-2">
                             <div class="form-group-legend">
-                                {{ form_widget(form.reserve, {'attr': {'class':'form-control bg-white calc-field','id':'reserve-field','data-calc':'reserve'}}) }}
-                                {{ form_label(form.reserve, 'Réservé', {'label_attr': {'class':'form-label'}}) }}
-                                {{ form_errors(form.reserve) }}
+                                {{ form_widget(form.datevolau, {'attr': {
+                                    'class': 'form-control bg-white date-end',
+                                    'min': form.datevol.vars.value ? form.datevol.vars.value|date('Y-m-d') : 'now'|date('Y-m-d')
+                                }}) }}
+                                {{ form_label(form.datevolau, 'Derniere date de la chaine :', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_errors(form.datevolau) }}
                             </div>
                         </div>
-                        <div class="col-md-12">
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
                             <div class="form-group-legend">
-                                {{ form_widget(form.freesale, {'attr': {'class':'form-control bg-white'}}) }}
-                                {{ form_label(form.freesale, 'Free Sale', {'label_attr': {'class':'form-label'}}) }}
-                                {{ form_errors(form.freesale) }}
+                                {{ form_widget(form.jplus, {'attr': {'class':'form-control bg-white'}}) }}
+                                {{ form_label(form.jplus, 'J.Plus:', {'label_attr': {'class':'form-label'}}) }}
+                                {{ form_errors(form.jplus) }}
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-3">
                             <div class="form-group-legend">
-                                {{ form_widget(form.dispo, {'attr': {'class':'form-control bg-white bg-light','readonly':true,'id':'dispo-field','data-calc':'dispo'}}) }}
-                                {{ form_label(form.dispo, 'Dispo.', {'label_attr': {'class':'form-label'}}) }}
-                                {{ form_errors(form.dispo) }}
+                                {{ form_widget(form.pnr, {'attr': {'class':'form-control bg-white','placeholder':'Saisir le PNR'}}) }}
+                                {{ form_label(form.pnr, 'PNR:', {'label_attr': {'class':'form-label'}}) }}
+                                {{ form_errors(form.pnr) }}
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-2">
                             <div class="form-group-legend">
-                                {{ form_widget(form.blocsiege, {'attr': {'class':'form-control bg-white'}}) }}
-                                {{ form_label(form.blocsiege, 'Blocsiege', {'label_attr': {'class':'form-label'}}) }}
-                                {{ form_errors(form.blocsiege) }}
+                                {{ form_widget(form.retro_vol, {'attr': {'class':'form-control bg-white','placeholder':'Delais '}}) }}
+                                {{ form_label(form.retro_vol, 'Délais rétro en jours:', {'label_attr': {'class':'form-label'}}) }}
+                                {{ form_errors(form.retro_vol) }}
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group-legend">
+                                {{ form_widget(form.datRetro, {'attr': {'class':'form-control bg-white'}}) }}
+                                {{ form_label(form.datRetro, 'Date rétro:', {'label_attr': {'class':'form-label'}}) }}
+                                {{ form_errors(form.datRetro) }}
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group-legend">
+                                {{ form_label(form.IDPAYS, 'Destination:', {'label_attr': {'class':'form-label'}}) }}
+                                {{ form_widget(form.IDPAYS, {'attr': {
+                                    'class':'form-control bg-white destination_select',
+                                    'id': 'destination_select'
+                                }}) }}
+                                {{ form_errors(form.IDPAYS) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Type de vol et options -->
+                    <div class="row align-items-center">
+                        <div class="col-md-3 d-flex align-items-center">
+                            {{ form_label(form.typevol, 'Type de vol:', {'label_attr': {'class':'form-label fw-semibold me-2 mb-0'}}) }}
+                            <div class="d-flex align-items-center">
+                                {% for child in form.typevol %}
+                                    <div class="form-check form-check-inline mb-0 me-2">
+                                        {{ form_widget(child, {'attr': {'class':'form-check-input'}}) }}
+                                        {{ form_label(child, null, {'label_attr': {'class':'form-check-label mb-0'}}) }}
+                                        {{ form_errors(child) }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="col-md-3 d-flex align-items-center">
+                            <div class="form-check form-switch mb-0">
+                                {{ form_widget(form.allotFreesale, {'attr': {'class':'form-check-input me-2'}}) }}
+                                {{ form_label(form.allotFreesale, 'Allotement free sale', {'label_attr': {'class':'form-check-label mb-0'}}) }}
+                                {{ form_errors(form.allotFreesale) }}
+                            </div>
+                        </div>
+                        <div class="col-md-3 d-flex align-items-center">
+                            <div class="form-check form-switch mb-0">
+                                {{ form_widget(form.volsec, {'attr': {'class':'form-check-input'}}) }}
+                                {{ form_label(form.volsec, 'Autorisé Vente Vol Sec Internet', {'label_attr': {'class':'form-check-label'}}) }}
+                                {{ form_errors(form.volsec) }}
+                            </div>
+                        </div>
+                        <div class="col-md-3 d-flex align-items-center">
+                            <div class="form-check form-switch mb-0">
+                                {{ form_widget(form.bagagesoute, {'attr': {'class':'form-check-input'}}) }}
+                                {{ form_label(form.bagagesoute, '1 seul bag en soute / Passager', {'label_attr': {'class':'form-check-label'}}) }}
+                                {{ form_errors(form.bagagesoute) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-3 align-items-end mt-2">
+                        <div class="col-md-2">
+                            <div class="form-group-legend">
+                                {{ form_widget(form.codaffret, {'attr': {
+                                    'class':'form-select form-select-sm affret-select bg-white',
+                                    'id':'codaffret',
+                                    'data-lib-target':'libaffret'
+                                }}) }}
+                                {{ form_label(form.codaffret, 'Affréteur:', {'label_attr': {'class':'form-label'}}) }}
+                                {{ form_errors(form.codaffret) }}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group-legend">
+                                {{ form_widget(form.libaffret, {'attr': {
+                                    'class':'form-control form-control-sm bg-white libaffret',
+                                    'id':'libaffret',
+                                    'readonly':true
+                                }}) }}
+                                {{ form_label(form.libaffret, 'Nom Affréteur:', {'label_attr': {'class':'form-label'}}) }}
+                                {{ form_errors(form.libaffret) }}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group-legend">
+                                {{ form_widget(form.nomfour, {'attr': {'class':'form-control form-control-sm bg-white'}}) }}
+                                {{ form_label(form.nomfour, 'Fournisseur:', {'label_attr': {'class':'form-label'}}) }}
+                                {{ form_errors(form.nomfour) }}
+                            </div>
+                        </div>
+                        <div class="col-md-1 d-flex align-items-center mt-2">
+                            <div class="form-check form-switch mb-4">
+                                {{ form_widget(form.ferry, {'attr': {'class':'form-check-input me-2'}}) }}
+                                {{ form_label(form.ferry, 'Vol Ferry', {'label_attr': {'class':'form-check-label'}}) }}
+                                {{ form_errors(form.ferry) }}
+                            </div>
+                        </div>
+                        <div class="col-md-1 d-flex align-items-center mt-2">
+                            <div class="form-check form-switch mb-4">
+                                {{ form_widget(form.fictif, {'attr': {'class':'form-check-input me-2'}}) }}
+                                {{ form_label(form.fictif, 'Vol Fictif', {'label_attr': {'class':'form-check-label'}}) }}
+                                {{ form_errors(form.fictif) }}
+                            </div>
+                        </div>
+                        <div class="col-md-2 d-flex align-items-center mt-2">
+                            <div class="form-check form-switch mb-1">
+                                <h6 class="form-check-label d-none" for="msg1" style="color: red;font-weight: bold">Retrocédé</h6>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="col-md-8">
-                    <div class="card card-body shadow-sm" style="border-radius:8px; height:fit-content;">
+            <!-- Détails du vol: Départ, Arrivée, Via -->
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="row">
+                        <!-- Départ -->
+                        <div class="col-md-4">
+                            <div class="flight-section departure-section">
+                                <span class="section-title text-success fw-bold">[Départ]</span>
+                                <div class="mb-1">
+                                    <div class="form-group-legend">
+                                        {{ form_widget(form.villeD, {'attr': {
+                                            'class':'form-select form-select-sm ville-select-depart villed',
+                                            'id':'villeD',
+                                            'data-aero-target':'aerodep'
+                                        }}) }}
+                                        {{ form_label(form.villeD, 'Ville de départ:', {'label_attr': {'class':'form-label'}}) }}
+                                        {{ form_errors(form.villeD) }}
+                                    </div>
+                                    <div class="form-group-legend">
+                                        {{ form_widget(form.aerodep, {'attr': {
+                                            'class':'form-control bg-white form-control-sm aerodep',
+                                            'id':'aerodep',
+                                            'readonly':true
+                                        }}) }}
+                                        {{ form_label(form.aerodep, 'Aéroport Départ:', {'label_attr': {'class':'form-label'}}) }}
+                                        {{ form_errors(form.aerodep) }}
+                                    </div>
+                                </div>
+                                <div class="mb-1">
+                                    <div class="form-group-legend">
+                                        {{ form_widget(form.heured, {'attr': {
+                                            'class':'form-control bg-white form-control-sm',
+                                            'data-aeroport-target':'timeInput'
+                                        }}) }}
+                                        {{ form_label(form.heured, 'Heure de départ:', {'label_attr': {'class':'form-label'}}) }}
+                                        {{ form_errors(form.heured) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                        <!-- Ligne 1 : SG + switch -->
-                        <div class="row g-3 align-items-end">
-                            <div class="col-md-3">
+                        <!-- Arrivée -->
+                        <div class="col-md-4">
+                            <div class="flight-section arrival-section">
+                                <span class="section-title fw-bold">[Arrivée]</span>
+                                <div class="mb-1">
+                                    <div class="form-group-legend">
+                                        {{ form_widget(form.villeA, {'attr': {
+                                            'class':'form-select form-select-sm ville-select villea',
+                                            'id':'villeA',
+                                            'data-aero-target':'aeroarr'
+                                        }}) }}
+                                        {{ form_label(form.villeA, 'Ville d\'arrivée:', {'label_attr': {'class':'form-label'}}) }}
+                                        {{ form_errors(form.villeA) }}
+                                    </div>
+                                    <div class="form-group-legend">
+                                        {{ form_widget(form.aeroarr, {'attr': {
+                                            'class':'form-control bg-white form-control-sm aeroarr',
+                                            'id':'aeroarr',
+                                            'readonly':true
+                                        }}) }}
+                                        {{ form_label(form.aeroarr, 'Aéroport Arrivée:', {'label_attr': {'class':'form-label'}}) }}
+                                        {{ form_errors(form.aeroarr) }}
+                                    </div>
+                                </div>
+                                <div class="mb-1">
+                                    <div class="form-group-legend">
+                                        {{ form_widget(form.heurea, {'attr': {
+                                            'class':'form-control bg-white form-control-sm',
+                                            'data-aeroport-target':'timeInput'
+                                        }}) }}
+                                        {{ form_label(form.heurea, "Heure d'arrivée:", {'label_attr': {'class':'form-label'}}) }}
+                                        {{ form_errors(form.heurea) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Via -->
+                        <div class="col-md-4">
+                            <div class="flight-section via-section">
+                                <span class="section-title text-warning fw-bold">[Via]</span>
+                                <div class="mb-1">
+                                    <div class="form-group-legend">
+                                        {{ form_widget(form.villeV, {'attr': {'class':'form-select form-select-sm'}}) }}
+                                        {{ form_label(form.villeV, 'Ville Via:', {'label_attr': {'class':'form-label'}}) }}
+                                        {{ form_errors(form.villeV) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Options de vol -->
+{#                    <div class="row mt-4">#}
+{#                        <div class="col-md-12">#}
+{#                            <div class="form-check form-switch">#}
+{#                                {{ form_widget(form.volsec, {'attr': {'class':'form-check-input'}}) }}#}
+{#                                {{ form_label(form.volsec, 'Autorisé Vente Vol Sec Internet', {'label_attr': {'class':'form-check-label'}}) }}#}
+{#                                {{ form_errors(form.volsec) }}#}
+{#                            </div>#}
+{#                            <div class="form-check form-switch">#}
+{#                                {{ form_widget(form.bagagesoute, {'attr': {'class':'form-check-input'}}) }}#}
+{#                                {{ form_label(form.bagagesoute, '1 seul bag en soute / Passager', {'label_attr': {'class':'form-check-label'}}) }}#}
+{#                                {{ form_errors(form.bagagesoute) }}#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+                </div>
+            </div>
+
+            <!-- Section Affréteur -->
+            <div class="col-md-12">
+                <div class="card shadow-sm border-1 mb-3" style="border: 1px solid #9a9c9d;border-radius: 12px;">
+                    <div class="card-header py-2" style="background:#f8f9fa;border-radius:12px 12px 0 0;">
+                        <h4 class="mb-2   step-card" style="color:#007bff;">
+                            <i class="fas fa-chart-bar"></i> Capacités
+                        </h4>
+                    </div>
+                    <div class="card-body mt-2">
+                        <div class="row g-3 align-items-end"> {# g-3 pour l'espacement, align-items-end pour aligner en bas #}
+                            <div class="col-auto"> {# col-auto pour largeur automatique #}
+                                <div class="form-group-legend">
+                                    {{ form_label(form.ouvert, 'Offre Total:', {'label_attr': {'class':'form-label'}}) }}
+                                    {{ form_widget(form.ouvert, {'attr': {
+                                        'class':'form-control bg-white',
+                                        'data-action':'change->availability#calculateAvailability',
+                                        'data-calc':'ouvert',
+                                        'data-availability-ouvert-value': form.ouvert.vars.value|default(0)
+                                    }}) }}
+                                    {{ form_errors(form.ouvert) }}
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="form-group-legend">
+                                    {{ form_label(form.vendu, 'Vendu:', {'label_attr': {'class':'form-label'}}) }}
+                                    {{ form_widget(form.vendu, {'attr': {
+                                        'class':'form-control bg-white calc-field',
+                                        'id':'vendu-field',
+                                        'data-calc':'vendu'
+                                    }}) }}
+                                    {{ form_errors(form.vendu) }}
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="form-group-legend">
+                                    {{ form_label(form.reserve, 'Réservé:', {'label_attr': {'class':'form-label'}}) }}
+                                    {{ form_widget(form.reserve, {'attr': {
+                                        'class':'form-control bg-white calc-field',
+                                        'id':'reserve-field',
+                                        'data-calc':'reserve'
+                                    }}) }}
+                                    {{ form_errors(form.reserve) }}
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="form-group-legend">
+                                    {{ form_label(form.freesale, 'Free Sale:', {'label_attr': {'class':'form-label'}}) }}
+                                    {{ form_widget(form.freesale, {'attr': {'class':'form-control bg-white'}}) }}
+                                    {{ form_errors(form.freesale) }}
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="form-group-legend">
+                                    {{ form_label(form.dispo, 'Dispo:', {'label_attr': {'class':'form-label'}}) }}
+                                    {{ form_widget(form.dispo, {'attr': {
+                                        'class':'form-control bg-white bg-light',
+                                        'readonly':true,
+                                        'id':'dispo-field',
+                                        'data-calc':'dispo'
+                                    }}) }}
+                                    {{ form_errors(form.dispo) }}
+                                </div>
+                            </div>
+                            <div class="col-auto">
                                 <div class="form-group-legend">
                                     {{ form_widget(form.sg, {'attr': {'class': 'form-control bg-white'}}) }}
-                                    {{ form_label(form.sg, "Siège(s) engagé(s)", {'label_attr': {'class': 'form-label'}}) }}
+                                    {{ form_label(form.sg, "Siège(s) engagé(s):", {'label_attr': {'class': 'form-label'}}) }}
                                     {{ form_errors(form.sg) }}
                                 </div>
                             </div>
-
-                            <div class="col-md-9 d-flex align-items-center">
-                                <div class="form-check form-switch mb-4">
+                            <div class="col-auto">
+                                <div class="form-group-legend">
                                     {{ form_widget(form.venduVolsec, {'attr': {'class':'form-check-input me-2'}}) }}
                                     {{ form_label(form.venduVolsec, 'Autorisé uniquement 7 jours Vente Vol Sec Pour Internet', {'label_attr': {'class':'form-check-label mb-0'}}) }}
                                     {{ form_errors(form.venduVolsec) }}
                                 </div>
                             </div>
                         </div>
+{#                        <div class="row g-3 align-items-end">#}
+{#                            <div class="col-md-2">#}
+{#                                <div class="form-group-legend">#}
+{#                                    {{ form_widget(form.codaffret, {'attr': {#}
+{#                                        'class':'form-select form-select-sm affret-select bg-white',#}
+{#                                        'id':'codaffret',#}
+{#                                        'data-lib-target':'libaffret'#}
+{#                                    }}) }}#}
+{#                                    {{ form_label(form.codaffret, 'Affréteur:', {'label_attr': {'class':'form-label'}}) }}#}
+{#                                    {{ form_errors(form.codaffret) }}#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="col-md-3">#}
+{#                                <div class="form-group-legend">#}
+{#                                    {{ form_widget(form.libaffret, {'attr': {#}
+{#                                        'class':'form-control form-control-sm bg-white libaffret',#}
+{#                                        'id':'libaffret',#}
+{#                                        'readonly':true#}
+{#                                    }}) }}#}
+{#                                    {{ form_label(form.libaffret, 'Nom Affréteur:', {'label_attr': {'class':'form-label'}}) }}#}
+{#                                    {{ form_errors(form.libaffret) }}#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="col-md-3">#}
+{#                                <div class="form-group-legend">#}
+{#                                    {{ form_widget(form.nomfour, {'attr': {'class':'form-control form-control-sm bg-white'}}) }}#}
+{#                                    {{ form_label(form.nomfour, 'Fournisseur:', {'label_attr': {'class':'form-label'}}) }}#}
+{#                                    {{ form_errors(form.nomfour) }}#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="col-md-2 d-flex align-items-center mt-2">#}
+{#                                <div class="form-check form-switch mb-4">#}
+{#                                    {{ form_widget(form.ferry, {'attr': {'class':'form-check-input me-2'}}) }}#}
+{#                                    {{ form_label(form.ferry, 'Vol Ferry', {'label_attr': {'class':'form-check-label'}}) }}#}
+{#                                    {{ form_errors(form.ferry) }}#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="col-md-2 d-flex align-items-center mt-2">#}
+{#                                <div class="form-check form-switch mb-4">#}
+{#                                    {{ form_widget(form.fictif, {'attr': {'class':'form-check-input me-2'}}) }}#}
+{#                                    {{ form_label(form.fictif, 'Vol Fictif', {'label_attr': {'class':'form-check-label'}}) }}#}
+{#                                    {{ form_errors(form.fictif) }}#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                        <!-- Ligne 2 : Date de confirmation -->
-                        <div class="row g-3 mt-2">
-                            <div class="col-md-4">
+    <!-- Étape 2: Capacités -->
+    <div class="step-content" data-step="1">
+        <div class="card step-card">
+            <h3><i class="fas fa-chart-bar"></i> Capacités</h3>
+            <div class="row">
+                <!-- Capacités principales -->
+                <div class="col-md-12">
+                    <div class="card card-body shadow-sm" style="border-radius:8px;height:fit-content;">
+{#                        <div class="row g-3 align-items-end"> #}{# g-3 pour l'espacement, align-items-end pour aligner en bas #}
+{#                            <div class="col-auto"> #}{# col-auto pour largeur automatique #}
+{#                                <div class="form-group-legend">#}
+{#                                    {{ form_label(form.ouvert, 'Offre Total:', {'label_attr': {'class':'form-label'}}) }}#}
+{#                                    {{ form_widget(form.ouvert, {'attr': {#}
+{#                                        'class':'form-control bg-white',#}
+{#                                        'data-action':'change->availability#calculateAvailability',#}
+{#                                        'data-calc':'ouvert',#}
+{#                                        'data-availability-ouvert-value': form.ouvert.vars.value|default(0)#}
+{#                                    }}) }}#}
+{#                                    {{ form_errors(form.ouvert) }}#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="col-auto">#}
+{#                                <div class="form-group-legend">#}
+{#                                    {{ form_label(form.vendu, 'Vendu:', {'label_attr': {'class':'form-label'}}) }}#}
+{#                                    {{ form_widget(form.vendu, {'attr': {#}
+{#                                        'class':'form-control bg-white calc-field',#}
+{#                                        'id':'vendu-field',#}
+{#                                        'data-calc':'vendu'#}
+{#                                    }}) }}#}
+{#                                    {{ form_errors(form.vendu) }}#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="col-auto">#}
+{#                                <div class="form-group-legend">#}
+{#                                    {{ form_label(form.reserve, 'Réservé:', {'label_attr': {'class':'form-label'}}) }}#}
+{#                                    {{ form_widget(form.reserve, {'attr': {#}
+{#                                        'class':'form-control bg-white calc-field',#}
+{#                                        'id':'reserve-field',#}
+{#                                        'data-calc':'reserve'#}
+{#                                    }}) }}#}
+{#                                    {{ form_errors(form.reserve) }}#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="col-auto">#}
+{#                                <div class="form-group-legend">#}
+{#                                    {{ form_label(form.freesale, 'Free Sale:', {'label_attr': {'class':'form-label'}}) }}#}
+{#                                    {{ form_widget(form.freesale, {'attr': {'class':'form-control bg-white'}}) }}#}
+{#                                    {{ form_errors(form.freesale) }}#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="col-auto">#}
+{#                                <div class="form-group-legend">#}
+{#                                    {{ form_label(form.dispo, 'Dispo:', {'label_attr': {'class':'form-label'}}) }}#}
+{#                                    {{ form_widget(form.dispo, {'attr': {#}
+{#                                        'class':'form-control bg-white bg-light',#}
+{#                                        'readonly':true,#}
+{#                                        'id':'dispo-field',#}
+{#                                        'data-calc':'dispo'#}
+{#                                    }}) }}#}
+{#                                    {{ form_errors(form.dispo) }}#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="col-auto">#}
+{#                                <div class="form-group-legend">#}
+{#                                    {{ form_widget(form.sg, {'attr': {'class': 'form-control bg-white'}}) }}#}
+{#                                    {{ form_label(form.sg, "Siège(s) engagé(s):", {'label_attr': {'class': 'form-label'}}) }}#}
+{#                                    {{ form_errors(form.sg) }}#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="col-auto">#}
+{#                                <div class="form-group-legend">#}
+{#                                    {{ form_widget(form.venduVolsec, {'attr': {'class':'form-check-input me-2'}}) }}#}
+{#                                    {{ form_label(form.venduVolsec, 'Autorisé uniquement 7 jours Vente Vol Sec Pour Internet', {'label_attr': {'class':'form-check-label mb-0'}}) }}#}
+{#                                    {{ form_errors(form.venduVolsec) }}#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+                    </div>
+                </div>
+{#                <div class="col-md-4">#}
+{#                    <div class="col-md-12 card card-body shadow-sm" style="border-radius:8px;height:fit-content;">#}
+{#                        <div class="col-md-12">#}
+{#                            <div class="form-group-legend">#}
+{#                                {{ form_widget(form.ouvert, {'attr': {#}
+{#                                    'class':'form-control bg-white',#}
+{#                                    'data-action':'change->availability#calculateAvailability',#}
+{#                                    'data-calc':'ouvert',#}
+{#                                    'data-availability-ouvert-value': form.ouvert.vars.value|default(0)#}
+{#                                }}) }}#}
+{#                                {{ form_label(form.ouvert, 'Offre Total:', {'label_attr': {'class':'form-label'}}) }}#}
+{#                                {{ form_errors(form.ouvert) }}#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="col-md-12">#}
+{#                            <div class="form-group-legend">#}
+{#                                {{ form_widget(form.vendu, {'attr': {#}
+{#                                    'class':'form-control bg-white calc-field',#}
+{#                                    'id':'vendu-field',#}
+{#                                    'data-calc':'vendu'#}
+{#                                }}) }}#}
+{#                                {{ form_label(form.vendu, 'Vendu:', {'label_attr': {'class':'form-label'}}) }}#}
+{#                                {{ form_errors(form.vendu) }}#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="col-md-12">#}
+{#                            <div class="form-group-legend">#}
+{#                                {{ form_widget(form.reserve, {'attr': {#}
+{#                                    'class':'form-control bg-white calc-field',#}
+{#                                    'id':'reserve-field',#}
+{#                                    'data-calc':'reserve'#}
+{#                                }}) }}#}
+{#                                {{ form_label(form.reserve, 'Réservé:', {'label_attr': {'class':'form-label'}}) }}#}
+{#                                {{ form_errors(form.reserve) }}#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="col-md-12">#}
+{#                            <div class="form-group-legend">#}
+{#                                {{ form_widget(form.freesale, {'attr': {'class':'form-control bg-white'}}) }}#}
+{#                                {{ form_label(form.freesale, 'Free Sale:', {'label_attr': {'class':'form-label'}}) }}#}
+{#                                {{ form_errors(form.freesale) }}#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="col-md-12">#}
+{#                            <div class="form-group-legend">#}
+{#                                {{ form_widget(form.dispo, {'attr': {#}
+{#                                    'class':'form-control bg-white bg-light',#}
+{#                                    'readonly':true,#}
+{#                                    'id':'dispo-field',#}
+{#                                    'data-calc':'dispo'#}
+{#                                }}) }}#}
+{#                                {{ form_label(form.dispo, 'Dispo:', {'label_attr': {'class':'form-label'}}) }}#}
+{#                                {{ form_errors(form.dispo) }}#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+
+                <!-- Informations complémentaires -->
+                <div class="col-md-8">
+                    <div class="card card-body shadow-sm" style="border-radius:8px; height:fit-content;">
+                        <!-- Sièges engagés et options -->
+                        <div class="row g-3 align-items-end">
+                            <div class="col-md-3">
                                 <div class="form-group-legend">
-                                    {{ form_widget(form.datedeconf, {'attr': {'class':'form-control bg-white'}}) }}
-                                    {{ form_label(form.datedeconf, 'Date de confirmation', {'label_attr': {'class':'form-label'}}) }}
-                                    {{ form_errors(form.datedeconf) }}
+{#                                    {{ form_widget(form.sg, {'attr': {'class': 'form-control bg-white'}}) }}#}
+{#                                    {{ form_label(form.sg, "Siège(s) engagé(s):", {'label_attr': {'class': 'form-label'}}) }}#}
+{#                                    {{ form_errors(form.sg) }}#}
+                                </div>
+                            </div>
+
+                            <div class="col-md-9 d-flex align-items-center">
+                                <div class="form-check form-switch mb-4">
+{#                                    {{ form_widget(form.venduVolsec, {'attr': {'class':'form-check-input me-2'}}) }}#}
+{#                                    {{ form_label(form.venduVolsec, 'Autorisé uniquement 7 jours Vente Vol Sec Pour Internet', {'label_attr': {'class':'form-check-label mb-0'}}) }}#}
+{#                                    {{ form_errors(form.venduVolsec) }}#}
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Ligne 3 : Observations -->
+                        <!-- Observations -->
                         <div class="row g-3 mt-1">
                             <div class="col-12">
                                 <div class="form-group-legend">
                                     {{ form_widget(form.obs, {'attr': {'class':'form-control bg-white'}}) }}
-                                    {{ form_label(form.obs, "Observations", {'label_attr': {'class':'form-label'}}) }}
+                                    {{ form_label(form.obs, "Observations:", {'label_attr': {'class':'form-label'}}) }}
                                     {{ form_errors(form.obs) }}
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
-
-
-            </div> <!-- row -->
+            </div>
         </div>
     </div>
 
-    <!-- Step 3 -->
+    <!-- Étape 3: Tarification -->
     <div class="step-content" data-step="2">
         <div class="card step-card">
-            <h3><i class="fas fa-tags"></i> Tarification</h3>
+            <h4 style="color: #007bff"><i class="fas fa-tags"></i> Tarification</h4>
             <div class="col-md-12 card card-body shadow-sm">
                 <div class="row">
+                    <!-- Tableau principal de tarification -->
                     <div class="col-md-8">
                         <table class="table table-bordered text-center align-middle shadow-sm mb-4">
                             <thead class="table-primary">
-                            <tr><th colspan="6" class="text-center fs-5 fw-bold">Tarification</th></tr>
-                            <tr><th>Tarification</th><th>Adulte</th><th>Enfant</th><th>Bébé</th><th>Taxe</th></tr>
+{#                            <tr>#}
+{#                                <th colspan="8" class="text-center fs-5 fw-bold py-2">Tarification</th>#}
+{#                            </tr>#}
+                            <tr>
+                                <td colspan="4" class="w-20">Tarification</td>
+                                <td class="w-20">Adulte</td>
+                                <td class="w-20">Enfant</td>
+                                <td class="w-20">Bébé</td>
+                                <td class="w-20">Taxe</td>
+                            </tr>
                             </thead>
                             <tbody>
+                            <!-- Achat forfait -->
                             <tr>
-                                <th class="align-middle fw-bold text-center">Achat forfait</th>
-                                <td>{{ form_widget(form.prixada,  {'attr': {'class':'form-control form-control-sm'}}) }}</td>
-                                <td>{{ form_widget(form.prixzza,  {'attr': {'class':'form-control form-control-sm'}}) }}</td>
-                                <td>{{ form_widget(form.prixbba,  {'attr': {'class':'form-control form-control-sm'}}) }}</td>
-                                <td>{{ form_widget(form.taxea,   {'attr': {'class':'form-control form-control-sm'}}) }}</td>
+                                <td colspan="4" class="fw-bold text-start ps-3 bg-light"><span>Achat forfait</span></td>
+                                <td>{{ form_widget(form.prixada, {'attr': {'class':'form-control form-control-sm text-center'}}) }}</td>
+                                <td>{{ form_widget(form.prixzza, {'attr': {'class':'form-control form-control-sm text-center'}}) }}</td>
+                                <td>{{ form_widget(form.prixbba, {'attr': {'class':'form-control form-control-sm text-center'}}) }}</td>
+                                <td>{{ form_widget(form.taxea, {'attr': {'class':'form-control form-control-sm text-center'}}) }}</td>
                             </tr>
+
+                            <!-- Achat vol sec -->
                             <tr>
-                                <th class="align-middle fw-bold text-center">Achat Vol sec</th>
-                                <td>{{ form_widget(form.prixadav, {'attr': {'class':'form-control form-control-sm'}}) }}</td>
-                                <td>{{ form_widget(form.prixzzav, {'attr': {'class':'form-control form-control-sm'}}) }}</td>
-                                <td>{{ form_widget(form.prixbbav, {'attr': {'class':'form-control form-control-sm'}}) }}</td>
-                                <td></td>
+                                <td colspan="4" class="fw-bold text-start ps-3 bg-light">Achat vol sec</td>
+                                <td>{{ form_widget(form.prixadav, {'attr': {'class':'form-control form-control-sm text-center'}}) }}</td>
+                                <td>{{ form_widget(form.prixzzav, {'attr': {'class':'form-control form-control-sm text-center'}}) }}</td>
+                                <td>{{ form_widget(form.prixbbav, {'attr': {'class':'form-control form-control-sm text-center'}}) }}</td>
+                                <td rowspan="4" class="align-middle">
+                                    <div class="col-md-12">
+                                        {{ form_label(form.prixYield, 'Yield:') }}
+                                        {{ form_widget(form.prixYield, {'attr': {'class':'form-control'}}) }}
+                                        {{ form_errors(form.prixYield) }}
+                                    </div>
+                                </td>
                             </tr>
+
+                            <!-- Prix vente - Forfait -->
                             <tr>
-                                <th rowspan="3" class="align-middle fw-bold text-center">Prix Vente</th>
-                                <td>{{ form_widget(form.prixadv,  {'attr': {'class':'form-control form-control-sm'}}) }}</td>
-                                <td>{{ form_widget(form.prixzzv,  {'attr': {'class':'form-control form-control-sm'}}) }}</td>
-                                <td>{{ form_widget(form.prixbbv,  {'attr': {'class':'form-control form-control-sm'}}) }}</td>
-                                <td></td>
+                                <td colspan="3" rowspan="3" class="fw-bold text-center bg-light align-middle">
+                                    <div class="d-flex flex-column justify-content-center h-100">
+                                        <span class="fs-6">Prix vente</span>
+                                    </div>
+                                </td>
+                                <td class="fw-bold text-start ps-2 bg-light">Forfait</td>
+                                <td>{{ form_widget(form.prixadv, {'attr': {'class':'form-control form-control-sm text-center'}}) }}</td>
+                                <td>{{ form_widget(form.prixzzv, {'attr': {'class':'form-control form-control-sm text-center'}}) }}</td>
+                                <td>{{ form_widget(form.prixbbv, {'attr': {'class':'form-control form-control-sm text-center'}}) }}</td>
                             </tr>
+
+                            <!-- Prix vente - Internet -->
                             <tr>
-                                <td>{{ form_widget(form.prixadv2, {'attr': {'class':'form-control form-control-sm'}}) }}</td>
-                                <td>{{ form_widget(form.prixzzv2, {'attr': {'class':'form-control form-control-sm'}}) }}</td>
-                                <td>{{ form_widget(form.prixbbv2, {'attr': {'class':'form-control form-control-sm'}}) }}</td>
-                                <td></td>
+                                <td class="fw-bold text-start ps-2 bg-light">Internet</td>
+                                <td>{{ form_widget(form.prixadv2, {'attr': {'class':'form-control form-control-sm text-center'}}) }}</td>
+                                <td>{{ form_widget(form.prixzzv2, {'attr': {'class':'form-control form-control-sm text-center'}}) }}</td>
+                                <td>{{ form_widget(form.prixbbv2, {'attr': {'class':'form-control form-control-sm text-center'}}) }}</td>
                             </tr>
+
+                            <!-- Prix vente - Vol sec -->
                             <tr>
-                                <td>{{ form_widget(form.prixadv3, {'attr': {'class':'form-control form-control-sm'}}) }}</td>
-                                <td>{{ form_widget(form.prixzzv3, {'attr': {'class':'form-control form-control-sm'}}) }}</td>
-                                <td>{{ form_widget(form.prixbbv3, {'attr': {'class':'form-control form-control-sm'}}) }}</td>
-                                <td></td>
+                                <td class="fw-bold text-start ps-2 bg-light">Vol sec</td>
+                                <td>{{ form_widget(form.prixadv3, {'attr': {'class':'form-control form-control-sm text-center'}}) }}</td>
+                                <td>{{ form_widget(form.prixzzv3, {'attr': {'class':'form-control form-control-sm text-center'}}) }}</td>
+                                <td>{{ form_widget(form.prixbbv3, {'attr': {'class':'form-control form-control-sm text-center'}}) }}</td>
                             </tr>
                             </tbody>
                         </table>
-                        <div class="col-md-6">
-                            {{ form_label(form.prixYield, 'YIELD') }}
-                            {{ form_widget(form.prixYield, {'attr': {'class':'form-control'}}) }}
-                            {{ form_errors(form.prixYield) }}
-                        </div>
+
+                        <!-- Yield -->
+{#                        <div class="col-md-2">#}
+{#                            {{ form_label(form.prixYield, 'Yield:') }}#}
+{#                            {{ form_widget(form.prixYield, {'attr': {'class':'form-control'}}) }}#}
+{#                            {{ form_errors(form.prixYield) }}#}
+{#                        </div>#}
                     </div>
 
-                    <div class="col-md-4">
+                    <!-- Taxes et suppléments -->
+                    <div class="col-md-3">
                         <table class="table table-bordered align-middle text-start shadow-sm">
                             <thead class="table-primary">
                             <tr><th colspan="2" class="text-center fs-5 fw-bold">Taxes & Suppléments</th></tr>
@@ -562,80 +1085,117 @@
                 </div>
             </div>
         </div>
+        <div class="card step-card">
+            <h4 style="color: #007bff;"><i class="fas fa-suitcase"></i> Bagages</h4>
+            <div class="col-md-12 card card-body shadow-sm">
+                <!-- Poids des bagages -->
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group-legend">
+                                    {{ form_widget(form.kilos, {'attr': {'class':'form-control bg-white'}}) }}
+                                    {{ form_label(form.kilos, 'Adultes (kg):', {'label_attr': {'class':'form-label'}}) }}
+                                    {{ form_errors(form.kilos) }}
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group-legend">
+                                    {{ form_widget(form.kilobebe, {'attr': {'class':'form-control bg-white'}}) }}
+                                    {{ form_label(form.kilobebe, 'Bébé (kg):', {'label_attr': {'class':'form-label'}}) }}
+                                    {{ form_errors(form.kilobebe) }}
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group-legend">
+                                    {{ form_widget(form.kilocabine, {'attr': {'class':'form-control bg-white'}}) }}
+                                    {{ form_label(form.kilocabine, 'Cabine (kg):', {'label_attr': {'class':'form-label'}}) }}
+                                    {{ form_errors(form.kilocabine) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Step 4 -->
+    <!-- Étape 4: Convocation -->
     <div class="step-content" data-step="3">
         <div class="card step-card">
             <h3><i class="fas fa-calendar-alt"></i> Convocation</h3>
 
             <div class="card convocation-card mb-4">
+                <!-- Informations de convocation -->
                 <div class="row mb-3">
                     <div class="col-md-3">
                         <div class="form-group-legend">
                             {{ form_widget(form.dateconvo, {'attr': {'class':'form-control bg-white'}}) }}
-                            {{ form_label(form.dateconvo, 'Date de convocation', {'label_attr': {'class':'form-label'}}) }}
+                            {{ form_label(form.dateconvo, 'Date de convocation:', {'label_attr': {'class':'form-label'}}) }}
                             {{ form_errors(form.dateconvo) }}
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group-legend">
                             {{ form_widget(form.heureconvo, {'attr': {'class':'form-control bg-white'}}) }}
-                            {{ form_label(form.heureconvo, 'Heure', {'label_attr': {'class':'form-label'}}) }}
+                            {{ form_label(form.heureconvo, 'Heure:', {'label_attr': {'class':'form-label'}}) }}
                             {{ form_errors(form.heureconvo) }}
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group-legend">
                             {{ form_widget(form.comptoir, {'attr': {'class':'form-control bg-white'}}) }}
-                            {{ form_label(form.comptoir, 'Comptoir & zone', {'label_attr': {'class':'form-label'}}) }}
+                            {{ form_label(form.comptoir, 'Comptoir & zone:', {'label_attr': {'class':'form-label'}}) }}
                             {{ form_errors(form.comptoir) }}
                         </div>
                     </div>
                 </div>
 
+                <!-- Lieu et porte -->
                 <div class="row mb-3">
                     <div class="col-md-3">
                         <div class="form-group-legend">
                             {{ form_widget(form.lieuconvo, {'attr': {'class':'form-control bg-white'}}) }}
-                            {{ form_label(form.lieuconvo, 'Aéroport & Lieu', {'label_attr': {'class':'form-label'}}) }}
+                            {{ form_label(form.lieuconvo, 'Aéroport & Lieu:', {'label_attr': {'class':'form-label'}}) }}
                             {{ form_errors(form.lieuconvo) }}
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group-legend">
                             {{ form_widget(form.porte, {'attr': {'class':'form-control bg-white'}}) }}
-                            {{ form_label(form.porte, 'Porte', {'label_attr': {'class':'form-label'}}) }}
+                            {{ form_label(form.porte, 'Porte:', {'label_attr': {'class':'form-label'}}) }}
                             {{ form_errors(form.porte) }}
                         </div>
                     </div>
                 </div>
 
+                <!-- Agence et formalités -->
                 <div class="row align-items-start">
                     <div class="col-md-6">
                         <div class="mb-3">
                             <div class="form-group-legend">
                                 {{ form_widget(form.agence, {'attr': {'class':'form-control bg-white'}}) }}
-                                {{ form_label(form.agence, 'Agence (confirmation vol)', {'label_attr': {'class':'form-label'}}) }}
+                                {{ form_label(form.agence, 'Agence (confirmation vol):', {'label_attr': {'class':'form-label'}}) }}
                                 {{ form_errors(form.agence) }}
                             </div>
                         </div>
                         <div class="mb-3">
                             <div class="form-group-legend">
                                 {{ form_widget(form.formforf, {'attr': {'class':'form-control bg-white'}}) }}
-                                {{ form_label(form.formforf, 'Formalités forfait', {'label_attr': {'class':'form-label'}}) }}
+                                {{ form_label(form.formforf, 'Formalités forfait:', {'label_attr': {'class':'form-label'}}) }}
                                 {{ form_errors(form.formforf) }}
                             </div>
                         </div>
                         <div class="mb-3">
                             <div class="form-group-legend">
                                 {{ form_widget(form.formsec, {'attr': {'class':'form-control bg-white'}}) }}
-                                {{ form_label(form.formsec, 'Formalités vol sec', {'label_attr': {'class':'form-label'}}) }}
+                                {{ form_label(form.formsec, 'Formalités vol sec:', {'label_attr': {'class':'form-label'}}) }}
                                 {{ form_errors(form.formsec) }}
                             </div>
                         </div>
                     </div>
 
+                    <!-- Spécifications -->
                     <div class="col-md-3 offset-md-1">
                         <label class="convocation-subtitle fw-bold mb-2">Spécification</label>
                         <div class="border p-3 bg-white text-dark rounded">
@@ -650,92 +1210,51 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Bandeau info + dateconf -->
-            <div class="col-md-12 pe-0">
-                <div class="card mb-4 border-0">
-                    <div class="d-flex flex-wrap align-items-center gap-3 p-3 info-inline">
-          <span class="info-inline__text">
-            Le prix de vente Internet sont à modifiables dans le programme vol internet
-          </span>
-                        <div class="info-inline__field">
-                            <div class="form-group-legend mb-0">
-                                {{ form_widget(form.dateconf, {'attr': {'class':'form-control bg-white'}}) }}
-                                {{ form_label(form.dateconf, 'Date de prise en compte', {'label_attr': {'class':'form-label'}}) }}
-                                {{ form_errors(form.dateconf) }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 
-    <!-- Step 5 -->
+    <!-- Étape 5: Bagages -->
     <div class="step-content" data-step="4">
-        <div class="card step-card">
-            <h3><i class="fas fa-suitcase"></i> Bagages</h3>
-            <div class="col-md-12 card card-body shadow-sm">
-                <div class="row g-3">
-                    <div class="col-md-4">
-                        <div class="form-group-legend">
-                            {{ form_widget(form.bagagesoption, {'attr': {'class':'form-control bg-white'}}) }}
-                            {{ form_label(form.bagagesoption, 'Bagages option', {'label_attr': {'class':'form-label'}}) }}
-                            {{ form_errors(form.bagagesoption) }}
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group-legend">
-                            {{ form_widget(form.prixbagagesoption, {'attr': {'class':'form-control bg-white'}}) }}
-                            {{ form_label(form.prixbagagesoption, 'Prix bagages', {'label_attr': {'class':'form-label'}}) }}
-                            {{ form_errors(form.prixbagagesoption) }}
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group-legend">
-                            {{ form_widget(form.nbrbagagesoption, {'attr': {'class':'form-control bg-white'}}) }}
-                            {{ form_label(form.nbrbagagesoption, 'Nb bagages', {'label_attr': {'class':'form-label'}}) }}
-                            {{ form_errors(form.nbrbagagesoption) }}
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row mb-3">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="form-group-legend">
-                                    {{ form_widget(form.kilos, {'attr': {'class':'form-control bg-white'}}) }}
-                                    {{ form_label(form.kilos, 'Poids total (kg)', {'label_attr': {'class':'form-label'}}) }}
-                                    {{ form_errors(form.kilos) }}
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="form-group-legend">
-                                    {{ form_widget(form.kilobebe, {'attr': {'class':'form-control bg-white'}}) }}
-                                    {{ form_label(form.kilobebe, 'Poids bébé (kg)', {'label_attr': {'class':'form-label'}}) }}
-                                    {{ form_errors(form.kilobebe) }}
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="form-group-legend">
-                                    {{ form_widget(form.kilocabine, {'attr': {'class':'form-control bg-white'}}) }}
-                                    {{ form_label(form.kilocabine, 'Cabine (kg)', {'label_attr': {'class':'form-label'}}) }}
-                                    {{ form_errors(form.kilocabine) }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
+{#        <div class="card step-card">#}
+{#            <h3><i class="fas fa-suitcase"></i> Bagages</h3>#}
+{#            <div class="col-md-12 card card-body shadow-sm">#}
+{#                <!-- Poids des bagages -->#}
+{#                <div class="row mb-3">#}
+{#                    <div class="col-md-12">#}
+{#                        <div class="row">#}
+{#                            <div class="col-4">#}
+{#                                <div class="form-group-legend">#}
+{#                                    {{ form_widget(form.kilos, {'attr': {'class':'form-control bg-white'}}) }}#}
+{#                                    {{ form_label(form.kilos, 'Adultes (kg):', {'label_attr': {'class':'form-label'}}) }}#}
+{#                                    {{ form_errors(form.kilos) }}#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="col-4">#}
+{#                                <div class="form-group-legend">#}
+{#                                    {{ form_widget(form.kilobebe, {'attr': {'class':'form-control bg-white'}}) }}#}
+{#                                    {{ form_label(form.kilobebe, 'Bébé (kg):', {'label_attr': {'class':'form-label'}}) }}#}
+{#                                    {{ form_errors(form.kilobebe) }}#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="col-4">#}
+{#                                <div class="form-group-legend">#}
+{#                                    {{ form_widget(form.kilocabine, {'attr': {'class':'form-control bg-white'}}) }}#}
+{#                                    {{ form_label(form.kilocabine, 'Cabine (kg):', {'label_attr': {'class':'form-label'}}) }}#}
+{#                                    {{ form_errors(form.kilocabine) }}#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
     </div>
 
-    <!-- Navigation -->
+    <!-- Navigation entre les étapes -->
     <div class="form-group row justify-content-between mt-5 mb-5">
-        <div class="col-auto"><button type="button" class="btn btn-secondary" id="prevBtn">Précédent</button></div>
+        <div class="col-auto">
+            <button type="button" class="btn btn-secondary" id="prevBtn">Précédent</button>
+        </div>
         <div class="col-auto">
             <button type="button" class="btn btn-primary" id="nextBtn">Suivant</button>
             <button type="submit" class="btn btn-success" id="submitBtn">Enregistrer</button>
@@ -744,7 +1263,9 @@
 
     {{ form_end(form) }}
 
+    <!-- Script de gestion du formulaire -->
     <script>
+        // Gestion de la navigation entre les étapes
         $(document).ready(function(){
             let currentStep = 0;
             const totalSteps = 5;
@@ -756,126 +1277,524 @@
             const progressBar = $('.step-progress-bar');
             const formEl = $('#vol-form');
 
+            // Affiche une étape spécifique
             function showStep(stepIndex){
                 stepContents.removeClass('active');
                 steps.removeClass('active completed');
                 stepContents.eq(stepIndex).addClass('active');
                 steps.eq(stepIndex).addClass('active');
-                for(let i=0;i<stepIndex;i++){ steps.eq(i).addClass('completed'); }
+
+                // Marquer les étapes précédentes comme complétées
+                for(let i=0;i<stepIndex;i++){
+                    steps.eq(i).addClass('completed');
+                }
+
+                // Mettre à jour la barre de progression
                 const progress = (stepIndex/(totalSteps-1))*100;
                 progressBar.css('width', progress + '%');
-                if(stepIndex===0){ prevBtn.hide(); } else { prevBtn.show(); }
-                if(stepIndex===totalSteps-1){ nextBtn.hide(); submitBtn.show(); }
-                else { nextBtn.show(); submitBtn.hide(); }
+
+                // Gérer la visibilité des boutons
+                if(stepIndex===0){
+                    prevBtn.hide();
+                } else {
+                    prevBtn.show();
+                }
+
+                if(stepIndex===totalSteps-1){
+                    nextBtn.hide();
+                    submitBtn.show();
+                } else {
+                    nextBtn.show();
+                    submitBtn.hide();
+                }
+
                 currentStep = stepIndex;
                 $('html,body').animate({scrollTop: $('.step-progress').offset().top - 20}, 300);
             }
 
+            // Validation côté client d'une étape
             function validateStepClient(stepIndex){
                 let isValid = true;
                 const errors = {};
                 const currentStepContent = stepContents.eq(stepIndex);
                 const requiredFields = currentStepContent.find('[required]');
+
                 requiredFields.each(function(){
                     const $f = $(this);
                     const name = $f.attr('name') || $f.attr('id') || 'field';
                     if(!$f.val() || $f.val().toString().trim()===''){
-                        isValid = false; errors[name] = 'Ce champ est obligatoire';
+                        isValid = false;
+                        errors[name] = 'Ce champ est obligatoire';
                     }
                 });
+
                 return { valid:isValid, errors };
             }
 
+            // Afficher les erreurs de validation
             function showValidationErrors(errors){
                 $('.is-invalid').removeClass('is-invalid');
                 $('.invalid-feedback').remove();
+
                 for(const k in errors){
                     let $field = $(`[name="${k}"]`);
-                    if($field.length===0){ $field = $(`[name="form[${k}]"]`); }
+                    if($field.length===0){
+                        $field = $(`[name="form[${k}]"]`);
+                    }
+
                     if($field.length>0){
                         $field.addClass('is-invalid');
                         const $err = $('<div>').addClass('invalid-feedback').text(errors[k]);
                         $field.after($err);
                     }
                 }
+
                 const $first = $('.is-invalid').first();
-                if($first.length>0){ $('html,body').animate({scrollTop: $first.offset().top - 100}, 500); }
+                if($first.length>0){
+                    $('html,body').animate({scrollTop: $first.offset().top - 100}, 500);
+                }
             }
 
+            // Événements de navigation
             nextBtn.on('click', function(){
                 const res = validateStepClient(currentStep);
                 if(res.valid){
-                    if(currentStep<totalSteps-1){ showStep(currentStep+1); }
-                }else{ showValidationErrors(res.errors); }
+                    if(currentStep<totalSteps-1){
+                        showStep(currentStep+1);
+                    }
+                } else {
+                    showValidationErrors(res.errors);
+                }
             });
-            prevBtn.on('click', function(){ if(currentStep>0){ showStep(currentStep-1); } });
+
+            prevBtn.on('click', function(){
+                if(currentStep>0){
+                    showStep(currentStep-1);
+                }
+            });
+
             steps.on('click', function(){
                 const s = parseInt($(this).data('step'));
-                if(s <= currentStep){ showStep(s); }
+                if(s <= currentStep){
+                    showStep(s);
+                }
             });
 
+            // Validation finale du formulaire
             formEl.on('submit', function(e){
                 e.preventDefault();
-                let allValid = true; const allErrors = {};
+                let allValid = true;
+                const allErrors = {};
+
                 for(let i=0;i<totalSteps;i++){
                     const r = validateStepClient(i);
-                    if(!r.valid){ allValid=false; Object.assign(allErrors, r.errors); if(i!==currentStep){ showStep(i); } break; }
+                    if(!r.valid){
+                        allValid=false;
+                        Object.assign(allErrors, r.errors);
+                        if(i!==currentStep){
+                            showStep(i);
+                        }
+                        break;
+                    }
                 }
-                if(allValid){ formEl.off('submit').submit(); } else { showValidationErrors(allErrors); alert('Veuillez corriger les erreurs avant de soumettre.'); }
+
+                if(allValid){
+                    formEl.off('submit').submit();
+                } else {
+                    showValidationErrors(allErrors);
+                    alert('Veuillez corriger les erreurs avant de soumettre.');
+                }
             });
 
-            // Helpers AJAX
+            // Configuration des sélecteurs de ville
             function setupVilleSelect(selector, inputClass, urlPrefix){
                 $(selector).on('change', function(){
                     const villeId = $(this).val();
-                    if(!villeId){ $('.'+inputClass).val(''); return; }
+                    if(!villeId){
+                        $('.'+inputClass).val('');
+                        return;
+                    }
+
                     $.ajax({
-                        url: urlPrefix + villeId, type:'GET', dataType:'json',
-                        success: function(data){ $('.'+inputClass).val(data.aeroport || ''); },
-                        error: function(){ $('.'+inputClass).val(''); }
+                        url: urlPrefix + villeId,
+                        type:'GET',
+                        dataType:'json',
+                        success: function(data){
+                            $('.'+inputClass).val(data.aeroport || '');
+                        },
+                        error: function(){
+                            $('.'+inputClass).val('');
+                        }
                     });
                 }).trigger('change');
             }
+
+            // Configuration du sélecteur d'affréteur
             function setupAffretSelect(){
                 $('.affret-select').on('change', function(){
-                    const id = $(this).val(); const $lib = $('.libaffret');
-                    if(!id){ $lib.val(''); return; }
+                    const id = $(this).val();
+                    const $lib = $('.libaffret');
+                    if(!id){
+                        $lib.val('');
+                        return;
+                    }
+
                     $lib.val('Chargement...');
                     $.ajax({
-                        url: '/vol/get-affret/' + id, type:'GET', dataType:'json',
-                        success: function(data){ $lib.val(data.libaffret || 'Non trouvé'); },
-                        error: function(){ $lib.val('Erreur de chargement'); console.error('Erreur chargement affréteur'); }
+                        url: '/vol/get-affret/' + id,
+                        type:'GET',
+                        dataType:'json',
+                        success: function(data){
+                            $lib.val(data.libaffret || 'Non trouvé');
+                        },
+                        error: function(){
+                            $lib.val('Erreur de chargement');
+                            console.error('Erreur chargement affréteur');
+                        }
                     });
                 }).trigger('change');
             }
+
+            // Calcul de la disponibilité
             function calculateDispo(){
+                const ouvert = parseInt($('[data-calc="ouvert"]').val()) || 0;
                 const vendu = parseInt($('[data-calc="vendu"]').val()) || 0;
                 const reserve = parseInt($('[data-calc="reserve"]').val()) || 0;
-                const dispo = Math.max(0, vendu - reserve);
+                const dispo = Math.max(0, ouvert - vendu - reserve);
                 $('[data-calc="dispo"]').val(dispo);
             }
 
-            // Init
-            setupVilleSelect('.ville-select', 'aeroarr', '/vol/get-aeroport/');
-            setupVilleSelect('.ville-select-depart', 'aerodep', '/vol/get-aeroport/');
-            setupAffretSelect();
-            $('[data-calc="vendu"], [data-calc="reserve"]').on('input', calculateDispo);
-            calculateDispo();
-            showStep(0);
+            // Calcul de la date rétro
+            function calculateDateRetro() {
+                try {
+                    const retroVol = parseInt($('#{{ form.retro_vol.vars.id }}').val()) || 0;
+                    const dateVol = $('#{{ form.datevol.vars.id }}').val();
+                    const msgElement = $('h6.form-check-label[for="msg1"]');
 
-            // Calcul JO depuis datevol
-            const $dateField = $('#{{ form.datevol.vars.id }}');
-            const $joField   = $('#{{ form.jo.vars.id }}');
-            $dateField.on('change', function(){
-                const v = $(this).val();
-                if(v){
-                    const [y,m,d] = v.split('-').map(Number);
-                    const dt = new Date(y, m-1, d);
-                    let jo = dt.getDay(); if(jo===0) jo = 7; // Dimanche = 7
-                    $joField.val(jo);
-                } else { $joField.val(''); }
-            });
-            if($dateField.val()) $dateField.trigger('change');
+                    // Masquer le message par défaut
+                    msgElement.addClass('d-none');
+
+                    if (!dateVol) {
+                        $('#{{ form.datRetro.vars.id }}').val('');
+                        return;
+                    }
+
+                    if (retroVol > 0) {
+                        const date = new Date(dateVol);
+                        if (isNaN(date.getTime())) {
+                            console.error('Date vol est invalide');
+                            return;
+                        }
+
+                        date.setDate(date.getDate() - retroVol);
+
+                        if (isNaN(date.getTime())) {
+                            console.error('Date rétro calculée invalide');
+                            return;
+                        }
+
+                        const year = date.getFullYear();
+                        const month = String(date.getMonth() + 1).padStart(2, '0');
+                        const day = String(date.getDate()).padStart(2, '0');
+                        const formattedDate = `${year}-${month}-${day}`;
+
+                        $('#{{ form.datRetro.vars.id }}').val(formattedDate);
+
+                        // Comparer avec la date du jour
+                        const today = new Date();
+                        const todayString = today.toISOString().split('T')[0]; // Format YYYY-MM-DD
+console.log(today);
+                        console.log('Date rétro:', formattedDate, 'Date aujourd\'hui:', todayString);
+
+                        if (formattedDate < todayString) {
+                            msgElement.removeClass('d-none'); // Afficher seulement si datretro < datejour
+                            console.log('Afficher message: datretro < datejour');
+                        } else {
+                            msgElement.addClass('d-none'); // Masquer sinon
+                            console.log('Masquer message: datretro >= datejour');
+                        }
+
+                    } else {
+                        $('#{{ form.datRetro.vars.id }}').val(dateVol);
+                        // Pas de rétro, donc masquer le message
+                        msgElement.addClass('d-none');
+                    }
+                } catch (error) {
+                    console.error('Erreur dans le calcul de la date rétro:', error);
+                    $('h6.form-check-label[for="msg1"]').addClass('d-none');
+                }
+            }
+
+            // Configuration du nettoyage des zéros
+            function setupZeroCleanup() {
+                $('input.form-control, input.form-control-sm').on('focus', function() {
+                    const value = $(this).val().trim();
+                    if (value === '0' || value === '0.00' || value === '.00') {
+                        $(this).val('');
+                    }
+                });
+
+                $('input.form-control, input.form-control-sm').on('blur', function() {
+                    const value = $(this).val().trim();
+                    if (value === '' ) {
+                        $(this).val('0');
+                    }
+                });
+            }
+
+            // Gestion des villes par destination
+            function setupDestinationVilles() {
+                $('.destination_select').on('change', function() {
+                    const paysId = $(this).val();
+
+                    if (!paysId) {
+                        $('.villed').empty().append('<option value="">Sélectionner une ville</option>');
+                        $('.villea').empty().append('<option value="">Sélectionner une ville</option>');
+                        return;
+                    }
+
+                    $.ajax({
+                        url: '/ville/villes-by-pays/' + paysId,
+                        method: 'GET',
+                        dataType: 'json',
+                        success: function(data) {
+                            console.log('Données reçues:', data);
+                            updateSelect('.villed', data.villesDepart, 'Sélectionner une ville de départ');
+                            updateSelect('.villea', data.villesArrivee, 'Sélectionner une ville d\'arrivée');
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Erreur AJAX:', error);
+                            console.log('Réponse serveur:', xhr.responseText);
+                            alert('Erreur lors du chargement des villes');
+                        }
+                    });
+                });
+
+                function updateSelect(selectClass, villes, placeholder) {
+                    const $select = $(selectClass);
+                    const currentValue = $select.val();
+
+                    $select.empty();
+                    $select.append($('<option>', {
+                        value: '',
+                        text: placeholder,
+                        disabled: true,
+                        selected: true
+                    }));
+
+                    $.each(villes, function(index, ville) {
+                        const $option = $('<option>', {
+                            value: ville.id,
+                            text: ville.libelle
+                        });
+
+                        if (ville.aero) {
+                            $option.attr('data-aero', ville.aero);
+                        }
+
+                        $select.append($option);
+                    });
+
+                    if (currentValue && $select.find('option[value="' + currentValue + '"]').length > 0) {
+                        $select.val(currentValue);
+                    }
+
+                    $select.trigger('change');
+                }
+            }
+
+            // Initialisation
+            function init() {
+                setupVilleSelect('.ville-select', 'aeroarr', '/vol/get-aeroport/');
+                setupVilleSelect('.ville-select-depart', 'aerodep', '/vol/get-aeroport/');
+                setupAffretSelect();
+                setupDestinationVilles();
+                setupZeroCleanup();
+                setupValidationCleanup();
+                setupDateSynchronization();
+                $('[data-calc="ouvert"], [data-calc="vendu"],[data-calc="reserve"]').on('input', calculateDispo);
+                calculateDispo();
+                showStep(0);
+
+                // Calcul JO depuis datevol
+                const $dateField = $('#{{ form.datevol.vars.id }}');
+                const $joField   = $('#{{ form.jo.vars.id }}');
+
+                $dateField.on('change', function(){
+                    const v = $(this).val();
+                    if(v){
+                        const [y,m,d] = v.split('-').map(Number);
+                        const dt = new Date(y, m-1, d);
+                        let jo = dt.getDay();
+                        if(jo===0) jo = 7; // Dimanche = 7
+                        $joField.val(jo);
+                    } else {
+                        $joField.val('');
+                    }
+                });
+
+                if($dateField.val()) {
+                    $dateField.trigger('change');
+                }
+
+                calculateDateRetro();
+            }
+
+            // Lancement de l'initialisation
+            init();
         });
+
+        // Gestion des dates
+        document.addEventListener('DOMContentLoaded', function() {
+            const dateStart = document.querySelector('.date-start');
+            const dateEnd = document.querySelector('.date-end');
+            const dayOfWeek = document.querySelector('.day-of-week');
+
+            // Synchronisation des dates
+            if (dateStart && dateEnd) {
+                dateStart.addEventListener('change', function() {
+                    dateEnd.min = this.value;
+                    if (dateEnd.value && dateEnd.value < this.value) {
+                        dateEnd.value = this.value;
+                    }
+                });
+            }
+
+            // Calcul du jour de la semaine
+            if (dateStart && dayOfWeek) {
+                dateStart.addEventListener('change', function() {
+                    if (this.value) {
+                        const date = new Date(this.value);
+                        const day = date.getDay();
+                        const phpDay = day === 0 ? 7 : day;
+                        dayOfWeek.value = phpDay;
+                    }
+                });
+            }
+        });
+        function calculateDateRetro() {
+            try {
+                const retroVol = parseInt($('#{{ form.retro_vol.vars.id }}').val()) || 0;
+                const dateVol = $('#{{ form.datevol.vars.id }}').val();
+                const msgElement = $('h6.form-check-label[for="msg1"]');
+
+                // Masquer le message par défaut
+                msgElement.addClass('d-none');
+
+                if (!dateVol) {
+                    $('#{{ form.datRetro.vars.id }}').val('');
+                    return;
+                }
+
+                if (retroVol > 0) {
+                    const date = new Date(dateVol);
+                    if (isNaN(date.getTime())) {
+                        console.error('Date vol est invalide');
+                        return;
+                    }
+
+                    date.setDate(date.getDate() - retroVol);
+
+                    if (isNaN(date.getTime())) {
+                        console.error('Date rétro calculée invalide');
+                        return;
+                    }
+
+                    const year = date.getFullYear();
+                    const month = String(date.getMonth() + 1).padStart(2, '0');
+                    const day = String(date.getDate()).padStart(2, '0');
+                    const formattedDate = `${year}-${month}-${day}`;
+
+                    $('#{{ form.datRetro.vars.id }}').val(formattedDate);
+
+                    // Comparer avec la date du jour
+                    const today = new Date();
+                    const todayString = today.toISOString().split('T')[0]; // Format YYYY-MM-DD
+                    console.log(today);
+                    console.log('Date rétro:', formattedDate, 'Date aujourd\'hui:', todayString);
+
+                    if (formattedDate < todayString) {
+                        msgElement.removeClass('d-none'); // Afficher seulement si datretro < datejour
+                        console.log('Afficher message: datretro < datejour');
+                    } else {
+                        msgElement.addClass('d-none'); // Masquer sinon
+                        console.log('Masquer message: datretro >= datejour');
+                    }
+
+                } else {
+                    $('#{{ form.datRetro.vars.id }}').val(dateVol);
+                    // Pas de rétro, donc masquer le message
+                    msgElement.addClass('d-none');
+                }
+            } catch (error) {
+                console.error('Erreur dans le calcul de la date rétro:', error);
+                $('h6.form-check-label[for="msg1"]').addClass('d-none');
+            }
+        }
+        // Événements pour le calcul de la date rétro
+        $('#{{ form.retro_vol.vars.id }}, #{{ form.datevol.vars.id }}').on('input change', function() {
+            calculateDateRetro();
+        });
+        // Fonction pour supprimer les erreurs de validation quand l'utilisateur saisit
+        function setupValidationCleanup() {
+            // Écouter les événements de saisie sur tous les champs
+            $(document).on('input change', '.form-control, .form-select', function() {
+                const $field = $(this);
+
+                // Si le champ a la classe is-invalid et qu'il a maintenant une valeur
+                if ($field.hasClass('is-invalid') && $field.val().toString().trim() !== '') {
+                    // Supprimer la classe is-invalid
+                    $field.removeClass('is-invalid');
+
+                    // Supprimer le message d'erreur associé
+                    $field.next('.invalid-feedback').remove();
+                }
+            });
+
+            // Gestion spécifique pour les champs radio et checkbox
+            $(document).on('change', '.form-check-input', function() {
+                const $field = $(this);
+
+                if ($field.hasClass('is-invalid') && $field.is(':checked')) {
+                    // Supprimer la classe is-invalid de l'input
+                    $field.removeClass('is-invalid');
+
+                    // Supprimer la classe is-invalid du label parent si présente
+                    $field.closest('.form-check').find('.form-check-label').removeClass('is-invalid');
+
+                    // Supprimer le message d'erreur associé
+                    $field.closest('.form-check').next('.invalid-feedback').remove();
+                }
+            });
+        }
+        function setupDateSynchronization() {
+            const $dateVol = $('#{{ form.datevol.vars.id }}');
+            const $dateVolAu = $('#{{ form.datevolau.vars.id }}');
+            const $dateConvo = $('#{{ form.dateconvo.vars.id }}');
+
+            $dateVol.on('change', function() {
+                const selectedDate = $(this).val();
+
+                if (selectedDate) {
+                    // Synchroniser datevolau
+                    $dateVolAu.val(selectedDate);
+
+                    // Synchroniser dateconvo
+                    $dateConvo.val(selectedDate);
+
+                    // Déclencher les événements pour les calculs dépendants
+                    $dateVolAu.trigger('change');
+                    $dateConvo.trigger('change');
+
+                    console.log('Dates synchronisées:', selectedDate);
+                }
+            });
+
+            // Initialisation si une date existe déjà
+            if ($dateVol.val()) {
+                $dateVolAu.val($dateVol.val());
+                $dateConvo.val($dateVol.val());
+            }
+        }
     </script>
 {% endblock %}

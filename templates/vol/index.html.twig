@@ -1,9 +1,38 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}RFT | Liste des Vols{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.bootstrap5.min.css">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.bootstrap5.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+{% endblock %}
 
 {% block body %}
+    <style>
+        .filters th {
+            padding: 8px 4px !important;
+            background-color: #f8f9fa;
+        }
 
+        .filters input {
+            width: 100%;
+            min-width: 80px;
+        }
+    </style>
     <div class="flex-grow-1 container-p-y container-fluid">
         <div class="card shadow rounded-3 border-0">
             <div class="card-header text-white">
@@ -20,7 +49,7 @@
             </div>
             <div class="card-body p-1" style="font-size: 12px;">
                 <div class="table-responsive">
-                    <table class="table table-hover table-striped table-bordered mb-1">
+                    <table id="volsTable" class="table table-hover table-striped table-bordered mb-1">
                         <thead class="thead-light">
                         <tr>
                             <th>#</th>
@@ -33,30 +62,58 @@
                             <th>Statut</th>
                             <th>Actions</th>
                         </tr>
+                        <!-- Ligne supplémentaire pour les filtres -->
+                        <tr class="filters">
+                            <th><input type="text" class="form-control form-control-sm" placeholder="Rechercher..."
+                                       data-column="0"></th>
+                            <th><input type="text" class="form-control form-control-sm" placeholder="Rechercher..."
+                                       data-column="1"></th>
+                            <th><input type="text" class="form-control form-control-sm" placeholder="Rechercher..."
+                                       data-column="2"></th>
+                            <th><input type="text" class="form-control form-control-sm" placeholder="Rechercher..."
+                                       data-column="3"></th>
+                            <th><input type="text" class="form-control form-control-sm" placeholder="Rechercher..."
+                                       data-column="4"></th>
+                            <th><input type="text" class="form-control form-control-sm" placeholder="Rechercher..."
+                                       data-column="5"></th>
+                            <th><input type="text" class="form-control form-control-sm" placeholder="Rechercher..."
+                                       data-column="6"></th>
+                            <th><input type="text" class="form-control form-control-sm" placeholder="Rechercher..."
+                                       data-column="7"></th>
+                            <th><!-- Pas de filtre pour la colonne Actions --></th>
+                        </tr>
                         </thead>
                         <tbody>
                         {% for vol in vols %}
                             <tr>
                                 <td>{{ vol.seqvol }}</td>
                                 <td>{{ vol.nvol }}</td>
-                                <td>{{ vol.datevol ? vol.datevol|date('d/m/Y H:i') : '' }}</td>
+                                <td data-order="{{ vol.datevol ? vol.datevol|date('Y-m-d ') : '' }}">
+                                    {{ vol.datevol ? vol.datevol|date('d/m/Y ') : '' }}
+                                </td>
                                 <td>
                                     {{ vol.villed }} /
-                                    <small>{{ vol.heured }}</small>
+                                    <small class="text-muted">{{ vol.HEURED }}</small>
                                 </td>
                                 <td>
                                     {{ vol.villea }} /
-                                    <small>{{ vol.heurea }}</small>
+                                    <small class="text-muted">{{ vol.heurea }}</small>
                                 </td>
-                                <td>{{ vol.codaffret.libaffret }}</td>
                                 <td>
-                                    <span class="badge bg-primary">{{ vol.sg }}</span> /
+                                    {% if vol.codaffret %}
+                                        {{ vol.codaffret.libaffret }}
+                                    {% else %}
+                                        <span class="text-muted">-</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <span class="badge bg-primary">{{ vol.ouvert }}</span> /
                                     <span class="badge bg-info">{{ vol.vendu }}</span> /
                                     <span class="badge bg-warning">{{ vol.reserve }}</span> =
-                                    <span class="badge bg-success">{{ (vol.sg - vol.vendu - vol.reserve) }}</span>
+                                    <span class="badge bg-success">{{ (vol.ouvert - vol.vendu - vol.reserve) }}</span>
                                 </td>
                                 <td>
-                                    {% if vol.ouvert == 1 %}
+                                    {% if (vol.ouvert - vol.vendu - vol.reserve) > 0 %}
                                         <span class="badge bg-success">Ouvert</span>
                                     {% else %}
                                         <span class="badge bg-danger">Fermé</span>
@@ -64,17 +121,14 @@
                                 </td>
                                 <td class="text-center">
                                     <div class="dropdown">
-                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Actions">
+                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                                data-bs-toggle="dropdown" aria-expanded="false" aria-label="Actions">
                                             <i class="bx bx-dots-vertical-rounded"></i>
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-end">
-{#                                            <li>#}
-{#                                                <a class="dropdown-item" href="{{ path('app_vol_show', {'seqvol': vol.seqvol}) }}">#}
-{#                                                    <i class="bx bx-show me-2"></i>Détails#}
-{#                                                </a>#}
-{#                                            </li>#}
                                             <li>
-                                                <a class="dropdown-item" href="{{ path('app_vol_edit', {'seqvol': vol.seqvol}) }}">
+                                                <a class="dropdown-item"
+                                                   href="{{ path('app_vol_edit', {'seqvol': vol.seqvol}) }}">
                                                     <i class="bx bx-edit-alt me-2"></i>Consulter | Modifier
                                                 </a>
                                             </li>
@@ -99,4 +153,48 @@
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function () {
+            $('#volsTable').DataTable({
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.13.4/i18n/fr-FR.json",
+                    "paginate": {
+                        "first": "⟪⟪",
+                        "last": "⟫⟫",
+                        "next": "››",
+                        "previous": "‹‹"
+                    }
+                },
+                "responsive": true,
+                "info": false,
+                "lengthChange":false,
+                "pageLength": 12,
+                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Tous"]],
+                "order": [[0, 'desc']],
+                // "searching": false, // Désactive la recherche globale
+                // "dom": 'rtp', // Affiche seulement le tableau et la pagination
+                "initComplete": function (settings, json) {
+                    // Appliquer la recherche pour chaque champ de filtre
+                    this.api().columns().every(function () {
+                        var column = this;
+
+                        // Ignorer la dernière colonne (Actions)
+                        if (column.index() === 8) return;
+
+                        $('input[data-column="' + column.index() + '"]').on('keyup change clear', function () {
+                            if (column.search() !== this.value) {
+                                column.search(this.value).draw();
+                            }
+                        });
+                    });
+                }
+            });
+
+// Optionnel : Vider tous les filtres
+            function clearFilters() {
+                $('.filters input').val('').trigger('change');
+                $('#volsTable').DataTable().search('').columns().search('').draw();
+            }
+        });
+    </script>
 {% endblock %}

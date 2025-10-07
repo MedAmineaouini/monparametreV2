@@ -44,4 +44,28 @@ class VilleRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    public function findVillesByPaysNotEqual($paysId): array
+    {
+        return $this->createQueryBuilder('v')
+            ->leftJoin('v.pays', 'p')
+            ->where('p.idpays != :paysId OR v.pays IS NULL')
+            ->setParameter('paysId', $paysId)
+            ->orderBy('v.libville', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Trouve les villes par pays
+     */
+    public function findVillesByPays($paysId): array
+    {
+        return $this->createQueryBuilder('v')
+            ->leftJoin('v.pays', 'p')
+            ->where('p.idpays = :paysId')
+            ->setParameter('paysId', $paysId)
+            ->orderBy('v.libville', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

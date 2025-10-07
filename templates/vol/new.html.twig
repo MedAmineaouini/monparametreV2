@@ -6,52 +6,52 @@
 
 {% block body %}
 
-        
-	<div class="card shadow rounded-3 border-0">
-		<div class="card-header page-header d-flex justify-content-between align-items-center">
-			<h5 class="mb-0 d-flex align-items-center">
+
+    <div class="card shadow rounded-3 border-0">
+        <div class="card-header page-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 d-flex align-items-center">
     <span class="page-header__icon me-2">
       <i class="fa fa-plane"></i>
     </span>
-				<span class="page-header__title">Vol</span>
-				<span class="page-header__sep mx-2">|</span>
-				<i class="fa fa-plus me-2 page-header__plus"></i>
-				<span class="fw-semibold">Ajouter Vol</span>
-			</h5>
+                <span class="page-header__title">Vol</span>
+                <span class="page-header__sep mx-2">|</span>
+                <i class="fa fa-plus me-2 page-header__plus"></i>
+                <span class="fw-semibold">Ajouter Vol</span>
+            </h5>
 
-			{# Zone actions (optionnelle) #}
-			{# <div class="d-flex align-items-center gap-2">
+{#             Zone actions (optionnelle) #}
+             <div class="d-flex align-items-center gap-2">
     <button class="btn btn-light btn-sm">Aide</button>
-  </div> #}
-		</div>
+  </div>
+        </div>
 
 
-		<hr>
-		<div class="card-body">
-{#            <!-- Tab navigation -->#}
-{#            <ul class="nav nav-tabs mb-4" id="volTabs" role="tablist">#}
-{#                <li class="nav-item" role="presentation">#}
-{#                    <button class="nav-link active" id="general-tab" data-bs-toggle="tab" data-bs-target="#general" type="button" role="tab">Général</button>#}
-{#                </li>#}
-{#                <li class="nav-item" role="presentation">#}
-{#                    <button class="nav-link" id="capacities-tab" data-bs-toggle="tab" data-bs-target="#capacities" type="button" role="tab">Capacités</button>#}
-{#                </li>#}
-{#                <li class="nav-item" role="presentation">#}
-{#                    <button class="nav-link" id="pricing-tab" data-bs-toggle="tab" data-bs-target="#pricing" type="button" role="tab">Tarification</button>#}
-{#                </li>#}
-{#                <li class="nav-item" role="presentation">#}
-{#                    <button class="nav-link" id="convocation-tab" data-bs-toggle="tab" data-bs-target="#convocation" type="button" role="tab">Convocation</button>#}
-{#                </li>#}
-{#                <li class="nav-item" role="presentation">#}
-{#                    <button class="nav-link" id="baggage-tab" data-bs-toggle="tab" data-bs-target="#baggage" type="button" role="tab">Bagages</button>#}
-{#                </li>#}
-{#                #}{# <li class="nav-item" role="presentation">#}
-{#                <button class="nav-link" id="options-tab" data-bs-toggle="tab" data-bs-target="#options" type="button" role="tab">Options</button>#}
-{#            </li> #}
-{#            </ul>#}
-			{{ include('vol/_form.html.twig') }}
-		</div>
-	</div>
+        <hr>
+        <div class="card-body">
+            {#            <!-- Tab navigation --> #}
+            {#            <ul class="nav nav-tabs mb-4" id="volTabs" role="tablist"> #}
+            {#                <li class="nav-item" role="presentation"> #}
+            {#                    <button class="nav-link active" id="general-tab" data-bs-toggle="tab" data-bs-target="#general" type="button" role="tab">Général</button> #}
+            {#                </li> #}
+            {#                <li class="nav-item" role="presentation"> #}
+            {#                    <button class="nav-link" id="capacities-tab" data-bs-toggle="tab" data-bs-target="#capacities" type="button" role="tab">Capacités</button> #}
+            {#                </li> #}
+            {#                <li class="nav-item" role="presentation"> #}
+            {#                    <button class="nav-link" id="pricing-tab" data-bs-toggle="tab" data-bs-target="#pricing" type="button" role="tab">Tarification</button> #}
+            {#                </li> #}
+            {#                <li class="nav-item" role="presentation"> #}
+            {#                    <button class="nav-link" id="convocation-tab" data-bs-toggle="tab" data-bs-target="#convocation" type="button" role="tab">Convocation</button> #}
+            {#                </li> #}
+            {#                <li class="nav-item" role="presentation"> #}
+            {#                    <button class="nav-link" id="baggage-tab" data-bs-toggle="tab" data-bs-target="#baggage" type="button" role="tab">Bagages</button> #}
+            {#                </li> #}
+            {#                #}{# <li class="nav-item" role="presentation"> #}
+            {#                <button class="nav-link" id="options-tab" data-bs-toggle="tab" data-bs-target="#options" type="button" role="tab">Options</button> #}
+            {#            </li> #}
+            {#            </ul> #}
+            {{ include('vol/_form.html.twig') }}
+        </div>
+    </div>
 {% endblock %}
 
 

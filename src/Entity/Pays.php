@@ -47,10 +47,14 @@ class Pays
     #[ORM\OneToMany(mappedBy: 'PAYBANQUE', targetEntity: Banque::class)]
     private Collection $banques;
 
+    #[ORM\OneToMany(targetEntity: Vol::class, mappedBy: 'IDPAYS')]
+    private Collection $vols;
+
     public function __construct()
     {
         $this->ORDRE = 0;
         $this->CONTINENT = '';
+        $this->vols = new ArrayCollection();
     }
 
     public function getOBSERVATION(): ?string
@@ -110,6 +114,36 @@ class Pays
     public function __toString(): string
     {
         return $this->getLIBPAYS(); // Remplacez getLibelle() par la propriété que vous voulez afficher
+    }
+
+    /**
+     * @return Collection<int, Vol>
+     */
+    public function getVols(): Collection
+    {
+        return $this->vols;
+    }
+
+    public function addVol(Vol $vol): static
+    {
+        if (!$this->vols->contains($vol)) {
+            $this->vols->add($vol);
+            $vol->setIDPAYS($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVol(Vol $vol): static
+    {
+        if ($this->vols->removeElement($vol)) {
+            // set the owning side to null (unless already changed)
+            if ($vol->getIDPAYS() === $this) {
+                $vol->setIDPAYS(null);
+            }
+        }
+
+        return $this;
     }
 
 
